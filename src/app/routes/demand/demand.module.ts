@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 
 import { Demand1Component } from './demand1/demand1.component';
 import { Demand2Component } from './demand2/demand2.component';
@@ -21,7 +22,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [Demand1Component, Demand2Component, PrelistingComponent, PostlistingComponent, Day40Component, Day90Component],
+  declarations: [
+    Demand1Component,
+    Demand2Component,
+    PrelistingComponent,
+    PostlistingComponent,
+    Day40Component,
+    Day90Component,
+    jqxGridComponent],
   imports: [
     SharedModule,
     CommonModule,

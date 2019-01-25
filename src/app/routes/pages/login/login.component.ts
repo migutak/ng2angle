@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
                 // to keep user logged in between page refreshes
                 user.authdata = window.btoa(value.username + ':' + value.password);
                 localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('username', user.username);
                 this.router.navigate([this.returnUrl]);
             } else {
                 this.error = 'Wrong username or password';

@@ -12,7 +12,7 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
-import { AuthGuard } from './auth.guard';
+
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -39,7 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    providers: [AuthGuard],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

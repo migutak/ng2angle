@@ -5,7 +5,7 @@
 <!-- START card-->
 <div class="card card-default">
     <div class="card-header">Demand Table #1</div>
-    <!-- START table-responsive-->
+    <!-- START table-responsive
     <div class="table-responsive">
         <table class="table table-bordered table-hover" id="table-ext-1">
             <thead>
@@ -108,6 +108,13 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div>-->
     <!-- END table-responsive-->
+
+<jqxGrid [theme]="'bootstrap'" [verticalscrollbarstep]="20"
+    [width]="'100%'" [source]="dataAdapter" [columns]="columns"
+    [columnsresize]="true" [sortable]="true"
+    [pageable]="true" [autoheight]="true"
+    [altrows]="true" [enabletooltips]="true">
+</jqxGrid>
 </div>

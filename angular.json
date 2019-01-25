@@ -28,7 +28,10 @@
             ],
             "styles": [
               "src/app/core/preloader/preloader.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.base.css",
+              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.bootstrap.css",
+              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.dark.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

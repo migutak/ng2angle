@@ -16,7 +16,7 @@ export class UserblockComponent implements OnInit {
         this.userdata = JSON.parse(localStorage.getItem('currentUser'));
 
         this.user = {
-            picture: 'assets/img/user/01.jpg',
+            picture: 'assets/img/user/coop.jpg',
             username: this.userdata.username,
             division: this.userdata.team,
         };
