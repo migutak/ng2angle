@@ -7,7 +7,8 @@
                   <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(settingsForm)">
                     <p class="lead">Demand Letter</p>
                     <p class="my-2">Type</p>
-                    <ngx-select (data)="valueCategory" [multiple]="false" [items]="itemsCategories" name="letterid" id="letterid" #letterid="ngModel" [(ngModel)]="model.letterid" required></ngx-select>
+                    <ngx-select (data)="valueCategory" [multiple]="false" [items]="itemsCategories" name="letterid" id="letterid" #letterid="ngModel" [(ngModel)]="model.letterid" (change)="onChange(letterid)" required ></ngx-select>
+                    <span><button class="btn btn-small btn-primary" (click)="onChange(letterid.model)" type="button"><em class="fa fa-sync fa-fw"></em> Letter details</button></span>
                     <p class="my-2">Days in arrears</p>
                     <ngx-select (data)="valueTag" [multiple]="false" [items]="itemsTags" name="daysinarr" id="daysinarr" #daysinarr="ngModel" [(ngModel)]="model.daysinarr" required></ngx-select>
                     <p class="my-2">Exceptions - Memo</p>

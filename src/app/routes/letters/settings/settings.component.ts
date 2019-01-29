@@ -27,6 +27,7 @@ export class SettingsComponent implements OnInit {
     valueTag;
     valueReview;
     contents: string;
+    letter: {};
 
   constructor(private ecolService: EcolService) { }
 
@@ -52,6 +53,21 @@ export class SettingsComponent implements OnInit {
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
+    });
+  }
+
+  onChange(letter) {
+    // load letter details
+    this.ecolService.getLetter(letter).subscribe(data => {
+      letter = data;
+      console.log(data);
+      this.model.sms = data.sms;
+      this.model.daysinarr = data.daysinarr;
+      this.model.exceptions = data.exceptions;
+      swal('Successful!', 'letter retrieved successfully!', 'success');
+    }, error => {
+      console.log(error);
+      swal('Error!', 'No letter found!', 'error');
     });
   }
 

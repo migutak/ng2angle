@@ -16,7 +16,7 @@ export const routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            // { path: '', redirectTo: 'login', pathMatch: 'full' },
+            { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
             { path: 'guarantors', loadChildren: './guarantors/guarantors.module#GuarantorsModule' },
@@ -46,6 +46,6 @@ export const routes = [
 
     // Not found
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'home' }
 
 ];

@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
            // return user;
         }, error => {
           console.log(error);
-          if (error.error.error.code === 'MODEL_NOT_FOUND') {
+         if (error.statusText === 'Not Found') {
             this.error = 'Wrong username or password';
             this.loading = false;
           } else {

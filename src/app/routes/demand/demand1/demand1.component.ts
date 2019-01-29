@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import * as $ from 'jquery';
+import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 
 @Component({
   selector: 'app-demand1',
@@ -8,69 +12,88 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class Demand1Component implements OnInit {
 
-  model: any = {};
-  source: any =
-    {
-        localdata:
-        [
-            ['Alfreds Futterkiste', 'Maria Anders', 'Sales Representative', 'Obere Str. 57', 'Berlin', 'Germany'],
-            ['Ana Trujillo Emparedados y helados', 'Ana Trujillo', 'Owner', 'Avda. de la Constitucin 2222', 'Mxico D.F.', 'Mexico'],
-            ['Antonio Moreno Taquera', 'Antonio Moreno', 'Owner', 'Mataderos 2312', 'Mxico D.F.', 'Mexico'],
-            ['Around the Horn', 'Thomas Hardy', 'Sales Representative', '120 Hanover Sq.', 'London', 'UK'],
-            ['Berglunds snabbkp', 'Christina Berglund', 'Order Administrator', 'Berguvsvgen 8', 'Lule', 'Sweden'],
-            ['Blauer See Delikatessen', 'Hanna Moos', 'Sales Representative', 'Forsterstr. 57', 'Mannheim', 'Germany'],
-            ['Blondesddsl pre et fils', 'Frdrique Citeaux', 'Marketing Manager', '24, place Klber', 'Strasbourg', 'France'],
-            ['Blido Comidas preparadas', 'Martn Sommer', 'Owner', 'C\/ Araquil, 67', 'Madrid', 'Spain'],
-            ['Bon app', 'Laurence Lebihan', 'Owner', '12, rue des Bouchers', 'Marseille', 'France'],
-            ['Bottom-Dollar Markets', 'Elizabeth Lincoln', 'Accounting Manager', '23 Tsawassen Blvd.', 'Tsawassen', 'Canada'],
-            ['B`s Beverages', 'Victoria Ashworth', 'Sales Representative', 'Fauntleroy Circus', 'London', 'UK'],
-            ['Cactus Comidas para llelet', 'Patricio Simpson', 'Sales Agent', 'Cerrito 333', 'Buenos Aires', 'Argentina'],
-            ['Centro comercial Moctezuma', 'Francisco Chang', 'Marketing Manager', 'Sierras de Granada 9993', 'Mxico D.F.', 'Mexico'],
-            ['Chop-suey Chinese', 'Yang Wang', 'Owner', 'Hauptstr. 29', 'Bern', 'Switzerland'],
-            ['Comrcio Mineiro', 'Pedro Afonso', 'Sales Associate', 'Av. dos Lusadas, 23', 'Sao Paulo', 'Brazil'],
-            ['Consolidated Holdings', 'Elizabeth Brown', 'Sales Representative', 'Berkeley Gardens 12 Brewery', 'London', 'UK'],
-            ['Drachenblut Delikatessen', 'Sven Ottlieb', 'Order Administrator', 'Walserweg 21', 'Aachen', 'Germany'],
-            ['Du monde entier', 'Janine Labrune', 'Owner', '67, rue des Cinquante Otages', 'Nantes', 'France'],
-            ['Eastern Connection', 'Ann Devon', 'Sales Agent', '35 King George', 'London', 'UK'],
-            ['Ernst Handel', 'Roland Mendel', 'Sales Manager', 'Kirchgasse 6', 'Graz', 'Austria']
-        ],
-        datafields:
-        [
-            { name: 'CompanyName', type: 'string', map: '0' },
-            { name: 'ContactName', type: 'string', map: '1' },
-            { name: 'Title', type: 'string', map: '2' },
-            { name: 'Address', type: 'string', map: '3' },
-            { name: 'City', type: 'string', map: '4' },
-            { name: 'Country', type: 'string', map: '5' }
-        ],
-        datatype: 'array'
-    };
+  @ViewChild('myModal') myModal;
+  public radioModel: string;
+  // public checkModel: any = { left: false, middle: true, right: false };
+  constructor(private http: HttpClient, private jqxDomService: JqxDomService) {
 
-    dataAdapter: any = new jqx.dataAdapter(this.source);
-
-    columns: any[] =
-    [
-        { text: 'Account Number', datafield: 'CompanyName', width: 200 },
-        { text: 'Customer Number', datafield: 'ContactName', width: 150 },
-        { text: 'Customer Name', datafield: 'Title', width: 100 },
-        { text: 'Address', datafield: 'Address', width: 100 },
-        { text: 'City', datafield: 'City', width: 100 },
-        { text: 'Country', datafield: 'Country' }
-    ];
-  constructor(private http: HttpClient) { }
-
-  ngOnInit() {
   }
 
-  onSubmit(form) {
-    console.log(form.value.send);
-    if (form.value.send === 'preview') {
-      let headers = new HttpHeaders();
-      headers = headers.set('Accept', 'application/pdf');
-      // tslint:disable-next-line:max-line-length
-      // return this.http.get('/Users/kevinabongo/Documents/demands/00009-Demand1-24-11-2018.pdf', { headers: headers, responseType: 'blob' });
-      window.open('/Users/kevinabongo/Documents/demands/00009-Demand1-24-11-2018.pdf', '_blank');
-    }
+  source: any =
+    {
+      url: environment.api + '/api/tbl_q_all?filter[limit]=20',
+      datafields:
+        [
+          { name: 'accnumber', type: 'string' },
+          { name: 'custnumber', type: 'string' },
+          { name: 'client_name', type: 'string' },
+          { name: 'oustbalance', type: 'number' },
+          { name: 'totalarrears', type: 'number' },
+          { name: 'daysinarr', type: 'number' },
+          { name: 'bucket', type: 'string' },
+          { name: 'branchname', type: 'string' },
+          { name: 'region', type: 'string' },
+          { name: 'arocode', type: 'string' },
+          { name: 'rrocode', type: 'string' },
+          { name: 'colofficer', type: 'string' },
+          { name: 'section', type: 'string' }
+        ],
+      datatype: 'json'
+    };
+
+  dataAdapter: any = new jqx.dataAdapter(this.source);
+
+  columns: any[] =
+    [
+      {
+        text: 'ACCNUMBER', datafield: 'accnumber', width: 150, filtertype: 'input',
+        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
+          const that = this;
+          const container = document.createElement('div');
+          htmlElement.appendChild(container);
+          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
+          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
+          // tslint:disable-next-line:no-shadowed-variable
+          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
+            that.onClickMe(clickEvent, rowdata);
+          });
+          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
+        },
+        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
+      },
+      { text: 'CUSTNUMBER', datafield: 'custnumber', width: 100, filtertype: 'input' },
+      { text: 'CLIENT_NAME', datafield: 'client_name', width: 200, filtertype: 'input' },
+      { text: 'OUSTBALANCE', datafield: 'oustbalance', filtertype: 'input', cellsformat: 'd' },
+      { text: 'TOTALARREARS', datafield: 'totalarrears', filtertype: 'input', cellsformat: 'd' },
+      { text: 'DAYSINARR', datafield: 'daysinarr', filtertype: 'input', cellsformat: 'd' },
+      { text: 'BUCKET', datafield: 'bucket', filtertype: 'input' },
+      { text: 'BRANCHNAME', datafield: 'branchname', filtertype: 'input' },
+      { text: 'DATEDUE', datafield: 'region', filtertype: 'input' },
+      { text: 'AROCODE', datafield: 'arocode', filtertype: 'input' },
+      { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
+      { text: 'DEMAND', datafield: 'rrocode', filtertype: 'input' }
+
+    ];
+
+  accnumber: String;
+  onClickMe(event, rowdata) {
+    console.log('ACCNUMBER: ' + event.target.textContent);
+    // open modal
+    // $('#classicModal').modal('show');
+    // this.openModel();
+    this.accnumber = event.target.textContent;
+    document.getElementById('openModalButton').click();
+  }
+
+  ngOnInit() {
+
+  }
+
+  openModel() {
+    this.myModal.nativeElement.className = 'modal fade show';
+  }
+  closeModel() {
+    this.myModal.nativeElement.className = 'modal hide';
   }
 
 }

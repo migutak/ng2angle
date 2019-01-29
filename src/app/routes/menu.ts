@@ -57,14 +57,14 @@ const Letters = {
             link: '/demand',
             submenu: [
                 {
-                    text: '1st Demand',
-                    link: '/demand/demand1'
+                    text: 'Letters Due',
+                    link: '/demand/demands'
                 },
                 {
-                    text: '2nd Demand',
-                    link: '/demand/demand2'
+                    text: 'Sent History',
+                    link: '/demand/demandhistory'
                 },
-                {
+                /*{
                     text: 'Pre Listing',
                     link: '/demand/prelisting'
                 },
@@ -79,7 +79,7 @@ const Letters = {
                 {
                     text: '90 Day',
                     link: '/demand/day90'
-                }
+                }*/
             ]
         }
     ]
@@ -465,17 +465,17 @@ export const menu = [
     headingMain,
     Home,
     Dashboard,
-    Letters,
+    Letters
     // Remedial,
-    headingComponents
+    // headingComponents,
+    // Pages,
    /* Elements,
     Forms,
     Charts,
-    Tables,
-    Maps,
-    headingMore,
-    Pages,
     Blog,
-    Ecommerce,
-    Extras*/
+    Maps,
+    headingMore,*/
+    // Tables,
+   // Ecommerce,
+   // Extras
 ];

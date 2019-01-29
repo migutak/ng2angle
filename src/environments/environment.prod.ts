@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  api: 'http://ecollecttst.co-opbank.co.ke:9000'
 };

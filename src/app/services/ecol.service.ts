@@ -47,6 +47,10 @@ export class EcolService {
 
   }
 
+  getLetter(letter) {
+    return this.httpClient.get<any>( environment.api + '/api/settings_letters/' + letter);
+  }
+
   logout() {
       //  remove user from local storage to log user out
       localStorage.removeItem('currentUser');

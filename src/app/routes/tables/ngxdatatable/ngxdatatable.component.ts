@@ -42,8 +42,8 @@ export class NgxdatatableComponent implements OnInit {
             // cache our list
             this.temp = _clone(data);
 
-            this.rows = _clone(data);;
-            this.rowsFilter = _clone(data);;
+            this.rows = _clone(data);
+            this.rowsFilter = _clone(data);
             this.rowsExp = _clone(data);
             this.rowsSort = _clone(data);
             this.rowsSel = _clone(data);

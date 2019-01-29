@@ -31,7 +31,7 @@
               "src/styles.scss",
               "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.base.css",
               "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.bootstrap.css",
-              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.dark.css"
+              "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

@@ -1,120 +1,73 @@
 <div class="content-heading">
-    <div>1st Demand 
-        <small>demand status</small></div>
+    <div>Demand Letters Due
+        <small>demand letters not send either manual or auto</small></div>
 </div>
 <!-- START card-->
 <div class="card card-default">
-    <div class="card-header">Demand Table #1</div>
-    <!-- START table-responsive
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover" id="table-ext-1">
-            <thead>
-                <tr>
-                    <th>accnumber</th>
-                    <th>Customer Name</th>
-                    <th>Postal Address</th>
-                    <th>Postal Code</th>
-                    <th>Email</th>
-                    <th>daysinarr</th>
-                    <th>
-                        status
-                    </th>
-                    <th>
-                        action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>sample name</td>
-                    <td>Po box 100</td>
-                    <td>00200</td>
-                    <td>mail@example.com</td>
-                    <td class="text-center">
-                        30
-                    </td>
-                    <td>
-                      <span class="badge badge-warning">not sent</span>
-                    </td>
-                    <td>
-                        <form #actionForm="ngForm" (ngSubmit)="onSubmit(actionForm)">
-                        <div class="input-group">
-                            <select class="custom-select" name="send" id="send" #send="ngModel" [(ngModel)]="model.send">
-                                <option value="preview">Preview</option>
-                                <option value="send-email">Send by email</option>
-                                <option value="send-download">Download</option>
-                            </select>
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">Apply</button>
-                            </div>
-                        </div>
-                      </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>sample name</td>
-                    <td>Po box 100</td>
-                    <td>00200</td>
-                    <td>mail@example.com</td>
-                    <td class="text-center">
-                        30
-                    </td>
-                    <td>
-                        <span class="badge badge-warning">not sent</span>
-                    </td>
-                    <td>
-                      <form #actionForm2="ngForm" (ngSubmit)="onSubmit(actionForm2)">
-                        <div class="input-group">
-                            <select class="custom-select" name="send2" id="send2" #send2="ngModel" [(ngModel)]="model.send2">
-                                <option value="preview">Preview</option>
-                                <option value="send-email">Send by email</option>
-                                <option value="send-download">Download</option>
-                            </select>
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">Apply</button>
-                            </div>
-                        </div>
-                      </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>sample name</td>
-                    <td>Po box 100</td>
-                    <td>00200</td>
-                    <td>mail@example.com</td>
-                    <td class="text-center">
-                        30
-                    </td>
-                    <td>
-                        <span class="badge badge-warning">not sent</span>
-                    </td>
-                    <td>
-                        <form #actionForm3="ngForm" (ngSubmit)="onSubmit(actionForm3)">
-                            <div class="input-group">
-                                <select class="custom-select" name="send3" id="send3" #send3="ngModel" [(ngModel)]="model.send3">
-                                    <option value="preview">Preview</option>
-                                    <option value="send-email">Send by email</option>
-                                    <option value="send-download">Download to send</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">Apply</button>
-                                </div>
-                            </div>
-                          </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>-->
-    <!-- END table-responsive-->
+    <div class="card-header">Demand: {{radioModel || 'ALL'}}</div>
+<!-- START box placeholder
+<div class="box-placeholder"></div>-->
+    <div class="col-xl-4">
+        <div class="btn-group">
+            <label class="btn btn-outline-success" [(ngModel)]="radioModel" btnRadio="1-Demand" uncheckable>1-Demand <span class="badge badge-danger">11</span></label>
+            <label class="btn btn-outline-success" [(ngModel)]="radioModel" btnRadio="2-Demand" uncheckable>2-Demand <span class="badge badge-danger">11</span></label>
+            <label class="btn btn-outline-info" [(ngModel)]="radioModel" btnRadio="Prelisting" uncheckable>Prelisting <span class="badge badge-danger">11</span></label>
+            <label class="btn btn-outline-warning" [(ngModel)]="radioModel" btnRadio="40-Day" uncheckable>40-Day <span class="badge badge-danger">11</span></label>
+            <label class="btn btn-outline-inverse" [(ngModel)]="radioModel" btnRadio="90-Day" uncheckable>90-Day <span class="badge badge-danger">11</span></label>
+            <label class="btn btn-outline-danger" [(ngModel)]="radioModel" btnRadio="Postlisting" uncheckable>Postlisting <span class="badge badge-danger">11</span></label>
+        </div>
+    </div>
 
-<jqxGrid [theme]="'bootstrap'" [verticalscrollbarstep]="20"
+<!-- END box placeholder-->
+    <jqxGrid [theme]="'energyblue'"
     [width]="'100%'" [source]="dataAdapter" [columns]="columns"
-    [columnsresize]="true" [sortable]="true"
-    [pageable]="true" [autoheight]="true"
+    [columnsresize]="true" [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true"
     [altrows]="true" [enabletooltips]="true">
-</jqxGrid>
+    </jqxGrid>
+    <!-- Classc modal -->
+    <div class="modal fade" bsModal #classicModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-bg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Name: {{accnumber}}</h4><br>
+                    <h4 class="modal-title">Demand: {{accnumber}}</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="classicModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Details</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Guarantors</a>
+                                </li>
+                              </ul>
+                              <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        accnumber
+                                        custnumber
+                                        postaladdress
+                                        postalcode
+                                        emailaddress
+                                        telnumber
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        guarantors
+                                </div>
+                              </div>
+                    
+                    buttons: - preview(open in a separate window)
+                             - emailsend (checkbox)
+                             - address send (checkbox)
+                             - print physical (checkbox)
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--hidden button-->
+    <button id="openModalButton" [hidden]="true" type="button" class="btn btn-primary mr-1" (click)="classicModal.show()">Classc modal</button>
+    
 </div>
