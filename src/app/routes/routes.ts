@@ -8,6 +8,8 @@ import { MaintenanceComponent } from './pages/maintenance/maintenance.component'
 import { Error404Component } from './pages/error404/error404.component';
 import { Error500Component } from './pages/error500/error500.component';
 
+import { SendLetterComponent } from './pages/actions/sendletter.component';
+
 import { AuthGuard} from '../auth.guard';
 
 export const routes = [
@@ -22,7 +24,7 @@ export const routes = [
             { path: 'guarantors', loadChildren: './guarantors/guarantors.module#GuarantorsModule' },
             { path: 'letters', loadChildren: './letters/letters.module#LettersModule' },
             { path: 'demand', loadChildren: './demand/demand.module#DemandModule' },
-            { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' },
+            { path: 'users', loadChildren: './users/users.module#UsersModule' },
             { path: 'elements', loadChildren: './elements/elements.module#ElementsModule' },
             { path: 'forms', loadChildren: './forms/forms.module#FormsModule' },
             { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
@@ -43,6 +45,7 @@ export const routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: '404', component: Error404Component },
     { path: '500', component: Error500Component },
+    { path: 'sendletter', component: SendLetterComponent },
 
     // Not found
     { path: '', redirectTo: 'login', pathMatch: 'full' },

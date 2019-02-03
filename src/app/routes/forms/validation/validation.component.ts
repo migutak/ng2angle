@@ -14,8 +14,8 @@ export class ValidationComponent implements OnInit {
 
     constructor(fb: FormBuilder) {
 
-        let password = new FormControl('', Validators.required);
-        let certainPassword = new FormControl('', CustomValidators.equalTo(password));
+        const password = new FormControl('', Validators.required);
+        const certainPassword = new FormControl('', CustomValidators.equalTo(password));
 
         // Model Driven validation
         this.valForm = fb.group({
@@ -52,7 +52,8 @@ export class ValidationComponent implements OnInit {
 
     submitForm($ev, value: any) {
         $ev.preventDefault();
-        for (let c in this.valForm.controls) {
+        // tslint:disable-next-line:forin
+        for (const c in this.valForm.controls) {
             this.valForm.controls[c].markAsTouched();
         }
         if (this.valForm.valid) {

@@ -10,6 +10,8 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
 
+import { SendLetterComponent } from './actions/sendletter.component';
+
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -33,7 +35,8 @@ import { Error500Component } from './error500/error500.component';
         LockComponent,
         MaintenanceComponent,
         Error404Component,
-        Error500Component
+        Error500Component,
+        SendLetterComponent
     ],
     exports: [
         RouterModule,
@@ -43,7 +46,8 @@ import { Error500Component } from './error500/error500.component';
         LockComponent,
         MaintenanceComponent,
         Error404Component,
-        Error500Component
+        Error500Component,
+        SendLetterComponent
     ]
 })
 export class PagesModule { }

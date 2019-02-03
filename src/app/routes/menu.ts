@@ -85,14 +85,22 @@ const Letters = {
     ]
 };
 
-const Remedial = {
-    text: 'Remedial',
-    link: '/widgets',
+const Administration = {
+    text: 'Administration',
+    link: '/admin',
     icon: 'icon-grid',
     submenu: [
         {
-            text: 'View all',
-            link: '/viewall'
+            text: 'Users',
+            link: '/users/search'
+        },
+        {
+            text: 'Roles',
+            link: '/users/roles'
+        },
+        {
+            text: 'Approvals',
+            link: '/users/approvals'
         }
     ]
 };
@@ -315,7 +323,7 @@ const Blog = {
             link: '/blog/articleview'
         }
     ]
-}
+};
 
 const Ecommerce = {
     text: 'Ecommerce',
@@ -465,8 +473,8 @@ export const menu = [
     headingMain,
     Home,
     Dashboard,
-    Letters
-    // Remedial,
+    Administration,
+    Letters,
     // headingComponents,
     // Pages,
    /* Elements,

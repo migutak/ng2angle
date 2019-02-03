@@ -1,0 +1,122 @@
+<div class="content-heading">
+  <div>Roles
+    <small>roles and the assigned permissions</small></div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="card b">
+        <div class="card-header bg-gray-lighter text-bold">Roles</div>
+        <div class="list-group">
+          <a href="#" class="list-group-item" (click)="settingActive=1" [ngClass]="{'active': (settingActive == 1)}">Administrator</a>
+          <a href="#" class="list-group-item" (click)="settingActive=2" [ngClass]="{'active': (settingActive == 2)}">Tele-Collector</a>
+          <a href="#" class="list-group-item" (click)="settingActive=3" [ngClass]="{'active': (settingActive == 3)}">Team
+            Leader</a>
+          <a href="#" class="list-group-item" (click)="settingActive=4" [ngClass]="{'active': (settingActive == 4)}">Branch
+            Manage</a>
+          <a href="#" class="list-group-item" (click)="settingActive=5" [ngClass]="{'active': (settingActive == 5)}">Branch
+            User</a>
+          <a href="#" class="list-group-item" (click)="settingActive=6" [ngClass]="{'active': (settingActive == 6)}">Remedial</a>
+          <a href="#" class="list-group-item" (click)="settingActive=7" [ngClass]="{'active': (settingActive == 7)}">Credit
+            Cards</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="card b">
+        <div class="card-header bg-gray-lighter text-bold">Permissions</div>
+        <div class="card-body">
+          <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)"
+            novalidate="">
+            <div class="list-group">
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">User management</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Collector activity</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Activity viewer</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Service providers</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Letters Configuration</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Send SMS</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Send demand letter</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Remedials</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Credit cards</p>
+                  <small>desc:</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="checkbox" />
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-info" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

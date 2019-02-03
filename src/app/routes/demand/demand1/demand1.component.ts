@@ -21,7 +21,7 @@ export class Demand1Component implements OnInit {
 
   source: any =
     {
-      url: environment.api + '/api/tbl_q_all?filter[limit]=20',
+      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=20',
       datafields:
         [
           { name: 'accnumber', type: 'string' },
@@ -30,13 +30,13 @@ export class Demand1Component implements OnInit {
           { name: 'oustbalance', type: 'number' },
           { name: 'totalarrears', type: 'number' },
           { name: 'daysinarr', type: 'number' },
-          { name: 'bucket', type: 'string' },
-          { name: 'branchname', type: 'string' },
-          { name: 'region', type: 'string' },
-          { name: 'arocode', type: 'string' },
-          { name: 'rrocode', type: 'string' },
+          { name: 'address', type: 'string' },
+          { name: 'postalcode', type: 'string' },
+          { name: 'section', type: 'string' },
+          { name: 'telnumber', type: 'string' },
+          { name: 'emailaddress', type: 'string' },
           { name: 'colofficer', type: 'string' },
-          { name: 'section', type: 'string' }
+          { name: 'demandletter', type: 'string' }
         ],
       datatype: 'json'
     };
@@ -66,12 +66,12 @@ export class Demand1Component implements OnInit {
       { text: 'OUSTBALANCE', datafield: 'oustbalance', filtertype: 'input', cellsformat: 'd' },
       { text: 'TOTALARREARS', datafield: 'totalarrears', filtertype: 'input', cellsformat: 'd' },
       { text: 'DAYSINARR', datafield: 'daysinarr', filtertype: 'input', cellsformat: 'd' },
-      { text: 'BUCKET', datafield: 'bucket', filtertype: 'input' },
+      { text: 'SECTION', datafield: 'section', filtertype: 'input' },
       { text: 'BRANCHNAME', datafield: 'branchname', filtertype: 'input' },
-      { text: 'DATEDUE', datafield: 'region', filtertype: 'input' },
-      { text: 'AROCODE', datafield: 'arocode', filtertype: 'input' },
+      { text: 'TELNUMBER', datafield: 'telnumber', filtertype: 'input' },
+      { text: 'EMAILADDRESS', datafield: 'emailaddress', filtertype: 'input' },
       { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'DEMAND', datafield: 'rrocode', filtertype: 'input' }
+      { text: 'DEMANDLETTER', datafield: 'demandletter', filtertype: 'input' }
 
     ];
 
@@ -79,21 +79,18 @@ export class Demand1Component implements OnInit {
   onClickMe(event, rowdata) {
     console.log('ACCNUMBER: ' + event.target.textContent);
     // open modal
-    // $('#classicModal').modal('show');
-    // this.openModel();
     this.accnumber = event.target.textContent;
-    document.getElementById('openModalButton').click();
+    // document.getElementById('openModalButton').click();
+    // open page
+    window.open('http://localhost:4500/sendletter?accnumber=' + this.accnumber, '_blank');
   }
 
   ngOnInit() {
 
   }
 
-  openModel() {
-    this.myModal.nativeElement.className = 'modal fade show';
-  }
-  closeModel() {
-    this.myModal.nativeElement.className = 'modal hide';
+  preview() {
+    console.log('preview later in browser');
   }
 
 }
