@@ -51,6 +51,19 @@ export class EcolService {
     return this.httpClient.get<any>( environment.api + '/api/settings_letters/' + letter);
   }
 
+  getAccount(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>( environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
+  }
+
+  generateLetter(data) {
+    return this.httpClient.post<any>( environment.letters_api + '/api/letters_post/demand1', data);
+  }
+
+  sendDemandEmail(data) {
+    return this.httpClient.post<any>( environment.api + '/api/Email-models/send', data);
+  }
+
   logout() {
       //  remove user from local storage to log user out
       localStorage.removeItem('currentUser');

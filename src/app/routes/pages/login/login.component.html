@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="block-center mt-4 wd-xl">
+    <div class="abs-center wd-xl">
         <!-- START card-->
         <div class="card card-flat login">
             <div class="card-header text-center bg-dark">
@@ -13,7 +13,7 @@
                 <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="loginForm" novalidate="" (submit)="submitForm($event, valForm.value)">
                     <div class="form-group">
                         <div class="input-group with-focus">
-                            <input class="form-control border-right-0" id="exampleInputEmail1" type="text" name="username" placeholder="Enter username" autocomplete="off" formControlName="username" required="" />
+                            <input class="form-control border-right-0" id="username" type="text" name="username" placeholder="Enter username" autocomplete="off" formControlName="username" required="" />
                             <div class="input-group-append">
                                 <span class="input-group-text text-muted bg-transparent border-left-0">
                                     <em class="fa fa-envelope"></em>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group with-focus">
-                            <input class="form-control border-right-0" id="exampleInputPassword1" type="password" name="password" placeholder="Password" formControlName="password" required="" />
+                            <input class="form-control border-right-0" id="password" type="password" name="password" placeholder="Password" formControlName="password" required="" />
                             <div class="input-group-append">
                                 <span class="input-group-text text-muted bg-transparent border-left-0">
                                     <em class="fa fa-lock"></em>
@@ -42,7 +42,7 @@
                 </form>
             </div>
         </div>
-        <!-- END card-->
+
         <div class="p-3 text-center">
             <span>&copy;</span>
             <span>{{ settings.getAppSetting('year') }}</span>

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:8800'
+  api: 'http://localhost:8800',
+  letters_api: 'http://localhost:8080/ecol_apis'
 };
 
 /*
