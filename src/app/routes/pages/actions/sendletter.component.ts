@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../services/ecol.service';
+import swal from 'sweetalert2';
+import { saveAs} from 'file-saver';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-sendletter',
@@ -14,6 +17,8 @@ export class SendLetterComponent implements OnInit {
   accountdetails: any;
   guarantors: [];
   model: any = {};
+  filepath: string;
+  demands: any;
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
@@ -29,11 +34,11 @@ export class SendLetterComponent implements OnInit {
 
     // get account details
     this.getaccount(this.accnumber);
+    this.getdemandshistory(this.accnumber);
   }
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
-      console.log(data);
       this.accountdetails = data[0];
       this.guarantors = data[0].guarantors;
       this.model.accnumber = data[0].accnumber;
@@ -47,8 +52,15 @@ export class SendLetterComponent implements OnInit {
     });
   }
 
+  getdemandshistory(accnumber) {
+    this.ecolService.getdemandshistory(accnumber).subscribe(data => {
+      console.log(data);
+      this.demands = data;
+    });
+  }
+
   generate() {
-    console.log(this.model);
+    this.ecolService.loader();
     const body = {
       cust: this.accountdetails.custnumber,
       acc: this.accountdetails.accnumber,
@@ -70,7 +82,7 @@ export class SendLetterComponent implements OnInit {
       }
       ]
     };
-    console.log(body);
+   // console.log(body);
 //
     this.ecolService.generateLetter(body).subscribe(data => {
       // console.log(data);
@@ -78,18 +90,68 @@ export class SendLetterComponent implements OnInit {
       if (this.model.sendemail) {
           const emaildata = {
           file: data.file,
-          name: this.accountdetails.client_name
+          name: this.accountdetails.client_name,
+          email: this.model.emailaddress
         };
         this.sendemail(emaildata);
       }
+      swal('Successful!', 'Letter generated and saved!', 'success');
+      const bulk = {
+        'accnumber': this.model.accnumber,
+        'custnumber': this.model.accnumber,
+        'idnumber': 'string',
+        'guarantorsname': 'string',
+        'address': this.model.addressline1,
+        'email': this.model.email,
+        'telnumber': this.model.telnumber,
+        'filepath': environment.uploadpath + data.file,
+        'datesent': '2019-02-03T17:06:45.989Z',
+        'owner': 'miguta',
+        'byemail': 'Y',
+        'byphysical': 'Y',
+        'bypost': 'Y',
+        'demand': 'Demand-1'
+      };
+      this.demandshistory(bulk);
+     // this.guarantorletter(bulk);
+     // this.sms(bulk);
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred letter generation!', 'error');
     });
   }
 
   sendemail(emaildata) {
     this.ecolService.sendDemandEmail(emaildata).subscribe(data => {
-      console.log(data);
-      alert(' letter generated and email sent');
+      if (data.result === 'success') {
+        swal('Successful!', 'Letter sent on email!', 'success');
+      } else {
+        swal('Error!', 'Error occurred during sending email!', 'error');
+      }
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred during sending email!', 'error');
     });
   }
 
+  demandshistory(body) {
+    this.ecolService.demandshistory(body).subscribe(data => {});
+  }
+
+  guarantorletter(body) {
+    this.ecolService.guarantorletters(body).subscribe(data => {});
+  }
+
+  sms(body) {
+    this.ecolService.guarantorletters(body).subscribe(data => {});
+  }
+
+  downloadFile(filepath) {
+    this.ecolService.downloadFile(filepath).subscribe(data => {
+     saveAs(data, 'filename');
+    }, error => {
+      console.log(error.error);
+      swal('Error!', ' Cannot download  file!', 'error');
+    });
+  }
 }

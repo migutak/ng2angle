@@ -64,6 +64,27 @@ export class EcolService {
     return this.httpClient.post<any>( environment.api + '/api/Email-models/send', data);
   }
 
+  demandshistory(data) {
+    return this.httpClient.post<any>( environment.api + '/api/demandshistory', data);
+  }
+
+  getdemandshistory(accnumber) {
+    return this.httpClient.get<any>( environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber);
+  }
+
+  guarantorletters(data) {
+    return this.httpClient.post<any>( environment.api + '/api/guarantorletters', data);
+  }
+
+  downloadFile(file: string) {
+    const body = {filename: file};
+
+    return this.httpClient.post(environment.uploadurl + '/download', body, {
+      responseType: 'blob',
+      headers: new HttpHeaders().append('Content-Type' , 'application/json')
+    });
+  }
+
   logout() {
       //  remove user from local storage to log user out
       localStorage.removeItem('currentUser');

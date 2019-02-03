@@ -325,6 +325,38 @@ const Blog = {
     ]
 };
 
+const Work = {
+    text: 'Work Queue',
+    link: '/work',
+    icon: 'icon-notebook',
+    submenu: [
+        {
+            text: 'View all',
+            link: '/work/viewall'
+        },
+        {
+            text: 'My allocations',
+            link: '/work/myallocations'
+        },
+        {
+            text: 'Todays',
+            link: '/work/todays'
+        },
+        {
+            text: 'New to arrears',
+            link: '/work/newtoarrears'
+        },
+        {
+            text: 'PTP Due',
+            link: '/work/ptps'
+        },
+        {
+            text: 'With funds',
+            link: '/work/withfunds'
+        }
+    ]
+};
+
 const Ecommerce = {
     text: 'Ecommerce',
     link: '/ecommerce',
@@ -460,7 +492,7 @@ const headingMain = {
 };
 
 const headingComponents = {
-    text: 'Components',
+    text: 'Work Queue',
     heading: true
 };
 
@@ -475,14 +507,15 @@ export const menu = [
     Dashboard,
     Administration,
     Letters,
-    // headingComponents,
+    headingComponents,
+    Work,
     // Pages,
    /* Elements,
     Forms,
     Charts,
     Blog,
-    Maps,
-    headingMore,*/
+    Maps,*/
+    headingMore,
     // Tables,
    // Ecommerce,
    // Extras
