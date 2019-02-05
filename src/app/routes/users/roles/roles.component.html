@@ -8,16 +8,16 @@
       <div class="card b">
         <div class="card-header bg-gray-lighter text-bold">Roles</div>
         <div class="list-group">
-          <a href="#" class="list-group-item" (click)="settingActive=1" [ngClass]="{'active': (settingActive == 1)}">Administrator</a>
-          <a href="#" class="list-group-item" (click)="settingActive=2" [ngClass]="{'active': (settingActive == 2)}">Tele-Collector</a>
-          <a href="#" class="list-group-item" (click)="settingActive=3" [ngClass]="{'active': (settingActive == 3)}">Team
+          <a href="#" class="list-group-item" (click)="permission(settingActive=1, 'admin')" [ngClass]="{'active': (settingActive == 1)}">Administrator</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=2, 'telecollector')" [ngClass]="{'active': (settingActive == 2)}">Tele Collector</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=3, 'teamleader')" [ngClass]="{'active': (settingActive == 3)}">Team
             Leader</a>
-          <a href="#" class="list-group-item" (click)="settingActive=4" [ngClass]="{'active': (settingActive == 4)}">Branch
+          <a href="#" class="list-group-item" (click)="permission(settingActive=4, 'branchmanager')" [ngClass]="{'active': (settingActive == 4)}">Branch
             Manage</a>
-          <a href="#" class="list-group-item" (click)="settingActive=5" [ngClass]="{'active': (settingActive == 5)}">Branch
+          <a href="#" class="list-group-item" (click)="permission(settingActive=5, 'branchuser')" [ngClass]="{'active': (settingActive == 5)}">Branch
             User</a>
-          <a href="#" class="list-group-item" (click)="settingActive=6" [ngClass]="{'active': (settingActive == 6)}">Remedial</a>
-          <a href="#" class="list-group-item" (click)="settingActive=7" [ngClass]="{'active': (settingActive == 7)}">Credit
+          <a href="#" class="list-group-item" (click)="permission(settingActive=6, 'remedial')" [ngClass]="{'active': (settingActive == 6)}">Remedial</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=7, 'creditcards')" [ngClass]="{'active': (settingActive == 7)}">Credit
             Cards</a>
         </div>
       </div>
@@ -32,87 +32,97 @@
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">User management</p>
-                  <small>desc:</small>
+                  <small>create and manage users</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="user_mgmt" [formControl]="valForm.controls['user_mgmt']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Collector activity</p>
-                  <small>desc:</small>
+                  <small>record a collection activity</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="col_activity" [formControl]="valForm.controls['col_activity']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Activity viewer</p>
-                  <small>desc:</small>
+                  <small>view collection records</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="act_viewer" [formControl]="valForm.controls['act_viewer']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Service providers</p>
-                  <small>desc:</small>
+                  <small>outsource accounts</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="external_agents" [formControl]="valForm.controls['external_agents']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Letters Configuration</p>
-                  <small>desc:</small>
+                  <small>manage demand letter configurations</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="letter_configs" [formControl]="valForm.controls['letter_configs']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
+                  <div>
+                    <p class="text-bold mb-0">SMS Configuration</p>
+                    <small>manage sms configurations</small>
+                  </div>
+                  <div class="ml-auto">
+                    <input type="checkbox" formControlName="sms_configs" [formControl]="valForm.controls['sms_configs']" />
+                  </div>
+                </div>
+              <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Send SMS</p>
-                  <small>desc:</small>
+                  <small>send sms from activity page</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="send_sms" [formControl]="valForm.controls['send_sms']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Send demand letter</p>
-                  <small>desc:</small>
+                  <small>issue demand letter</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="send_letter" [formControl]="valForm.controls['send_letter']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Remedials</p>
-                  <small>desc:</small>
+                  <small>access remedial functionalities</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="cmd" [formControl]="valForm.controls['cmd']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
                   <p class="text-bold mb-0">Credit cards</p>
-                  <small>desc:</small>
+                  <small>access and action credit cards</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="checkbox" />
+                  <input type="checkbox" formControlName="creditcards" [formControl]="valForm.controls['creditcards']" />
                 </div>
               </div>
             </div>
+            <hr>
             <div class="text-center">
-                <button class="btn btn-info" type="submit">Submit</button>
+                <button class="btn btn-info" type="submit">Update Permissions</button>
             </div>
           </form>
         </div>

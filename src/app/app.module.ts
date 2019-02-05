@@ -7,6 +7,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import {NgxToggleModule} from 'ngx-toggle';
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';

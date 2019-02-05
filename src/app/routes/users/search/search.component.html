@@ -1,132 +1,156 @@
 <div class="content-heading">
-    <div>Users
-      <small>create or search new user</small></div>
-  </div>
-  <div class="container-fluid">
-      <div class="row">
-          <div class="col-lg-12">
-              <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)" novalidate="">
-                <!-- START card-->
-                <div class="card card-default">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-lg-4 mb-3">
-                                <label>Username</label>
-                                <input class="form-control" type="text" formControlName="username" [formControl]="valForm.controls['username']" />
-                                <span class="text-danger" *ngIf="valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched)">username is required</span>
-                            </div>
-                            <div class="col-lg-4 mb-3">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-4 mb-3">
-                                <label>First name</label>
-                                <input class="form-control" type="text" formControlName="firstname" [formControl]="valForm.controls['firstname']" />
-                                <span class="text-danger" *ngIf="valForm.controls['firstname'].hasError('required') && (valForm.controls['firstname'].dirty || valForm.controls['firstname'].touched)">firstname is required</span>
-                            </div>
-                            <div class="col-lg-4 mb-3">
-                                <label>Last name</label>
-                                <input class="form-control" type="text" formControlName="lastname" [formControl]="valForm.controls['lastname']" />
-                                <span class="text-danger" *ngIf="valForm.controls['lastname'].hasError('required') && (valForm.controls['lastname'].dirty || valForm.controls['lastname'].touched)">lastname is required</span>
-                            </div>
-                            <div class="col-lg-4 mb-3">
-                                <label>Surname</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" formControlName="surname" [formControl]="valForm.controls['surname']" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-4 mb-3">
-                                <label>Division</label>
-                                    <select class="form-control" formControlName="division" [formControl]="valForm.controls['division']">
-                                        <option value="">Nothing</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
-                                        <option value="4">Option 4</option>
-                                    </select>
-                                    <span class="text-danger" *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)">division is required</span>
-                                
-                            </div>
-                            <div class="col-lg-4 mb-3">
-                                <label>Branch</label>
-                                <input class="form-control" type="text" formControlName="branchcode" [formControl]="valForm.controls['branchcode']" />
-                            </div>
-                            <div class="col-lg-4 mb-3">
-                                <label>Manager</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" formControlName="manager" [formControl]="valForm.controls['manager']" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-lg-4 mb-3">
-                                <label>Email</label>
-                                <input class="form-control" type="text" formControlName="email" [formControl]="valForm.controls['email']" />
-                            </div>
-                        </div>
-                        <fieldset class="b0">
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Active</label>
-                                <div class="col-md-10">
-                                    <div class="ml-auto">
-                                        <label class="switch switch-lg m-0">
-                                            <input type="checkbox" checked="checked" />
-                                            <span></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="b0">
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Roles</label>
-                                <div class="col-md-10">
-                                    <div class="c-radio">
-                                        <label>
-                                            <input type="radio" name="a" value="option1" />
-                                            <span class="fa fa-circle"></span>Administrator</label>
-                                    </div>
-                                    <div class="c-radio">
-                                        <label>
-                                            <input type="radio" name="a" value="option2" checked="" />
-                                            <span class="fa fa-circle"></span>Tele Collector</label>
-                                    </div>
-                                    <div class="c-radio">
-                                        <label>
-                                            <input type="radio" name="a" value="option2" />
-                                            <span class="fa fa-circle"></span>Team Leader</label>
-                                    </div>
-                                    <div class="c-radio">
-                                        <label>
-                                            <input type="radio" name="a" />
-                                            <span class="fa fa-circle"></span>Remedial</label>
-                                    </div>
-                                    <div class="c-radio">
-                                        <label>
-                                            <input type="radio" name="a" />
-                                            <span class="fa fa-circle"></span>Branch User</label>
-                                    </div>
-                                    <div class="c-radio">
-                                        <label>
-                                            <input type="radio" name="a" />
-                                            <span class="fa fa-circle"></span>Branch Manager</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
+  <div>Users
+    <small>create or search new user</small></div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)"
+        novalidate="">
+        <!-- START card-->
+        <div class="card card-default">
+          <div class="card-body">
+            <div class="form-row">
+              <div class="col-lg-4 mb-3">
+                <label>Username</label>
+                <input class="form-control" type="text" formControlName="username" [formControl]="valForm.controls['username']" />
+                <span class="text-danger" *ngIf="valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched)">username
+                  is required</span>
+              </div>
+              <div class="col-lg-4 mb-3">
+                <label></label>
+                <button [disabled]="valForm.controls['username'].hasError('required')" class="mr-1 btn btn-oval btn-outline-success mb-1" type="button" (click)="search(valForm.value.username)">Retrieve</button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-lg-4 mb-3">
+                <label>First Name</label>
+                <input class="form-control" type="text" formControlName="firstname" [formControl]="valForm.controls['firstname']" />
+                <span class="text-danger" *ngIf="valForm.controls['firstname'].hasError('required') && (valForm.controls['firstname'].dirty || valForm.controls['firstname'].touched)">firstname
+                  is required</span>
+              </div>
+              <div class="col-lg-4 mb-3">
+                <label>Last Name</label>
+                <input class="form-control" type="text" formControlName="lastname" [formControl]="valForm.controls['lastname']" />
+                <span class="text-danger" *ngIf="valForm.controls['lastname'].hasError('required') && (valForm.controls['lastname'].dirty || valForm.controls['lastname'].touched)">lastname
+                  is required</span>
+              </div>
+              <div class="col-lg-4 mb-3">
+                <label>Surname</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" formControlName="surname" [formControl]="valForm.controls['surname']" />
                 </div>
-                <!-- Buttons -->
-                <fieldset>
-                    <div class="d-flex justify-content-center">
-                        <button class="btn btn-secondary" type="button">Cancel</button>
-                        <button class="btn btn-primary" type="submit">Save changes</button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-lg-4 mb-3">
+                <label>Division</label>
+                <select class="form-control" formControlName="division" [formControl]="valForm.controls['division']">
+                  <option value="">Nothing</option>
+                  <option value="SUPPORT">SUPPORT</option>
+                  <option value="REMEDIAL">REMEDIAL</option>
+                  <option value="CREDITCARD">CREDITCARD</option>
+                  <option value="BRANCH">BRANCH</option>
+                  <option value="TELECOLLECTOR">TELECOLLECTOR</option>
+                </select>
+                <span class="text-danger" *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)">division
+                  is required</span>
+
+              </div>
+              <div class="col-lg-4 mb-3">
+                <label>Branch</label>
+                <input class="form-control" type="text" formControlName="branch" [formControl]="valForm.controls['branch']" />
+              </div>
+              <div class="col-lg-4 mb-3">
+                <label>Manager</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" formControlName="manager" [formControl]="valForm.controls['manager']" />
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-lg-4 mb-3">
+                <label>Email</label>
+                <input class="form-control" type="text" formControlName="email" [formControl]="valForm.controls['email']" />
+              </div>
+              <div class="col-lg-4 mb-3">
+                    <label>Create date</label>
+                    <input class="form-control" type="text" formControlName="createdate" [formControl]="valForm.controls['createdate']" />
+                  </div>
+                  <div class="col-lg-4 mb-3">
+                    <label>Expiry Date</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" 
+                            formControlName="expirydate" [formControl]="valForm.controls['expirydate']" />
                     </div>
-                </fieldset>
-              </form>
+                  </div>
+            </div>
+            <fieldset class="b0">
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Active</label>
+                <div class="col-md-10">
+                  <div class="ml-auto">
+                    <label class="switch switch-lg m-0">
+                      <input type="checkbox" checked="checked" formControlName="active" [formControl]="valForm.controls['active']"/>
+                      <span></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="b0">
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Roles</label>
+                <div class="col-md-10">
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="admin" formControlName="role" [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Administrator</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="telecollector" checked="" formControlName="role" [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Tele Collector</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="teamleader" formControlName="role" [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Team Leader</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="remedial" formControlName="role" [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Remedial</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="branchuser" formControlName="role" [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Branch User</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="branchmanager" formControlName="role" [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Branch Manager</label>
+                  </div>
+                  <div class="c-radio">
+                        <label>
+                          <input type="radio" name="role" value="creditcards" formControlName="role" [formControl]="valForm.controls['role']" />
+                          <span class="fa fa-circle"></span>Credit Cards</label>
+                      </div>
+                </div>
+              </div>
+            </fieldset>
           </div>
-      </div>
+        </div>
+        <!-- Buttons -->
+        <fieldset>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-warning" type="button">Cancel</button>
+            <button class="btn btn-secondary" type="submit">Update User</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
   </div>
+</div>

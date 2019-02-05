@@ -28,7 +28,7 @@ const Dashboard = {
 const Letters = {
     text: 'Leters',
     link: '/letters',
-    icon: 'icon-grid',
+    icon: 'icon-note',
     label: {
         value: '2',
         classname: 'badge bg-success'
@@ -88,7 +88,7 @@ const Letters = {
 const Administration = {
     text: 'Administration',
     link: '/admin',
-    icon: 'icon-grid',
+    icon: 'icon-settings',
     submenu: [
         {
             text: 'Users',
@@ -249,6 +249,70 @@ const Tables = {
     ]
 };
 
+const Collectionrpt = {
+    text: 'Collection Reports',
+    link: '/collectionrpts',
+    icon: 'icon-grid',
+    submenu: [
+        {
+            text: 'Standard',
+            link: '/tables/standard'
+        },
+        {
+            text: 'Extended',
+            link: '/tables/extended'
+        },
+        {
+            text: 'Data-Tables',
+            link: '/tables/datatable'
+        },
+        {
+            text: 'Angular Grid',
+            link: '/tables/aggrid'
+        },
+        {
+            text: 'NGxDatatables',
+            link: '/tables/ngxdatatable'
+        }
+    ]
+};
+
+const Remedialrpts = {
+    text: 'Remedial Reports',
+    link: '/remedialrpts',
+    icon: 'icon-graph',
+    submenu: [
+        {
+            text: 'Unactioned report',
+            link: '/remedialrpts/unactionedrpt'
+        },
+        {
+            text: 'New File Analysis',
+            link: '/remedialrpts/newfileanalysis'
+        },
+        {
+            text: 'Portfolio Movement',
+            link: '/remedialrpts/portfoliomvt'
+        },
+        {
+            text: 'Relegation Analysis',
+            link: '/remedialrpts/relegationanalysis'
+        },
+        {
+            text: 'Invoices',
+            link: '/remedialrpts/invoices'
+        },
+        {
+            text: 'Portfolio movement cc',
+            link: '/remedialrpts/portfoliomvt'
+        },
+        {
+            text: 'Relegation analysis cc',
+            link: '/remedialrpts/relegationanalysis'
+        }
+    ]
+};
+
 const Maps = {
     text: 'Maps',
     link: '/maps',
@@ -328,7 +392,7 @@ const Blog = {
 const Work = {
     text: 'Work Queue',
     link: '/work',
-    icon: 'icon-notebook',
+    icon: 'icon-briefcase',
     submenu: [
         {
             text: 'View all',
@@ -341,6 +405,10 @@ const Work = {
         {
             text: 'Todays',
             link: '/work/todays'
+        },
+        {
+            text: 'Pre Delinquent',
+            link: '/work/predelinquent'
         },
         {
             text: 'New to arrears',
@@ -497,7 +565,7 @@ const headingComponents = {
 };
 
 const headingMore = {
-    text: 'More',
+    text: 'Reports',
     heading: true
 };
 
@@ -516,6 +584,8 @@ export const menu = [
     Blog,
     Maps,*/
     headingMore,
+    Collectionrpt,
+    Remedialrpts
     // Tables,
    // Ecommerce,
    // Extras
