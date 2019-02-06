@@ -11,15 +11,15 @@ const Dashboard = {
     icon: 'icon-speedometer',
     submenu: [
         {
-            text: 'Dashbord v1',
+            text: 'Dashbord Portfolio',
             link: '/dashboard/v1'
         },
         {
-            text: 'Dashbord v2',
+            text: 'Dashbord Activity',
             link: '/dashboard/v2'
         },
         {
-            text: 'Dashbord v3',
+            text: 'Dashbord Letters',
             link: '/dashboard/v3'
         }
     ]

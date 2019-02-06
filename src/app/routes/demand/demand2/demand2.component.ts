@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EcolService } from '../../../services/ecol.service';
 
 @Component({
   selector: 'app-demand2',
@@ -8,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class Demand2Component implements OnInit {
 
   model: any = {};
-  constructor() { }
+  demands: any;
+  constructor(private ecolService: EcolService) { }
 
   ngOnInit() {
+  }
+
+  Search(accnumber) {
+    this.ecolService.getdemandshistory(accnumber.value).subscribe(data => {
+      if (data.length > 0) {
+        this.demands = data;
+      }
+    });
   }
 
 }
