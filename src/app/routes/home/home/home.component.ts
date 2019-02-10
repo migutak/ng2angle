@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-home',
@@ -8,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-    constructor() { }
+    constructor(private location: Location) { }
 
     ngOnInit() {
+        // reload home page to refresh menus === kevin
+        if (localStorage.getItem('profile') === '1') {
+            window.location.reload();
+        }
+        //
+        localStorage.setItem('profile', '0');
     }
-
 }

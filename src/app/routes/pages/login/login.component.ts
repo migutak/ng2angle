@@ -58,9 +58,18 @@ export class LoginComponent implements OnInit {
             if (user !== null || user !== undefined) {
                 // store user details and basic auth credentials in local storage
                 // to keep user logged in between page refreshes
-                user.authdata = window.btoa(value.username + ':' + value.password);
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.router.navigate([this.returnUrl]);
+                // get user permissions
+                this.ecolService.getpermissions(user.role).subscribe(permission => {
+                    // console.log(permission);
+                    user.authdata = window.btoa(value.username + ':' + value.password);
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('userpermission', JSON.stringify(permission));
+                    localStorage.setItem('profile', '1');
+
+                    // this.router.navigate([this.returnUrl]);
+                    this.router.navigate(['/home']);
+                });
+                //
             } else {
                 this.error = 'Wrong username or password';
                 this.loading = false;

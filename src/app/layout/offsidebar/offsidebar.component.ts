@@ -62,8 +62,9 @@ export class OffsidebarComponent implements OnInit, OnDestroy {
 
     logout() {
         //
-        console.log('am logging out');
-        this.ecolService.logout();
+        if (confirm('Confirm logout!')) {
+            this.ecolService.logout();
         this.router.navigate(['/login']);
+        }
     }
 }

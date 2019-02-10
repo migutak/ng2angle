@@ -10,15 +10,18 @@ import { UserblockService } from './userblock.service';
 export class UserblockComponent implements OnInit {
     user: any;
     userdata: any = {};
+    userperm: any;
 
     constructor(public userblockService: UserblockService) {
 
         this.userdata = JSON.parse(localStorage.getItem('currentUser'));
+        this.userperm = JSON.parse(localStorage.getItem('userpermission'));
 
         this.user = {
             picture: 'assets/img/user/coop.jpg',
             username: this.userdata.username,
             division: this.userdata.team,
+            user_mgmt: this.userperm[0].attr,
         };
     }
 

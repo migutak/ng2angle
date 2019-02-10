@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import * as $ from 'jquery';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
+import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
+import { EcolService } from '../../../services/ecol.service';
 
 @Component({
   selector: 'app-demand1',
@@ -13,15 +15,17 @@ import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbu
 export class Demand1Component implements OnInit {
 
   @ViewChild('myModal') myModal;
+  @ViewChild('myGrid') myGrid: jqxGridComponent;
   public radioModel: string;
-  // public checkModel: any = { left: false, middle: true, right: false };
-  constructor(private http: HttpClient, private jqxDomService: JqxDomService) {
+
+  total:  any = {};
+  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
   }
 
   source: any =
     {
-      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=20',
+      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=50',
       datafields:
         [
           { name: 'accnumber', type: 'string' },
@@ -36,7 +40,9 @@ export class Demand1Component implements OnInit {
           { name: 'telnumber', type: 'string' },
           { name: 'emailaddress', type: 'string' },
           { name: 'colofficer', type: 'string' },
-          { name: 'demandletter', type: 'string' }
+          { name: 'demandletter', type: 'string' },
+          { name: 'datedue', type: 'string' },
+          { name: 'status', type: 'string' }
         ],
       datatype: 'json'
     };
@@ -71,26 +77,108 @@ export class Demand1Component implements OnInit {
       { text: 'TELNUMBER', datafield: 'telnumber', filtertype: 'input' },
       { text: 'EMAILADDRESS', datafield: 'emailaddress', filtertype: 'input' },
       { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'DEMANDLETTER', datafield: 'demandletter', filtertype: 'input' }
+      { text: 'DEMANDLETTER', datafield: 'demandletter', filtertype: 'input' },
+      { text: 'DATEDUE', datafield: 'datedue', filtertype: 'input' },
+      { text: 'STATUS', datafield: 'status', filtertype: 'input' }
 
     ];
 
   accnumber: String;
   onClickMe(event, rowdata) {
-    console.log('ACCNUMBER: ' + event.target.textContent);
+    // console.log('ACCNUMBER: ' + event.target.textContent);
     // open modal
     this.accnumber = event.target.textContent;
     // document.getElementById('openModalButton').click();
     // open page
-    window.open('http://localhost:4500/sendletter?accnumber=' + this.accnumber, '_blank');
+    window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber, '_blank');
   }
 
   ngOnInit() {
-
+    // get total for badges
+    this.gettotals();
   }
 
-  preview() {
-    console.log('preview later in browser');
+  filterfunction (column, value) {
+    console.log(column, value);
+  }
+
+  refreshgrid() {
+    // this.mygrid.setOptions({source:{}});
+  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=50',
+
+  // console.log(this.source.url, this.dataAdapter);
+  // tslint:disable-next-line:max-line-length
+  // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
+  this.myGrid.updatebounddata('cells');
+  }
+
+  gettotal (column, value, letter) {
+    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
+      if (data.length > 0) {
+        this.total.DEMAND1 =  data[0].TOTAL;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettotal1 (column, value, letter) {
+    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
+      if (data.length > 0) {
+        this.total.DEMAND2 =  data[0].TOTAL;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettotal2 (column, value, letter) {
+    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
+      if (data.length > 0) {
+        this.total.PRELISTING =  data[0].TOTAL;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettotal3 (column, value, letter) {
+    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
+      if (data.length > 0) {
+        this.total.POSTLISTING =  data[0].TOTAL;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettotal4 (column, value, letter) {
+    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
+      if (data.length > 0) {
+        this.total.DAY40 =  data[0].TOTAL;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettotal5 (column, value, letter) {
+    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
+      if (data.length > 0) {
+        this.total.DAY90 =  data[0].TOTAL;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettotals () {
+    this.gettotal(null, null, 'DEMAND1');
+    this.gettotal1(null, null, 'DEMAND2');
+    this.gettotal2(null, null, 'PRELISTING');
+    this.gettotal3(null, null, 'POSTLISTING');
+    this.gettotal4(null, null, 'DAY40');
+    this.gettotal5(null, null, 'DAY90');
   }
 
 }

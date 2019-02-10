@@ -56,6 +56,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tblusers?filter[where][username]=' + username);
   }
 
+  getpermissions(role_id: string) {
+    return this.httpClient.get<any>(environment.api + '/api/permissionsettings?filter[where][role_id]=' + role_id);
+  }
+
   getLetter(letter) {
     return this.httpClient.get<any>(environment.api + '/api/settings_letters/' + letter);
   }
@@ -81,6 +85,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber);
   }
 
+  getbranches() {
+    return this.httpClient.get<any>(environment.api + '/api/branches');
+  }
+
   guarantorletters(data) {
     return this.httpClient.post<any>(environment.api + '/api/guarantorletters', data);
   }
@@ -91,6 +99,19 @@ export class EcolService {
 
   postperm(perm: object) {
     return this.httpClient.put<any>(environment.api + '/api/permissionsettings', perm);
+  }
+
+  setpermissions(perm: object) {
+    return this.httpClient.post<any>(environment.api + '/api/permissionsettings/setpermission', perm);
+  }
+
+  gettotalletters(column, value, letter) {
+    if (column) {
+      // tslint:disable-next-line:max-line-length
+      return this.httpClient.get<any>(environment.api + '/api/demandsdue/grouptotal?column=' + column + '&value=' + value );
+    } else {
+      return this.httpClient.get<any>(environment.api + '/api/demandsdue/grouptotal?letter=' + letter);
+    }
   }
 
   downloadFile(file: string) {
@@ -106,6 +127,8 @@ export class EcolService {
     //  remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     localStorage.removeItem('accountInfo');
+    localStorage.removeItem('userpermission');
+    localStorage.removeItem('profile');
   }
 
 }

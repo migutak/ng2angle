@@ -55,11 +55,15 @@
                 </select>
                 <span class="text-danger" *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)">division
                   is required</span>
-
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Branch</label>
-                <input class="form-control" type="text" formControlName="branch" [formControl]="valForm.controls['branch']" />
+                <select class="form-control" formControlName="branch" [formControl]="valForm.controls['branch']">
+                  <option value="">Nothing</option>
+                  <option *ngFor="let b of branches" [value]="b?.BRANCHCODE">{{b?.BRANCHNAME}}</option>
+                </select>
+                <span class="text-danger" *ngIf="valForm.controls['branch'].hasError('required') && (valForm.controls['branch'].dirty || valForm.controls['branch'].touched)">branch
+                  is required</span>
               </div>
               <div class="col-lg-4 mb-3">
                 <label>Manager</label>

@@ -17,9 +17,17 @@ const Dashboard = {
         {
             text: 'Dashbord Activity',
             link: '/dashboard/v2'
-        },
+        }
+    ]
+};
+
+const DashboardAdmin = {
+    text: 'Dashboard',
+    link: '/dashboard',
+    icon: 'icon-speedometer',
+    submenu: [
         {
-            text: 'Dashbord Letters',
+            text: 'Performance Metrics',
             link: '/dashboard/v3'
         }
     ]
@@ -34,10 +42,10 @@ const Letters = {
         classname: 'badge bg-success'
     },
     submenu: [
-        {
+        /*{
             text: 'Settings',
             link: '/letters/settings'
-        },
+        },*/
         {
             text: 'Guarantors',
             link: '/guarantors',
@@ -453,6 +461,24 @@ const Ecommerce = {
     ]
 };
 
+const Demandletters = {
+    text: 'Demand Letters',
+    link: '/letters/settings',
+    icon: 'icon-envelope-letter'
+};
+
+const Allocations = {
+    text: 'Account allocations',
+    link: '/configurations/allocations',
+    icon: 'icon-people'
+};
+
+const SMS = {
+    text: 'SMS',
+    link: '/configurations/sms',
+    icon: 'icon-note'
+};
+
 const Extras = {
     text: 'Extras',
     link: '/extras',
@@ -569,14 +595,25 @@ const headingMore = {
     heading: true
 };
 
-export const menu = [
+const headingConfigurations = {
+    text: 'Configurations',
+    heading: true
+};
+
+// user permissions
+const userperm = JSON.parse(localStorage.getItem('userpermission'));
+console.log('menu', userperm);
+
+let menuitems = [];
+
+const user_mgmt_menu = [
     headingMain,
     Home,
-    Dashboard,
+    DashboardAdmin,
     Administration,
-    Letters,
-    headingComponents,
-    Work,
+    // Letters,
+    // headingComponents,
+    // Work,
     // Pages,
    /* Elements,
     Forms,
@@ -590,3 +627,72 @@ export const menu = [
    // Ecommerce,
    // Extras
 ];
+
+const act_viewer_menu = [
+    headingMain,
+    Home,
+    Dashboard,
+    Letters,
+    headingComponents,
+    Work,
+    headingMore,
+    Collectionrpt,
+    Remedialrpts,
+    headingConfigurations,
+    Demandletters,
+    Allocations,
+    SMS
+];
+
+const creditcards_menu = [
+    headingMain,
+    Home,
+    Dashboard,
+    Letters,
+    headingComponents,
+    Work,
+    headingMore,
+    Collectionrpt,
+    Remedialrpts
+];
+
+const remedial_menu = [
+    headingMain,
+    Home,
+    Dashboard,
+    Letters,
+    headingComponents,
+    Work,
+    headingMore,
+    Collectionrpt,
+    Remedialrpts
+];
+
+const teamleader_menu = [
+    headingMain,
+    Home,
+    Dashboard,
+    Letters,
+    headingComponents,
+    Work,
+    headingMore,
+    Collectionrpt,
+    Remedialrpts,
+    headingConfigurations,
+    Demandletters,
+    Allocations,
+    SMS
+];
+
+if (userperm !== null) {
+    if (userperm[0].attr === 'true' ) {
+        menuitems = user_mgmt_menu;
+    } else {
+        menuitems = teamleader_menu;
+    }
+} else {
+    menuitems = act_viewer_menu;
+}
+
+
+export const menu = menuitems;

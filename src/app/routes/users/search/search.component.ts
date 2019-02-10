@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit {
       containerClass: 'theme-angle'
   };
 
+  branches: Array<any>;
 
   constructor(fb: FormBuilder, private ecolService: EcolService ) {
     // Model Driven validation
@@ -43,6 +44,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getbranches();
   }
 
   submitForm($ev, value: any) {
@@ -55,13 +57,13 @@ export class SearchComponent implements OnInit {
       console.log('Valid!');
     }
     // console.log(value);
-
     this.putuser(value);
   }
 
   putuser(body) {
-    this.ecolService.loader();
-    this.ecolService.putuser(body).subscribe(data => {
+   // console.log(body);
+   this.ecolService.loader();
+   this.ecolService.putuser(body).subscribe(data => {
      // console.log(data);
       swal('Successful!', 'user updated!', 'success');
     }, error => {
@@ -74,7 +76,7 @@ export class SearchComponent implements OnInit {
     this.ecolService.loader();
     if (username) {
       this.ecolService.getuser(username).subscribe(data => {
-        console.log(data);
+        // console.log(data);
         if (data.length > 0) {
           this.valForm.patchValue({
             username: data[0].username,
@@ -86,18 +88,38 @@ export class SearchComponent implements OnInit {
             email: data[0].username,
             active: data[0].active,
             expirydate: data[0].expirydate,
-            createdate: data[0].createdate
+            createdate: data[0].createdate,
+            role: data[0].role
           });
           // success
         swal('Successful!', 'user details retrieved!', 'success');
         } else {
           swal('Warning!', 'No user found!', 'warning');
+          this.valForm.patchValue({
+            username: '',
+            firstname: '',
+            lastname: '',
+            surname: '',
+            division: '',
+            branch: '',
+            email: '',
+            active: '',
+            expirydate: '',
+            role: ''
+          });
         }
       }, error => {
         console.log(error);
         swal('Error!', 'Error occurred during processing!', 'error');
       });
     }
+  }
+
+  getbranches() {
+    this.ecolService.getbranches().subscribe(data => {
+      // console.log(data);
+      this.branches = data;
+    });
   }
 
 }
