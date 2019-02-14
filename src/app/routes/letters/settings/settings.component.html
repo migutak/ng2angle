@@ -4,7 +4,7 @@
     <small>Demand letters configurations</small>
   </div>
 </div>
-<div class="container container-fluid">
+<div class="container-fluid">
   <div id="accordion">
     <div class="card">
       <div class="card-header">
@@ -15,11 +15,10 @@
       <div id="collapseOne" class="collapse show" data-parent="#accordion">
         <div class="card-body">
           <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
               <div class="card card-primary">
                 <div class="card-body">
                   <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(settingsForm)">
-                    <p class="lead">Demand Letter</p>
                     <p class="my-2">Type</p>
                     <!--<ngx-select (data)="valueCategory" [multiple]="false" [items]="itemsCategories" ></ngx-select>
                                             <span><button class="btn btn-small btn-primary" type="button"><em class="fa fa-sync fa-fw"></em> Letter details</button></span>-->
@@ -132,6 +131,9 @@
                   </form>
                 </div>
               </div>
+            </div>
+            <div class="col-xl-6">
+              SAMPLE
             </div>
           </div>
         </div>

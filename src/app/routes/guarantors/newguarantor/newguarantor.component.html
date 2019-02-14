@@ -11,21 +11,21 @@
           <div class="card-body">
               <form #newGuarantorForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(newGuarantorForm)" autocomplete="off">
                   <div class="form-group row">
-                      <label class="col-xl-2 col-form-label">custnumber</label>
+                      <label class="col-xl-2 col-form-label">Customer custnumber</label>
                       <div class="col-xl-10">
                           <input class="form-control" type="text" name="custnumber" id="custnumber" #custnumber="ngModel" [(ngModel)]="model.custnumber" required placeholder="custnumber" />
                           <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">custnumber is required</div>
                       </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-xl-2 col-form-label">accnumber</label>
+                      <label class="col-xl-2 col-form-label">Customer accnumber</label>
                       <div class="col-xl-10">
                           <input class="form-control" type="text" name="accnumber" id="accnumber" #accnumber="ngModel" [(ngModel)]="model.accnumber" required placeholder="accnumber" />
                           <div class="validation-error" *ngIf="accnumber.invalid && accnumber.touched">accnumber is required</div>
                       </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-xl-2 col-form-label">nationid</label>
+                      <label class="col-xl-2 col-form-label">Guarantor nationid</label>
                       <div class="col-xl-10">
                           <input class="form-control" type="text" name="nationid" id="nationid" #nationid="ngModel" [(ngModel)]="model.nationid" required placeholder="nationid" />
                           <div class="validation-error" *ngIf="nationid.invalid && nationid.touched">nationid is required</div>
@@ -39,7 +39,7 @@
                       </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-xl-2 col-form-label">Address</label>
+                    <label class="col-xl-2 col-form-label">Guarantor address</label>
                     <div class="col-xl-10">
                         <input class="form-control" type="text" name="address" id="address" #address="ngModel" [(ngModel)]="model.address" required placeholder="Address" />
                         <div class="validation-error" *ngIf="address.invalid && address.touched">address is required</div>

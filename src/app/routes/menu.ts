@@ -598,7 +598,7 @@ const headingConfigurations = {
 
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
-// console.log('menu', userperm);
+console.log('menu', userperm);
 
 let menuitems = [];
 
@@ -684,7 +684,7 @@ const teamleader_menu = [
     SMS
 ];
 
-if (userperm !== null) {
+/*if (userperm !== null) {
     if (userperm[0].attr === 'true' ) {
         menuitems = user_mgmt_menu;
     } else {
@@ -692,7 +692,7 @@ if (userperm !== null) {
     }
 } else {
     menuitems = collection_menu;
-}
+}*/
 
 
-export const menu = menuitems;
+export const menu = collection_menu;
