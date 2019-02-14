@@ -600,7 +600,7 @@ const headingConfigurations = {
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
 console.log('menu', userperm);
 
-let menuitems = [];
+const menuitems = [];
 
 const user_mgmt_menu = [
     headingMain,
