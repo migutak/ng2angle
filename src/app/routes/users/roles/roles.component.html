@@ -31,11 +31,11 @@
             <div class="list-group">
               <div class="list-group-item d-flex align-items-center">
                 <div>
-                  <p class="text-bold mb-0">User management</p>
-                  <small>create and manage users</small>
+                  <p class="text-bold mb-0">Administrator</p>
+                  <small>System management</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="user_mgmt" [formControl]="valForm.controls['user_mgmt']" />
+                  <input type="checkbox" formControlName="administrator" [formControl]="valForm.controls['administrator']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
@@ -44,16 +44,16 @@
                   <small>record a collection activity</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="col_activity" [formControl]="valForm.controls['col_activity']" />
+                  <input type="checkbox" formControlName="activity" [formControl]="valForm.controls['activity']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
-                  <p class="text-bold mb-0">Activity viewer</p>
-                  <small>view collection records</small>
+                  <p class="text-bold mb-0">Team Leader</p>
+                  <small>Team leader</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="act_viewer" [formControl]="valForm.controls['act_viewer']" />
+                  <input type="checkbox" formControlName="teamleader" [formControl]="valForm.controls['teamleader']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
@@ -67,38 +67,38 @@
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
-                  <p class="text-bold mb-0">Letters Configuration</p>
-                  <small>manage demand letter configurations</small>
+                  <p class="text-bold mb-0">Configuration</p>
+                  <small>Manage demand letter configurations</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="letter_configs" [formControl]="valForm.controls['letter_configs']" />
+                  <input type="checkbox" formControlName="configurations" [formControl]="valForm.controls['configurations']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                   <div>
-                    <p class="text-bold mb-0">SMS Configuration</p>
-                    <small>manage sms configurations</small>
+                    <p class="text-bold mb-0">MCoop Cash</p>
+                    <small>M-Coop Cash Collections</small>
                   </div>
                   <div class="ml-auto">
-                    <input type="checkbox" formControlName="sms_configs" [formControl]="valForm.controls['sms_configs']" />
+                    <input type="checkbox" formControlName="mcoopcash" [formControl]="valForm.controls['mcoopcash']" />
                   </div>
                 </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
-                  <p class="text-bold mb-0">Send SMS</p>
-                  <small>send sms from activity page</small>
+                  <p class="text-bold mb-0">Collections</p>
+                  <small>Collections dept related activities</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="send_sms" [formControl]="valForm.controls['send_sms']" />
+                  <input type="checkbox" formControlName="collection" [formControl]="valForm.controls['collection']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
                 <div>
-                  <p class="text-bold mb-0">Send demand letter</p>
-                  <small>issue demand letter</small>
+                  <p class="text-bold mb-0">Dashboard</p>
+                  <small>access to collection dashboard</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="send_letter" [formControl]="valForm.controls['send_letter']" />
+                  <input type="checkbox" formControlName="dashboard" [formControl]="valForm.controls['dashboard']" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">
@@ -107,7 +107,7 @@
                   <small>access remedial functionalities</small>
                 </div>
                 <div class="ml-auto">
-                  <input type="checkbox" formControlName="cmd" [formControl]="valForm.controls['cmd']" checked="" />
+                  <input type="checkbox" formControlName="remedial" [formControl]="valForm.controls['remedial']" checked="" />
                 </div>
               </div>
               <div class="list-group-item d-flex align-items-center">

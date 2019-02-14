@@ -37,10 +37,6 @@ const Letters = {
     text: 'Leters',
     link: '/letters',
     icon: 'icon-note',
-    label: {
-        value: '2',
-        classname: 'badge bg-success'
-    },
     submenu: [
         /*{
             text: 'Settings',
@@ -90,7 +86,9 @@ const Letters = {
                 }*/
             ]
         }
-    ]
+    ],
+    'alert': '23',
+    'label': 'badge badge-warning'
 };
 
 const Administration = {
@@ -110,7 +108,9 @@ const Administration = {
             text: 'Approvals',
             link: '/users/approvals'
         }
-    ]
+    ],
+    'alert': 'new',
+    'label': 'badge badge-primary'
 };
 
 const Elements = {
@@ -263,29 +263,75 @@ const Collectionrpt = {
     icon: 'icon-grid',
     submenu: [
         {
-            text: 'Standard',
+            text: 'Collector activity',
             link: '/tables/standard'
         },
         {
-            text: 'Extended',
+            text: 'Amount collected',
             link: '/tables/extended'
         },
         {
-            text: 'Data-Tables',
+            text: 'SMS report',
             link: '/tables/datatable'
         },
         {
-            text: 'Angular Grid',
+            text: 'Daily notes',
             link: '/tables/aggrid'
         },
         {
-            text: 'NGxDatatables',
+            text: 'Bulk notes',
             link: '/tables/ngxdatatable'
         }
     ]
 };
 
 const Remedialrpts = {
+    text: 'Remedial Reports',
+    link: '/collectionrpts',
+    icon: 'icon-grid',
+    submenu: [
+        {
+            text: 'Unactioned report',
+            link: '/tables/standard'
+        },
+        {
+            text: 'New File Analysis',
+            link: '/tables/extended'
+        },
+        {
+            text: 'Portfolio Movement',
+            link: '/tables/datatable'
+        },
+        {
+            text: 'Relegation Analysis',
+            link: '/tables/aggrid'
+        },
+        {
+            text: 'Relegation analysis cc',
+            link: '/tables/ngxdatatable'
+        },
+        {
+            text: 'Portfolio movement cc',
+            link: '/tables/aggrid'
+        },
+        {
+            text: 'Invoices',
+            link: '/tables/ngxdatatable'
+        },
+        {
+            text: 'More',
+            link: '/tables/ngxdatatable',
+            submenu: [
+                {
+                    text: 'Unactioned report',
+                    link: '/tables/standard'
+                }
+            ]
+        }
+    ]
+};
+
+const Remedialrpt = {
     text: 'Remedial Reports',
     link: '/remedialrpts',
     icon: 'icon-graph',
@@ -404,7 +450,9 @@ const Work = {
     submenu: [
         {
             text: 'View all',
-            link: '/work/viewall'
+            link: '/work/viewall',
+            'alert': '23',
+            'label': 'badge badge-warning'
         },
         {
             text: 'My allocations',
@@ -419,10 +467,6 @@ const Work = {
             link: '/work/predelinquent'
         },
         {
-            text: 'New to arrears',
-            link: '/work/newtoarrears'
-        },
-        {
             text: 'PTP Due',
             link: '/work/ptps'
         },
@@ -433,30 +477,82 @@ const Work = {
     ]
 };
 
-const Ecommerce = {
-    text: 'Ecommerce',
-    link: '/ecommerce',
-    icon: 'icon-basket-loaded',
+const creditcards = {
+    text: 'Credit Cards',
+    link: '/creditcards',
+    icon: 'icon-credit-card',
     submenu: [
         {
-            text: 'Orders',
-            link: '/ecommerce/orders'
+            text: 'Todays Work',
+            link: '/creditcards/list'
         },
         {
-            text: 'Order View',
-            link: '/ecommerce/orderview'
+            text: 'My Worklist',
+            link: '/creditcards/post'
         },
         {
-            text: 'Products',
-            link: '/ecommerce/products'
+            text: 'My Allocations',
+            link: '/creditcards/list'
         },
         {
-            text: 'Product View',
-            link: '/ecommerce/productview'
+            text: 'Post',
+            link: '/creditcards/post'
         },
         {
-            text: 'Checkout',
-            link: '/ecommerce/checkout'
+            text: 'List',
+            link: '/creditcards/list'
+        },
+        {
+            text: 'Post',
+            link: '/creditcards/post'
+        }
+    ]
+};
+
+const Remedial = {
+    text: 'Remedial',
+    link: '/remedial',
+    icon: 'icon-equalizer',
+    submenu: [
+        {
+            text: 'List',
+            link: '/blog/list'
+        },
+        {
+            text: 'Post',
+            link: '/blog/post'
+        }
+    ]
+};
+
+const serviceproviders = {
+    text: 'Service Providers',
+    link: '/serviceproviders',
+    icon: 'icon-drawer',
+    submenu: [
+        {
+            text: 'List',
+            link: '/blog/list'
+        },
+        {
+            text: 'Post',
+            link: '/blog/post'
+        }
+    ]
+};
+
+const mcoopcash = {
+    text: 'M-Coop Cash',
+    link: '/mcoopcash',
+    icon: 'icon-wallet',
+    submenu: [
+        {
+            text: 'List',
+            link: '/blog/list'
+        },
+        {
+            text: 'Post',
+            link: '/blog/post'
         }
     ]
 };
@@ -477,106 +573,6 @@ const SMS = {
     text: 'SMS',
     link: '/configurations/sms',
     icon: 'icon-note'
-};
-
-const Extras = {
-    text: 'Extras',
-    link: '/extras',
-    icon: 'icon-cup',
-    submenu: [
-        {
-            text: 'Contacts',
-            link: '/extras/contacts'
-        },
-        {
-            text: 'Contact details',
-            link: '/extras/contactdetails'
-        },
-        {
-            text: 'Projects',
-            link: '/extras/projects'
-        },
-        {
-            text: 'Projects details',
-            link: '/extras/projectsdetails'
-        },
-        {
-            text: 'Team Viewer',
-            link: '/extras/teamviewer'
-        },
-        {
-            text: 'Social Board',
-            link: '/extras/socialboard'
-        },
-        {
-            text: 'Vote links',
-            link: '/extras/votelinks'
-        },
-        {
-            text: 'Bug tracker',
-            link: '/extras/bugtracker'
-        },
-        {
-            text: 'Faq',
-            link: '/extras/faq'
-        },
-        {
-            text: 'Help center',
-            link: '/extras/helpcenter'
-        },
-        {
-            text: 'Followers',
-            link: '/extras/followers'
-        },
-        {
-            text: 'Settings',
-            link: '/extras/settings'
-        },
-        {
-            text: 'Plans',
-            link: '/extras/plans'
-        },
-        {
-            text: 'File manager',
-            link: '/extras/filemanager'
-        },
-        {
-            text: 'Forum',
-            link: '/extras/forum'
-        },
-        {
-            text: 'Mailbox',
-            link: '/extras/mailbox'
-        },
-        {
-            text: 'Timeline',
-            link: '/extras/timeline'
-        },
-        {
-            text: 'Calendar',
-            link: '/extras/calendar'
-        },
-        {
-            text: 'Invoice',
-            link: '/extras/invoice'
-        },
-        {
-            text: 'Search',
-            link: '/extras/search'
-        },
-        {
-            text: 'Todo list',
-            link: '/extras/todolist'
-        },
-        {
-            text: 'Profile',
-            link: '/extras/profile'
-        },
-        {
-            text: 'Code editor',
-            link: '/extras/codeeditor'
-        }
-    ]
 };
 
 
@@ -602,7 +598,7 @@ const headingConfigurations = {
 
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
-console.log('menu', userperm);
+// console.log('menu', userperm);
 
 let menuitems = [];
 
@@ -628,13 +624,17 @@ const user_mgmt_menu = [
    // Extras
 ];
 
-const act_viewer_menu = [
+const collection_menu = [
     headingMain,
     Home,
     Dashboard,
     Letters,
     headingComponents,
     Work,
+    Remedial,
+    mcoopcash,
+    serviceproviders,
+    creditcards,
     headingMore,
     Collectionrpt,
     Remedialrpts,
@@ -688,10 +688,10 @@ if (userperm !== null) {
     if (userperm[0].attr === 'true' ) {
         menuitems = user_mgmt_menu;
     } else {
-        menuitems = teamleader_menu;
+        menuitems = collection_menu;
     }
 } else {
-    menuitems = act_viewer_menu;
+    menuitems = collection_menu;
 }
 
 

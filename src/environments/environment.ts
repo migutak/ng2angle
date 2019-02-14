@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   api: 'http://ecollecttst.co-opbank.co.ke:8800',
-  letters_api: 'http://localhost:8080/ecol_apis',
-  uploadpath: '/users/kevinabongo/Documents/demands/',
+  letters_path: '/users/kevinabongo/Documents/demands/',
   uploadurl: 'http://ecollecttst.co-opbank.co.ke:4000',
   metrics: 'http://localhost:8800/appmetrics-dash',
   applink: 'http://localhost:4500'

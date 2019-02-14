@@ -21,6 +21,7 @@ export class UserblockComponent implements OnInit {
             picture: 'assets/img/user/coop.jpg',
             username: this.userdata.username,
             division: this.userdata.team,
+            role: this.userdata.role,
             user_mgmt: this.userperm[0].attr,
         };
     }

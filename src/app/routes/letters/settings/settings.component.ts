@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-settings',
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
         'Adrian <adrian@email.com>'
     ];
     model: any = {};
+    test: any = {};
     valueCategory;
     valueTag;
     valueReview;
@@ -35,8 +37,79 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
   }
 
+  testSubmit(form) {
+    this.ecolService.loader();
+    const body = {
+      demand: form.value.demand,
+      accnumber1: form.value.accnumber1,
+      accnumber2: form.value.accnumber2,
+      accnumber3: form.value.accnumber3,
+      telnumber: form.value.telnumber,
+      email: form.value.email,
+      sendsms: form.value.sendsms
+      };
+
+      //
+      this.processletter(body.demand, body.accnumber1, body.email);
+      this.processletter(body.demand, body.accnumber2, body.email);
+      this.processletter(body.demand, body.accnumber3, body.email);
+      // console.log(body);
+  }
+
+  generateletter(letter, emaildata: any) {
+    console.log(letter);
+    this.ecolService.generateLetter(letter).subscribe(data => {
+      console.log(data);
+      swal('Success!', 'Letter generated!', 'success');
+      // send email
+      // add file full path
+      emaildata.file = environment.letters_path + data.result.file;
+      this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+        console.log(response);
+      });
+      // send sms
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  processletter(demand, accnumber, emailaddress) {
+    console.log(demand);
+    this.ecolService.getAccount(accnumber).subscribe(data => {
+      if (data.length > 0) {
+        const letter = {
+          demand: demand.toLowerCase(),
+          cust: data[0].custnumber,
+          acc: data[0].accnumber,
+          custname: data[0].client_name,
+          address: data[0].addressline1,
+          postcode: data[0].postcode,
+          arocode: data[0].arocode,
+          branchname: data[0].branchcode,
+          branchcode: data[0].branchcode,
+          manager: data[0].manager,
+          ccy: data[0].currency,
+          demand1date : new Date(),
+          guarantors: data[0].guarantors
+        };
+        const emaildata = {
+          name: data[0].client_name,
+          email: emailaddress,
+          title: demand
+        };
+      // generate letter
+      this.generateletter(letter, emaildata);
+
+      } else {
+        swal('None!', accnumber + 'not found!', 'warning');
+      }
+    }, error => {
+      console.log(error);
+      swal('Error!', 'exception occured!', 'error');
+    });
+  }
+
   onSubmit(form) {
-    // console.log(form.value);
     // Loading indictor
     this.ecolService.loader();
     //

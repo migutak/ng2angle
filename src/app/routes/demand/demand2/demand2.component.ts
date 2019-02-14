@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
+import { saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-demand2',
@@ -29,6 +30,15 @@ export class Demand2Component implements OnInit {
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred letter generation!', 'error');
+    });
+  }
+
+  downloadFile(filepath) {
+    this.ecolService.downloadFile(filepath).subscribe(data => {
+     saveAs(data, 'filename');
+    }, error => {
+      console.log(error.error);
+      swal('Error!', ' Cannot download  file!', 'error');
     });
   }
 

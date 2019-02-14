@@ -16,16 +16,16 @@ export class RolesComponent implements OnInit {
     // Model Driven validation
     this.valForm = fb.group({
       'role_id': [null],
-      'user_mgmt': [null],
-      'act_viewer': [null],
-      'col_activity': [null],
-      'letter_configs': [null],
+      'administrator': [null],
+      'teamleader': [null],
+      'activity': [null],
+      'configurations': [null],
       'external_agents': [null],
-      'sms_configs': [null],
-      'send_sms': [false],
-      'send_letter': [null],
+      'mcoopcash': [null],
+      'collection': [false],
+      'dashboard': [null],
       'creditcards': [null],
-      'cmd': [null],
+      'remedial': [null],
     });
   }
 
@@ -45,21 +45,21 @@ export class RolesComponent implements OnInit {
       // prepare permission data
         this.ecolService.loader();
         const body0 = {
-          attr: value.user_mgmt,
+          attr: value.administrator,
           role_id: value.role_id,
-          perm_id: 'user_mgmt'
+          perm_id: 'administrator'
         };
 
         const body1 = {
-          attr: value.act_viewer,
+          attr: value.teamleader,
           role_id: value.role_id,
-          perm_id: 'act_viewer'
+          perm_id: 'teamleader'
         };
 
         const body2 = {
-          attr: value.cmd,
+          attr: value.remedial,
           role_id: value.role_id,
-          perm_id: 'cmd'
+          perm_id: 'remedial'
         };
 
         const body3 = {
@@ -69,33 +69,33 @@ export class RolesComponent implements OnInit {
         };
 
         const body4 = {
-          attr: value.letter_configs,
+          attr: value.configurations,
           role_id: value.role_id,
-          perm_id: 'letter_configs'
+          perm_id: 'configurations'
         };
 
         const body5 = {
-          attr: value.send_letter,
+          attr: value.dashboard,
           role_id: value.role_id,
-          perm_id: 'send_letter'
+          perm_id: 'dashboard'
         };
 
         const body6 = {
-          attr: value.send_sms,
+          attr: value.collection,
           role_id: value.role_id,
-          perm_id: 'send_sms'
+          perm_id: 'collection'
         };
 
         const body7 = {
-          attr: value.act_viewer,
+          attr: value.teamleader,
           role_id: value.role_id,
-          perm_id: 'act_viewer'
+          perm_id: 'teamleader'
         };
 
         const body8 = {
-          attr: value.sms_configs,
+          attr: value.mcoopcash,
           role_id: value.role_id,
-          perm_id: 'sms_configs'
+          perm_id: 'mcoopcash'
         };
 
         const body9 = {
@@ -105,9 +105,9 @@ export class RolesComponent implements OnInit {
         };
 
         const body10 = {
-          attr: value.col_activity,
+          attr: value.activity,
           role_id: value.role_id,
-          perm_id: 'col_activity'
+          perm_id: 'activity'
         };
 
         this.ecolService.setpermissions(body1).subscribe(data => { });
@@ -137,16 +137,16 @@ export class RolesComponent implements OnInit {
       console.log(data);
       this.valForm.patchValue({
         role_id: data[0].role_id,
-        user_mgmt: this.truefalse(data[0].attr),
-        act_viewer: this.truefalse(data[2].attr),
-        col_activity: this.truefalse(data[1].attr),
-        letter_configs: this.truefalse(data[3].attr),
+        administrator: this.truefalse(data[0].attr),
+        teamleader: this.truefalse(data[2].attr),
+        activity: this.truefalse(data[1].attr),
+        configurations: this.truefalse(data[3].attr),
         external_agents: this.truefalse(data[9].attr),
-        sms_configs: this.truefalse(data[4].attr),
-        send_sms: this.truefalse(data[5].attr),
-        send_letter: this.truefalse(data[6].attr),
+        mcoopcash: this.truefalse(data[4].attr),
+        collection: this.truefalse(data[5].attr),
+        dashboard: this.truefalse(data[6].attr),
         creditcards: this.truefalse(data[7].attr),
-        cmd: this.truefalse(data[8].attr)
+        remedial: this.truefalse(data[8].attr)
       });
       swal('Successful!', 'Permissions retrieved!', 'success');
     }, error => {

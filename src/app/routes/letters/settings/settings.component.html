@@ -5,114 +5,201 @@
   </div>
 </div>
 <div class="container container-fluid">
-  <div class="row">
-    <div class="col-xl-9">
-      <div class="card card-default">
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          Demand Letter Configurations
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse show" data-parent="#accordion">
         <div class="card-body">
-          <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(settingsForm)">
-            <p class="lead">Demand Letter</p>
-            <p class="my-2">Type</p>
-            <!--<ngx-select (data)="valueCategory" [multiple]="false" [items]="itemsCategories" ></ngx-select>
-                    <span><button class="btn btn-small btn-primary" type="button"><em class="fa fa-sync fa-fw"></em> Letter details</button></span>-->
-            <div class="input-group">
-              <select class="form-control" name="letterid" id="letterid" #letterid="ngModel" [(ngModel)]="model.letterid"
-                required>
-                <option value="">Nothing</option>
-                <option *ngFor="let demand of itemsDemands">{{demand}}</option>
-              </select>
-              <span class="input-group-btn">
-                <button class="btn btn-primary" [disabled]="!letterid.valid" type="button" (click)="onChange(model.letterid)">
-                  <em class="fa fa-search"></em>
-                </button>
-              </span>
-            </div>
-            <p class="my-2">Days in arrears</p>
-            <ngx-select (data)="valueTag" [multiple]="false" [items]="itemsTags" name="daysinarr" id="daysinarr"
-              #daysinarr="ngModel" [(ngModel)]="model.daysinarr" required></ngx-select>
-            <p class="lead mt-3"></p>
-            <div class="form-group">
-              <p>Send only to - memo</p>
-              <textarea class="form-control" rows="3" placeholder="only to memo ..." name="onlyto" id="onlyto"
-                #onlyto="ngModel" [(ngModel)]="model.onlyto"></textarea>
-            </div>
-            <p class="my-2">Exceptions - Memo</p>
-            <ngx-select (data)="valueReview" [multiple]="true" [items]="memoTags" name="exceptions" id="exceptions"
-              #exceptions="ngModel" [(ngModel)]="model.exceptions"></ngx-select>
-              <p class="lead mt-3"></p>
-              <div class="form-group">
-              <p>Exceptions - custnumber</p>
-              <textarea class="form-control" rows="3" placeholder="exceptions custnumber..." name="exceptionscust" id="exceptionscust"
-                #exceptionscust="ngModel" [(ngModel)]="model.exceptionscust"></textarea>
-            </div>
-            <p class="lead mt-3"></p>
-            <div class="form-group">
-              <p>sms template</p>
-              <textarea class="form-control" rows="5" placeholder="sms message.." name="sms" id="sms" #sms="ngModel"
-                [(ngModel)]="model.sms" required></textarea>
-            </div>
-            <!--<div class="form-group">
-                        <p>Template - Email</p>
-                        <textarea class="form-control" rows="3" placeholder="email template..."name="templateemail" id="templateemail" #templateemail="ngModel" [(ngModel)]="model.templateemail"></textarea>
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="card card-primary">
+                <div class="card-body">
+                  <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(settingsForm)">
+                    <p class="lead">Demand Letter</p>
+                    <p class="my-2">Type</p>
+                    <!--<ngx-select (data)="valueCategory" [multiple]="false" [items]="itemsCategories" ></ngx-select>
+                                            <span><button class="btn btn-small btn-primary" type="button"><em class="fa fa-sync fa-fw"></em> Letter details</button></span>-->
+                    <div class="input-group">
+                      <select class="form-control" name="letterid" id="letterid" #letterid="ngModel" [(ngModel)]="model.letterid"
+                        required>
+                        <option value="">Nothing</option>
+                        <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+                      </select>
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" [disabled]="!letterid.valid" type="button" (click)="onChange(model.letterid)">
+                          <em class="fa fa-search"></em>
+                        </button>
+                      </span>
                     </div>
+                    <p class="my-2">Days in arrears</p>
+                    <ngx-select (data)="valueTag" [multiple]="false" [items]="itemsTags" name="daysinarr" id="daysinarr"
+                      #daysinarr="ngModel" [(ngModel)]="model.daysinarr" required></ngx-select>
+                    <p class="lead mt-3"></p>
                     <div class="form-group">
-                        <p>Template - Letter</p>
-                        <textarea class="form-control" rows="3" placeholder="letter template..." name="templateletter" id="templateletter" #templateletter="ngModel" [(ngModel)]="model.templateletter"></textarea>
-                    </div>-->
-            <fieldset>
-              <div class="form-check mb-2 mr-sm-2">
-                  <div class="checkbox c-checkbox">
-                    <label>
-                      <input type="checkbox" name="suspendletter"  id="suspendletter" #suspendletter="ngModel" [(ngModel)]="model.suspendletter"/>
-                      <span class="fa fa-check"></span>Suspend Letter</label>
-                  </div>
-              </div>
-              
-            </fieldset>
-            <fieldset>
-                    <div class="form-check mb-2 mr-sm-2">
-                            <div class="checkbox c-checkbox">
-                                <label>
-                                    <input type="checkbox" name="suspendsms"  id="suspendsms" #suspendsms="ngModel" [(ngModel)]="model.suspendsms" />
-                                    <span class="fa fa-check"></span>Suspend SMS</label>
-                            </div>
+                      <p>Send only to - memo</p>
+                      <textarea class="form-control" rows="3" placeholder="only to memo ..." name="onlyto" id="onlyto"
+                        #onlyto="ngModel" [(ngModel)]="model.onlyto"></textarea>
                     </div>
-            </fieldset>
-            <fieldset>
-                    <div class="form-check mb-2 mr-sm-2">
-                            <div class="checkbox c-checkbox">
-                                <label>
-                                    <input type="checkbox" name="suspendautodelivery"  id="suspendautodelivery" #suspendautodelivery="ngModel" [(ngModel)]="model.suspendautodelivery" />
-                                    <span class="fa fa-check"></span>Suspend automatic delivery</label>
-                            </div>
+                    <p class="my-2">Exceptions - Memo</p>
+                    <ngx-select (data)="valueReview" [multiple]="true" [items]="memoTags" name="exceptions" id="exceptions"
+                      #exceptions="ngModel" [(ngModel)]="model.exceptions"></ngx-select>
+                    <p class="lead mt-3"></p>
+                    <div class="form-group">
+                      <p>Exceptions - custnumber</p>
+                      <textarea class="form-control" rows="3" placeholder="exceptions custnumber..." name="exceptionscust"
+                        id="exceptionscust" #exceptionscust="ngModel" [(ngModel)]="model.exceptionscust"></textarea>
                     </div>
-            </fieldset>
-            <fieldset>
-                    <div class="form-group row">
+                    <p class="lead mt-3"></p>
+                    <div class="form-group">
+                      <p>sms template</p>
+                      <textarea class="form-control" rows="5" placeholder="sms message.." name="sms" id="sms" #sms="ngModel"
+                        [(ngModel)]="model.sms" required></textarea>
+                    </div>
+                    <!--<div class="form-group">
+                                                <p>Template - Email</p>
+                                                <textarea class="form-control" rows="3" placeholder="email template..."name="templateemail" id="templateemail" #templateemail="ngModel" [(ngModel)]="model.templateemail"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <p>Template - Letter</p>
+                                                <textarea class="form-control" rows="3" placeholder="letter template..." name="templateletter" id="templateletter" #templateletter="ngModel" [(ngModel)]="model.templateletter"></textarea>
+                                            </div>-->
+                    <fieldset>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="checkbox c-checkbox">
+                          <label>
+                            <input type="checkbox" name="suspendletter" id="suspendletter" #suspendletter="ngModel"
+                              [(ngModel)]="model.suspendletter" />
+                            <span class="fa fa-check"></span>Suspend Letter</label>
+                        </div>
+                      </div>
+
+                    </fieldset>
+                    <fieldset>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="checkbox c-checkbox">
+                          <label>
+                            <input type="checkbox" name="suspendsms" id="suspendsms" #suspendsms="ngModel" [(ngModel)]="model.suspendsms" />
+                            <span class="fa fa-check"></span>Suspend SMS</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="checkbox c-checkbox">
+                          <label>
+                            <input type="checkbox" name="suspendautodelivery" id="suspendautodelivery"
+                              #suspendautodelivery="ngModel" [(ngModel)]="model.suspendautodelivery" />
+                            <span class="fa fa-check"></span>Suspend automatic delivery</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <div class="form-group row">
                         <label class="col-md-2 col-form-label">Delivery mode</label>
                         <p></p>
                         <div class="col-md-10">
-                            <label class="c-checkbox">
-                                <input id="inlineCheckbox10" type="checkbox" name="byemail"  id="byemail" #byemail="ngModel" [(ngModel)]="model.byemail" />
-                                <span class="fa fa-check"></span>Email</label>
-                            <label class="c-checkbox">
-                                <input id="inlineCheckbox20" type="checkbox" name="bypost"  id="bypost" #bypost="ngModel" [(ngModel)]="model.bypost" />
-                                <span class="fa fa-check"></span>Post</label>
-                            <label class="c-checkbox">
-                                <input id="inlineCheckbox30" type="checkbox" name="byphysical"  id="byphysical" #byphysical="ngModel" [(ngModel)]="model.byphysical" />
-                                <span class="fa fa-check"></span>Physical</label>
+                          <label class="c-checkbox">
+                            <input id="inlineCheckbox10" type="checkbox" name="byemail" id="byemail" #byemail="ngModel"
+                              [(ngModel)]="model.byemail" />
+                            <span class="fa fa-check"></span>Email</label>
+                          <label class="c-checkbox">
+                            <input id="inlineCheckbox20" type="checkbox" name="bypost" id="bypost" #bypost="ngModel"
+                              [(ngModel)]="model.bypost" />
+                            <span class="fa fa-check"></span>Post</label>
+                          <label class="c-checkbox">
+                            <input id="inlineCheckbox30" type="checkbox" name="byphysical" id="byphysical" #byphysical="ngModel"
+                              [(ngModel)]="model.byphysical" />
+                            <span class="fa fa-check"></span>Physical</label>
                         </div>
+                      </div>
+                    </fieldset>
+                    <div>
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <button [disabled]="!settingsForm.valid || !settingsForm.dirty" class="btn btn-primary" type="submit">
+                            <em class="fa fa-check fa-fw"></em>Save</button>
+                        </div>
+                        <!--<div class="float-right">
+                                                        <button class="btn btn-danger" type="button">
+                                                            <em class="fas fa-trash-alt fa-fw"></em>Cancel</button>
+                                                    </div>-->
+                      </div>
                     </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseTwo">
+          Test Letter automatic delivery
+        </a>
+      </div>
+      <div id="collapseTwo" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <form #testForm="ngForm" class="form-horizontal" (ngSubmit)="testSubmit(testForm)" autocomplete="off">
+            <select class="form-control" name="demand" id="demand" #demand="ngModel" [(ngModel)]="model.letterid"
+                required>
+                <option value="">Nothing</option>
+                <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+            </select>
+            <p class="lead mt-3"></p>
+            <div class="form-group">
+              <p>accountnumber 1</p>
+              <input class="form-control" name="accnumber1" id="accnumber1" #accnumber1="ngModel" [(ngModel)]="test.accnumber1"
+                required />
+            </div>
+
+            <p class="lead mt-3"></p>
+            <div class="form-group">
+              <p>accountnumber 2</p>
+              <input class="form-control" name="accnumber2" id="accnumber2" #accnumber2="ngModel" [(ngModel)]="test.accnumber2"
+                required />
+            </div>
+
+            <p class="lead mt-3"></p>
+            <div class="form-group">
+              <p>accountnumber 3</p>
+              <input class="form-control" name="accnumber3" id="accnumber3" #accnumber3="ngModel" [(ngModel)]="test.accnumber3"
+                required />
+            </div>
+
+            <p class="lead mt-3"></p>
+            <div class="form-group">
+              <p>Email address</p>
+              <input class="form-control" name="email" id="email" #email="ngModel" [(ngModel)]="test.email" required />
+            </div>
+
+            <p class="lead mt-3"></p>
+            <div class="form-group">
+              <p>Phone Number</p>
+              <input class="form-control" name="telnumber" id="telnumber" #telnumber="ngModel" [(ngModel)]="test.telnumber"
+                required />
+            </div>
+
+            <fieldset>
+              <div class="form-check mb-2 mr-sm-2">
+                <div class="checkbox c-checkbox">
+                  <label>
+                    <input type="checkbox" name="sendsms" id="sendsms" #sendsms="ngModel" [(ngModel)]="test.sendsms" />
+                    <span class="fa fa-check"></span>Test SMS</label>
+                </div>
+              </div>
             </fieldset>
             <div>
               <div class="clearfix">
                 <div class="float-left">
-                  <button [disabled]="!settingsForm.valid || !settingsForm.dirty" class="btn btn-primary" type="submit">
-                    <em class="fa fa-check fa-fw"></em>Save</button>
+                  <button [disabled]="!testForm.valid || !testForm.dirty" class="btn btn-primary" type="submit">
+                    <em class="fa fa-check fa-fw"></em>Test</button>
                 </div>
-                <!--<div class="float-right">
-                                <button class="btn btn-danger" type="button">
-                                    <em class="fas fa-trash-alt fa-fw"></em>Cancel</button>
-                            </div>-->
               </div>
             </div>
           </form>

@@ -23,19 +23,19 @@ export class EcolService {
   }
 
   submitGuarantor(body) {
-    return this.httpClient.post(environment.api + '/api/guarantors', body);
+    return this.httpClient.post(environment.api + '/api/guarantordetails', body);
   }
 
   updateGuarantor(id, body) {
-    return this.httpClient.put(environment.api + '/api/guarantors/' + id, body);
+    return this.httpClient.put(environment.api + '/api/guarantordetails/' + id, body);
   }
 
   retrieveGuarantors(accnumber) {
-    return this.httpClient.get(environment.api + '/api/guarantors?filter[where][accnumber]=' + accnumber);
+    return this.httpClient.get(environment.api + '/api/guarantordetails?filter[where][accnumber]=' + accnumber);
   }
 
   retrieve_a_Guarantor(id) {
-    return this.httpClient.get(environment.api + '/api/guarantors?filter[where][id]=' + id);
+    return this.httpClient.get(environment.api + '/api/guarantordetails?filter[where][id]=' + id);
   }
 
   updateLetter(body) {
@@ -70,7 +70,7 @@ export class EcolService {
   }
 
   generateLetter(data) {
-    return this.httpClient.post<any>(environment.letters_api + '/api/letters_post/demand1', data);
+    return this.httpClient.post<any>(environment.api + '/api/generate/send', data);
   }
 
   sendDemandEmail(data) {

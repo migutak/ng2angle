@@ -15,7 +15,7 @@
     </div>
   </div>
   <h2>Send Demand Letter</h2>
-  <form #sendLetterForm="ngForm" class="form-horizontal">
+  <form #sendLetterForm="ngForm" class="form-horizontal" autocomplete="off">
     <div id="accordion">
       <div class="card">
         <div class="card-header">
@@ -27,7 +27,16 @@
           <div class="card-body">
             <div class="card card-default">
               <div class="card-body">
-                <form class="form-horizontal">
+                <form class="form-horizontal" autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Demand</label>
+                        <div class="col-xl-8">
+                            <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand"
+                            #demand="ngModel" [ngClass]="{ 'is-invalid': demand.invalid }" required>
+                            <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+                            </select>
+                        </div>
+                      </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">accnumber</label>
                     <div class="col-xl-8">

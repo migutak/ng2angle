@@ -7,6 +7,7 @@ import { TranslatorService } from '../../core/translator/translator.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 import { EcolService } from '../../services/ecol.service';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-offsidebar',
@@ -62,9 +63,19 @@ export class OffsidebarComponent implements OnInit, OnDestroy {
 
     logout() {
         //
-        if (confirm('Confirm logout!')) {
-            this.ecolService.logout();
-        this.router.navigate(['/login']);
-        }
+        swal({
+            title: 'Are you sure?',
+            text: 'You want to logout!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Logout!'
+          }).then((result) => {
+            if (result.value) {
+                this.ecolService.logout();
+                this.router.navigate(['/login']);
+            }
+          });
     }
 }

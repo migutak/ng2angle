@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     error = '';
     data: any;
+    menuArray = ['Home'];
 
     constructor(
         public settings: SettingsService,
@@ -60,12 +61,15 @@ export class LoginComponent implements OnInit {
                 // to keep user logged in between page refreshes
                 // get user permissions
                 this.ecolService.getpermissions(user.role).subscribe(permission => {
-                    // console.log(permission);
+                    //
+                    for (let i = 0; i < permission.length; i++) {
+                        this.menuArray.push(permission[i].perm_id);
+                    }
+                    // console.log(this.menuArray);
                     user.authdata = window.btoa(value.username + ':' + value.password);
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     localStorage.setItem('userpermission', JSON.stringify(permission));
-                    localStorage.setItem('profile', '1');
-
+                    localStorage.setItem('userrole', JSON.stringify(this.menuArray));
                     // this.router.navigate([this.returnUrl]);
                     this.router.navigate(['/home']);
                 });

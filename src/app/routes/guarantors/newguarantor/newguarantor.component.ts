@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 const cust = localStorage.getItem('custnumber');
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
+import { CodegenComponentFactoryResolver } from '@angular/core/src/linker/component_factory_resolver';
 
 @Component({
   selector: 'app-newguarantor',
@@ -33,7 +34,7 @@ export class NewguarantorComponent implements OnInit {
       email: form.value.email,
       active: form.value.active
     };
-
+console.log(body);
     this.ecolService.submitGuarantor(body).subscribe(data => {
       swal('Successful!', 'saved successfully!', 'success');
     }, error => {

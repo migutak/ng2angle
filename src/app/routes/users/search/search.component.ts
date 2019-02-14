@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
   };
 
   branches: Array<any>;
+  buttonTitle = 'update user';
 
   constructor(fb: FormBuilder, private ecolService: EcolService ) {
     // Model Driven validation
@@ -66,8 +67,10 @@ export class SearchComponent implements OnInit {
    this.ecolService.putuser(body).subscribe(data => {
      // console.log(data);
       swal('Successful!', 'user updated!', 'success');
+
     }, error => {
      // console.log(error);
+    // this.buttonTitle = 'update user';
       swal('Error!', 'Error occurred during processing!', 'error');
     });
   }
@@ -93,8 +96,10 @@ export class SearchComponent implements OnInit {
           });
           // success
         swal('Successful!', 'user details retrieved!', 'success');
+        this.buttonTitle = 'update user';
         } else {
           swal('Warning!', 'No user found!', 'warning');
+          this.buttonTitle = 'create user';
           this.valForm.patchValue({
             username: '',
             firstname: '',
@@ -111,6 +116,7 @@ export class SearchComponent implements OnInit {
       }, error => {
         console.log(error);
         swal('Error!', 'Error occurred during processing!', 'error');
+        this.buttonTitle = 'create user';
       });
     }
   }
