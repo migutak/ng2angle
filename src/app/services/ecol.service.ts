@@ -101,6 +101,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/branches');
   }
 
+  putbranch(branch: object) {
+    return this.httpClient.put<any>(environment.api + '/api/branches', branch);
+  }
+
   guarantorletters(data) {
     return this.httpClient.post<any>(environment.api + '/api/guarantorletters', data);
   }

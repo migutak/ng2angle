@@ -107,6 +107,10 @@ const Administration = {
         {
             text: 'Approvals',
             link: '/users/approvals'
+        },
+        {
+            text: 'Branches',
+            link: '/users/branches'
         }
     ]
 };
@@ -598,8 +602,8 @@ const headingConfigurations = {
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-console.log('menu', userperm);
-console.log('currentUser', currentUser);
+// console.log('menu', userperm);
+// console.log('currentUser', currentUser);
 
 let menuitems = [];
 
@@ -617,9 +621,9 @@ const user_mgmt_menu = [
     Charts,
     Blog,
     Maps,*/
-    headingMore,
-    Collectionrpt,
-    Remedialrpts
+    // headingMore,
+    // Collectionrpt,
+    // Remedialrpts
     // Tables,
    // Ecommerce,
    // Extras

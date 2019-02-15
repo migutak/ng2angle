@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UiSwitchModule } from 'ngx-ui-switch';
+import { BranchesComponent } from './branches/branches.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
   { path: 'search', component: SearchComponent },
   { path: 'roles', component: RolesComponent },
-  { path: 'approvals', component: ApprovalsComponent }
+  { path: 'approvals', component: ApprovalsComponent },
+  { path: 'branches', component: BranchesComponent }
 ];
 
 @NgModule({
@@ -24,7 +25,8 @@ const routes: Routes = [
   declarations: [
     SearchComponent,
     RolesComponent,
-    ApprovalsComponent
+    ApprovalsComponent,
+    BranchesComponent
   ],
   exports: [
       RouterModule

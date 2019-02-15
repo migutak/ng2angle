@@ -1,0 +1,79 @@
+<div class="content-heading">
+  <div>Branches
+    <small>Create and manage branches</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card card-default">
+        <div class="card-header">Branch List</div>
+        <div class="card-body">
+          <scrollable class="list-group" height="600">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>BranchCode#</th>
+                    <th>Branch Name</th>
+                    <th>Branch Manager</th>
+                    <th>Branch Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let b of branches">
+                    <td><button class="btn btn-link" (click)="update(b)">{{b.branchcode}}</button></td>
+                    <td>{{b.branchname}}</td>
+                    <td>{{b.manager}}</td>
+                    <td>{{b.branchemail}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </scrollable>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card card-default">
+        <div class="card-body">
+          <form [formGroup]="branchForm" class="form-validate form-horizontal"
+            (submit)="submitForm($event, branchForm.value)" novalidate="">
+            <div class="form-group">
+              <p>BranchCode#</p>
+              <input class="form-control" type="text" formControlName="branchcode" name="branchcode"
+                [formControl]="branchForm.controls['branchcode']" [ngClass]="{ 'is-invalid': f.branchcode.errors }"
+                required />
+            </div>
+            <div class="form-group">
+              <p>Branch Name</p>
+              <input class="form-control" type="text" formControlName="branchname"
+                [formControl]="branchForm.controls['branchname']" [ngClass]="{ 'is-invalid': f.branchname.errors }"
+                required />
+            </div>
+            <div class="form-group">
+              <p>Branch Manager</p>
+              <input class="form-control" type="text" formControlName="branchmanager"
+                [formControl]="branchForm.controls['branchmanager']"
+                [ngClass]="{ 'is-invalid': f.branchmanager.errors }" required />
+            </div>
+            <div class="form-group">
+              <p>Branch Email</p>
+              <input class="form-control" type="text" formControlName="branchemail"
+                [formControl]="branchForm.controls['branchemail']" [ngClass]="{ 'is-invalid': f.branchemail.errors }"
+                required />
+            </div>
+            <div class="form-group">
+              <p>Region</p>
+              <input class="form-control" type="text" formControlName="region"
+                [formControl]="branchForm.controls['region']" />
+            </div>
+            <div class="form-group">
+                <button [disabled]="branchForm.invalid" class="btn btn-outline-primary">Update or create new Branch</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
