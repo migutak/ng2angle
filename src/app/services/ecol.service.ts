@@ -64,6 +64,18 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/settings_letters/' + letter);
   }
 
+  getdemandSettings() {
+    return this.httpClient.get<any>(environment.api + '/api/demandsettings');
+  }
+
+  demandSettings(body) {
+    return this.httpClient.post<any>(environment.api + '/api/demandsettings', body);
+  }
+
+  putdemandSettings(body) {
+    return this.httpClient.put<any>(environment.api + '/api/demandsettings', body);
+  }
+
   getAccount(accnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);

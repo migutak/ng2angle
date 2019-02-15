@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
         }*/
         this.ecolService.login(value.username, value.password)
         .subscribe(user => {
-            console.log(user);
+            // console.log(user);
             // login successful if there's a user in the response
             if (user !== null || user !== undefined) {
                 // store user details and basic auth credentials in local storage
@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     localStorage.setItem('userpermission', JSON.stringify(permission));
                     localStorage.setItem('userrole', JSON.stringify(this.menuArray));
+                    localStorage.setItem('profile', '1');
                     // this.router.navigate([this.returnUrl]);
                     this.router.navigate(['/home']);
                 });

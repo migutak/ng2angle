@@ -25,7 +25,7 @@ export class Demand1Component implements OnInit {
 
   source: any =
     {
-      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=50',
+      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=150',
       datafields:
         [
           { name: 'accnumber', type: 'string' },
@@ -104,11 +104,12 @@ export class Demand1Component implements OnInit {
 
   refreshgrid() {
     // this.mygrid.setOptions({source:{}});
-  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=50',
+  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=150',
 
   // console.log(this.source.url, this.dataAdapter);
   // tslint:disable-next-line:max-line-length
   // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
+  //
   this.myGrid.updatebounddata('cells');
   }
 

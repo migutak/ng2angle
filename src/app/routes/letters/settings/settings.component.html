@@ -24,28 +24,42 @@
                                             <span><button class="btn btn-small btn-primary" type="button"><em class="fa fa-sync fa-fw"></em> Letter details</button></span>-->
                     <div class="input-group">
                       <select class="form-control" name="letterid" id="letterid" #letterid="ngModel" [(ngModel)]="model.letterid"
-                        required>
+                        [ngClass]="{ 'is-invalid': letterid.invalid }" required>
                         <option value="">Nothing</option>
                         <option *ngFor="let demand of itemsDemands">{{demand}}</option>
                       </select>
-                      <span class="input-group-btn">
+                      <!--<span class="input-group-btn">
                         <button class="btn btn-primary" [disabled]="!letterid.valid" type="button" (click)="onChange(model.letterid)">
                           <em class="fa fa-search"></em>
                         </button>
-                      </span>
+                      </span>--->
                     </div>
-                    <p class="my-2">Days in arrears</p>
-                    <ngx-select (data)="valueTag" [multiple]="false" [items]="itemsTags" name="daysinarr" id="daysinarr"
-                      #daysinarr="ngModel" [(ngModel)]="model.daysinarr" required></ngx-select>
+                    <p class="my-2"></p>
+                    <!--<ngx-select (data)="valueTag" [multiple]="false" [items]="itemsTags" name="daysinarr" id="daysinarr"
+                      #daysinarr="ngModel" [(ngModel)]="model.daysinarr" required></ngx-select>-->
+
+                    <div class="form-group">
+                      <p>Day in arrears when the letter will be sent (Between 0 and 120)</p>
+                      <input class="form-control" type="number" name="daysinarr" id="daysinarr" #daysinarr="ngModel"
+                        [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.invalid }" min="1" required />
+                      <!--<div *ngIf="daysinarr.errors.min">Minimum required is 0</div>
+                          <div *ngIf="daysinarr.errors.max">Maximum required is 120</div>-->
+                    </div>
+
                     <p class="lead mt-3"></p>
                     <div class="form-group">
                       <p>Send only to - memo</p>
                       <textarea class="form-control" rows="3" placeholder="only to memo ..." name="onlyto" id="onlyto"
                         #onlyto="ngModel" [(ngModel)]="model.onlyto"></textarea>
                     </div>
-                    <p class="my-2">Exceptions - Memo</p>
-                    <ngx-select (data)="valueReview" [multiple]="true" [items]="memoTags" name="exceptions" id="exceptions"
-                      #exceptions="ngModel" [(ngModel)]="model.exceptions"></ngx-select>
+                    <p class="my-2"></p>
+                    <!--<ngx-select (data)="valueReview" [multiple]="true" [items]="memoTags" name="exceptions" id="exceptions"
+                      #exceptions="ngModel" [(ngModel)]="model.exceptions"></ngx-select>-->
+                    <div class="form-group">
+                      <p>Exceptions - Memo</p>
+                      <textarea class="form-control" rows="3" placeholder="exceptions memo ..." name="exceptions" id="exceptions"
+                        #exceptions="ngModel" [(ngModel)]="model.exceptions"></textarea>
+                    </div>
                     <p class="lead mt-3"></p>
                     <div class="form-group">
                       <p>Exceptions - custnumber</p>
@@ -119,13 +133,17 @@
                     <div>
                       <div class="clearfix">
                         <div class="float-left">
-                          <button [disabled]="!settingsForm.valid || !settingsForm.dirty" class="btn btn-primary" type="submit">
-                            <em class="fa fa-check fa-fw"></em>Save</button>
+                          <button class="btn btn-outline-primary" type="button" [disabled]="disable" (click)="update()">
+                            <em class="fa fa-pencil fa-fw"></em>Update {{model.lettername}} </button>
                         </div>
-                        <!--<div class="float-right">
-                                                        <button class="btn btn-danger" type="button">
-                                                            <em class="fas fa-trash-alt fa-fw"></em>Cancel</button>
-                                                    </div>-->
+                        <div class="float-left">
+                          <button class="btn btn-outline-primary" type="submit">
+                            <em class="fa fa-check fa-fw"></em>Add New</button>
+                        </div>
+                        <div class="float-right">
+                          <button class="btn btn-danger" type="button" [disabled]="disable" (click)="delete()">
+                            <em class="fas fa-trash-alt fa-fw"></em>Delete</button>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -133,125 +151,54 @@
               </div>
             </div>
             <div class="col-xl-6">
-                <div class="col-xl-12">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <!---<div class="px-2 float-right badge badge-danger">5</div>
+              <div class="col-xl-12">
+                <div class="card card-default">
+                  <div class="card-header">
+                    <!---<div class="px-2 float-right badge badge-danger">5</div>
                             <div class="px-2 mr-2 float-right badge badge-success">12</div>-->
-                            <div class="card-title">Demand setups</div>
+                    <div class="card-title">Demand setups</div>
+                  </div>
+                  <!-- START list group-->
+                  <scrollable class="list-group" height="700">
+                    <!-- START list group item-->
+                    <div *ngFor="let s of demandSettings" class="list-group-item list-group-item-action">
+                      <div class="media">
+                        <!--<img class="align-self-start mx-2 circle thumb32" src="assets/img/user/02.jpg" alt="Image">-->
+                        <div class="media-body text-truncate">
+                          <p class="mb-1">
+                            <strong class="text-primary">
+                              <span class="circle bg-success circle-lg text-left"></span>
+                              <span>Letter: {{s.lettername}}</span>
+                            </strong>
+                          </p>
+                          <p class="mb-1 text-sm">Daysinarr: {{s.daysinarr}}</p>
+                          <p class="mb-1 text-sm">send only to: {{s.onlyto}}</p>
+                          <p class="mb-1 text-sm">exceptions-memo: {{s.exceptions}}</p>
+                          <p class="mb-1 text-sm">exceptions-cust: {{s.exceptionscust}}</p>
+                          <p class="mb-1 text-sm">sms template: {{s.sms}}</p>
+                          <button class="btn btn-outline-success" (click)="updatedemandsettings(s)">update</button>
                         </div>
-                        <!-- START list group-->
-                        <scrollable class="list-group" height="560">
-                            <!-- START list group item-->
-                            <div class="list-group-item list-group-item-action">
-                                <div class="media">
-                                    <img class="align-self-start mx-2 circle thumb32" src="assets/img/user/02.jpg" alt="Image">
-                                    <div class="media-body text-truncate">
-                                        <p class="mb-1">
-                                            <strong class="text-primary">
-                                                 <span class="circle bg-success circle-lg text-left"></span>
-                                                 <span>Catherine Ellis</span>
-                                              </strong>
-                                        </p>
-                                        <p class="mb-1 text-sm">Cras sit amet nibh libero, in gravida nulla. Nulla...</p>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <small class="text-muted ml-2">2h</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END list group item-->
-                            <!-- START list group item-->
-                            <div class="list-group-item list-group-item-action">
-                                <div class="media">
-                                    <img class="align-self-start mx-2 circle thumb32" src="assets/img/user/03.jpg" alt="Image">
-                                    <div class="media-body text-truncate">
-                                        <p class="mb-1">
-                                            <strong class="text-primary">
-                                                 <span class="circle bg-success circle-lg text-left"></span>
-                                                 <span>Jessica Silva</span>
-                                              </strong>
-                                        </p>
-                                        <p class="mb-1 text-sm">Cras sit amet nibh libero, in gravida nulla. Nulla...</p>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <small class="text-muted ml-2">3h</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END list group item-->
-                            <!-- START list group item-->
-                            <div class="list-group-item list-group-item-action">
-                                <div class="media">
-                                    <img class="align-self-start mx-2 circle thumb32" src="assets/img/user/09.jpg" alt="Image">
-                                    <div class="media-body text-truncate">
-                                        <p class="mb-1">
-                                            <strong class="text-primary">
-                                                 <span class="circle bg-danger circle-lg text-left"></span>
-                                                 <span>Jessie Wells</span>
-                                              </strong>
-                                        </p>
-                                        <p class="mb-1 text-sm">Cras sit amet nibh libero, in gravida nulla. Nulla...</p>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <small class="text-muted ml-2">4h</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END list group item-->
-                            <!-- START list group item-->
-                            <div class="list-group-item list-group-item-action">
-                                <div class="media">
-                                    <img class="align-self-start mx-2 circle thumb32" src="assets/img/user/12.jpg" alt="Image">
-                                    <div class="media-body text-truncate">
-                                        <p class="mb-1">
-                                            <strong class="text-primary">
-                                                 <span class="circle bg-danger circle-lg text-left"></span>
-                                                 <span>Rosa Burke</span>
-                                              </strong>
-                                        </p>
-                                        <p class="mb-1 text-sm">Cras sit amet nibh libero, in gravida nulla. Nulla...</p>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <small class="text-muted ml-2">1d</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END list group item-->
-                            <!-- START list group item-->
-                            <div class="list-group-item list-group-item-action">
-                                <div class="media">
-                                    <img class="align-self-start mx-2 circle thumb32" src="assets/img/user/10.jpg" alt="Image">
-                                    <div class="media-body text-truncate">
-                                        <p class="mb-1">
-                                            <strong class="text-primary">
-                                                 <span class="circle bg-danger circle-lg text-left"></span>
-                                                 <span>Michelle Lane</span>
-                                              </strong>
-                                        </p>
-                                        <p class="mb-1 text-sm">Mauris eleifend, libero nec cursus lacinia...</p>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <small class="text-muted ml-2">2d</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END list group item-->
-                        </scrollable>
-                        <!-- END list group-->
-                        <!-- START card footer-->
-                        <div class="card-footer clearfix">
-                            <div class="input-group">
-                                <input class="form-control form-control-sm" type="text" placeholder="Search message .." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-secondary btn-sm" type="submit"><i class="fa fa-search"></i>
-                                    </button>
-                                 </span>
-                            </div>
+                        <div class="ml-auto">
+                          <small class="text-muted ml-2">{{s.stagedate}}</small>
                         </div>
-                        <!-- END card-footer-->
+                      </div>
                     </div>
+                    <!-- END list group item-->
+                  </scrollable>
+                  <!-- END list group-->
+                  <!-- START card footer-->
+                  <div class="card-footer clearfix">
+                    <div class="input-group">
+                      <input class="form-control form-control-sm" type="text" placeholder="Search message .." />
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary btn-sm" type="submit"><i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <!-- END card-footer-->
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -267,9 +214,9 @@
         <div class="card-body">
           <form #testForm="ngForm" class="form-horizontal" (ngSubmit)="testSubmit(testForm)" autocomplete="off">
             <select class="form-control" name="demand" id="demand" #demand="ngModel" [(ngModel)]="model.letterid"
-                required>
-                <option value="">Nothing</option>
-                <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+              required>
+              <option value="">Nothing</option>
+              <option *ngFor="let demand of itemsDemands">{{demand}}</option>
             </select>
             <p class="lead mt-3"></p>
             <div class="form-group">

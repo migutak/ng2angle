@@ -11,7 +11,8 @@ import { environment } from '../../../../environments/environment';
 export class SettingsComponent implements OnInit {
 
   public itemsCategories: Array<string> = ['1-Demand', '2-Demand', 'Pre-listing', 'Post-listing', '90-day', '40-day'];
-  public itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
+  public itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40',
+'creditcard_overdue', 'creditcard_prelisting', 'creditcard_suspension'];
   public itemsTags: Array<number> = [7, 14, 30, 60, 90, 120];
   public memoTags: Array<number> = [100, 140, 300, 600, 900, 120];
   public itemsReview = [
@@ -31,10 +32,21 @@ export class SettingsComponent implements OnInit {
     valueReview;
     contents: string;
     letter: {};
+    demandSettings: any;
+    disable = true;
 
   constructor(private ecolService: EcolService) { }
 
   ngOnInit() {
+    this.getdemandSettings();
+  }
+
+  getdemandSettings() {
+    this.ecolService.getdemandSettings().subscribe(response => {
+      this.demandSettings = response;
+    }, error => {
+      console.log(error);
+    });
   }
 
   testSubmit(form) {
@@ -130,8 +142,16 @@ export class SettingsComponent implements OnInit {
     onlyto: form.value.onlyto
     };
 
-    this.ecolService.updateLetter(body).subscribe(data => {
+    /*this.ecolService.updateLetter(body).subscribe(data => {
       swal('Successful!', 'saved successfully!', 'success');
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred during processing!', 'error');
+    });*/
+
+    this.ecolService.demandSettings(body).subscribe(data => {
+      swal('Successful!', 'saved successfully!', 'success');
+      this.getdemandSettings();
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
@@ -158,6 +178,49 @@ export class SettingsComponent implements OnInit {
     }, error => {
       console.log(error);
       swal('Error!', 'No letter found!', 'error');
+    });
+  }
+
+  updatedemandsettings (demand) {
+    this.disable = false;
+    this.model = demand;
+  }
+
+  update() {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to update!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, update!'
+    }).then((result) => {
+      if (result.value) {
+        this.ecolService.loader();
+        this.ecolService.putdemandSettings(this.model).subscribe(Response => {
+          swal('Successful!', 'letter updated!', 'success');
+        }, error => {
+          console.log(error);
+          swal('Error!', 'Error updating letter!', 'error');
+        });
+      }
+    });
+  }
+
+  delete() {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to DELETE!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete!'
+    }).then((result) => {
+      if (result.value) {
+        //
+      }
     });
   }
 

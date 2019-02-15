@@ -108,9 +108,7 @@ const Administration = {
             text: 'Approvals',
             link: '/users/approvals'
         }
-    ],
-    'alert': 'new',
-    'label': 'badge badge-primary'
+    ]
 };
 
 const Elements = {
@@ -598,9 +596,12 @@ const headingConfigurations = {
 
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
-console.log('menu', userperm);
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-const menuitems = [];
+console.log('menu', userperm);
+console.log('currentUser', currentUser);
+
+let menuitems = [];
 
 const user_mgmt_menu = [
     headingMain,
@@ -684,15 +685,15 @@ const teamleader_menu = [
     SMS
 ];
 
-/*if (userperm !== null) {
-    if (userperm[0].attr === 'true' ) {
+if (currentUser !== null) {
+    if (currentUser.role === 'admin' ) {
         menuitems = user_mgmt_menu;
     } else {
         menuitems = collection_menu;
     }
 } else {
     menuitems = collection_menu;
-}*/
+}
 
 
-export const menu = collection_menu;
+export const menu = menuitems;

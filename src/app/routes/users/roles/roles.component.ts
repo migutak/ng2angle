@@ -141,12 +141,12 @@ export class RolesComponent implements OnInit {
         teamleader: this.truefalse(data[2].attr),
         activity: this.truefalse(data[1].attr),
         configurations: this.truefalse(data[3].attr),
-        external_agents: this.truefalse(data[9].attr),
+        external_agents: this.truefalse(data[8].attr),
         mcoopcash: this.truefalse(data[4].attr),
         collection: this.truefalse(data[5].attr),
-        dashboard: this.truefalse(data[6].attr),
+        dashboard: this.truefalse(data[9].attr),
         creditcards: this.truefalse(data[7].attr),
-        remedial: this.truefalse(data[8].attr)
+        remedial: this.truefalse(data[6].attr)
       });
       swal('Successful!', 'Permissions retrieved!', 'success');
     }, error => {
