@@ -25,7 +25,7 @@ export const routes = [
             { path: 'letters', loadChildren: './letters/letters.module#LettersModule' },
             { path: 'demand', loadChildren: './demand/demand.module#DemandModule' },
             { path: 'users', loadChildren: './users/users.module#UsersModule' },
-            { path: 'elements', loadChildren: './elements/elements.module#ElementsModule' },
+            { path: 'creditcards', loadChildren: './creditcards/creditcards.module#CreditcardsModule' },
             { path: 'forms', loadChildren: './forms/forms.module#FormsModule' },
             { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
             { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },

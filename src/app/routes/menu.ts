@@ -482,7 +482,7 @@ const Work = {
 const Work_cc = {
     text: 'Work Queue',
     link: '/creditcards',
-    icon: 'icon-briefcase',
+    icon: 'icon-credit-card',
     submenu: [
         {
             text: 'View all',
@@ -496,33 +496,33 @@ const Work_cc = {
         },
         {
             text: 'My Worklist',
-            link: '/creditcards/worklist'
+            link: '/creditcards/myworklist'
         },
         {
             text: 'View all cards',
-            link: '/creditcards/predelinquent'
+            link: '/creditcards/allcards'
         },
         {
             text: 'Cards Cr/Zero Bal',
-            link: '/creditcards/ptps'
+            link: '/creditcards/zerobalance'
         },
         {
             text: 'View all loans',
-            link: '/creditcards/withfunds'
+            link: '/creditcards/loans'
         }
         ,
         {
             text: 'Demand Letters',
-            link: '/creditcards/demands',
+            link: '/creditcards/creditcarddemands',
             icon: 'icon-note',
             submenu: [
                 {
                     text: 'Demands due',
-                    link: '/creditcards/demands/due'
+                    link: '/creditcards/creditcarddemands/demandsdue'
                 },
                 {
                     text: 'Demands history',
-                    link: '/creditcards/demands/history'
+                    link: '/creditcards/creditcarddemands/demandshistory'
                 }
             ]
         },

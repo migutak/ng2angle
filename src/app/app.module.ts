@@ -26,7 +26,7 @@ export function createTranslateLoader(http: HttpClient) {
         BrowserModule,
         HttpClientModule,
         FormsModule,
-        BrowserAnimationsModule, // required for ng2-tag-input
+        BrowserAnimationsModule, // required for ng2-tag-input ...
         CoreModule,
         LayoutModule,
         SharedModule.forRoot(),
@@ -42,4 +42,5 @@ export function createTranslateLoader(http: HttpClient) {
     providers: [],
     bootstrap: [AppComponent]
 })
+
 export class AppModule { }
