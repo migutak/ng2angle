@@ -1,52 +1,10 @@
 <div class="content-heading">
-  <div>Demand Letters History
-    <small>all demand letters issued</small></div>
+  <div>My Worklist
+    <small>user: </small></div>
 </div>
 <div class="card card-default">
-  <div class="card-header">Search</div>
 
   <div class="card-body">
-    <form class="form-horizontal">
-      <div class="input-group">
-        <input class="form-control" type="text" placeholder="Search for accnumber ..." #accnumber />
-        <span class="input-group-btn">
-          <button [disabled]="!accnumber.value" class="btn btn-secondary" type="button" (click)="Search(accnumber)">
-            <em class="fa fa-search"></em>
-          </button>
-        </span>
-      </div>
-    </form>
-    <table class="wd-wide">
-      <tbody>
-        <tr *ngFor="let d of demands">
-          <td class="wd-xs">
-            <div class="px-2">
-              <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.filepath)">
-                <i class="fa fa-download"></i>
-              </button>
-            </div>
-          </td>
-          <td>
-            <div class="px-2">
-              <h4 class="mb-2">{{d.demand}}</h4>
-              <small class="text-muted">{{d.owner}}</small>
-            </div>
-          </td>
-          <td class="wd-sm  d-none d-lg-table-cell">
-            <div class="px-2">
-              <p class="m-0">Date sent</p>
-              <small class="text-muted">{{d.datesent | date}}</small>
-            </div>
-          </td>
-          <td class="wd-xs d-none d-lg-table-cell">
-            <div class="px-2">
-              <p class="m-0 text-muted">
-                <em class="icon-people mr-2 fa-lg"></em>0</p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 
 </div>

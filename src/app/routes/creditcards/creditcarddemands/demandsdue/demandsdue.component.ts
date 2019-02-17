@@ -25,19 +25,19 @@ export class DemandsdueComponent implements OnInit {
 
   source: any =
     {
-      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=150',
+      url: environment.api + '/api/demandsduecc?filter[status]=PENDING&filter[limit]=150',
       datafields:
         [
-          { name: 'accnumber', type: 'string' },
-          { name: 'custnumber', type: 'string' },
-          { name: 'client_name', type: 'string' },
-          { name: 'oustbalance', type: 'number' },
-          { name: 'totalarrears', type: 'number' },
-          { name: 'daysinarr', type: 'number' },
+          { name: 'cardacct', type: 'string' },
+          { name: 'cardnumber', type: 'string' },
+          { name: 'cardname', type: 'string' },
+          { name: 'outbalance', type: 'number' },
+          { name: 'exppmnt', type: 'number' },
+          { name: 'daysinarrears', type: 'number' },
           { name: 'address', type: 'string' },
-          { name: 'postalcode', type: 'string' },
-          { name: 'section', type: 'string' },
-          { name: 'telnumber', type: 'string' },
+          { name: 'rpcode', type: 'string' },
+          { name: 'city', type: 'string' },
+          { name: 'mobile', type: 'string' },
           { name: 'emailaddress', type: 'string' },
           { name: 'colofficer', type: 'string' },
           { name: 'demandletter', type: 'string' },
@@ -52,7 +52,7 @@ export class DemandsdueComponent implements OnInit {
   columns: any[] =
     [
       {
-        text: 'ACCNUMBER', datafield: 'accnumber', width: 150, filtertype: 'input',
+        text: 'CARDACCT', datafield: 'cardacct', width: 150, filtertype: 'input',
         createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
           const that = this;
           const container = document.createElement('div');
@@ -67,14 +67,12 @@ export class DemandsdueComponent implements OnInit {
         },
         initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
       },
-      { text: 'CUSTNUMBER', datafield: 'custnumber', width: 100, filtertype: 'input' },
-      { text: 'CLIENT_NAME', datafield: 'client_name', width: 200, filtertype: 'input' },
-      { text: 'OUSTBALANCE', datafield: 'oustbalance', filtertype: 'input', cellsformat: 'd' },
-      { text: 'TOTALARREARS', datafield: 'totalarrears', filtertype: 'input', cellsformat: 'd' },
-      { text: 'DAYSINARR', datafield: 'daysinarr', filtertype: 'input', cellsformat: 'd' },
-      { text: 'SECTION', datafield: 'section', filtertype: 'input' },
-      { text: 'BRANCHNAME', datafield: 'branchname', filtertype: 'input' },
-      { text: 'TELNUMBER', datafield: 'telnumber', filtertype: 'input' },
+      { text: 'CARDNUMBER', datafield: 'cardnumber', width: 100, filtertype: 'input' },
+      { text: 'CARDNAME', datafield: 'cardname', width: 150, filtertype: 'input' },
+      { text: 'OUTBALANCE', datafield: 'outbalance', filtertype: 'input', cellsformat: 'd' },
+      { text: 'EXPPMNT', datafield: 'exppmnt', filtertype: 'input', cellsformat: 'd' },
+      { text: 'DAYSINARR', datafield: 'daysinarrears', filtertype: 'input', cellsformat: 'd' },
+      { text: 'TELNUMBER', datafield: 'mobile', filtertype: 'input' },
       { text: 'EMAILADDRESS', datafield: 'emailaddress', filtertype: 'input' },
       { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
       { text: 'DEMANDLETTER', datafield: 'demandletter', filtertype: 'input' },
