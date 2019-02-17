@@ -8,10 +8,10 @@ import { ColorsService } from '../../../shared/colors/colors.service';
 })
 export class RadialComponent implements OnInit {
 
-    easyPiePercent1: number = 85;
-    easyPiePercent2: number = 45;
-    easyPiePercent3: number = 25;
-    easyPiePercent4: number = 60;
+    easyPiePercent1 = 85;
+    easyPiePercent2 = 45;
+    easyPiePercent3 = 25;
+    easyPiePercent4 = 60;
 
     pieOptions1 = {
         animate: {

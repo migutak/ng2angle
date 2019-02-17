@@ -38,6 +38,14 @@ export class EcolService {
     return this.httpClient.get(environment.api + '/api/guarantordetails?filter[where][id]=' + id);
   }
 
+  global(body) {
+    return this.httpClient.put(environment.api + '/api/global_letter_settings', body);
+  }
+
+  getglobal() {
+    return this.httpClient.get(environment.api + '/api/global_letter_settings');
+  }
+
   updateLetter(body) {
     return this.httpClient.put(environment.api + '/api/settings_letters', body);
   }

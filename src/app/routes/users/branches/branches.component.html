@@ -38,7 +38,7 @@
       <div class="card card-default">
         <div class="card-body">
           <form [formGroup]="branchForm" class="form-validate form-horizontal"
-            (submit)="submitForm($event, branchForm.value)" novalidate="">
+            (submit)="submitForm($event, branchForm.value)" novalidate="" autocomplete="off">
             <div class="form-group">
               <p>BranchCode#</p>
               <input class="form-control" type="text" formControlName="branchcode" name="branchcode"

@@ -479,34 +479,83 @@ const Work = {
     ]
 };
 
-const creditcards = {
-    text: 'Credit Cards',
+const Work_cc = {
+    text: 'Work Queue',
     link: '/creditcards',
-    icon: 'icon-credit-card',
+    icon: 'icon-briefcase',
     submenu: [
         {
-            text: 'Todays Work',
-            link: '/creditcards/list'
+            text: 'View all',
+            link: '/creditcards/viewall',
+            'alert': '23',
+            'label': 'badge badge-warning'
+        },
+        {
+            text: 'My allocations',
+            link: '/creditcards/myallocations'
         },
         {
             text: 'My Worklist',
-            link: '/creditcards/post'
+            link: '/creditcards/worklist'
         },
         {
-            text: 'My Allocations',
-            link: '/creditcards/list'
+            text: 'View all cards',
+            link: '/creditcards/predelinquent'
         },
         {
-            text: 'Post',
-            link: '/creditcards/post'
+            text: 'Cards Cr/Zero Bal',
+            link: '/creditcards/ptps'
         },
         {
-            text: 'List',
-            link: '/creditcards/list'
+            text: 'View all loans',
+            link: '/creditcards/withfunds'
+        }
+        ,
+        {
+            text: 'Demand Letters',
+            link: '/creditcards/demands',
+            icon: 'icon-note',
+            submenu: [
+                {
+                    text: 'Demands due',
+                    link: '/creditcards/demands/due'
+                },
+                {
+                    text: 'Demands history',
+                    link: '/creditcards/demands/history'
+                }
+            ]
         },
         {
-            text: 'Post',
-            link: '/creditcards/post'
+            text: 'Reports Credit cards',
+            link: '/creditcards/reports',
+            icon: 'icon-chart',
+            submenu: [
+                {
+                    text: 'Collector activity',
+                    link: '/creditcards/reports/activity'
+                },
+                {
+                    text: 'Daily notes',
+                    link: '/creditcards/reports/dailynotes'
+                },
+                {
+                    text: 'bulk notes',
+                    link: '/creditcards/reports/bulknotes'
+                },
+                {
+                    text: 'Amount collected',
+                    link: '/creditcards/reports/amntcollected'
+                },
+                {
+                    text: 'Allocation summary',
+                    link: '/creditcards/reports/allocation summary'
+                },
+                {
+                    text: 'Overdue report',
+                    link: '/creditcards/reports/overduereportcc'
+                }
+            ]
         }
     ]
 };
@@ -611,22 +660,7 @@ const user_mgmt_menu = [
     headingMain,
     Home,
     DashboardAdmin,
-    Administration,
-    // Letters,
-    // headingComponents,
-    // Work,
-    // Pages,
-   /* Elements,
-    Forms,
-    Charts,
-    Blog,
-    Maps,*/
-    // headingMore,
-    // Collectionrpt,
-    // Remedialrpts
-    // Tables,
-   // Ecommerce,
-   // Extras
+    Administration
 ];
 
 const collection_menu = [
@@ -639,7 +673,6 @@ const collection_menu = [
     Remedial,
     mcoopcash,
     serviceproviders,
-    creditcards,
     headingMore,
     Collectionrpt,
     Remedialrpts,
@@ -653,12 +686,8 @@ const creditcards_menu = [
     headingMain,
     Home,
     Dashboard,
-    Letters,
     headingComponents,
-    Work,
-    headingMore,
-    Collectionrpt,
-    Remedialrpts
+    Work_cc
 ];
 
 const remedial_menu = [
@@ -688,10 +717,16 @@ const teamleader_menu = [
     Allocations,
     SMS
 ];
-
+// console.log('menu role==>', currentUser.role);
 if (currentUser !== null) {
     if (currentUser.role === 'admin' ) {
         menuitems = user_mgmt_menu;
+    } else if (currentUser.role === 'remedial') {
+        menuitems = remedial_menu;
+    } else if (currentUser.role === 'creditcards') {
+        menuitems = creditcards_menu;
+    } else if (currentUser.role === 'teamleader') {
+        menuitems = teamleader_menu;
     } else {
         menuitems = collection_menu;
     }

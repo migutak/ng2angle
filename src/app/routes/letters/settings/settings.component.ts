@@ -27,6 +27,7 @@ export class SettingsComponent implements OnInit {
     ];
     model: any = {};
     test: any = {};
+    global: any = {};
     valueCategory;
     valueTag;
     valueReview;
@@ -39,11 +40,30 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getdemandSettings();
+    this.getblobal();
   }
 
   getdemandSettings() {
     this.ecolService.getdemandSettings().subscribe(response => {
       this.demandSettings = response;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  globalSubmit(form) {
+    this.ecolService.loader();
+    this.ecolService.global(this.global).subscribe(response => {
+      swal('Success!', 'Settngs saved!', 'success');
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occured!', 'error');
+    });
+  }
+
+  getblobal() {
+    this.ecolService.getglobal().subscribe(response => {
+      this.global = response[0];
     }, error => {
       console.log(error);
     });
@@ -71,7 +91,7 @@ export class SettingsComponent implements OnInit {
   generateletter(letter, emaildata: any) {
     console.log(letter);
     this.ecolService.generateLetter(letter).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       swal('Success!', 'Letter generated!', 'success');
       // send email
       // add file full path

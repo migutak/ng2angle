@@ -36,17 +36,18 @@ export class BranchesComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.branchForm.invalid) {
-        return;
+      return;
     }
-this.ecolService.loader();
+    this.ecolService.loader();
     // console.log(value);
     this.ecolService.putbranch(value).subscribe(res => {
       swal('Successful!', 'Branch set!', 'success');
+      this.getbranches();
     }, error => {
       console.log(error);
       swal('Error!', 'Exception occured!', 'error');
     });
-}
+  }
 
   getbranches() {
     this.ecolService.getbranches().subscribe(response => {

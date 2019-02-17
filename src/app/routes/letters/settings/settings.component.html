@@ -137,7 +137,7 @@
                             <em class="fa fa-pencil fa-fw"></em>Update {{model.lettername}} </button>
                         </div>
                         <div class="float-left">
-                          <button class="btn btn-outline-primary" type="submit">
+                          <button [disabled]="!settingsForm.valid || !settingsForm.dirty" class="btn btn-outline-primary" type="submit">
                             <em class="fa fa-check fa-fw"></em>Add New</button>
                         </div>
                         <div class="float-right">
@@ -201,6 +201,57 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseThree">
+          Demand Letter global settings (Footer, directors, and logo)
+        </a>
+      </div>
+      <div id="collapseThree" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <form #globalForm="ngForm" class="form-horizontal" (ngSubmit)="globalSubmit(globalForm)" autocomplete="off">
+            
+            <div class="form-group">
+              <p>Letter Footer</p>
+              <input class="form-control" name="footer" id="footer" #footer="ngModel" [(ngModel)]="global.footer"
+                required />
+            </div>
+
+            <p class="lead mt-3"></p>
+            <div class="form-group">
+              <p>Bank Directors</p>
+              <input class="form-control" name="directors" id="directors" #directors="ngModel" [(ngModel)]="global.directors"
+                required />
+            </div>
+
+            <p class="lead mt-3"></p>
+
+            <fieldset class="b0">
+              <div class="form-group row">
+                <label class="col-md-2 col-form-label">Show logo on printed letters</label>
+                <div class="col-md-10">
+                  <div class="ml-auto">
+                    <label class="switch switch-lg m-0">
+                      <input type="checkbox" checked="checked" name="logo" id="logo" #logo="ngModel" [(ngModel)]="global.logo"/>
+                      <span></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <div class="clearfix">
+                <div class="float-left">
+                  <button [disabled]="!globalForm.valid || !globalForm.dirty" class="btn btn-primary" type="submit">
+                    <em class="fa fa-check fa-fw"></em>Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>

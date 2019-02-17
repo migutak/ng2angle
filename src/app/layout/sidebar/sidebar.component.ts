@@ -27,8 +27,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     ngOnInit() {
 
         // user permissions
-this.userperm = JSON.parse(localStorage.getItem('userpermission'));
-console.log('menu-user-attr', this.userperm[0].attr);
+// this.userperm = JSON.parse(localStorage.getItem('userpermission'));
+// console.log('menu-user-attr', this.userperm[0].attr);
 
         this.router = this.injector.get(Router);
 

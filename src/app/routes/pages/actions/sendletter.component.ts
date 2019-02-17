@@ -20,6 +20,7 @@ export class SendLetterComponent implements OnInit {
   filepath: string;
   demands: any;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
+  currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -134,17 +135,15 @@ export class SendLetterComponent implements OnInit {
       const bulk = {
         'accnumber': this.model.accnumber,
         'custnumber': this.model.accnumber,
-        'idnumber': 'string',
-        'guarantorsname': 'string',
         'address': this.model.addressline1,
         'email': this.model.email,
         'telnumber': this.model.telnumber,
-        'filepath': environment.letters_path + data.file,
-        'datesent': '2019-02-03T17:06:45.989Z',
-        'owner': 'miguta',
-        'byemail': 'Y',
-        'byphysical': 'Y',
-        'bypost': 'Y',
+        'filepath': environment.letters_path + data.result.file,
+        'datesent': new Date(),
+        'owner': this.currentUser.username,
+        'byemail': this.model.sendemail,
+        'byphysical': this.model.sendphysical,
+        'bypost': this.model.sendpostal,
         'demand': demand
       };
       this.demandshistory(bulk);
@@ -165,10 +164,12 @@ export class SendLetterComponent implements OnInit {
       emaildata.file = environment.letters_path + data.result.file;
       this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
         console.log(response);
+        swal('Success!', 'Letter sent on email!', 'success');
       });
       // send sms
     }, error => {
       console.log(error);
+      swal('Error!', 'Error sending to email!', 'error');
     });
   }
 
@@ -186,7 +187,9 @@ export class SendLetterComponent implements OnInit {
   }*/
 
   demandshistory(body) {
-    this.ecolService.demandshistory(body).subscribe(data => {});
+    this.ecolService.demandshistory(body).subscribe(data => {
+      console.log(data);
+    });
   }
 
   guarantorletter(body) {
