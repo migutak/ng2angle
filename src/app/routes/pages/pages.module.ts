@@ -8,7 +8,7 @@ import { RecoverComponent } from './recover/recover.component';
 import { LockComponent } from './lock/lock.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { Error404Component } from './error404/error404.component';
-import { Error500Component } from './error500/error500.component';
+import { SendLetterccComponent } from './actionscc/sendlettercc.component';
 
 import { SendLetterComponent } from './actions/sendletter.component';
 
@@ -35,7 +35,7 @@ import { SendLetterComponent } from './actions/sendletter.component';
         LockComponent,
         MaintenanceComponent,
         Error404Component,
-        Error500Component,
+        SendLetterccComponent,
         SendLetterComponent
     ],
     exports: [
@@ -46,7 +46,7 @@ import { SendLetterComponent } from './actions/sendletter.component';
         LockComponent,
         MaintenanceComponent,
         Error404Component,
-        Error500Component,
+        SendLetterccComponent,
         SendLetterComponent
     ]
 })

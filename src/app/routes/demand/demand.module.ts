@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -32,9 +31,7 @@ const routes: Routes = [
     PrelistingComponent,
     PostlistingComponent,
     Day40Component,
-    Day90Component,
-    jqxGridComponent,
-    jqxButtonComponent
+    Day90Component
   ],
   imports: [
     SharedModule,

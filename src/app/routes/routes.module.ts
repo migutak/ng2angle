@@ -14,7 +14,9 @@ import { routes } from './routes';
         RouterModule.forRoot(routes), // , {useHash: true}
         PagesModule
     ],
-    declarations: [],
+    declarations: [
+    ],
+    entryComponents: [],
     exports: [
         RouterModule
     ]

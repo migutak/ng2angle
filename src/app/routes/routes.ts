@@ -6,7 +6,7 @@ import { RecoverComponent } from './pages/recover/recover.component';
 import { LockComponent } from './pages/lock/lock.component';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { Error404Component } from './pages/error404/error404.component';
-import { Error500Component } from './pages/error500/error500.component';
+import { SendLetterccComponent } from './pages/actionscc/sendlettercc.component';
 
 import { SendLetterComponent } from './pages/actions/sendletter.component';
 
@@ -44,7 +44,7 @@ export const routes = [
     { path: 'lock', component: LockComponent },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: '404', component: Error404Component },
-    { path: '500', component: Error500Component },
+    { path: 'sendlettercc', component: SendLetterccComponent },
     { path: 'sendletter', component: SendLetterComponent },
 
     // Not found

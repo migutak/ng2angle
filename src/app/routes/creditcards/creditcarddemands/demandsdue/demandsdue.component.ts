@@ -81,14 +81,11 @@ export class DemandsdueComponent implements OnInit {
 
     ];
 
-  accnumber: String;
+    cardacct: String;
   onClickMe(event, rowdata) {
-    // console.log('ACCNUMBER: ' + event.target.textContent);
-    // open modal
-    this.accnumber = event.target.textContent;
-    // document.getElementById('openModalButton').click();
+    this.cardacct = event.target.textContent;
     // open page
-    window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber, '_blank');
+    window.open(environment.applink + '/sendlettercc?cardacct=' + this.cardacct, '_blank');
   }
 
   ngOnInit() {
@@ -99,8 +96,8 @@ export class DemandsdueComponent implements OnInit {
   }
 
   refreshgrid() {
-    // this.mygrid.setOptions({source:{}});
-  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=150',
+  this.source.url = environment.api + '/api/demandsduecc?filter[where][demandletter]='
+   + this.radioModel.toUpperCase() + '&filter[limit]=150',
 
   // console.log(this.source.url, this.dataAdapter);
   // tslint:disable-next-line:max-line-length

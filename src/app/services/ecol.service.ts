@@ -89,8 +89,17 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
   }
 
+  getcardAccount(cardacct) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/cards_stage?filter[where][cardacct]=' + cardacct);
+  }
+
   generateLetter(data) {
     return this.httpClient.post<any>(environment.api + '/api/generate/send', data);
+  }
+
+  generateLetterccoverdue(data) {
+    return this.httpClient.post<any>(environment.api + '/api/generate/sendccoverdue', data);
   }
 
   sendDemandEmail(data) {

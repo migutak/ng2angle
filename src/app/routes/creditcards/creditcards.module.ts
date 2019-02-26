@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
-import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { AllcardsComponent } from './allcards/allcards.component';
@@ -16,6 +14,7 @@ import { DemandsdueComponent } from './creditcarddemands/demandsdue/demandsdue.c
 import { DemandshistoryComponent } from './creditcarddemands/demandshistory/demandshistory.component';
 
 import { JqxDomService } from '../../shared/jqwidgets-dom.service';
+import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -40,9 +39,7 @@ const routes: Routes = [
     ViewallComponent,
     ZerobalanceComponent,
     DemandsdueComponent,
-    DemandshistoryComponent,
-    jqxGridComponent,
-    jqxButtonComponent
+    DemandshistoryComponent
   ],
   imports: [
     SharedModule,

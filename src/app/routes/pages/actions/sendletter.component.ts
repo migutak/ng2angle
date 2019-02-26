@@ -19,6 +19,7 @@ export class SendLetterComponent implements OnInit {
   model: any = {};
   filepath: string;
   demands: any;
+  file: string;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -55,6 +56,7 @@ export class SendLetterComponent implements OnInit {
   }
 
   getdemandshistory(accnumber) {
+    // console.log('getdemandshistory called ...');
     this.ecolService.getdemandshistory(accnumber).subscribe(data => {
       this.demands = data;
     });
@@ -132,21 +134,7 @@ export class SendLetterComponent implements OnInit {
         };
       // generate letter
       this.generateletter(letter, emaildata);
-      const bulk = {
-        'accnumber': this.model.accnumber,
-        'custnumber': this.model.accnumber,
-        'address': this.model.addressline1,
-        'email': this.model.email,
-        'telnumber': this.model.telnumber,
-        'filepath': environment.letters_path + data.result.file,
-        'datesent': new Date(),
-        'owner': this.currentUser.username,
-        'byemail': this.model.sendemail,
-        'byphysical': this.model.sendphysical,
-        'bypost': this.model.sendpostal,
-        'demand': demand
-      };
-      this.demandshistory(bulk);
+
       } else {
         swal('None!', accnumber + ' not found!', 'warning');
       }
@@ -159,13 +147,30 @@ export class SendLetterComponent implements OnInit {
   generateletter(letter, emaildata: any) {
     this.ecolService.generateLetter(letter).subscribe(data => {
       swal('Success!', 'Letter generated!', 'success');
+      this.file = data.result.file;
+      // save to history
+      const bulk = {
+        'accnumber': this.model.accnumber,
+        'custnumber': this.model.accnumber,
+        'address': this.model.addressline1,
+        'email': this.model.email,
+        'telnumber': this.model.telnumber,
+        'filepath': environment.letters_path + this.file,
+        'datesent': new Date(),
+        'owner': this.currentUser.username,
+        'byemail': this.model.sendemail,
+        'byphysical': this.model.sendphysical,
+        'bypost': this.model.sendpostal,
+        'demand': letter.demand
+      };
+      this.demandshistory(bulk);
       // send email
       // add file full path
       emaildata.file = environment.letters_path + data.result.file;
-      this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+      /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
         console.log(response);
         swal('Success!', 'Letter sent on email!', 'success');
-      });
+      });*/
       // send sms
     }, error => {
       console.log(error);
@@ -188,7 +193,8 @@ export class SendLetterComponent implements OnInit {
 
   demandshistory(body) {
     this.ecolService.demandshistory(body).subscribe(data => {
-      console.log(data);
+      // console.log(data);
+      this.getdemandshistory(this.accnumber);
     });
   }
 
@@ -206,6 +212,27 @@ export class SendLetterComponent implements OnInit {
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
+    });
+  }
+
+  resend(filepath) {
+    swal({
+      title: 'confirm email address',
+      input: 'text',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Send Email',
+      showLoaderOnConfirm: true,
+      preConfirm: (email) => {},
+      allowOutsideClick: () => !swal.isLoading()
+    }).then ((result) => {
+      if (result.value) {
+        swal(
+          'Sent!',
+          'Email has been sent',
+          'success'
+        );
+      }
     });
   }
 }
