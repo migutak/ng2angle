@@ -20,8 +20,9 @@ export class SendLetterccComponent implements OnInit {
   filepath: string;
   demands: any;
   file: string;
-  itemsDemands: Array<string> = ['overdue', 'prelisting', 'suspension'];
+  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension'];
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
+
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -38,6 +39,11 @@ export class SendLetterccComponent implements OnInit {
     // get account details
     this.getcardaccount(this.cardacct);
     this.getdemandshistory(this.cardacct);
+  }
+
+  openletter(demand) {
+    window.open('http://ecollecttst.co-opbank.co.ke:8002/' + demand +
+      '?cardacct=00&outbalance=00&exp_pmt=00&city=00&rpcode=00&address=00&cardname=00', '_blank');
   }
 
   getcardaccount(cardacct) {
