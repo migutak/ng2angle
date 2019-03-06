@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://ecollecttst.co-opbank.co.ke:8000',
+  // api: 'http://ecollecttst.co-opbank.co.ke:8000',
+  api: 'http://localhost:8800',
   // letters_path: '/users/kevinabongo/Documents/demands/',
   // letters_path: 'c:\\logs\\',
   letters_path: '/home/ecollectadmin/demand_letters/',
