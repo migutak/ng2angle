@@ -5,6 +5,9 @@ import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs} from 'file-saver';
 import { environment } from '../../../../environments/environment';
+import { FileUploader } from 'ng2-file-upload';
+
+const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
   selector: 'app-sendlettercc',
@@ -23,7 +26,17 @@ export class SendLetterccComponent implements OnInit {
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension'];
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
+  public uploader: FileUploader = new FileUploader({ url: URL });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
 
+  public fileOverBase(e: any): void {
+      this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+      this.hasAnotherDropZoneOver = e;
+  }
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
@@ -41,9 +54,39 @@ export class SendLetterccComponent implements OnInit {
     this.getdemandshistory(this.cardacct);
   }
 
-  openletter(demand) {
-    window.open('http://ecollecttst.co-opbank.co.ke:8002/' + demand +
-      '?cardacct=00&outbalance=00&exp_pmt=00&city=00&rpcode=00&address=00&cardname=00', '_blank');
+  openletter(letter) {
+    this.ecolService.loader();
+    const body = {
+        'demand': letter.demand,
+        'showlogo': letter.showlogo,
+        'format': letter.format,
+        'cardacct': '1234567',
+        'cardnumber': '00000012345678',
+        'cardname': 'DORIS KAWER',
+        'address': 'PO BOX 40 KISII',
+        'rpcode': '00300',
+        'arocode': 'RRO001',
+        'city': 'KARIOKO',
+        'EXP_PMNT': 10000,
+        'OUT_BALANCE': 2000,
+        'demand1date': '30-JAN-2019'
+    };
+    console.log(body);
+    // call generate letter api
+    this.ecolService.generateLetter(body).subscribe(data => {
+      // sucess
+      if (data.result === 'success') {
+        swal('Good!', data.message, 'success');
+        this.downloadDemand(data.message, data.filename);
+      } else {
+        swal('Error!', 'Error occured during letter generation!', 'error');
+      }
+
+      //
+    }, error => {
+      console.log('error==>', error);
+      swal('Error!', 'Error occured during letter generation!', 'error');
+    });
   }
 
   getcardaccount(cardacct) {
@@ -65,6 +108,15 @@ export class SendLetterccComponent implements OnInit {
   getdemandshistory(cardacct) {
     this.ecolService.getdemandshistory(cardacct).subscribe(data => {
       this.demands = data;
+    });
+  }
+
+  downloadDemand(filepath, filename) {
+    this.ecolService.downloadFile(filepath).subscribe(data => {
+      saveAs(data, filename);
+    }, error => {
+      console.log(error.error);
+      swal('Error!', ' Cannot download  file!', 'error');
     });
   }
 

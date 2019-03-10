@@ -95,11 +95,12 @@ export class EcolService {
   }
 
   generateLetter(data) {
-    return this.httpClient.post<any>(environment.api + '/api/generate/send', data);
+    console.log('data received', data);
+    return this.httpClient.post<any>(environment.letters_api + data.demand + '/download', data);
   }
 
   generateLetterccoverdue(data) {
-    return this.httpClient.post<any>(environment.api + '/api/generate/sendccoverdue', data);
+    return this.httpClient.post<any>(environment.letters_api + data.demand + '/download', data);
   }
 
   sendDemandEmail(data) {

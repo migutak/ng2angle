@@ -11,6 +11,7 @@ import { Error404Component } from './error404/error404.component';
 import { SendLetterccComponent } from './actionscc/sendlettercc.component';
 
 import { SendLetterComponent } from './actions/sendletter.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
@@ -26,6 +27,7 @@ import { SendLetterComponent } from './actions/sendletter.component';
 @NgModule({
     imports: [
         SharedModule,
+        FileUploadModule,
         // RouterModule.forChild(routes)
     ],
     declarations: [

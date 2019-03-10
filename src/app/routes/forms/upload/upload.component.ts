@@ -11,8 +11,8 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 export class UploadComponent implements OnInit {
 
     public uploader: FileUploader = new FileUploader({ url: URL });
-    public hasBaseDropZoneOver: boolean = false;
-    public hasAnotherDropZoneOver: boolean = false;
+    public hasBaseDropZoneOver = false;
+    public hasAnotherDropZoneOver = false;
 
     public fileOverBase(e: any): void {
         this.hasBaseDropZoneOver = e;

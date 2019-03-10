@@ -3,8 +3,11 @@ import { SettingsService } from '../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs} from 'file-saver';
+import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
+import { FileUploader } from 'ng2-file-upload';
+
+const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
   selector: 'app-sendletter',
@@ -22,6 +25,18 @@ export class SendLetterComponent implements OnInit {
   file: string;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
+
+  public uploader: FileUploader = new FileUploader({ url: URL });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -67,28 +82,7 @@ export class SendLetterComponent implements OnInit {
     this.processletter(this.model.demand, this.model.accnumber, this.model.emailaddress);
     this.getdemandshistory(this.accnumber);
 
-    /*const body = {
-      demand: this.accountdetails.demand,
-      cust: this.accountdetails.custnumber,
-      acc: this.accountdetails.accnumber,
-      custname: this.accountdetails.client_name,
-      address: 'Po Box 100 Nairobi',
-      postcode: '00100',
-      arocode: 'AGRB03',
-      branchname: '00000',
-      branchcode: 'NYERI BRANCH',
-      manager: 'MANAGER',
-      ccy: 'KES',
-      guarantors:
-      [
-      {
-        name: 'guarantor1'
-      },
-      {
-        name: 'guarantor2'
-      }
-      ]
-    };
+    /*
    // console.log(body);
     this.ecolService.generateLetter(body).subscribe(data => {
       console.log('file generated==>', data);
@@ -109,6 +103,51 @@ export class SendLetterComponent implements OnInit {
     });*/
   }
 
+  openletter(letter) {
+    this.ecolService.loader();
+    const body = {
+      'demand': letter.demand,
+      'showlogo': letter.showlogo,
+      'format': letter.format,
+      'cust': '1234567',
+      'acc': '00000012345678',
+      'custname': 'DORIS KAWER',
+      'address': 'PO BOX 40 KISII',
+      'postcode': '00300',
+      'arocode': 'RRO001',
+      'branchname': 'KARIOKO',
+      'branchcode': '00500',
+      'manager': 'ROSE KARAMBU',
+      'ccy': 'KES',
+      'demand1date': '',
+      'guarantors': [
+        { 'name': 'Guarantor acccount', 'address': 'Po box 009 - 00200 Nairobi', 'celnumber': '0700' },
+        { 'name': 'Guarantor account ', 'address': 'Po box 90 Nakuru', 'celnumber': '0700' }
+      ],
+      'accounts': [
+        { 'accnumber': '0000009999999', 'oustbalance': 90000, 'princarrears': 9000, 'intarrears': 9000, 'totalarrears': 9000 },
+        { 'accnumber': '0000009999999', 'oustbalance': 90000, 'princarrears': 9000, 'intarrears': 9000, 'totalarrears': 9000 },
+        { 'accnumber': '0000009999999', 'oustbalance': 90000, 'princarrears': 9000, 'intarrears': 9000, 'totalarrears': 9000 }
+      ]
+    };
+    console.log(body);
+    // call generate letter api
+    this.ecolService.generateLetter(body).subscribe(data => {
+      // sucess
+      if (data.result === 'success') {
+        swal('Good!', data.message, 'success');
+        this.downloadDemand(data.message, data.filename);
+      } else {
+        swal('Error!', 'Error occured during letter generation!', 'error');
+      }
+
+      //
+    }, error => {
+      console.log('error==>', error);
+      swal('Error!', 'Error occured during letter generation!', 'error');
+    });
+  }
+
   processletter(demand, accnumber, emailaddress) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data.length > 0) {
@@ -124,7 +163,7 @@ export class SendLetterComponent implements OnInit {
           branchcode: data[0].branchcode,
           manager: data[0].manager,
           ccy: data[0].currency,
-          demand1date : new Date(),
+          demand1date: new Date(),
           guarantors: data[0].guarantors
         };
         const emaildata = {
@@ -132,8 +171,8 @@ export class SendLetterComponent implements OnInit {
           email: emailaddress,
           title: demand
         };
-      // generate letter
-      this.generateletter(letter, emaildata);
+        // generate letter
+        this.generateletter(letter, emaildata);
 
       } else {
         swal('None!', accnumber + ' not found!', 'warning');
@@ -146,37 +185,44 @@ export class SendLetterComponent implements OnInit {
 
   generateletter(letter, emaildata: any) {
     this.ecolService.generateLetter(letter).subscribe(data => {
-      swal('Success!', 'Letter generated!', 'success');
-      this.file = data.result.file;
-      // save to history
-      const bulk = {
-        'accnumber': this.model.accnumber,
-        'custnumber': this.model.accnumber,
-        'address': this.model.addressline1,
-        'email': this.model.email,
-        'telnumber': this.model.telnumber,
-        'filepath': environment.letters_path + this.file,
-        'datesent': new Date(),
-        'owner': this.currentUser.username,
-        'byemail': this.model.sendemail,
-        'byphysical': this.model.sendphysical,
-        'bypost': this.model.sendpostal,
-        'demand': letter.demand
-      };
-      this.demandshistory(bulk);
-      // send email
-      // add file full path
-      emaildata.file = environment.letters_path + data.result.file;
-      /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
-        console.log(response);
-        swal('Success!', 'Letter sent on email!', 'success');
-      });*/
-      // send sms
+      if (data.result === 'success') {
+        //
+        swal('Success!', 'Letter generated!', 'success');
+        this.file = data.result.file;
+        // save to history
+        const bulk = {
+          'accnumber': this.model.accnumber,
+          'custnumber': this.model.accnumber,
+          'address': this.model.addressline1,
+          'email': this.model.email,
+          'telnumber': this.model.telnumber,
+          'filepath': data.message,
+          'datesent': new Date(),
+          'owner': this.currentUser.username,
+          'byemail': this.model.sendemail,
+          'byphysical': this.model.sendphysical,
+          'bypost': this.model.sendpostal,
+          'demand': letter.demand
+        };
+        console.log('files details to db ', bulk);
+        this.demandshistory(bulk);
+        // send email
+        // add file full path
+        emaildata.file = environment.letters_path + data.result.file;
+        /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+          console.log(response);
+          swal('Success!', 'Letter sent on email!', 'success');
+        });*/
+        // send sms
+      } else {
+        // error in letter generation
+        swal('Error!', 'Error generating to letter!', 'error');
+      }
     }, error => {
       console.log(error);
-      swal('Error!', 'Error sending to email!', 'error');
+      swal('Error!', 'Error generating to letter!', 'error');
     });
-  }
+  }  // end generateletter
 
   /*sendemail(emaildata) {
     this.ecolService.sendDemandEmail(emaildata).subscribe(data => {
@@ -199,16 +245,25 @@ export class SendLetterComponent implements OnInit {
   }
 
   guarantorletter(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => {});
+    this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
   sms(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => {});
+    this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
   downloadFile(filepath) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-     saveAs(data, 'filename');
+      saveAs(data, 'filename');
+    }, error => {
+      console.log(error.error);
+      swal('Error!', ' Cannot download  file!', 'error');
+    });
+  }
+
+  downloadDemand(filepath, filename) {
+    this.ecolService.downloadFile(filepath).subscribe(data => {
+      saveAs(data, filename);
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
@@ -223,9 +278,9 @@ export class SendLetterComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Send Email',
       showLoaderOnConfirm: true,
-      preConfirm: (email) => {},
+      preConfirm: (email) => { },
       allowOutsideClick: () => !swal.isLoading()
-    }).then ((result) => {
+    }).then((result) => {
       if (result.value) {
         swal(
           'Sent!',
