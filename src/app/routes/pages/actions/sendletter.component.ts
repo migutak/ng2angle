@@ -24,6 +24,8 @@ export class SendLetterComponent implements OnInit {
   filepath: string;
   demands: any;
   file: string;
+  smsMessage: string;
+  username: string;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -49,6 +51,11 @@ export class SendLetterComponent implements OnInit {
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
+    });
+
+    this.username = this.route.snapshot.queryParamMap.get('username');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.username = queryParams.get('username');
     });
 
     // get account details
@@ -78,12 +85,12 @@ export class SendLetterComponent implements OnInit {
 
   generate() {
     this.ecolService.loader();
-    this.processletter(this.model.demand, this.model.accnumber, this.model.emailaddress);
+    this.processletter(this.model, this.model.accnumber, this.model.emailaddress);
     this.getdemandshistory(this.accnumber);
   }
 
   openletter(letter) {
-    console.log('letter==>', letter);
+    // console.log('letter==>', letter);
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
       // if account is there
@@ -137,34 +144,44 @@ export class SendLetterComponent implements OnInit {
     });
   }
 
-  processletter(demand, accnumber, emailaddress) {
+  processletter(letter: any, accnumber, emailaddress) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
-      if (data.length > 0) {
-        const letter = {
-          demand: demand.toLowerCase(),
-          cust: data[0].custnumber,
-          acc: data[0].accnumber,
-          custname: data[0].client_name,
-          address: this.model.addressline1,
-          postcode: this.model.postcode,
-          arocode: data[0].arocode,
-          branchname: data[0].branchcode,
-          branchcode: data[0].branchcode,
-          manager: data[0].manager,
-          ccy: data[0].currency,
-          demand1date: new Date(),
-          guarantors: data[0].guarantors
-        };
-        const emaildata = {
-          name: data[0].client_name,
-          email: emailaddress,
-          title: demand
-        };
-        // generate letter
-        this.generateletter(letter, emaildata);
-
+      if (data && data.length > 0) {
+        // console.log('getAccount=>', data);
+        this.bodyletter.demand = letter.demand;
+        this.bodyletter.showlogo = letter.showlogo;
+        this.bodyletter.format = letter.format;
+        this.bodyletter.cust = data[0].custnumber;
+        this.bodyletter.acc = data[0].accnumber;
+        this.bodyletter.custname = data[0].client_name;
+        this.bodyletter.address = letter.addressline1;
+        this.bodyletter.postcode = letter.postcode;
+        this.bodyletter.arocode = data[0].arocode;
+        this.bodyletter.branchname = data[0].branchname;
+        this.bodyletter.branchcode = data[0].branchcode;
+        this.bodyletter.manager = data[0].manager;
+        this.bodyletter.ccy = data[0].currency;
+        this.bodyletter.demand1date = new Date();
+        this.bodyletter.guarantors = data[0].guarantors;
+        // Get all cust accounts
+        this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
+          // add accounts to the array
+          // console.log('accounts=>', accounts);
+          this.bodyletter.accounts = accounts;
+          // console.log(this.bodyletter);
+          const emaildata = {
+            name: data[0].client_name,
+            email: emailaddress,
+            title: letter.demand
+          };
+          // generate letter
+          this.generateletter(this.bodyletter.demand, emaildata);
+        }, error => {
+          console.log('error==>', error);
+          swal('Error!', 'unable to retrieve customer accounts!', 'error');
+        });
       } else {
-        swal('None!', accnumber + ' not found!', 'warning');
+        swal('None!', letter.accnumber + ' not found!', 'warning');
       }
     }, error => {
       console.log(error);
@@ -173,11 +190,10 @@ export class SendLetterComponent implements OnInit {
   }
 
   generateletter(letter, emaildata: any) {
-    this.ecolService.generateLetter(letter).subscribe(data => {
-      if (data.result === 'success') {
+    this.ecolService.generateLetter(letter).subscribe(uploaddata => {
+      if (uploaddata.result === 'success') {
         //
         swal('Success!', 'Letter generated!', 'success');
-        this.file = data.result.file;
         // save to history
         const bulk = {
           'accnumber': this.model.accnumber,
@@ -185,7 +201,8 @@ export class SendLetterComponent implements OnInit {
           'address': this.model.addressline1,
           'email': this.model.email,
           'telnumber': this.model.telnumber,
-          'filepath': data.message,
+          'filepath': uploaddata.message,
+          'filename': uploaddata.filename,
           'datesent': new Date(),
           'owner': this.currentUser.username,
           'byemail': this.model.sendemail,
@@ -193,23 +210,42 @@ export class SendLetterComponent implements OnInit {
           'bypost': this.model.sendpostal,
           'demand': letter.demand
         };
-        console.log('files details to db ', bulk);
+        //
         this.demandshistory(bulk);
         // send email
         // add file full path
-        emaildata.file = environment.letters_path + data.result.file;
+        emaildata.file = uploaddata.filepath;
         /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
           console.log(response);
           swal('Success!', 'Letter sent on email!', 'success');
         });*/
         // send sms
+        this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
+          if (result && result.length > 0) {
+            this.smsMessage = result[0].message;
+          } else {
+            // tslint:disable-next-line:max-line-length
+            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+          }
+
+          const smsdata = {
+            'demand': letter.demand,
+            'custnumber': this.model.accnumber,
+            'telnumber': this.model.telnumber,
+            'owner': this.username,
+            'message': this.smsMessage,
+          };
+          this.sendsms(smsdata);
+        }, error => {
+          console.log(error);
+        });
       } else {
         // error in letter generation
-        swal('Error!', 'Error generating to letter!', 'error');
+        swal('Error!', 'Error generating letter!', 'error');
       }
     }, error => {
       console.log(error);
-      swal('Error!', 'Error generating to letter!', 'error');
+      swal('Error!', 'Cannot retrieve account details!', 'error');
     });
   }  // end generateletter
 
@@ -225,6 +261,15 @@ export class SendLetterComponent implements OnInit {
       swal('Error!', 'Error occurred during sending email!', 'error');
     });
   }*/
+
+  sendsms(smsdata) {
+    this.ecolService.sendsms(smsdata).subscribe(result => {
+      swal('Successful!', 'Demand letter sent!', 'success');
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred during sending email!', 'error');
+    });
+  }
 
   demandshistory(body) {
     this.ecolService.demandshistory(body).subscribe(data => {
