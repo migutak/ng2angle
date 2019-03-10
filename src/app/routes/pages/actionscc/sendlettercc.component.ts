@@ -3,7 +3,7 @@ import { SettingsService } from '../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs} from 'file-saver';
+import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 
@@ -20,6 +20,7 @@ export class SendLetterccComponent implements OnInit {
   accountdetails: any;
   guarantors: [];
   model: any = {};
+  letterbody: any = {};
   filepath: string;
   demands: any;
   file: string;
@@ -31,11 +32,11 @@ export class SendLetterccComponent implements OnInit {
   public hasAnotherDropZoneOver = false;
 
   public fileOverBase(e: any): void {
-      this.hasBaseDropZoneOver = e;
+    this.hasBaseDropZoneOver = e;
   }
 
   public fileOverAnother(e: any): void {
-      this.hasAnotherDropZoneOver = e;
+    this.hasAnotherDropZoneOver = e;
   }
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -56,36 +57,44 @@ export class SendLetterccComponent implements OnInit {
 
   openletter(letter) {
     this.ecolService.loader();
-    const body = {
-        'demand': letter.demand,
-        'showlogo': letter.showlogo,
-        'format': letter.format,
-        'cardacct': '1234567',
-        'cardnumber': '00000012345678',
-        'cardname': 'DORIS KAWER',
-        'address': 'PO BOX 40 KISII',
-        'rpcode': '00300',
-        'arocode': 'RRO001',
-        'city': 'KARIOKO',
-        'EXP_PMNT': 10000,
-        'OUT_BALANCE': 2000,
-        'demand1date': '30-JAN-2019'
-    };
-    console.log(body);
-    // call generate letter api
-    this.ecolService.generateLetter(body).subscribe(data => {
-      // sucess
-      if (data.result === 'success') {
-        swal('Good!', data.message, 'success');
-        this.downloadDemand(data.message, data.filename);
-      } else {
-        swal('Error!', 'Error occured during letter generation!', 'error');
-      }
+    this.ecolService.getcardAccount(this.cardacct).subscribe(carddata => {
+      // if cardacct
+      if (carddata && carddata.length > 0) {
+        this.letterbody.demand = letter.demand,
+          this.letterbody.showlogo = letter.showlogo,
+          this.letterbody.format = letter.format,
+          this.letterbody.cardacct = this.cardacct,
+          this.letterbody.cardnumber = carddata[0].cardnumber,
+          this.letterbody.cardname = carddata[0].cardname,
+          this.letterbody.address = letter.address,
+          this.letterbody.rpcode = letter.rpcode,
+          this.letterbody.city = letter.city,
+          this.letterbody.EXP_PMNT = carddata[0].exppmnt,
+          this.letterbody.OUT_BALANCE = carddata[0].outbalance,
+          this.letterbody.demand1date = new Date();
 
-      //
+        // console.log(body);
+        // call generate letter api
+        this.ecolService.generateLetter(this.letterbody).subscribe(data => {
+          // sucess
+          if (data.result === 'success') {
+            swal('Good!', data.message, 'success');
+            this.downloadDemand(data.message, data.filename);
+          } else {
+            swal('Error!', 'Error occured during letter generation!', 'error');
+          }
+          //
+        }, error => {
+          console.log('error==>', error);
+          swal('Error!', 'Error occured during letter generation!', 'error');
+        });
+      } else {
+        swal('None!', letter.accnumber + ' not found!', 'warning');
+      }
     }, error => {
-      console.log('error==>', error);
-      swal('Error!', 'Error occured during letter generation!', 'error');
+      //
+      console.log(error);
+      swal('Error!', 'account info missing!', 'error');
     });
   }
 
@@ -101,7 +110,6 @@ export class SendLetterccComponent implements OnInit {
       this.model.emailaddress = data[0].email;
       this.model.celnumber = data[0].mobile;
       // if guarantors are available
-
     });
   }
 
@@ -144,8 +152,8 @@ export class SendLetterccComponent implements OnInit {
           email: emailaddress,
           title: demand
         };
-      // generate letter
-      this.generateletter(letter, emaildata);
+        // generate letter
+        this.generateletter(letter, emaildata);
 
       } else {
         swal('None!', cardacct + ' not found!', 'warning');
@@ -212,16 +220,16 @@ export class SendLetterccComponent implements OnInit {
   }
 
   guarantorletter(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => {});
+    this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
   sms(body) {
-    this.ecolService.guarantorletters(body).subscribe(data => {});
+    this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
   downloadFile(filepath) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-     saveAs(data, 'Credit_Card_Demand_Letter');
+      saveAs(data, 'Credit_Card_Demand_Letter');
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
@@ -236,9 +244,9 @@ export class SendLetterccComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Send Email',
       showLoaderOnConfirm: true,
-      preConfirm: (email) => {},
+      preConfirm: (email) => { },
       allowOutsideClick: () => !swal.isLoading()
-    }).then ((result) => {
+    }).then((result) => {
       if (result.value) {
         swal(
           'Sent!',

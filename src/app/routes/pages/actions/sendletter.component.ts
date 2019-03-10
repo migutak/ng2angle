@@ -82,68 +82,57 @@ export class SendLetterComponent implements OnInit {
     this.ecolService.loader();
     this.processletter(this.model.demand, this.model.accnumber, this.model.emailaddress);
     this.getdemandshistory(this.accnumber);
-
-    /*
-   // console.log(body);
-    this.ecolService.generateLetter(body).subscribe(data => {
-      console.log('file generated==>', data);
-      // send email
-      if (this.model.sendemail) {
-          const emaildata = {
-          file: environment.letters_path + data.result.file,
-          name: this.accountdetails.client_name,
-          email: this.model.emailaddress
-        };
-        this.sendemail(emaildata);
-      }
-      swal('Successful!', 'Letter generated and saved!', 'success');
-
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred letter generation!', 'error');
-    });*/
   }
 
   openletter(letter) {
+    console.log('letter==>', letter);
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
       // if account is there
-      this.bodyletter.demand = letter.demand;
-      this.bodyletter.showlogo = letter.showlogo;
-      this.bodyletter.format = letter.format;
-      this.bodyletter.cust = data[0].custnumber;
-      this.bodyletter.acc = data[0].accnumber;
-      this.bodyletter.custname = data[0].client_name;
-      this.bodyletter.address = data[0].addressline1,
-        this.bodyletter.postcode = data[0].postcode,
-        this.bodyletter.arocode = data[0].arocode,
+      if (data && data.length > 0) {
+        // console.log('getAccount=>', data);
+        this.bodyletter.demand = letter.demand;
+        this.bodyletter.showlogo = letter.showlogo;
+        this.bodyletter.format = letter.format;
+        this.bodyletter.cust = data[0].custnumber;
+        this.bodyletter.acc = data[0].accnumber;
+        this.bodyletter.custname = data[0].client_name;
+        this.bodyletter.address = letter.addressline1;
+        this.bodyletter.postcode = letter.postcode;
+        this.bodyletter.arocode = data[0].arocode;
         this.bodyletter.branchname = data[0].branchname;
-      this.bodyletter.branchcode = data[0].branchcode,
+        this.bodyletter.branchcode = data[0].branchcode;
         this.bodyletter.manager = data[0].manager;
-      this.bodyletter.ccy = data[0].currency;
-      this.bodyletter.demand1date = new Date();
-      this.bodyletter.guarantors = data[0].guarantors;
-      // Get all cust accounts
-      this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
-        // add accounts to the array
-        this.bodyletter.accounts = accounts;
-        console.log(this.bodyletter);
-        // call generate letter api
-        this.ecolService.generateLetter(this.bodyletter).subscribe(generateletterdata => {
-          // sucess
-          if (generateletterdata.result === 'success') {
-            swal('Good!', generateletterdata.message, 'success');
-            this.downloadDemand(generateletterdata.message, generateletterdata.filename);
-          } else {
+        this.bodyletter.ccy = data[0].currency;
+        this.bodyletter.demand1date = new Date();
+        this.bodyletter.guarantors = data[0].guarantors;
+        // Get all cust accounts
+        this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
+          // add accounts to the array
+          // console.log('accounts=>', accounts);
+          this.bodyletter.accounts = accounts;
+          // console.log(this.bodyletter);
+          // call generate letter api
+          this.ecolService.generateLetter(this.bodyletter).subscribe(generateletterdata => {
+            // sucess
+            if (generateletterdata.result === 'success') {
+              swal('Good!', generateletterdata.message, 'success');
+              this.downloadDemand(generateletterdata.message, generateletterdata.filename);
+            } else {
+              swal('Error!', 'Error occured during letter generation!', 'error');
+            }
+            //
+          }, error => {
+            console.log('error==>', error);
             swal('Error!', 'Error occured during letter generation!', 'error');
-          }
-
-          //
+          });
         }, error => {
           console.log('error==>', error);
-          swal('Error!', 'Error occured during letter generation!', 'error');
+          swal('Error!', 'unable to retrieve customer accounts!', 'error');
         });
-      });
+      } else {
+        swal('None!', letter.accnumber + ' not found!', 'warning');
+      }
     }, error => {
       console.log('error==>', error);
       swal('Error!', 'account info missing!', 'error');
