@@ -20,6 +20,7 @@ export class SendLetterComponent implements OnInit {
   accountdetails: any;
   guarantors: [];
   model: any = {};
+  bodyletter: any = {};
   filepath: string;
   demands: any;
   file: string;
@@ -105,46 +106,47 @@ export class SendLetterComponent implements OnInit {
 
   openletter(letter) {
     this.ecolService.loader();
-    const body = {
-      'demand': letter.demand,
-      'showlogo': letter.showlogo,
-      'format': letter.format,
-      'cust': '1234567',
-      'acc': '00000012345678',
-      'custname': 'DORIS KAWER',
-      'address': 'PO BOX 40 KISII',
-      'postcode': '00300',
-      'arocode': 'RRO001',
-      'branchname': 'KARIOKO',
-      'branchcode': '00500',
-      'manager': 'ROSE KARAMBU',
-      'ccy': 'KES',
-      'demand1date': '',
-      'guarantors': [
-        { 'name': 'Guarantor acccount', 'address': 'Po box 009 - 00200 Nairobi', 'celnumber': '0700' },
-        { 'name': 'Guarantor account ', 'address': 'Po box 90 Nakuru', 'celnumber': '0700' }
-      ],
-      'accounts': [
-        { 'accnumber': '0000009999999', 'oustbalance': 90000, 'princarrears': 9000, 'intarrears': 9000, 'totalarrears': 9000 },
-        { 'accnumber': '0000009999999', 'oustbalance': 90000, 'princarrears': 9000, 'intarrears': 9000, 'totalarrears': 9000 },
-        { 'accnumber': '0000009999999', 'oustbalance': 90000, 'princarrears': 9000, 'intarrears': 9000, 'totalarrears': 9000 }
-      ]
-    };
-    console.log(body);
-    // call generate letter api
-    this.ecolService.generateLetter(body).subscribe(data => {
-      // sucess
-      if (data.result === 'success') {
-        swal('Good!', data.message, 'success');
-        this.downloadDemand(data.message, data.filename);
-      } else {
-        swal('Error!', 'Error occured during letter generation!', 'error');
-      }
+    this.ecolService.getAccount(this.accnumber).subscribe(data => {
+      // if account is there
+      this.bodyletter.demand = letter.demand;
+      this.bodyletter.showlogo = letter.showlogo;
+      this.bodyletter.format = letter.format;
+      this.bodyletter.cust = data[0].custnumber;
+      this.bodyletter.acc = data[0].accnumber;
+      this.bodyletter.custname = data[0].client_name;
+      this.bodyletter.address = data[0].addressline1,
+        this.bodyletter.postcode = data[0].postcode,
+        this.bodyletter.arocode = data[0].arocode,
+        this.bodyletter.branchname = data[0].branchname;
+      this.bodyletter.branchcode = data[0].branchcode,
+        this.bodyletter.manager = data[0].manager;
+      this.bodyletter.ccy = data[0].currency;
+      this.bodyletter.demand1date = new Date();
+      this.bodyletter.guarantors = data[0].guarantors;
+      // Get all cust accounts
+      this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
+        // add accounts to the array
+        this.bodyletter.accounts = accounts;
+        console.log(this.bodyletter);
+        // call generate letter api
+        this.ecolService.generateLetter(this.bodyletter).subscribe(generateletterdata => {
+          // sucess
+          if (generateletterdata.result === 'success') {
+            swal('Good!', generateletterdata.message, 'success');
+            this.downloadDemand(generateletterdata.message, generateletterdata.filename);
+          } else {
+            swal('Error!', 'Error occured during letter generation!', 'error');
+          }
 
-      //
+          //
+        }, error => {
+          console.log('error==>', error);
+          swal('Error!', 'Error occured during letter generation!', 'error');
+        });
+      });
     }, error => {
       console.log('error==>', error);
-      swal('Error!', 'Error occured during letter generation!', 'error');
+      swal('Error!', 'account info missing!', 'error');
     });
   }
 
