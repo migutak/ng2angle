@@ -7,7 +7,7 @@ import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = environment.uploadurl;
 
 @Component({
   selector: 'app-sendletter',
@@ -66,8 +66,6 @@ export class SendLetterComponent implements OnInit {
       this.model.postcode = data[0].postcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
-      // if guarantors are available
-
     });
   }
 

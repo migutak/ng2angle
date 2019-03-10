@@ -104,12 +104,20 @@ export class EcolService {
     return this.httpClient.post<any>(environment.letters_api + data.demand + '/download', data);
   }
 
-  generateLetterccoverdue(data) {
+  generateLettercc(data) {
     return this.httpClient.post<any>(environment.letters_api + data.demand + '/download', data);
+  }
+
+  getsmsmessage(demand) {
+    return this.httpClient.get<any>(environment.api + '/api/tbl_smstemplate?filter[where][title]=' + demand);
   }
 
   sendDemandEmail(data) {
     return this.httpClient.post<any>(environment.api + '/api/Email-models/send', data);
+  }
+
+  sendsms(data) {
+    return this.httpClient.post<any>(environment.api + '/api/sms', data);
   }
 
   demandshistory(data) {
@@ -117,7 +125,8 @@ export class EcolService {
   }
 
   getdemandshistory(accnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber);
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber + '&filter[order]=datesent desc');
   }
 
   getbranches() {

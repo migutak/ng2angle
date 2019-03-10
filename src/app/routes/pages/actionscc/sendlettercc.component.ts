@@ -7,7 +7,7 @@ import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = environment.uploadurl;
 
 @Component({
   selector: 'app-sendlettercc',
@@ -23,7 +23,9 @@ export class SendLetterccComponent implements OnInit {
   letterbody: any = {};
   filepath: string;
   demands: any;
+  smsMessage: string;
   file: string;
+  username: string;
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension'];
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -48,6 +50,11 @@ export class SendLetterccComponent implements OnInit {
     this.cardacct = this.route.snapshot.queryParamMap.get('cardacct');
     this.route.queryParamMap.subscribe(queryParams => {
       this.cardacct = queryParams.get('cardacct');
+    });
+
+    this.username = this.route.snapshot.queryParamMap.get('username');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.username = queryParams.get('username');
     });
 
     // get account details
@@ -100,7 +107,7 @@ export class SendLetterccComponent implements OnInit {
 
   getcardaccount(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
-      console.log('this is getcardAccount==>', data);
+      // console.log('this is getcardAccount==>', data);
       this.accountdetails = data[0];
       this.guarantors = data[0].guarantors;
       this.model.accnumber = data[0].cardacct;
@@ -139,7 +146,7 @@ export class SendLetterccComponent implements OnInit {
       if (data.length > 0) {
         const letter = {
           demand: demand.toLowerCase(),
-          card_acct: data[0].cardacct,
+          cardacct: data[0].cardacct,
           cardname: data[0].cardname,
           address: this.model.addressline1,
           postcode: this.model.postcode,
@@ -165,34 +172,62 @@ export class SendLetterccComponent implements OnInit {
   }
 
   generateletter(letter, emaildata: any) {
-    this.ecolService.generateLetterccoverdue(letter).subscribe(data => {
-      // console.log('generateLetterccoverdue', data);
-      this.file = data.result.file;
-      swal('Success!', 'Letter generated!', 'success');
-      // save to history
-      const bulk = {
-        'accnumber': this.model.accnumber,
-        'custnumber': this.model.accnumber,
-        'address': this.model.addressline1,
-        'email': this.model.email,
-        'telnumber': this.model.telnumber,
-        'filepath': environment.letters_path + this.file,
-        'datesent': new Date(),
-        'owner': this.currentUser.username,
-        'byemail': this.model.emailaddress,
-        'byphysical': this.model.sendphysical,
-        'bypost': this.model.sendpostal,
-        'demand': letter.demand
-      };
-      this.demandshistory(bulk);
+    this.ecolService.generateLettercc(letter).subscribe(dataupload => {
+      console.log('generateLetterccoverdue==>', dataupload);
+      // sucess
+      if (dataupload.result === 'success') {
+        swal('Good!', dataupload.message, 'success');
+        // save to history
+        const bulk = {
+          'accnumber': this.model.accnumber,
+          'custnumber': this.model.accnumber,
+          'address': this.model.addressline1,
+          'email': this.model.email,
+          'telnumber': this.model.telnumber,
+          'filepath': dataupload.message,
+          'filename': dataupload.filename,
+          'datesent': new Date(),
+          'owner': this.username,
+          'byemail': this.model.emailaddress,
+          'byphysical': this.model.sendphysical,
+          'bypost': this.model.sendpostal,
+          'demand': letter.demand
+        };
+        this.demandshistory(bulk);
+        this.getdemandshistory(this.cardacct);
+        this.downloadDemand(letter.message, dataupload.filename);
+      } else {
+        swal('Error!', 'Error occured during letter generation!', 'error');
+      }
+
       // send email
       // add file full path
-      emaildata.file = environment.letters_path + data.result.file;
+      emaildata.file = dataupload.message;
       /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
         console.log(response);
         swal('Success!', 'Letter sent on email!', 'success');
       });*/
       // send sms
+      // get message
+      this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
+        if (result && result.length > 0) {
+          this.smsMessage = result[0].message;
+        } else {
+          // tslint:disable-next-line:max-line-length
+          this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+        }
+
+        const smsdata = {
+          'demand': letter.demand,
+          'custnumber': this.model.accnumber,
+          'telnumber': this.model.telnumber,
+          'owner': this.username,
+          'message': this.smsMessage,
+        };
+        this.sendsms(smsdata);
+      }, error => {
+        console.log(error);
+      });
     }, error => {
       console.log(error);
       swal('Error!', 'Error sending to email!', 'error');
@@ -212,6 +247,23 @@ export class SendLetterccComponent implements OnInit {
     });
   }*/
 
+  sendsms(smsdata) {
+    this.ecolService.sendsms(smsdata).subscribe(result => {
+      swal('Successful!', 'Demand letter sent!', 'success');
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred during sending email!', 'error');
+    });
+  }
+
+  getsmsmessage(demand) {
+    this.ecolService.getsmsmessage(demand).subscribe(result => {
+      this.smsMessage = result[0].message;
+    }, error => {
+      console.log(error);
+    });
+  }
+
   demandshistory(body) {
     console.log('demandshistory body', body);
     this.ecolService.demandshistory(body).subscribe(data => {
@@ -227,9 +279,9 @@ export class SendLetterccComponent implements OnInit {
     this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
-  downloadFile(filepath) {
+  downloadFile(filepath, filename) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-      saveAs(data, 'Credit_Card_Demand_Letter');
+      saveAs(data, filename);
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
