@@ -73,8 +73,8 @@ export class SendLetterccComponent implements OnInit {
           this.letterbody.cardacct = this.cardacct,
           this.letterbody.cardnumber = carddata[0].cardnumber,
           this.letterbody.cardname = carddata[0].cardname,
-          this.letterbody.address = letter.address,
-          this.letterbody.rpcode = letter.rpcode,
+          this.letterbody.address = letter.addressline1,
+          this.letterbody.rpcode = letter.postcode,
           this.letterbody.city = letter.city,
           this.letterbody.EXP_PMNT = carddata[0].exppmnt,
           this.letterbody.OUT_BALANCE = carddata[0].outbalance,
@@ -248,6 +248,7 @@ export class SendLetterccComponent implements OnInit {
   }*/
 
   sendsms(smsdata) {
+    console.log('sendsms==data==', smsdata);
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter sent!', 'success');
     }, error => {

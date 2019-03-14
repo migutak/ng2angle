@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
                 // to keep user logged in between page refreshes
                 // get user permissions
                 this.ecolService.getpermissions(user.role).subscribe(permission => {
-                    console.log(permission);
+                    // console.log(permission);
                     user.authdata = window.btoa(value.username + ':' + value.password);
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     localStorage.setItem('userpermission', JSON.stringify(permission));

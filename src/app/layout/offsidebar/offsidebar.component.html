@@ -217,6 +217,9 @@
                 <option [value]="lang.code" *ngFor="let lang of getLangs()">{{lang.text}}</option>
             </select>
         </div>
+        <button class="btn btn-block btn-outline-warning btn-sm" (click)="logout()">
+                <span class="fa fa-sign-out-alt"></span><strong>Logout</strong>
+             </button>
     </tab>
     <tab>
         <ng-template tabHeading>
@@ -330,9 +333,7 @@
             <a class="btn btn-purple btn-sm" href="#" title="See more contacts">
                            <strong>Load more..</strong>
                         </a>-->
-                        <button class="btn btn-outline-warning btn-sm" (click)="logout()">
-                            <span class="fa fa-sign-out-alt"></span><strong>Logout</strong>
-                         </button>
+                        
         </div>
         
     </tab>

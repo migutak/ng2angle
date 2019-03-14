@@ -1,3 +1,15 @@
-<p>
-  view all !
-</p>
+<div class="content-heading">
+    <div>Credit cards
+      <small>view all</small></div>
+  </div>
+  <!-- START card-->
+  <div class="card card-default">
+  
+    <!-- END box placeholder-->
+    <jqxGrid #myGrid [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns" [columnsresize]="true"
+      [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true" [altrows]="true"
+      [enabletooltips]="true" [filterable]="true">
+    </jqxGrid>
+  
+  </div>
+  

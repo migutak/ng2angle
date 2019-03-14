@@ -19,6 +19,7 @@ export class Demand1Component implements OnInit {
   public radioModel: string;
 
   total:  any = {};
+  user = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
   }
@@ -90,7 +91,7 @@ export class Demand1Component implements OnInit {
     this.accnumber = event.target.textContent;
     // document.getElementById('openModalButton').click();
     // open page
-    window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber, '_blank');
+    window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber + '&username=' + this.user.username, '_blank');
   }
 
   ngOnInit() {

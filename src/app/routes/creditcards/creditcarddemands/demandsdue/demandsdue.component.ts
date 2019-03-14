@@ -19,6 +19,7 @@ export class DemandsdueComponent implements OnInit {
   public radioModel: string;
 
   total:  any = {};
+  user = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
   }
@@ -85,7 +86,7 @@ export class DemandsdueComponent implements OnInit {
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
     // open page
-    window.open(environment.applink + '/sendlettercc?cardacct=' + this.cardacct, '_blank');
+    window.open(environment.applink + '/sendlettercc?cardacct=' + this.cardacct + '&username=' + this.user.username, '_blank');
   }
 
   ngOnInit() {

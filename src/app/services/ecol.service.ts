@@ -129,6 +129,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber + '&filter[order]=datesent desc');
   }
 
+  demand1history(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber + '&filter[where][demand]=Demand1&filter[order]=datesent desc');
+  }
+
   getbranches() {
     return this.httpClient.get<any>(environment.api + '/api/branches');
   }

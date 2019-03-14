@@ -34,7 +34,7 @@ const DashboardAdmin = {
 };
 
 const Letters = {
-    text: 'Leters',
+    text: 'Letters',
     link: '/letters',
     icon: 'icon-note',
     submenu: [

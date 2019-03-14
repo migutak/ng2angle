@@ -134,7 +134,6 @@ export class RolesComponent implements OnInit {
   permission(perm, rights) {
     this.ecolService.loader();
     this.ecolService.getperm(rights).subscribe(data => {
-      console.log(data);
       this.valForm.patchValue({
         role_id: data[0].role_id,
         administrator: this.truefalse(data[0].attr),

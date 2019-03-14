@@ -111,43 +111,6 @@
       </div>
       <div class="card">
         <div class="card-header">
-          <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-            Guarantors <span class="badge badge-primary">{{guarantors?.length}}</span>
-          </a>
-        </div>
-        <div id="collapseTwo" class="collapse" data-parent="#accordion">
-          <div class="card-body">
-            <!-- START table-responsive-->
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Gurarantor Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Postal Code</th>
-                    <th scope="col">Tenumber</th>
-                    <th scope="col">Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let g of guarantors">
-                    <th scope="row">{{g.idnumber}}</th>
-                    <td>{{g.guarantorname}}</td>
-                    <td>{{g.address}}</td>
-                    <td>{{g.postalcode}}</td>
-                    <td>{{g.telnumber}}</td>
-                    <td>{{g.email}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- END table-responsive-->
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
           <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
             History Demand Letters <span class="badge badge-primary">{{demands?.length}}</span>
           </a>
@@ -274,7 +237,7 @@
                             <div>
                                 <div>
                                     Queue progress:
-                                    <div class="progress" style="">
+                                    <div class="progress">
                                         <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
                                     </div>
                                 </div>
@@ -300,17 +263,17 @@
         <label class="col-md-0 col-form-label"></label>
         <div class="col-md-12">
           <label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="roundedcheckbox10" type="checkbox" [disabled]="!emailaddress.valid" name="sendemail" id="sendemail"
+            <input id="sendemailinput" type="checkbox" [disabled]="!emailaddress.valid" name="sendemail" id="sendemail"
               [(ngModel)]="model.sendemail" #sendemail="ngModel" />
             <span class="fa fa-check"></span>Send to email</label>
           <label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="roundedcheckbox20" type="checkbox" [disabled]="!addressline1.valid" name="sendpostal" id="sendpostal"
+            <input id="sendpostalinput" type="checkbox" [disabled]="!addressline1.valid" name="sendpostal" id="sendpostal"
               [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
             <span class="fa fa-check"></span>Send to post address</label>
-          <!--<label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="roundedcheckbox20" type="checkbox" name="sendphysical" id="sendphysical" [(ngModel)]="model.sendphysical"
+          <label class="checkbox c-checkbox c-checkbox-rounded">
+            <input id="sendsmsinput" type="checkbox" [disabled]="!celnumber.valid" name="sendphysical" id="sendphysical" [(ngModel)]="model.sendphysical"
               #sendphysical="ngModel" />
-            <span class="fa fa-check"></span>Physical delivery</label>-->
+            <span class="fa fa-check"></span>SMS delivery</label>
         </div>
       </div>
     </fieldset>

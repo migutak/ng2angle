@@ -301,17 +301,17 @@
         <label class="col-md-0 col-form-label"></label>
         <div class="col-md-12">
           <label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="roundedcheckbox10" type="checkbox" [disabled]="!emailaddress.valid" name="sendemail" id="sendemail"
+            <input id="sendemailinput" type="checkbox" [disabled]="!emailaddress.valid" name="sendemail" id="sendemail"
               [(ngModel)]="model.sendemail" #sendemail="ngModel" />
             <span class="fa fa-check"></span>Send to email</label>
           <label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="roundedcheckbox20" type="checkbox" [disabled]="!addressline1.valid" name="sendpostal" id="sendpostal"
+            <input id="sendpostalinput" type="checkbox" [disabled]="!addressline1.valid" name="sendpostal" id="sendpostal"
               [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
             <span class="fa fa-check"></span>Send to post address</label>
-          <!--<label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="roundedcheckbox20" type="checkbox" name="sendphysical" id="sendphysical" [(ngModel)]="model.sendphysical"
+            <label class="checkbox c-checkbox c-checkbox-rounded">
+            <input id="sendsmsinput" type="checkbox" [disabled]="!celnumber.valid" name="sendphysical" id="sendphysical" [(ngModel)]="model.sendphysical"
               #sendphysical="ngModel" />
-            <span class="fa fa-check"></span>Physical delivery</label>-->
+            <span class="fa fa-check"></span>SMS delivery</label>
         </div>
       </div>
     </fieldset>
