@@ -142,12 +142,6 @@
                   <td class="wd-xs d-none d-lg-table-cell">
                     <div class="px-2">
                       <p class="m-0 text-muted">
-                        <em class="icon-people mr-2 fa-lg"></em>0</p>
-                    </div>
-                  </td>
-                  <td class="wd-xs d-none d-lg-table-cell">
-                    <div class="px-2">
-                      <p class="m-0 text-muted">
                         <em class="icon-envelop mr-2 fa-lg"></em><button class="btn btn-link" (click)="resend(d.filepath)">resend on email</button></p>
                     </div>
                   </td>
@@ -164,6 +158,15 @@
             </a>
           </div>
           <div id="collapseupload" class="collapse" data-parent="#accordion">
+              <div class="row">
+                  <label class="col-lg-4"></label>
+                  <div class="col-lg-8"> select demand
+                      <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand"
+                      #demand="ngModel" [ngClass]="{ 'is-invalid': demand.invalid }" required>
+                      <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+                      </select>
+                  </div>
+              </div>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="card">
@@ -205,8 +208,8 @@
                                 <tbody>
                                     <tr *ngFor="let item of uploader.queue">
                                         <td><strong>{{ item?.file?.name }}</strong></td>
-                                        <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                                        <td *ngIf="uploader.isHTML5">
+                                        <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                        <td>
                                             <div class="progress" style="margin-bottom: 0;">
                                                 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                                             </div>

@@ -7,7 +7,7 @@ import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = environment.uploadurl;
+const URL = environment.valor;
 
 @Component({
   selector: 'app-sendlettercc',
@@ -27,9 +27,10 @@ export class SendLetterccComponent implements OnInit {
   file: string;
   username: string;
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension'];
-  currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
-  public uploader: FileUploader = new FileUploader({ url: URL });
+  public uploader: FileUploader = new FileUploader({
+    url: URL
+  });
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
@@ -40,10 +41,25 @@ export class SendLetterccComponent implements OnInit {
   public fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
+
+  // Add in the other upload form parameters.
+
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
     //
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('demand', this.model.demand);
+      form.append('accnumber', this.cardacct);
+      form.append('owner', this.username);
+      form.append('custnumber', this.cardacct);
+    };
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      // console.log('ImageUpload:uploaded:', item, status);
+      // refresh demad history notes
+      this.getdemandshistory(this.cardacct);
+    };
   }
 
   ngOnInit() {

@@ -10,7 +10,8 @@ export const environment = {
   // letters_path: '/users/kevinabongo/Demands/',
   // letters_path: 'c:\\logs\\',
   letters_path: '/home/ecollectadmin/demand_letters/',
-  uploadurl: 'http://ecollecttst.co-opbank.co.ke:4000',
+  uploadurl: 'http://localhost:4000',
+  valor: 'http://localhost:3000/api/',
   metrics: 'http://localhost:8800/appmetrics-dash',
   applink: 'http://localhost:4500'
 };

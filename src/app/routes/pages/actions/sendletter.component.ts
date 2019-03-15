@@ -7,7 +7,7 @@ import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 
-const URL = environment.uploadurl;
+const URL = environment.valor;
 
 @Component({
   selector: 'app-sendletter',
@@ -17,6 +17,7 @@ const URL = environment.uploadurl;
 export class SendLetterComponent implements OnInit {
 
   accnumber: string;
+  custnumber: string;
   accountdetails: any;
   guarantors: [];
   model: any = {};
@@ -27,7 +28,6 @@ export class SendLetterComponent implements OnInit {
   smsMessage: string;
   username: string;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
-  currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
@@ -45,6 +45,18 @@ export class SendLetterComponent implements OnInit {
     private route: ActivatedRoute,
     private ecolService: EcolService) {
     //
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('demand', this.model.demand);
+      form.append('accnumber', this.accnumber);
+      form.append('owner', this.username);
+      form.append('custnumber', this.custnumber);
+    };
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      console.log('ImageUpload:uploaded:', item, status);
+      // refresh demad history notes
+      this.getdemandshistory(this.accnumber);
+    };
   }
 
   ngOnInit() {
@@ -56,6 +68,11 @@ export class SendLetterComponent implements OnInit {
     this.username = this.route.snapshot.queryParamMap.get('username');
     this.route.queryParamMap.subscribe(queryParams => {
       this.username = queryParams.get('username');
+    });
+
+    this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.custnumber = queryParams.get('custnumber');
     });
 
     // get account details
