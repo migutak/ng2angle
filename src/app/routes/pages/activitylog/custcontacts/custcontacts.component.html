@@ -1,0 +1,54 @@
+<div>
+  <h2>Customer contacts</h2>
+    <div id="accordion">
+      <div class="card">
+        <div id="collapseupload" class="collapse show" data-parent="#accordion">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4">
+                  <form #custcontactsform class="form-horizontal" autocomplete="off" novalidate>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Contact Number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="contactnumber" id="contactnumber" [(ngModel)]="model.contactnumber"
+                            #contactnumber="ngModel" [ngClass]="{ 'is-invalid': contactnumber.invalid }" required />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Contact Name</label>
+                        <div class="col-xl-8">
+                          <input class="form-control" type="text" name="contactname" id="contactname" [(ngModel)]="model.contactname"
+                            #contactname="ngModel" [ngClass]="{ 'is-invalid': contactname.invalid }" required />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Active</label>
+                        <div class="col-xl-8">
+                          <select class="form-control" type="text" name="active" id="active" [(ngModel)]="model.active"
+                            #active="ngModel" [ngClass]="{ 'is-invalid': active.invalid }" required>
+                            <option>Yes</option>
+                            <option>No</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                          <button [disabled]="custcontactsform.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
+                            type="submit" (click)="savecontact(model)">Submit</button>
+                          <button [disabled]="custcontactsform.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
+                            type="submit" (click)="savecontact(model)">Update</button>
+                        </div>
+                      </div>
+                    </form>
+              </div>
+              <div class="col-lg-8" style="margin-bottom: 40px">
+                list
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>

@@ -26,6 +26,32 @@ export class EcolService {
     return this.httpClient.post(environment.api + '/api/guarantordetails', body);
   }
 
+  getallnotes(filter, cust) {
+    //
+    let url = environment.api + '/api/notehis?filter[where][custnumber]=' + cust;
+
+    if (filter !== '') {
+      url = url + '&filter[order]=notedate DESC' + '&filter[skip]=' + filter.skip + '&filter[limit]= ' + filter.limit;
+    }
+    return this.httpClient.get(url);
+  }
+
+  getcmdstatus() {
+    const url = environment.api + '/api/cmdstatus';
+    return this.httpClient.get(url);
+  }
+
+  getbranchstatus() {
+    const url = environment.api + '/api/cmdstatus';
+    return this.httpClient.get(url);
+  }
+
+
+  postactivitylogs(body) {
+    const url = environment.api + '/api/activitylogs';
+    return this.httpClient.post(url, body);
+  }
+
   updateGuarantor(id, body) {
     return this.httpClient.put(environment.api + '/api/guarantordetails/' + id, body);
   }

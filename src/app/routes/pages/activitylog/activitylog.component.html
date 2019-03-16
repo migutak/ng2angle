@@ -1,0 +1,76 @@
+<div>
+  <div class="card b text-white">
+    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/profile-bg.jpg);">
+      <div class="media mt-0 align-items-center">
+        <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image" />
+        <div class="media-body">
+          <div class="d-flex">
+            <div>
+              <h4 class="m-0">Name: {{accountdetails?.client_name}}</h4>
+              <p>Address: {{accountdetails?.addressline1}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="hidden-xs col-sm-2">
+      <div class="fading-side-menu" data-spy="affix" data-offset-top="350" style="padding-left: 10px">
+        <h5>Menus</h5>
+        <hr class="no-margin">
+        <ul class="list-unstyled">
+          <li>
+            <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary"></span>Client Home
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./notes']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary"></span>Notes History &nbsp;<span class="badge badge-success">New</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./activityaction']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary"></span>Collector Activity
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary" ></span>Demand letters
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./files']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary" ></span>Upload Files
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./sms']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary"></span>Send/Schedule sms
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./accplan']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary"></span> Account plan
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./contacts']" [routerLinkActive]="['active']">
+              <span class="fa fa-angle-double-right text-primary"></span>Customer contacts
+            </a>
+          </li>
+          <li>
+              <a [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']">
+                <span class="fa fa-angle-double-right text-primary"></span>Remedial collaterals
+              </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+      <p class="small text-muted">activity page {{date}}</p>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

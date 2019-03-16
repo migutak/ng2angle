@@ -1,0 +1,79 @@
+<div class="card">
+    <div class="card-header">
+        <strong>send sms </strong>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <form #sendsmsForm="ngForm" (ngSubmit)="sendsmsfunc(sendsmsForm)" novalidate>
+                    <div class="form-group">
+                        <label>Mobile Number:</label> <input class="form-control" #smsNumber="ngModel"
+                            [(ngModel)]="dataSms.smsNumber" name="smsNumber"
+                            [ngClass]="{ 'is-invalid': smsNumber.errors }" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12 col-form-label" for="inline-radios">Select Template: </label>
+                        <div class="col-md-12 col-form-label">
+                            <div class="form-check form-check-inline mr-1" id="inline-radios">
+                                <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
+                                    value="LOAN" #smsTemplate="ngModel" (change)="changetemplate($event)"
+                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate">
+                                <label class="form-check-label" for="inlineRadio1">LOAN</label>
+                            </div>
+                            <div class="form-check form-check-inline mr-1">
+                                <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio2"
+                                    value="LOANOD" #smsTemplate="ngModel" (change)="changetemplate($event)"
+                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate">
+                                <label class="form-check-label" for="inlineRadio2">LOANOD/LIABILITY</label>
+                            </div>
+                            <div class="form-check form-check-inline mr-1">
+                                <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio3"
+                                    value="CC" #smsTemplate="ngModel" (change)="changetemplate($event)"
+                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate">
+                                <label class="form-check-label" for="inlineRadio3">CC</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>SMS Message</label>
+                        <textarea class="form-control" rows="3" maxlength="160" required id="smsMessage"
+                            name="smsMessage" #smsMessage="ngModel" [(ngModel)]="dataSms.smsMessage" required
+                            [ngClass]="{ 'is-invalid': smsMessage.errors }"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>CallBack Number</label>
+                        <textarea class="form-control" rows="1" maxlength="50" required id="smsCallback"
+                            name="smsCallback" #smsCallback="ngModel" [(ngModel)]="dataSms.smsCallback" required
+                            [ngClass]="{ 'is-invalid': smsCallback.errors }"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!sendsmsForm.valid">Send
+                        SMS</button>
+                </form>
+            </div>
+            <div class="col-md-8" style="min-height: 500; max-height: 750px; overflow-y: scroll;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>CustNumber</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th>By</th>
+                            <th>Sent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of sms">
+                            <td><strong>{{d.custnumber}}</strong></td>
+                            <td>{{d.message}}</td>
+                            <td>{{d.datesent}}</td>
+                            <td>{{d.owner}}</td>
+                            <td>
+                                <span class="badge badge-success">{{d.SENT}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

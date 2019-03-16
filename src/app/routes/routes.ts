@@ -9,8 +9,17 @@ import { Error404Component } from './pages/error404/error404.component';
 import { SendLetterccComponent } from './pages/actionscc/sendlettercc.component';
 
 import { SendLetterComponent } from './pages/actions/sendletter.component';
+import { ActivityLogComponent } from './pages/activitylog/activitylog.component';
 
 import { AuthGuard} from '../auth.guard';
+import { ActivityActionComponent } from './pages/activitylog/activityaction/activityaction.component';
+import { ActivityHomeComponent } from './pages/activitylog/activityhome/activityhome.component';
+import { AccPlanComponent } from './pages/activitylog/accplan/accplan.component';
+import { CustContactsComponent } from './pages/activitylog/custcontacts/custcontacts.component';
+import { DemandLettersComponent } from './pages/activitylog/demandletters/demandletters.component';
+import { SmsComponent } from './pages/activitylog/sms/sms.component';
+import { NotesComponent } from './pages/activitylog/notes/notes.component';
+import { FilesComponent } from './pages/activitylog/files/files.component';
 
 export const routes = [
 
@@ -46,6 +55,23 @@ export const routes = [
     { path: '404', component: Error404Component },
     { path: 'sendlettercc', component: SendLetterccComponent },
     { path: 'sendletter', component: SendLetterComponent },
+    { 
+        path: 'activitylog',
+        component: ActivityLogComponent,
+        children: [
+            { path: '', redirectTo: 'activityhome', pathMatch: 'full' },
+            { path: 'activityhome', component: ActivityHomeComponent },
+            { path: 'activityaction', component: ActivityActionComponent},
+            { path: 'notes', component: NotesComponent },
+            { path: 'files', component: FilesComponent},
+            { path: 'sms', component: SmsComponent },
+            { path: 'accplan', component: AccPlanComponent},
+            { path: 'contacts', component: CustContactsComponent },
+            { path: 'demandletters', component: DemandLettersComponent },
+            { path: '**', redirectTo: 'activityhome' }
+          ]
+
+    },
 
     // Not found
     { path: '', redirectTo: 'login', pathMatch: 'full' },
