@@ -8,7 +8,7 @@ import { EcolService } from '../../../services/ecol.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss', './style.css', './font-awesome-4.7.0/css/font-awesome.css']
 })
 export class LoginComponent implements OnInit {
 
