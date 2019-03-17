@@ -97,6 +97,7 @@ export class ActivityActionComponent implements OnInit {
   ];
 
   branchstatus: any = [];
+  account: any = [];
 
   currentDate() {
     const currentDate = new Date();
@@ -146,6 +147,14 @@ export class ActivityActionComponent implements OnInit {
     // get cmd status
     this.getcmdstatus();
     this.getbranchstatus();
+    // get account details
+    this.getaccount(this.accnumber);
+  }
+
+  getaccount(accnumber) {
+    this.ecolService.getAccount(accnumber).subscribe(data => {
+      this.account = data[0];
+    });
   }
 
   getcmdstatus() {
@@ -208,11 +217,11 @@ export class ActivityActionComponent implements OnInit {
       cure: this.f.cure.value,
       accnumber: this.accnumber,
       custnumber: this.custnumber,
-      arramount: 0,
-      oustamount: 0,
+      arramount: this.account.totalarrears,
+      oustamount: this.account.oustbalance,
       notesrc: 'made a note',
       noteimp: 'N',
-      rfdother: 'other',
+      rfdother: this.f.rfdother.value,
       owner: this.username
     };
     this.ecolService.postactivitylogs(body).subscribe(data => {

@@ -48,7 +48,15 @@ export class ActivityHomeComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
+    // get account details
+    this.getaccount(this.accnumber);
 
+  }
+
+  getaccount(accnumber) {
+    this.ecolService.getAccount(accnumber).subscribe(data => {
+      this.account = data[0];
+    });
   }
 
   

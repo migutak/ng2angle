@@ -1,192 +1,210 @@
 <div>
-    <div class="card">
-      <div class="card-header">
-        <strong>Collector action </strong> capture
-      </div>
-      <form [formGroup]="actionForm" (ngSubmit)="onSubmit()">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-xl-2 col-md-3">
-              Collector activity
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="collectoraction" name="collectoraction" class="form-control" formControlName="collectoraction" class="form-control" [ngClass]="{ 'is-invalid': f.collectoraction.errors }">
-                  <option value="">Please select</option>
-                  <option *ngFor="let action of actions" [value]="action.code">{{action.name}}</option>
-                </select>
-              </div>
-            </div>
+  <div class="card">
+    <div class="card-header">
+      <strong>Collector action </strong> capture
+    </div>
+    <form [formGroup]="actionForm" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-2 col-md-3">
+            Collector activity
           </div>
-  
-          <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Party contacted
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="party" name="party" class="form-control" name="party" class="form-control" formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
-                  <option value="">Please select</option>
-                  <option *ngFor="let p of party" [value]="p.code">{{p.name}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              Reason for default
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="reason" name="reason" class="form-control" name="reason" class="form-control" formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': f.reason.errors }">
-                  <option value="0">Please select</option>
-                  <option *ngFor="let reason of reasons" [value]="reason.code">{{reason.name}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Promise to pay
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="ptp" name="ptp" class="form-control" name="ptp" class="form-control" formControlName="ptp" class="form-control" [ngClass]="{ 'is-invalid': f.ptp.errors }">
-                  <option value="">Please select</option>
-                  <option value="NO">NO</option>
-                  <option value="YES">YES</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              Route for review
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="route" name="route" class="form-control" formControlName="route" class="form-control" [ngClass]="{ 'is-invalid': f.route.errors }">
-                  <option value="">Please select</option>
-                  <option value="NO">NO</option>
-                  <option value="YES">YES</option>
-                </select>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Promise amount
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <input type="number" class="form-control" formControlName="ptpamount" class="form-control" [ngClass]="{ 'is-invalid': f.ptpamount.errors }">
-              </div>
-            </div>
-            <div class="col-md-3">
-              CMD status
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="cmdstatus" name="cmdstatus" class="form-control" formControlName="cmdstatus" class="form-control" [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
-                  <option value="">Please select</option>
-                  <option *ngFor="let cmd of cmdstatus" [value]="cmd.code">{{cmd.name}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Promise date
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <input class="form-control" formControlName="ptpdate" class="form-control"            
-                bsDatepicker
-                [bsConfig] ="{ dateInputFormat: 'YYYY-MM-DD' }"
-                [minDate]="minDate"  
-                [ngClass]="{ 'is-invalid': f.ptpdate.errors }"/>
-              </div>
-            </div>
-            <div class="col-md-3">
-              Branch status
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="branchstatus" name="branchstatus" class="form-control" formControlName="branchstatus" class="form-control" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
-                  <option value="">Please select</option>
-                  <option *ngFor="let br of branchstatus" [value]="br.code">{{br.name}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Payment mode
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="paymode" name="paymode" class="form-control" formControlName="paymode" class="form-control" [ngClass]="{ 'is-invalid': f.paymode.errors }">
-                  <option value="">Please select</option>
-                  <option>Cash</option>
-                  <option>Cheque</option>
-                  <option>Mobile Transfer</option>
-                  <option>Bank Transfer</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3">
-              Curing method
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <select id="cure" name="cure" class="form-control" formControlName="cure" class="form-control" [ngClass]="{ 'is-invalid': f.cure.errors }">
-                  <option value="">Please select</option>
-                  <option *ngFor="let c of cure" [value]="c.code">{{c.name}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-  
-          <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Review date
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <input class="form-control" id="reviewdate" name="reviewdate" name="reviewdate"
-                bsDatepicker
-                [bsValue]="bsValue"
-                [bsConfig] ="{ dateInputFormat: 'YYYY-MM-DD' }"
-                [minDate]="minDate"  
-                class="form-control" formControlName="reviewdate" class="form-control" [ngClass]="{ 'is-invalid': f.reviewdate.errors }"/>
-
-                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig">
-                        
-                
-              </div>
-            </div>
-          </div>
-  
-          <div class="row" style="padding-top: 20px">
+          <div class="col-md-3">
             <div class="col-md-12">
-              <label>Collector note</label>
-              <textarea class="form-control" rows="5" id="collectornote" name="collectornote" name="collectornote" class="form-control" formControlName="collectornote" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.collectornote.errors }"></textarea>
+              <select id="collectoraction" name="collectoraction" class="form-control" formControlName="collectoraction"
+                class="form-control" [ngClass]="{ 'is-invalid': f.collectoraction.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let action of actions" [value]="action.code">{{action.name}}</option>
+              </select>
             </div>
-  
           </div>
-          <div class="form-group row">
-            <div class="col-md-9 col-form-label">
-              <!--<label class="switch switch-label switch-outline-warning-alt">
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Party contacted
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="party" name="party" class="form-control" name="party" class="form-control"
+                formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let p of party" [value]="p.code">{{p.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            Reason for default
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="reason" name="reason" class="form-control" name="reason" class="form-control"
+                formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': f.reason.errors }">
+                <option value="0">Please select</option>
+                <option *ngFor="let reason of reasons" [value]="reason.code">{{reason.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Promise to pay
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="ptp" name="ptp" class="form-control" name="ptp" class="form-control" formControlName="ptp"
+                class="form-control" [ngClass]="{ 'is-invalid': f.ptp.errors }">
+                <option value="">Please select</option>
+                <option value="NO">NO</option>
+                <option value="YES">YES</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            Route for review
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="route" name="route" class="form-control" formControlName="route" class="form-control"
+                [ngClass]="{ 'is-invalid': f.route.errors }">
+                <option value="">Please select</option>
+                <option value="NO">NO</option>
+                <option value="YES">YES</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Promise amount
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input type="number" class="form-control" formControlName="ptpamount" class="form-control"
+                [ngClass]="{ 'is-invalid': f.ptpamount.errors }">
+            </div>
+          </div>
+          <div class="col-md-3">
+            CMD status
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="cmdstatus" name="cmdstatus" class="form-control" formControlName="cmdstatus"
+                class="form-control" [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let cmd of cmdstatus" [value]="cmd.code">{{cmd.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Promise date
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input class="form-control" formControlName="ptpdate" class="form-control" bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [minDate]="minDate"
+                [ngClass]="{ 'is-invalid': f.ptpdate.errors }" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            Branch status
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="branchstatus" name="branchstatus" class="form-control" formControlName="branchstatus"
+                class="form-control" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let br of branchstatus" [value]="br.code">{{br.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Payment mode
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="paymode" name="paymode" class="form-control" formControlName="paymode" class="form-control"
+                [ngClass]="{ 'is-invalid': f.paymode.errors }">
+                <option value="">Please select</option>
+                <option>Cash</option>
+                <option>Cheque</option>
+                <option>Mobile Transfer</option>
+                <option>Bank Transfer</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            Curing method
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <select id="cure" name="cure" class="form-control" formControlName="cure" class="form-control"
+                [ngClass]="{ 'is-invalid': f.cure.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let c of cure" [value]="c.code">{{c.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            Review date
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input class="form-control" id="reviewdate" name="reviewdate" name="reviewdate" bsDatepicker
+                [bsValue]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [minDate]="minDate"
+                class="form-control" formControlName="reviewdate" class="form-control"
+                [ngClass]="{ 'is-invalid': f.reviewdate.errors }" />
+
+              <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
+                name="dp-basic" [bsConfig]="bsConfig">
+
+
+            </div>
+          </div>
+          <div class="col-md-3">
+            Other reason for default
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother" class="form-control"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-md-12">
+            <label>Collector note</label>
+            <textarea class="form-control" rows="5" id="collectornote" name="collectornote" name="collectornote"
+              class="form-control" formControlName="collectornote" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.collectornote.errors }"></textarea>
+          </div>
+
+        </div>
+        <div class="form-group row">
+          <div class="col-md-9 col-form-label">
+            <!--<label class="switch switch-label switch-outline-warning-alt">
                 <input type="checkbox" class="switch-input">
                 Pin this note <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
               </label>-->
-            </div>
           </div>
         </div>
-        <div class="card-footer">
-          <button type="submit" [disabled]="actionForm.invalid" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
-          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
-        </div>
-      </form>
-    </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" [disabled]="actionForm.invalid" class="btn btn-sm btn-primary"><i
+            class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+      </div>
+    </form>
   </div>
+</div>
