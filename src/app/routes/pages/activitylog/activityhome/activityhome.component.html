@@ -8,7 +8,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Accnumber:</label>
                         <div class="col-lg-10">
-                            <strong>{{account.accnumber}}</strong>
+                            <strong>{{account?.accnumber}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Oustbalance:</label>
                         <div class="col-lg-10">
-                            <strong>{{account.oustnumber}}</strong>
+                            <strong>{{account?.oustnumber}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -24,7 +24,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Totalarrears:</label>
                         <div class="col-lg-10">
-                            <strong>{{account.totalarrears}}</strong>
+                            <strong>{{account?.totalarrears}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -32,7 +32,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Bucket:</label>
                         <div class="col-lg-10">
-                            <strong>{{accunt.bucket}}</strong>
+                            <strong>{{account?.bucket}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -40,7 +40,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Arocode :</label>
                         <div class="col-lg-10">
-                            <strong>{{account.arocode}}</strong>
+                            <strong>{{account?.arocode}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -48,7 +48,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Branchname :</label>
                         <div class="col-lg-10">
-                            <strong>{{account.branchcode}}</strong>
+                            <strong>{{account?.branchcode}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -67,15 +67,13 @@
                                 <th>Promise Date</th>
                                 <th>Owner</th>
                                 <th class="text-center">Met?</th>
-                                <th>Total Amount received</th>
+                                <th>Amount received</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    
-                                </td>
-                                <td>$ 100.00</td>
+                                <td></td>
+                                <td>$ 00</td>
                                 <td>5</td>
                                 <td>21%</td>
                                 <td class="text-center">
@@ -251,12 +249,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </tab>
-        <tab>
-            <ng-template tabHeading>CRB Balances</ng-template>
-            <div>
-                crb balances
             </div>
         </tab>
     </tabset>
