@@ -218,8 +218,8 @@ export class ActivityActionComponent implements OnInit {
       cure: this.f.cure.value,
       accnumber: this.accnumber,
       custnumber: this.custnumber,
-      arramount: this.account.totalarrears,
-      oustamount: this.account.oustbalance,
+      arramount: this.account.totalarrears || 0,
+      oustamount: this.account.oustbalance || 0,
       notesrc: 'made a note',
       noteimp: 'N',
       rfdother: this.f.rfdother.value,
@@ -231,7 +231,7 @@ export class ActivityActionComponent implements OnInit {
     }, error => {
       console.log(error);
       // fire error service
-      swal('Error!', 'service is currently not available', 'error');
+      swal('Error!', 'postactivitylogs - service is currently not available', 'error');
     });
     //update portfolio add notes and ptp
     this.ecolService.recordupdate(body).subscribe(data => {
@@ -239,7 +239,7 @@ export class ActivityActionComponent implements OnInit {
     }, error => {
       console.log(error);
       // fire error service
-      swal('Error!', 'service is currently not available (recordupdate)', 'error');
+      swal('Error!', 'recordupdate - service is currently not available', 'error');
     });
   }
 }
