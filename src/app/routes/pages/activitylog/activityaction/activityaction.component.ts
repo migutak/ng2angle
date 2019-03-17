@@ -28,10 +28,13 @@ export class ActivityActionComponent implements OnInit {
   smsMessage: string;
   username: string;
 
-  // bsValue = new Date();
-  // bsRangeValue: Date[];
-  // maxDate = new Date();
+  bsValue = new Date();
+  bsRangeValue: Date[];
+  maxDate = new Date();
   minDate = new Date();
+  bsConfig = {
+    containerClass: 'theme-angle'
+};
 
   actionForm: FormGroup;
   submitted = false;
@@ -54,7 +57,7 @@ export class ActivityActionComponent implements OnInit {
     { code: '5', name: 'Third Party' },
     { code: '6', name: 'Disconnected' },
     { code: '7', name: 'Not applicable' }
-  ]
+  ];
 
   cure = [
     { code: 'REST', name: 'Restructure' },
@@ -63,7 +66,7 @@ export class ActivityActionComponent implements OnInit {
     { code: 'MORAT', name: 'Moratorium' },
     { code: 'TAKEOVER', name: 'Take Over' },
     { code: 'TOPUP', name: 'Top Ups' }
-  ]
+  ];
 
   reasons = [
     { code: 'Hardship', name: 'Hardship' },
@@ -91,25 +94,25 @@ export class ActivityActionComponent implements OnInit {
     { code: 'Terminated', name: 'Terminated' },
     { code: 'Business Failure', name: 'Business Failure' },
     { code: 'Business Loss', name: 'Business Loss' }
-  ]
+  ];
 
-  branchstatus: any = []
+  branchstatus: any = [];
 
   currentDate() {
     const currentDate = new Date();
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
-    return year + "-" + month + "-" + day;
+    return year + '-' + month + '-' + day;
   }
 
   // Datepicker
-  bsValue = new Date();
-  bsRangeValue: Date[];
-  maxDate = new Date();
-  bsConfig = {
+  // bsValue = new Date();
+  // bsRangeValue: Date[];
+  // maxDate = new Date();
+  /* bsConfig = {
       containerClass: 'theme-angle'
-  }
+  }*/
 
   constructor(
     public settings: SettingsService,
@@ -137,6 +140,31 @@ export class ActivityActionComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
+    // build form
+    this.buildForm();
+
+    // get cmd status
+    this.getcmdstatus();
+    this.getbranchstatus();
+  }
+
+  getcmdstatus() {
+    this.ecolService.getcmdstatus().subscribe(cmdstatus => {
+      this.cmdstatus = cmdstatus;
+    });
+  }
+
+  getbranchstatus() {
+    this.ecolService.getcmdstatus().subscribe(branchstatus => {
+      this.branchstatus = branchstatus;
+    });
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.actionForm.controls; }
+
+  buildForm() {
+    // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
       party: ['', Validators.required],
@@ -152,26 +180,7 @@ export class ActivityActionComponent implements OnInit {
       paymode: [''],
       cure: ['']
     });
-
-    // get cmd status
-    this.getcmdstatus();
-    this.getbranchstatus();
   }
-
-  getcmdstatus() {
-    this.ecolService.getcmdstatus().subscribe(cmdstatus => {
-      this.cmdstatus = cmdstatus;
-    })
-  }
-
-  getbranchstatus() {
-    this.ecolService.getcmdstatus().subscribe(branchstatus => {
-      this.branchstatus = branchstatus;
-    })
-  }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.actionForm.controls; }
 
   onSubmit() {
     this.submitted = true;
@@ -197,21 +206,21 @@ export class ActivityActionComponent implements OnInit {
       route: this.f.route.value,
       paymode: this.f.paymode.value,
       cure: this.f.cure.value,
-      accnumber: '0000',
-      custnumber: '0000',
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
       arramount: 0,
       oustamount: 0,
       notesrc: 'made a note',
       noteimp: 'N',
       rfdother: 'other',
-      owner: 'miguta'
-    }
+      owner: this.username
+    };
     this.ecolService.postactivitylogs(body).subscribe(data => {
       swal('Success!', 'activity saved', 'success');
     }, error => {
       console.log(error);
       // fire error service
       swal('Error!', 'service is currently not available', 'error');
-    })
+    });
   }
 }

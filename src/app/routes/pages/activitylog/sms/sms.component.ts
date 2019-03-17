@@ -21,7 +21,10 @@ export class SmsComponent implements OnInit {
   smsMessage: [];
   model: any = {};
   username: string;
-  
+
+  sms: any = [];
+  dataSms: any = {};
+  account: any = [];
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -45,8 +48,68 @@ export class SmsComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
-    // get account details
+    this.getsms();
+    this.getaccount(this.accnumber);
   }
 
-  
+  getsms() {
+    this.ecolService.getsms(this.custnumber).subscribe(data => {
+      this.sms = data;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  gettemplate(template) {
+    if (template === 'LOAN') {
+      // tslint:disable-next-line:max-line-length
+      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarr + ' days. Amount in arrears is Kes. '
+        + this.account.totalarrears + '. Please pay within seven days. ';
+      this.dataSms.smsCallback = ' Enquire details on 0711049000/020-3276000.';
+    } else if (template === 'LOANOD') {
+      this.dataSms.smsMessage = 'Dear Customer, Your account is overdawn by  Kes. '
+          + this.account.totalarrears + '. Please regularize within seven days.';
+      this.dataSms.smsCallback = ' Enquire details on 0711049000/020-3276000.';
+    } else if (template === 'CC') {
+      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarr +
+       ' days. Amount in arrears is Kes. ' + this.account.totalarrears + '. Please pay within seven days. ';
+      this.dataSms.smsCallback = ' Enquire details on 0711049000/020-3276000.';
+    }
+}
+
+changetemplate($event) {
+// console.log('this is  the event ==>', $event.target.value);
+this.gettemplate($event.target.value);
+}
+
+getaccount(account) {
+this.ecolService.getaccount(account).subscribe(data => {
+  // console.log('getaccount==>', data);
+  this.account = data;
+  this.dataSms.smsNumber = data.celnumber;
+  // this.spinner.hide();
+});
+}
+
+sendsmsfunc (form) {
+  this.ecolService.loader();
+  const body = {
+    custnumber: this.custnumber,
+    owner: this.username,
+    message: form.value.smsMessage + form.value.smsCallback,
+    arrears: this.account.totalarrears,
+    datesent: new Date(),
+    telnumber: form.value.smsNumber
+  };
+  this.ecolService.postsms(body).subscribe(data => {
+    // console.log(data);
+    swal('Success!', 'sms sent', 'success');
+    this.dataSms = {};
+    this.getsms();
+  }, error => {
+    console.log(error);
+    swal('Error!', 'sms service currently not available', 'error');
+  });
+}
+
 }

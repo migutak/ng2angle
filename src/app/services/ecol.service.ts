@@ -94,8 +94,20 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/permissionsettings?filter[where][role_id]=' + role_id);
   }
 
+  getaccount (accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
+  }
+
+  getsms(cust) {
+    return this.httpClient.get<any>(environment.api + '/api/sms?filter[where][custnumber]=' + cust + '&filter[order]=datesent desc');
+  }
+
   getLetter(letter) {
     return this.httpClient.get<any>(environment.api + '/api/settings_letters/' + letter);
+  }
+
+  postsms (body) {
+    return this.httpClient.post(environment.api + '/api/sms/', body);
   }
 
   getdemandSettings() {
