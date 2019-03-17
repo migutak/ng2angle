@@ -31,17 +31,17 @@
             </a>
           </li>
           <li>
-            <a [routerLink]="['./activityaction']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+            <a [routerLink]="['./activityaction']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Collector Activity
             </a>
           </li>
           <li>
-            <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+            <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary" ></span>Demand letters
             </a>
           </li>
           <li>
-            <a [routerLink]="['./files']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+            <a [routerLink]="['./files']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary" ></span>Upload Files
             </a>
           </li>
