@@ -52,6 +52,11 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+  recordupdate(body) {
+    const url = environment.api + '/api/activitylogs/action';
+    return this.httpClient.post(url, body);
+  }
+
   updateGuarantor(id, body) {
     return this.httpClient.put(environment.api + '/api/guarantordetails/' + id, body);
   }

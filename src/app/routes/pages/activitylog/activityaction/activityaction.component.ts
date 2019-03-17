@@ -225,12 +225,21 @@ export class ActivityActionComponent implements OnInit {
       rfdother: this.f.rfdother.value,
       owner: this.username
     };
+    //add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
       swal('Success!', 'activity saved', 'success');
     }, error => {
       console.log(error);
       // fire error service
       swal('Error!', 'service is currently not available', 'error');
+    });
+    //update portfolio add notes and ptp
+    this.ecolService.recordupdate(body).subscribe(data => {
+      swal('Success!', 'Records updated', 'success');
+    }, error => {
+      console.log(error);
+      // fire error service
+      swal('Error!', 'service is currently not available (recordupdate)', 'error');
     });
   }
 }
