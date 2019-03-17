@@ -170,7 +170,6 @@ export class ActivityLogComponent implements OnInit {
   }
 
   processletter(letter: any, accnumber, emailaddress) {
-    console.log('processletter==>', letter);
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data && data.length > 0) {
         // console.log('getAccount=>', data);

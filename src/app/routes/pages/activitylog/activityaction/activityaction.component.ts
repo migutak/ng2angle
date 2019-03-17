@@ -187,7 +187,8 @@ export class ActivityActionComponent implements OnInit {
       branchstatus: [''],
       route: [''],
       paymode: [''],
-      cure: ['']
+      cure: [''],
+      rfdother: ['']
     });
   }
 
