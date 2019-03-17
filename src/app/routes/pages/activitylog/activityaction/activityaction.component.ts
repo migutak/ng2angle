@@ -207,7 +207,7 @@ export class ActivityActionComponent implements OnInit {
       party: this.f.party.value,
       ptpamount: this.f.ptpamount.value,
       ptp: this.f.ptp.value,
-      ptpdate: this.f.ptpdate.value + 1,
+      ptpdate: this.f.ptpdate.value,
       collectornote: this.f.collectornote.value,
       reviewdate: this.f.reviewdate.value + 1,
       reason: this.f.reason.value,
