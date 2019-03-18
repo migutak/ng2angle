@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -37,6 +38,7 @@ import { FilesComponent } from '../pages/activitylog/files/files.component';
     imports: [
         SharedModule,
         FileUploadModule,
+        NgbModule
         // RouterModule.forChild(routes)
     ],
     declarations: [

@@ -106,9 +106,15 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input class="form-control" formControlName="ptpdate" class="form-control" bsDatepicker
-                [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [minDate]="minDate"
-                [ngClass]="{ 'is-invalid': f.ptpdate.errors }" />
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate"
+                    id="ptpdate" name="ptpdate" name="ptpdate" ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate"
+                    [ngClass]="{ 'is-invalid': f.ptpdate?.errors }" />
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i class="fa fa-calendar"></i>
+                      </span></button>
+                    </div>
+              </div>
             </div>
           </div>
           <div class="col-md-3">
@@ -161,14 +167,15 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <input class="form-control" id="reviewdate" name="reviewdate" name="reviewdate" bsDatepicker
-                [bsValue]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [minDate]="minDate"
-                class="form-control" formControlName="reviewdate" class="form-control"
-                [ngClass]="{ 'is-invalid': f.reviewdate.errors }" />
-
-              <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                name="dp-basic" [bsConfig]="bsConfig">
-
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                    id="reviewdate" name="reviewdate" name="reviewdate" ngbDatepicker #d="ngbDatepicker" formControlName="reviewdate"
+                    [ngClass]="{ 'is-invalid': f.reviewdate?.errors }">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i class="fa fa-calendar"></i>
+                      </span></button>
+                    </div>
+              </div>
 
             </div>
           </div>

@@ -59,5 +59,9 @@ export class ActivityHomeComponent implements OnInit {
     });
   }
 
+  fetchPtps(active) {
+    console.log('clicked==>', active)
+  }
+
   
 }
