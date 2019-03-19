@@ -21,50 +21,77 @@
         <hr class="no-margin">
         <ul class="list-unstyled">
           <li>
-            <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
+            <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Client Home
             </a>
           </li>
           <li>
-            <a [routerLink]="['./notes']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge"> 
-              <span class="fa fa-angle-double-right text-primary"></span>Notes History &nbsp;<span class="badge badge-success">New</span>
+            <a [routerLink]="['./notes']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              queryParamsHandling="merge">
+              <span class="fa fa-angle-double-right text-primary"></span>Notes History &nbsp;<span
+                class="badge badge-success">9</span>
             </a>
           </li>
           <li>
-            <a [routerLink]="['./activityaction']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
+            <a [routerLink]="['./activityaction']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Collector Activity
             </a>
           </li>
           <li>
-            <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
-              <span class="fa fa-angle-double-right text-primary" ></span>Demand letters
+            <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              queryParamsHandling="merge">
+              <span class="fa fa-angle-double-right text-primary"></span>Demand letters
             </a>
           </li>
           <li>
-            <a [routerLink]="['./files']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}" queryParamsHandling="merge">
-              <span class="fa fa-angle-double-right text-primary" ></span>Upload Files
+            <a [routerLink]="['./files']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              queryParamsHandling="merge">
+              <span class="fa fa-angle-double-right text-primary"></span>Upload Files
             </a>
           </li>
           <li>
-            <a [routerLink]="['./sms']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+            <a [routerLink]="['./sms']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
               <span class="fa fa-angle-double-right text-primary"></span>Send/Schedule sms
             </a>
           </li>
           <li>
-            <a [routerLink]="['./accplan']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+            <a [routerLink]="['./accplan']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
               <span class="fa fa-angle-double-right text-primary"></span> Account plan
             </a>
           </li>
           <li>
-            <a [routerLink]="['./contacts']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+            <a [routerLink]="['./contacts']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
               <span class="fa fa-angle-double-right text-primary"></span>Customer contacts
             </a>
           </li>
           <li>
-              <a [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']" [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
-                <span class="fa fa-angle-double-right text-primary"></span>Remedial collaterals
-              </a>
-            </li>
+            <a [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              <span class="fa fa-angle-double-right text-primary"></span>Remedial collaterals
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./guarantors']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              <span class="fa fa-angle-double-right text-primary"></span>Guarantors
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./bulknotes']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              <span class="fa fa-angle-double-right text-primary"></span>Bulk note upload
+            </a>
+          </li>
         </ul>
       </div>
     </div>

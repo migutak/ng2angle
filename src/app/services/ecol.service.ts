@@ -103,6 +103,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
   }
 
+  getfileshistory (custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber);
+  }
+
   getsms(cust) {
     return this.httpClient.get<any>(environment.api + '/api/sms?filter[where][custnumber]=' + cust + '&filter[order]=datesent desc');
   }
@@ -141,6 +145,37 @@ export class EcolService {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/cards_stage?filter[where][cardacct]=' + cardacct);
   }
+
+  getcardwithid(nationid) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/cards_stage?filter[where][nationid]=' + nationid);
+  }
+
+  ptps(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
+  }
+
+  otheraccs(custnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[where][custnumber]=' + custnumber);
+  }
+
+  collaterals(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/collaterals?filter[where][accnumber]=' + accnumber);
+  }
+
+  directors(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/directors?filter[where][accnumber]=' + accnumber);
+  }
+
+  accwithid(nationid) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[where][nationid]=' + nationid);
+  }
+
 
   generateLetter(data) {
     console.log('data received', data);

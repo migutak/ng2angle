@@ -3,6 +3,8 @@
     <div id="accordion">
       <div class="card">
         <div id="collapseupload" class="collapse show" data-parent="#accordion">
+          <div class="card-header">add or edit a contact</div>
+          
           <div class="card-body">
             <div class="row">
               <div class="col-lg-4">
@@ -43,7 +45,32 @@
                     </form>
               </div>
               <div class="col-lg-8" style="margin-bottom: 40px">
-                list
+                  <table class="table table-hover table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>custnumber#</th>
+                          <th>contactNumber</th>
+                          <th>contactName</th>
+                          <th>owner</th>
+                          <th class="text-center">active</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let c of contacts">
+                          <td>{{d.custnumber}}</td>
+                          <td>{{d.contact}}</td>
+                          <td>{{d.name}}</td>
+                          <td>{{d.owner}}</td>
+                          <td>{{d.active}}</td>
+                          <td class="text-center">
+                            <button class="btn btn-outline-success btn-sm" (click)="editcontact(d.id)">
+                              <i class="fa fa-download"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
               </div>
             </div>
           </div>

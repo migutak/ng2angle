@@ -3,7 +3,7 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
+import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,7 +12,8 @@ const URL = environment.valor;
 @Component({
   selector: 'app-sendletter',
   templateUrl: './activityaction.component.html',
-  styleUrls: ['./activityaction.component.scss']
+  styleUrls: ['./activityaction.component.scss'],
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class ActivityActionComponent implements OnInit {
 
@@ -27,14 +28,6 @@ export class ActivityActionComponent implements OnInit {
   file: string;
   smsMessage: string;
   username: string;
-
-  bsValue = new Date();
-  bsRangeValue: Date[];
-  maxDate = new Date();
-  minDate = new Date();
-  bsConfig = {
-    containerClass: 'theme-angle'
-};
 
   actionForm: FormGroup;
   submitted = false;
@@ -107,22 +100,12 @@ export class ActivityActionComponent implements OnInit {
     return year + '-' + month + '-' + day;
   }
 
-  // Datepicker
-  // bsValue = new Date();
-  // bsRangeValue: Date[];
-  // maxDate = new Date();
-  /* bsConfig = {
-      containerClass: 'theme-angle'
-  }*/
-
   constructor(
     public settings: SettingsService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private ecolService: EcolService) {
     //
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
-    this.minDate.setDate(this.minDate.getDate() - 1);
   }
 
   ngOnInit() {
@@ -179,9 +162,9 @@ export class ActivityActionComponent implements OnInit {
       party: ['', Validators.required],
       ptpamount: [''],
       ptp: ['', [Validators.required]],
-      ptpdate: [''],
+      ptpdate: [Date],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
-      reviewdate: [this.currentDate(), Validators.required],
+      reviewdate: [Date, Validators.required],
       reason: ['', Validators.required],
       cmdstatus: [''],
       branchstatus: [''],

@@ -1,9 +1,9 @@
 <div class="content-heading">Account information</div>
-<form class="card">
-    <tabset [justified]="true" class="ie-fix-flex">
-        <tab>
-            <ng-template tabHeading>Account info</ng-template>
+<ngb-tabset (tabChange)="beforeChange($event)">
+    <ngb-tab title="Account info">
+        <ng-template ngbTabContent>
             <div>
+                <div class="loader" *ngIf="loader"></div>
                 <fieldset>
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Accnumber:</label>
@@ -53,11 +53,13 @@
                     </div>
                 </fieldset>
             </div>
-        </tab>
-        <tab>
-            <ng-template tabHeading>PTPs</ng-template>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+        <ng-template ngbTabTitle><b>PTP</b>s</ng-template>
+        <ng-template ngbTabContent>
             <div>
-                <div class="card-header">Promises made and status</div>
+                <div class="loader" *ngIf="loader"></div>
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered table-striped">
                         <thead>
@@ -85,6 +87,182 @@
                     </table>
                 </div>
             </div>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Other accounts">
+        <ng-template ngbTabContent>
+            <!--<form>
+                <div class="form-group form-inline">
+                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                </div>
+            </form>-->
+            <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let country of countries; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                                style="width: 20px">
+                            {{ country.name }}
+                        </td>
+                        <td>{{ country.area | number }}</td>
+                        <td>{{ country.population | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Collateral info">
+        <ng-template ngbTabContent>
+                <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let country of countries; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                                style="width: 20px">
+                            {{ country.name }}
+                        </td>
+                        <td>{{ country.area | number }}</td>
+                        <td>{{ country.population | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Directors">
+        <ng-template ngbTabContent>
+                <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let country of countries; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                                style="width: 20px">
+                            {{ country.name }}
+                        </td>
+                        <td>{{ country.area | number }}</td>
+                        <td>{{ country.population | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Credit card">
+        <ng-template ngbTabContent>
+            <!--<form>
+                            <div class="form-group form-inline">
+                                Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                            </div>
+                        </form>-->
+            <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CardNumber</th>
+                        <th scope="col">CardAcct</th>
+                        <th scope="col">CardName</th>
+                        <th scope="col">OustBalance</th>
+                        <th scope="col">ExpAmount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let card of cards; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            {{ card.cardnumber }}
+                        </td>
+                        <td>
+                            {{ card.cardacct }}
+                        </td>
+                        <td>
+                            {{ card.cardname }}
+                        </td>
+                        <td>{{ card.oustbalance | number }}</td>
+                        <td>{{ card.expamount | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="with same idNumber">
+        <ng-template ngbTabContent>
+            <!--<form>
+                                <div class="form-group form-inline">
+                                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                                </div>
+                            </form>-->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Population</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let country of countries; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2"
+                                style="width: 20px">
+                            {{ country.name }}
+                        </td>
+                        <td>{{ country.area | number }}</td>
+                        <td>{{ country.population | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="CRB Balances" [disabled]="true">
+        <ng-template ngbTabContent>
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>
+<!---<form class="card">
+    <tabset [justified]="true" class="ie-fix-flex">
+        <tab>
+            <ng-template tabHeading>Account info</ng-template>
+
+        </tab>
+        <tab>
+            <ng-template tabHeading>PTPs</ng-template>
+
         </tab>
         <tab>
             <ng-template tabHeading>Other accounts</ng-template>
@@ -157,10 +335,8 @@
         <tab>
             <ng-template tabHeading>Directors</ng-template>
             <div>
-                <!-- Checkout Process-->
-            <form action="" method="post" novalidate="novalidate">
+                <form action="" method="post" novalidate="novalidate">
                     <accordion [closeOthers]="true" class="card-group">
-                        <!-- Checkout Method-->
                         <accordion-group #stepgroup1 [isOpen]="step1" panelClass="b mb-2">
                             <div accordion-heading><strong>Name: </strong></div>
                             <div id="collapse01">
@@ -171,7 +347,7 @@
                                         </p>
                                         <p class="mb-0">tel:</p>
                                         <p>mobile:</p>
-                                        <hr/>
+                                        <hr />
                                     </div>
                                     <div class="col-lg-6">
                                         account list
@@ -252,4 +428,4 @@
             </div>
         </tab>
     </tabset>
-</form>
+</form>-->
