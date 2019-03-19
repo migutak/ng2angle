@@ -12,8 +12,10 @@ export const environment = {
   letters_path: '/home/ecollectadmin/demand_letters/',
   uploadurl: 'http://localhost:4000',
   valor: 'http://localhost:3000/api/',
+  xlsuploadapi: 'http://localhost:3001/api/',
   metrics: 'http://localhost:8800/appmetrics-dash',
-  applink: 'http://localhost:4500'
+  applink: 'http://localhost:4500',
+  xlstemplate: '/Users/Kevinabongo/Documents/upload_notes.xlsx',
 };
 
 /*

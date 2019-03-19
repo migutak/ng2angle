@@ -6,5 +6,6 @@ export const environment = {
   uploadurl: 'http://ecollecttst.co-opbank.co.ke:4000',
   valor: 'http://ecollecttst.co-opbank.co.ke:3000/api',
   metrics: 'http://ecollecttst.co-opbank.co.ke:8000/appmetrics-dash',
-  applink: 'http://ecollecttst.co-opbank.co.ke:8001'
+  applink: 'http://ecollecttst.co-opbank.co.ke:8001',
+  xlsuploadapi: 'http://ecollecttst.co-opbank.co.ke:3001/api/',
 };

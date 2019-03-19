@@ -5,9 +5,9 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem , ParsedResponseHeaders} from 'ng2-file-upload';
 
-const URL = environment.valor;
+const URL = environment.xlsuploadapi;
 
 @Component({
   selector: 'app-bulknotes',
@@ -31,11 +31,23 @@ export class BulknotesComponent implements OnInit {
   public fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
-  
+
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
     //
+    //
+    this.uploader.onBuildItemForm = (item, form) => {
+      form.append('owner', this.username);
+      form.append('custnumber', this.custnumber);
+    };
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      // console.log('ImageUpload:uploaded:', item, status, response); 
+    };
+    this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
+    this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+
   }
 
   ngOnInit() {
@@ -55,6 +67,38 @@ export class BulknotesComponent implements OnInit {
     });
 
     // get account details
+  }
+
+  onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    let data = JSON.parse(response); //success server response
+    if (data.success == false) {
+      swal({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong! - ' + data.message,
+      })
+    } else {
+      swal({
+        type: 'success',
+        title: 'All Good!',
+        text: 'Excel bulk notes upload is a success',
+      })
+    }
+  }
+
+  onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    let error = JSON.parse(response); //error server response
+    console.log('error', error)
+  }
+
+  downloadFile() {
+    const template = environment.xlstemplate;
+    this.ecolService.downloadFile(template).subscribe(data => {
+      saveAs(data, 'ECollect_bulk_notes_upload_template.xlsx');
+    }, error => {
+      console.log(error.error);
+      swal('Error!', ' Cannot upload template  file!', 'error');
+    });
   }
 
 }
