@@ -20,6 +20,9 @@ import { DemandLettersComponent } from './pages/activitylog/demandletters/demand
 import { SmsComponent } from './pages/activitylog/sms/sms.component';
 import { NotesComponent } from './pages/activitylog/notes/notes.component';
 import { FilesComponent } from './pages/activitylog/files/files.component';
+import { GuarantorsComponent } from './pages/activitylog/guarantors/guarantors.component';
+import { BulknotesComponent } from './pages/activitylog/bulknotes/bulknotes.component';
+import { CollateralsComponent } from './pages/activitylog/collaterals/collaterals.component';
 
 export const routes = [
 
@@ -68,6 +71,9 @@ export const routes = [
             { path: 'accplan', component: AccPlanComponent},
             { path: 'contacts', component: CustContactsComponent },
             { path: 'demandletters', component: DemandLettersComponent },
+            { path: 'remedialcollaterals', component: CollateralsComponent},
+            { path: 'bulknotes', component: BulknotesComponent },
+            { path: 'guarantors', component: GuarantorsComponent },
             { path: '**', redirectTo: 'activityhome' }
           ]
 

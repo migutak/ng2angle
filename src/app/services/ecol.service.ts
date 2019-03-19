@@ -161,6 +161,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[where][custnumber]=' + custnumber);
   }
 
+  guarantordetails(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/guarantordetails?filter[where][accnumber]=' + accnumber);
+  }
+
   collaterals(accnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/collaterals?filter[where][accnumber]=' + accnumber);

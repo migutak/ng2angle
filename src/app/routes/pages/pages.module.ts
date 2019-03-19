@@ -22,6 +22,9 @@ import { DemandLettersComponent } from '../pages/activitylog/demandletters/deman
 import { SmsComponent } from '../pages/activitylog/sms/sms.component';
 import { NotesComponent } from '../pages/activitylog/notes/notes.component';
 import { FilesComponent } from '../pages/activitylog/files/files.component';
+import { GuarantorsComponent } from '../pages/activitylog/guarantors/guarantors.component';
+import { BulknotesComponent } from '../pages/activitylog/bulknotes/bulknotes.component';
+import { CollateralsComponent } from '../pages/activitylog/collaterals/collaterals.component';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
@@ -58,7 +61,10 @@ import { FilesComponent } from '../pages/activitylog/files/files.component';
         DemandLettersComponent,
         SmsComponent,
         NotesComponent,
-        FilesComponent
+        FilesComponent,
+        GuarantorsComponent,
+        BulknotesComponent,
+        CollateralsComponent
     ],
     exports: [
         RouterModule,
@@ -75,7 +81,10 @@ import { FilesComponent } from '../pages/activitylog/files/files.component';
         DemandLettersComponent,
         SmsComponent,
         NotesComponent,
-        FilesComponent
+        FilesComponent,
+        GuarantorsComponent,
+        BulknotesComponent,
+        CollateralsComponent
     ]
 })
 export class PagesModule { }
