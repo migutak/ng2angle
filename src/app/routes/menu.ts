@@ -461,12 +461,16 @@ const Work = {
             link: '/work/myallocations'
         },
         {
+            text: 'My worklist',
+            link: '/work/myworklist'
+        },
+        {
             text: 'Todays',
             link: '/work/todays'
         },
         {
             text: 'Pre Delinquent',
-            link: '/work/predelinquent'
+            link: '/work/predelq'
         },
         {
             text: 'PTP Due',
@@ -566,12 +570,34 @@ const Remedial = {
     icon: 'icon-equalizer',
     submenu: [
         {
-            text: 'List',
-            link: '/blog/list'
+            text: 'View all',
+            link: '/work/viewall',
+            'alert': '23',
+            'label': 'badge badge-warning'
         },
         {
-            text: 'Post',
-            link: '/blog/post'
+            text: 'My allocations',
+            link: '/work/myallocations'
+        },
+        {
+            text: 'My worklist',
+            link: '/work/myworklist'
+        },
+        {
+            text: 'Todays',
+            link: '/work/todays'
+        },
+        {
+            text: 'Pre Delinquent',
+            link: '/work/predelq'
+        },
+        {
+            text: 'PTP Due',
+            link: '/work/ptps'
+        },
+        {
+            text: 'With funds',
+            link: '/work/withfunds'
         }
     ]
 };

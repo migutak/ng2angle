@@ -39,9 +39,9 @@ export const routes = [
             { path: 'users', loadChildren: './users/users.module#UsersModule' },
             { path: 'creditcards', loadChildren: './creditcards/creditcards.module#CreditcardsModule' },
             { path: 'forms', loadChildren: './forms/forms.module#FormsModule' },
-            { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
+            { path: 'work', loadChildren: './work/work.module#WorkModule' },
             { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
-            { path: 'maps', loadChildren: './maps/maps.module#MapsModule' },
+            { path: 'remedial', loadChildren: './remedial/remedial.module#RemedialModule' },
             { path: 'blog', loadChildren: './blog/blog.module#BlogModule' },
             { path: 'ecommerce', loadChildren: './ecommerce/ecommerce.module#EcommerceModule' },
             { path: 'extras', loadChildren: './extras/extras.module#ExtrasModule' }

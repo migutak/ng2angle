@@ -46,4 +46,8 @@ export class CustContactsComponent implements OnInit {
     // get account details
   }
 
+  savecontact(form) {
+    console.log(form);
+  }
+
 }
