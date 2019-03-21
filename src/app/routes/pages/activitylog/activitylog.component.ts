@@ -27,6 +27,7 @@ export class ActivityLogComponent implements OnInit {
   file: string;
   smsMessage: string;
   username: string;
+  date = new Date();
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });

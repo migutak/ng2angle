@@ -17,7 +17,7 @@ export class CustContactsComponent implements OnInit {
 
   accnumber: string;
   custnumber: string;
-  accountdetails: [];
+  contacts: [];
   model: any = {};
   username: string;
 
@@ -48,6 +48,10 @@ export class CustContactsComponent implements OnInit {
 
   savecontact(form) {
     console.log(form);
+  }
+
+  updatecontact(model) {
+    console.log('feee')
   }
 
 }

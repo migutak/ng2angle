@@ -8,4 +8,5 @@ export const environment = {
   metrics: 'http://ecollecttst.co-opbank.co.ke:8000/appmetrics-dash',
   applink: 'http://ecollecttst.co-opbank.co.ke:8001',
   xlsuploadapi: 'http://ecollecttst.co-opbank.co.ke:3001/api/',
+  xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
 };

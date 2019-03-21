@@ -79,4 +79,8 @@ export class GuarantorsComponent implements OnInit {
     })
   }
 
+  reset() {
+    console.log('please!!!');
+  }
+
 }

@@ -4,6 +4,9 @@ const screenfull = require('screenfull');
 import { UserblockService } from '../sidebar/userblock/userblock.service';
 import { SettingsService } from '../../core/settings/settings.service';
 import { MenuService } from '../../core/menu/menu.service';
+import { EcolService } from '../../services/ecol.service';
+import swal from 'sweetalert2';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -18,7 +21,7 @@ export class HeaderComponent implements OnInit {
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
 
-    constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService) {
+    constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService, public ecolService: EcolService, public router: Router) {
 
         // show only a few items on demo
         this.menuItems = menu.getMenu().slice(0, 4); // for horizontal layout
@@ -77,5 +80,22 @@ export class HeaderComponent implements OnInit {
         if (screenfull.enabled) {
             screenfull.toggle();
         }
+    }
+
+    logout() {
+        swal({
+            title: 'Are you sure?',
+            text: 'You want to logout!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Logout!'
+        }).then((result) => {
+            if (result.value) {
+                this.ecolService.logout();
+                this.router.navigate(['/login']);
+            }
+        });
     }
 }
