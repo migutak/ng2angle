@@ -265,24 +265,12 @@ const Collectionrpt = {
     icon: 'icon-grid',
     submenu: [
         {
-            text: 'Collector activity',
-            link: '/tables/standard'
+            text: 'Reports',
+            link: '/reports/allreports'
         },
         {
-            text: 'Amount collected',
-            link: '/tables/extended'
-        },
-        {
-            text: 'SMS report',
-            link: '/tables/datatable'
-        },
-        {
-            text: 'Daily notes',
-            link: '/tables/aggrid'
-        },
-        {
-            text: 'Bulk notes',
-            link: '/tables/ngxdatatable'
+            text: 'Dashboards',
+            link: '/reports/dashboards'
         }
     ]
 };
@@ -701,7 +689,6 @@ const collection_menu = [
     serviceproviders,
     headingMore,
     Collectionrpt,
-    Remedialrpts,
     headingConfigurations,
     Demandletters,
     Allocations,
@@ -724,8 +711,7 @@ const remedial_menu = [
     headingComponents,
     Work,
     headingMore,
-    Collectionrpt,
-    Remedialrpts
+    Collectionrpt
 ];
 
 const teamleader_menu = [
@@ -737,7 +723,6 @@ const teamleader_menu = [
     Work,
     headingMore,
     Collectionrpt,
-    Remedialrpts,
     headingConfigurations,
     Demandletters,
     Allocations,

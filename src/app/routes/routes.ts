@@ -23,6 +23,7 @@ import { FilesComponent } from './pages/activitylog/files/files.component';
 import { GuarantorsComponent } from './pages/activitylog/guarantors/guarantors.component';
 import { BulknotesComponent } from './pages/activitylog/bulknotes/bulknotes.component';
 import { CollateralsComponent } from './pages/activitylog/collaterals/collaterals.component';
+import { ActivitydashComponent } from './pages/activitydash/activitydash.component';
 
 export const routes = [
 
@@ -43,7 +44,7 @@ export const routes = [
             { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
             { path: 'remedial', loadChildren: './remedial/remedial.module#RemedialModule' },
             { path: 'blog', loadChildren: './blog/blog.module#BlogModule' },
-            { path: 'ecommerce', loadChildren: './ecommerce/ecommerce.module#EcommerceModule' },
+            { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },
             { path: 'extras', loadChildren: './extras/extras.module#ExtrasModule' }
         ],
         canActivate: [AuthGuard]
@@ -56,9 +57,10 @@ export const routes = [
     { path: 'lock', component: LockComponent },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: '404', component: Error404Component },
+    { path: 'activitydash', component: ActivitydashComponent },
     { path: 'sendlettercc', component: SendLetterccComponent },
     { path: 'sendletter', component: SendLetterComponent },
-    { 
+    {
         path: 'activitylog',
         component: ActivityLogComponent,
         children: [

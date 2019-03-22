@@ -10,21 +10,12 @@ import { environment } from '../../../../environments/environment';
 })
 export class SettingsComponent implements OnInit {
 
-  public itemsCategories: Array<string> = ['1-Demand', '2-Demand', 'Pre-listing', 'Post-listing', '90-day', '40-day'];
-  public itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40',
+  // tslint:disable-next-line:max-line-length
+  public itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingSecuredcc', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30',
 'creditcard_overdue', 'creditcard_prelisting', 'creditcard_suspension'];
   public itemsTags: Array<number> = [7, 14, 30, 60, 90, 120];
   public memoTags: Array<number> = [100, 140, 300, 600, 900, 120];
-  public itemsReview = [
-        'Adam <adam@email.com>',
-        'Amalie <amalie@email.com>',
-        'Wladimir <wladimir@email.com>',
-        'Samantha <samantha@email.com>',
-        'Estefanía <estefanía@email.com>',
-        'Natasha <natasha@email.com>',
-        'Nicole <nicole@email.com>',
-        'Adrian <adrian@email.com>'
-    ];
+
     model: any = {};
     test: any = {};
     global: any = {};
@@ -89,7 +80,6 @@ export class SettingsComponent implements OnInit {
   }
 
   generateletter(letter, emaildata: any) {
-    console.log(letter);
     this.ecolService.generateLetter(letter).subscribe(data => {
       // console.log(data);
       swal('Success!', 'Letter generated!', 'success');
@@ -106,7 +96,6 @@ export class SettingsComponent implements OnInit {
   }
 
   processletter(demand, accnumber, emailaddress) {
-    console.log(demand);
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data.length > 0) {
         const letter = {

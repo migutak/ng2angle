@@ -25,6 +25,7 @@ import { FilesComponent } from '../pages/activitylog/files/files.component';
 import { GuarantorsComponent } from '../pages/activitylog/guarantors/guarantors.component';
 import { BulknotesComponent } from '../pages/activitylog/bulknotes/bulknotes.component';
 import { CollateralsComponent } from '../pages/activitylog/collaterals/collaterals.component';
+import { ActivitydashComponent } from '../pages/activitydash/activitydash.component';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
@@ -64,7 +65,8 @@ import { CollateralsComponent } from '../pages/activitylog/collaterals/collatera
         FilesComponent,
         GuarantorsComponent,
         BulknotesComponent,
-        CollateralsComponent
+        CollateralsComponent,
+        ActivitydashComponent
     ],
     exports: [
         RouterModule,
@@ -84,7 +86,8 @@ import { CollateralsComponent } from '../pages/activitylog/collaterals/collatera
         FilesComponent,
         GuarantorsComponent,
         BulknotesComponent,
-        CollateralsComponent
+        CollateralsComponent,
+        ActivitydashComponent
     ]
 })
 export class PagesModule { }

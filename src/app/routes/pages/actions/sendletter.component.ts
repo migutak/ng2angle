@@ -27,6 +27,7 @@ export class SendLetterComponent implements OnInit {
   file: string;
   smsMessage: string;
   username: string;
+  // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
@@ -94,7 +95,6 @@ export class SendLetterComponent implements OnInit {
   }
 
   getdemandshistory(accnumber) {
-    // console.log('getdemandshistory called ...');
     this.ecolService.getdemandshistory(accnumber).subscribe(data => {
       this.demands = data;
     });
@@ -170,7 +170,7 @@ export class SendLetterComponent implements OnInit {
   }
 
   processletter(letter: any, accnumber, emailaddress) {
-    console.log('processletter==>', letter);
+    // console.log('processletter==>', letter);
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data && data.length > 0) {
         // console.log('getAccount=>', data);
@@ -186,6 +186,7 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.branchname = data[0].branchname;
         this.bodyletter.branchcode = data[0].branchcode;
         this.bodyletter.manager = data[0].manager;
+        this.bodyletter.branchemail = data[0].branchemail;
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = new Date();
         this.bodyletter.guarantors = data[0].guarantors;
@@ -193,7 +194,6 @@ export class SendLetterComponent implements OnInit {
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           // add accounts to the array
           this.bodyletter.accounts = accounts;
-          // console.log(this.bodyletter);
           const emaildata = {
             name: data[0].client_name,
             email: emailaddress,
@@ -240,10 +240,10 @@ export class SendLetterComponent implements OnInit {
         // send email
         // add file full path
         emaildata.file = uploaddata.filepath;
-        /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+        this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
           console.log(response);
           swal('Success!', 'Letter sent on email!', 'success');
-        });*/
+        });
         // send sms
         this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
           if (result && result.length > 0) {

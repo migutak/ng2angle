@@ -173,7 +173,8 @@ export class SendLetterccComponent implements OnInit {
         const emaildata = {
           name: data[0].cardname,
           email: emailaddress,
-          title: demand
+          title: demand,
+          branchemail: 'Contact Centre Team <ContactCentreTeam@co-opbank.co.ke>'
         };
         // generate letter
         this.generateletter(letter, emaildata);
@@ -219,10 +220,10 @@ export class SendLetterccComponent implements OnInit {
       // send email
       // add file full path
       emaildata.file = dataupload.message;
-      /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+      this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
         console.log(response);
         swal('Success!', 'Letter sent on email!', 'success');
-      });*/
+      });
       // send sms
       // get message
       this.ecolService.getsmsmessage(letter.demand).subscribe(result => {

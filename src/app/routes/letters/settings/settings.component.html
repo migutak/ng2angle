@@ -49,7 +49,7 @@
                     <p class="lead mt-3"></p>
                     <div class="form-group">
                       <p>Send only to - memo</p>
-                      <textarea class="form-control" rows="3" placeholder="only to memo ..." name="onlyto" id="onlyto"
+                      <textarea class="form-control" rows="1" placeholder="only to memo ..." name="onlyto" id="onlyto"
                         #onlyto="ngModel" [(ngModel)]="model.onlyto"></textarea>
                     </div>
                     <p class="my-2"></p>
@@ -57,19 +57,19 @@
                       #exceptions="ngModel" [(ngModel)]="model.exceptions"></ngx-select>-->
                     <div class="form-group">
                       <p>Exceptions - Memo</p>
-                      <textarea class="form-control" rows="3" placeholder="exceptions memo ..." name="exceptions" id="exceptions"
+                      <textarea class="form-control" rows="1" placeholder="exceptions memo ..." name="exceptions" id="exceptions"
                         #exceptions="ngModel" [(ngModel)]="model.exceptions"></textarea>
                     </div>
                     <p class="lead mt-3"></p>
                     <div class="form-group">
                       <p>Exceptions - custnumber</p>
-                      <textarea class="form-control" rows="3" placeholder="exceptions custnumber..." name="exceptionscust"
+                      <textarea class="form-control" rows="1" placeholder="exceptions custnumber..." name="exceptionscust"
                         id="exceptionscust" #exceptionscust="ngModel" [(ngModel)]="model.exceptionscust"></textarea>
                     </div>
                     <p class="lead mt-3"></p>
                     <div class="form-group">
                       <p>sms template</p>
-                      <textarea class="form-control" rows="5" placeholder="sms message.." name="sms" id="sms" #sms="ngModel"
+                      <textarea class="form-control" rows="3" placeholder="sms message.." name="sms" id="sms" #sms="ngModel"
                         [(ngModel)]="model.sms" required></textarea>
                     </div>
                     <!--<div class="form-group">
@@ -159,7 +159,7 @@
                     <div class="card-title">Demand setups</div>
                   </div>
                   <!-- START list group-->
-                  <scrollable class="list-group" height="700">
+                  <scrollable class="list-group" style="height:700; overflow: scroll">
                     <!-- START list group item-->
                     <div *ngFor="let s of demandSettings" class="list-group-item list-group-item-action">
                       <div class="media">
@@ -186,7 +186,7 @@
                     <!-- END list group item-->
                   </scrollable>
                   <!-- END list group-->
-                  <!-- START card footer-->
+                  <!-- START card footer
                   <div class="card-footer clearfix">
                     <div class="input-group">
                       <input class="form-control form-control-sm" type="text" placeholder="Search message .." />
@@ -196,7 +196,7 @@
                       </span>
                     </div>
                   </div>
-                  <!-- END card-footer-->
+                   END card-footer-->
                 </div>
               </div>
             </div>
@@ -216,15 +216,15 @@
             
             <div class="form-group">
               <p>Letter Footer</p>
-              <input class="form-control" name="footer" id="footer" #footer="ngModel" [(ngModel)]="global.footer"
-                required />
+              <textarea class="form-control" rows="4" name="footer" id="footer" #footer="ngModel" [(ngModel)]="global.footer"
+                required></textarea>
             </div>
 
             <p class="lead mt-3"></p>
             <div class="form-group">
               <p>Bank Directors</p>
-              <input class="form-control" name="directors" id="directors" #directors="ngModel" [(ngModel)]="global.directors"
-                required />
+              <textarea class="form-control" rows="3" name="directors" id="directors" #directors="ngModel" [(ngModel)]="global.directors"
+                required></textarea>
             </div>
 
             <p class="lead mt-3"></p>
