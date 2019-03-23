@@ -196,7 +196,7 @@ export class EcolService {
   }
 
   sendDemandEmail(data) {
-    return this.httpClient.post<any>(environment.api + '/api/Email-models/send', data);
+    return this.httpClient.post<any>(environment.emailapi, data);
   }
 
   sendsms(data) {

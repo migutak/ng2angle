@@ -164,6 +164,8 @@ export class SendLetterccComponent implements OnInit {
           demand: demand.toLowerCase(),
           cardacct: data[0].cardacct,
           cardname: data[0].cardname,
+          showlogo: true,
+          format: 'pdf',
           address: this.model.addressline1,
           postcode: this.model.postcode,
           exp_pmnt: data[0].exppmnt,

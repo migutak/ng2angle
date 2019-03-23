@@ -25,6 +25,7 @@ export const environment = {
   applink: 'http://localhost:4500',
   xlsuploadapi: 'http://ecollecttst.co-opbank.co.ke:5001/api/',
   xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
+  emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email'
 };
 
 /*

@@ -162,7 +162,7 @@
                 <tr *ngFor="let d of demands">
                   <td class="wd-xs">
                     <div class="px-2">
-                      <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.filepath)">
+                      <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.filepath, d.filename)">
                         <i class="fa fa-download"></i>
                       </button>
                     </div>

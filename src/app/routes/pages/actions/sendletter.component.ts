@@ -27,6 +27,7 @@ export class SendLetterComponent implements OnInit {
   file: string;
   smsMessage: string;
   username: string;
+  emaildata: any = {};
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
@@ -175,8 +176,8 @@ export class SendLetterComponent implements OnInit {
       if (data && data.length > 0) {
         // console.log('getAccount=>', data);
         this.bodyletter.demand = letter.demand;
-        this.bodyletter.showlogo = letter.showlogo;
-        this.bodyletter.format = letter.format;
+        this.bodyletter.showlogo = true;
+        this.bodyletter.format = 'pdf';
         this.bodyletter.cust = data[0].custnumber;
         this.bodyletter.acc = data[0].accnumber;
         this.bodyletter.custname = data[0].client_name;
@@ -194,13 +195,14 @@ export class SendLetterComponent implements OnInit {
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           // add accounts to the array
           this.bodyletter.accounts = accounts;
-          const emaildata = {
+          this.emaildata = {
             name: data[0].client_name,
             email: emailaddress,
+            branchemail: this.bodyletter.branchemail,
             title: letter.demand
           };
           // generate letter
-          this.generateletter(this.bodyletter, emaildata);
+          this.generateletter(this.bodyletter);
         }, error => {
           console.log('error==>', error);
           swal('Error!', 'unable to retrieve customer accounts!', 'error');
@@ -214,7 +216,7 @@ export class SendLetterComponent implements OnInit {
     });
   }
 
-  generateletter(letter, emaildata: any) {
+  generateletter(letter) {
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
         //
@@ -239,8 +241,9 @@ export class SendLetterComponent implements OnInit {
         this.demandshistory(bulk);
         // send email
         // add file full path
-        emaildata.file = uploaddata.filepath;
-        this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+        this.emaildata.file = uploaddata.message;
+        console.log('sendDemandEmail==>', this.emaildata);
+        this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
           console.log(response);
           swal('Success!', 'Letter sent on email!', 'success');
         });
@@ -300,7 +303,7 @@ export class SendLetterComponent implements OnInit {
   demandshistory(body) {
     console.log('demandshistory', body);
     this.ecolService.demandshistory(body).subscribe(data => {
-      console.log('saved demandshistory==', data);
+      // console.log('saved demandshistory==', data);
       this.getdemandshistory(this.accnumber);
     });
   }
@@ -313,9 +316,9 @@ export class SendLetterComponent implements OnInit {
     this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
-  downloadFile(filepath) {
+  downloadFile(filepath, filename) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-      saveAs(data, 'filename');
+      saveAs(data, filename);
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
