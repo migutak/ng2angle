@@ -123,6 +123,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/demandsettings');
   }
 
+  getdemandSettingsduplicate(letterid, daysinarr, onlyto) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/demandsettings?filter[where][letterid]=' + letterid + '&filter[where][daysinarr]=' + daysinarr + '&filter[where][onlyto]=' + onlyto);
+  }
+
   demandSettings(body) {
     return this.httpClient.post<any>(environment.api + '/api/demandsettings', body);
   }

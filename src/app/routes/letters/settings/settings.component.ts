@@ -151,16 +151,21 @@ export class SettingsComponent implements OnInit {
     onlyto: form.value.onlyto
     };
 
-    /*this.ecolService.updateLetter(body).subscribe(data => {
-      swal('Successful!', 'saved successfully!', 'success');
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred during processing!', 'error');
-    });*/
-
-    this.ecolService.demandSettings(body).subscribe(data => {
-      swal('Successful!', 'saved successfully!', 'success');
-      this.getdemandSettings();
+    // check letter duplicate
+    this.ecolService.getdemandSettingsduplicate(body.letterid, body.daysinarr, body.onlyto).subscribe(data => {
+      if (data.length > 0) {
+        // letter already added
+        swal('Stop!', 'Letter already added!', 'warning');
+      } else {
+        // add letter
+        this.ecolService.demandSettings(body).subscribe(response => {
+          swal('Successful!', 'saved successfully!', 'success');
+          this.getdemandSettings();
+        }, error => {
+          console.log(error);
+          swal('Error!', 'Error occurred during processing!', 'error');
+        });
+      }
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
@@ -168,7 +173,6 @@ export class SettingsComponent implements OnInit {
   }
 
   onChange(letter) {
-    // load letter details
     this.ecolService.getLetter(letter).subscribe(data => {
       letter = data;
       // console.log(data);

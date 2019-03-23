@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { SettingsComponent } from './settings/settings.component';
 import { NgxSelectModule } from 'ngx-select-ex';
+import { FilterPipe} from './filter.pipe';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -19,7 +20,7 @@ const routes: Routes = [
       RouterModule.forChild(routes)
   ],
   declarations: [
-    SettingsComponent,
+    SettingsComponent, FilterPipe
   ],
   exports: [
       RouterModule
