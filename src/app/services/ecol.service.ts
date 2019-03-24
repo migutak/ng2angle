@@ -81,9 +81,12 @@ export class EcolService {
     return this.httpClient.put(environment.api + '/api/settings_letters', body);
   }
 
-  login(username: string, password: string) {
+  login(username: string) {
     return this.httpClient.get<any>(environment.api + '/api/tblusers/' + username);
+  }
 
+  auth(username: string, password: string) {
+    return this.httpClient.get<any>(environment.auth + '?username=' + username + '&pass=' + password);
   }
 
   putuser(user: object) {

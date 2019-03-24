@@ -4,11 +4,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 import { EcolService } from '../../../services/ecol.service';
+import { getDefaultService } from 'selenium-webdriver/chrome';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss', './style.css', './font-awesome-4.7.0/css/font-awesome.css'] // 
+    styleUrls: ['./login.component.scss', './style.css', './font-awesome-4.7.0/css/font-awesome.css'] //
 })
 export class LoginComponent implements OnInit {
 
@@ -53,49 +54,21 @@ export class LoginComponent implements OnInit {
             console.log('Valid!');
             console.log(value);
         }*/
-        this.ecolService.login(value.username, value.password)
-        .subscribe(user => {
-            // console.log(user);
-            // login successful if there's a user in the response
-            if (user !== null || user !== undefined) {
-                // store user details and basic auth credentials in local storage
-                // to keep user logged in between page refreshes
-                // get user permissions
-                this.ecolService.getpermissions(user.role).subscribe(permission => {
-                    // console.log(permission);
-                    user.authdata = window.btoa(value.username + ':' + value.password);
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    localStorage.setItem('userpermission', JSON.stringify(permission));
-                    localStorage.setItem('profile', '1');
-                    // this.router.navigate([this.returnUrl]);
-                    this.router.navigate(['/home']);
-                });
-                //
+        // AD login
+        this.ecolService.auth(value.username, value.password).subscribe(response => {
+            //
+            if (response.result === 'success') {
+                // get user
+                this.getuser(value.username, value.password);
             } else {
-                this.error = 'Wrong username or password';
+                this.error = 'Wrong username and/or password';
                 this.loading = false;
             }
-
-           // return user;
         }, error => {
-          console.log(error);
-         if (error.statusText === 'Not Found') {
-            this.error = 'Wrong username or password';
-            this.loading = false;
-          } else {
+            console.log(error);
             this.error = 'Error during login';
             this.loading = false;
-          }
-
         });
-           /* .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.error = error;
-                    this.loading = false;
-                });*/
 
     }
 
@@ -106,5 +79,39 @@ export class LoginComponent implements OnInit {
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
+    }
+
+    getuser(username, password) {
+        this.ecolService.login(username).subscribe(user => {
+            if (user !== null || user !== undefined) {
+                // store user details and basic auth credentials in local storage
+                // to keep user logged in between page refreshes
+                // get user permissions
+                this.ecolService.getpermissions(user.role).subscribe(permission => {
+                    // console.log(permission);
+                    user.authdata = window.btoa(username + ':' + password);
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('userpermission', JSON.stringify(permission));
+                    localStorage.setItem('profile', '1');
+                    // this.router.navigate([this.returnUrl]);
+                    this.router.navigate(['/home']);
+                });
+                //
+            } else {
+                this.error = 'User not created on E-Collect';
+                this.loading = false;
+            }
+
+           // return user;
+        }, error => {
+          console.log(error);
+         if (error.statusText === 'Not Found') {
+            this.error = 'User not created on E-Collect';
+            this.loading = false;
+          } else {
+            this.error = 'Error during login';
+            this.loading = false;
+          }
+        });
     }
 }

@@ -5,7 +5,7 @@ import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 const URL = environment.valor;
 
@@ -56,8 +56,16 @@ export class SendLetterComponent implements OnInit {
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log('ImageUpload:uploaded:', item, status);
-      // refresh demad history notes
+      // refresh demad history
       this.getdemandshistory(this.accnumber);
+    };
+
+    this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
+      // success
+    };
+
+    this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
+      // error server response
     };
   }
 
@@ -136,7 +144,7 @@ export class SendLetterComponent implements OnInit {
           this.bodyletter.accounts = accounts;
           // get demand1 date
           this.ecolService.demand1history(this.accnumber).subscribe(dd1date => {
-            if (dd1date && dd1date.length > 0 ) {
+            if (dd1date && dd1date.length > 0) {
               this.bodyletter.demand1date = dd1date[0].datesent;
             }
             // call generate letter api

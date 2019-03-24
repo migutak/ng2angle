@@ -9,5 +9,6 @@ export const environment = {
   applink: 'http://ecollecttst.co-opbank.co.ke:8001',
   xlsuploadapi: 'http://ecollecttst.co-opbank.co.ke:5001/api/',
   xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
-  emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email'
+  emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email',
+  auth: 'http://ecollecttst.co-opbank.co.ke:8080/ecol_apis/auth',
 };
