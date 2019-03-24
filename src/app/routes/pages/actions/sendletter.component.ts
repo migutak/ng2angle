@@ -55,15 +55,12 @@ export class SendLetterComponent implements OnInit {
     };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      console.log('ImageUpload:uploaded:', item, status);
-      // refresh demad history
-      this.getdemandshistory(this.accnumber);
+      //
     };
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
       var obj = JSON.parse(response);
-      console.log('response', JSON.parse(response));
       for (let i=0; i <obj.files.length; i ++) {
         const bulk = {
             'accnumber': this.accnumber,

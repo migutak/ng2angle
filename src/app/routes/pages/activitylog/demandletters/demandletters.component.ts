@@ -5,7 +5,7 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders  } from 'ng2-file-upload';
 
 const URL = environment.valor;
 
@@ -53,9 +53,39 @@ export class DemandLettersComponent implements OnInit {
     };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      console.log('ImageUpload:uploaded:', item, status);
-      // refresh demad history notes
-      this.getdemandshistory(this.accnumber);
+      //
+    };
+
+    this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
+      // success
+      var obj = JSON.parse(response);
+      for (let i=0; i <obj.files.length; i ++) {
+        const bulk = {
+            'accnumber': this.accnumber,
+            'custnumber': this.custnumber,
+            'address': 'none',
+            'email': 'none',
+            'telnumber': 'none',
+            'filepath': obj.files[i].path,
+            'filename': obj.files[i].originalname,
+            'datesent': new Date(),
+            'owner': this.username,
+            'byemail': false,
+            'byphysical': true,
+            'bypost': true,
+            'demand': this.model.demand
+          };
+          this.ecolService.demandshistory(bulk).subscribe(response => {
+            this.getdemandshistory(this.accnumber);
+            swal('Good!', 'Demand letter uploaded successfully!', 'success');
+          }, error => {
+            swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
+          })
+    }
+    };
+
+    this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
+      // error server response
     };
   }
 
@@ -313,9 +343,9 @@ export class DemandLettersComponent implements OnInit {
     this.ecolService.guarantorletters(body).subscribe(data => { });
   }
 
-  downloadFile(filepath) {
+  downloadFile(filepath, filename) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-      saveAs(data, 'filename');
+      saveAs(data, filename);
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
