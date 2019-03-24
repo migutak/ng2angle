@@ -192,7 +192,7 @@ export class ActivityActionComponent implements OnInit {
       ptp: this.f.ptp.value,
       ptpdate: this.f.ptpdate.value,
       collectornote: this.f.collectornote.value,
-      reviewdate: this.f.reviewdate.value + 1,
+      reviewdate: this.f.reviewdate.value,
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
       branchstatus: this.f.branchstatus.value,
@@ -211,6 +211,8 @@ export class ActivityActionComponent implements OnInit {
     //add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
       swal('Success!', 'activity saved', 'success');
+      // build form
+      this.buildForm();
     }, error => {
       console.log(error);
       // fire error service

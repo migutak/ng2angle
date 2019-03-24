@@ -60,11 +60,33 @@ export class SendLetterComponent implements OnInit {
       this.getdemandshistory(this.accnumber);
     };
 
-    this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
+    this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
-      console.log('success', item);
-      console.log('response', response);
-      console.log('status', status);
+      var obj = JSON.parse(response);
+      console.log('response', JSON.parse(response));
+      for (let i=0; i <obj.files.length; i ++) {
+        const bulk = {
+            'accnumber': this.accnumber,
+            'custnumber': this.custnumber,
+            'address': 'none',
+            'email': 'none',
+            'telnumber': 'none',
+            'filepath': obj.files[i].path,
+            'filename': obj.files[i].originalname,
+            'datesent': new Date(),
+            'owner': this.username,
+            'byemail': false,
+            'byphysical': true,
+            'bypost': true,
+            'demand': this.model.demand
+          };
+          this.ecolService.demandshistory(bulk).subscribe(response => {
+            this.getdemandshistory(this.accnumber);
+            swal('Good!', 'Demand letter uploaded successfully!', 'success');
+          }, error => {
+            swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
+          })
+    }
     };
 
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
