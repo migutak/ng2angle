@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
             console.log(value);
         }*/
         // AD login
-        this.ecolService.auth(value.username, value.password).subscribe(response => {
+        /*this.ecolService.auth(value.username, value.password).subscribe(response => {
             //
             if (response.result === 'success') {
                 // get user
@@ -68,7 +68,8 @@ export class LoginComponent implements OnInit {
             console.log(error);
             this.error = 'Error during login';
             this.loading = false;
-        });
+        });*/
+        this.getuser(value.username, value.password);
 
     }
 

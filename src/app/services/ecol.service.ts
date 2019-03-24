@@ -86,7 +86,7 @@ export class EcolService {
   }
 
   auth(username: string, password: string) {
-    return this.httpClient.get<any>(environment.auth + '?username=' + username + '&pass=' + password);
+    return this.httpClient.get<any>(environment.auth + '?username=' + username + '&password=' + password);
   }
 
   putuser(user: object) {
