@@ -62,6 +62,9 @@ export class SendLetterComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
       // success
+      console.log('success', item);
+      console.log('response', response);
+      console.log('status', status);
     };
 
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
