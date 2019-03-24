@@ -3,9 +3,7 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
-import { FileUploader } from 'ng2-file-upload';
 
 const URL = environment.valor;
 
@@ -18,7 +16,10 @@ export class CollateralsComponent implements OnInit {
 
   custnumber;
   accnumber;
-  username
+  username;
+  collaterals: any = [];
+  model = {};
+  //
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {

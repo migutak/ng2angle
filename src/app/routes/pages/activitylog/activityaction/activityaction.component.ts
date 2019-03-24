@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
@@ -32,6 +32,9 @@ export class ActivityActionComponent implements OnInit {
   actionForm: FormGroup;
   submitted = false;
   cmdstatus: any = [];
+
+  message: string = 'Hello Kevin';
+  @Output() MessageEvent = new EventEmitter<String>();
 
   actions = [
     { code: 'OC', name: 'OUTGOING CALL' },
@@ -133,6 +136,10 @@ export class ActivityActionComponent implements OnInit {
     // get account details
     this.getaccount(this.accnumber);
   }
+
+  sendMessage() {
+    this.MessageEvent.emit(this.message);
+  };
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {

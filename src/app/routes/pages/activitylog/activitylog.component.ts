@@ -28,6 +28,7 @@ export class ActivityLogComponent implements OnInit {
   smsMessage: string;
   username: string;
   date = new Date();
+  notesTotal = 0;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
@@ -79,6 +80,10 @@ export class ActivityLogComponent implements OnInit {
     // get account details
     this.getaccount(this.accnumber);
     this.getdemandshistory(this.accnumber);
+  }
+
+  receiveMessage($event) {
+    this.notesTotal = $event;
   }
 
   getaccount(accnumber) {

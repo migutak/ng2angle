@@ -32,7 +32,7 @@
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Notes History &nbsp;<span
-                class="badge badge-success">9</span>
+                class="badge badge-success">{{notesTotal}}</span>
             </a>
           </li>
           <li>
@@ -97,7 +97,7 @@
     </div>
     <div class="col-xs-12 col-sm-10">
       <p class="small text-muted">activity page {{date}}</p>
-      <router-outlet></router-outlet>
+      <router-outlet (messageEvent)="receiveMessage($event)"></router-outlet>
     </div>
   </div>
 </div>
