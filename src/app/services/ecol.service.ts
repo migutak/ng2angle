@@ -215,6 +215,10 @@ export class EcolService {
     return this.httpClient.post<any>(environment.api + '/api/demandshistory', data);
   }
 
+  uploads(data) {
+    return this.httpClient.post<any>(environment.api + '/api/uploads', data);
+  }
+
   getdemandshistory(accnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/demandshistory?filter[where][accnumber]=' + accnumber + '&filter[order]=datesent desc');

@@ -5,9 +5,9 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders  } from 'ng2-file-upload';
 
-const URL = environment.valor;
+const URL = environment.filesapi;
 
 @Component({
   selector: 'app-files',
@@ -49,7 +49,36 @@ export class FilesComponent implements OnInit {
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       // refresh demad history notes
-      this.getfileshistory(this.custnumber);
+      
+    };
+
+    this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
+      // success
+      var obj = JSON.parse(response);
+      for (let i=0; i <obj.files.length; i ++) {
+        const bulk = {
+            'accnumber': this.accnumber,
+            'custnumber': this.custnumber,
+            'destpath': obj.files[i].path,
+            'filesize': obj.files[i].size,
+            'filetype': obj.files[i].mimetype ,
+            'filepath': obj.files[i].path,
+            'filename': obj.files[i].originalname,
+            'doctype': obj.files[i].originalname,
+            'docdesc': this.model.filedesc,
+            'colofficer': this.username,
+          };
+          this.ecolService.uploads(bulk).subscribe(response => {
+            this.getfileshistory(this.custnumber);
+            swal('Good!', 'File uploaded successfully!', 'success');
+          }, error => {
+            swal('Oooops!', 'File uploaded but unable to add to demands history!', 'warning');
+          })
+    }
+    };
+
+    this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
+      // error server response
     };
   }
 

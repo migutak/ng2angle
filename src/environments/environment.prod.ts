@@ -11,4 +11,5 @@ export const environment = {
   xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
   emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email',
   auth: 'http://ecollecttst.co-opbank.co.ke:8080/ecol_apis/api/restlogin',
+  filesapi: 'http://ecollecttst.co-opbank.co.ke:3100/api',
 };

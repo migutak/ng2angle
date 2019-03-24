@@ -17,6 +17,7 @@ export const environment = {
   applink: 'http://localhost:4500',
   emailapi: 'http://localhost:8005/demand/email',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
+  filesapi: 'http://localhost:3100/api',
 
 /*  api: 'http://ecollecttst.co-opbank.co.ke:8000',
   letters_path: '/home/ecollectadmin/demand_letters/',
