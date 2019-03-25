@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit {
     letter: {};
     demandSettings: any;
     disable = true;
+    searchText: string;
 
   constructor(private ecolService: EcolService) { }
 
@@ -143,7 +144,7 @@ export class SettingsComponent implements OnInit {
     suspendletter: form.value.suspendletter,
     suspendsms: form.value.suspendsms,
     suspendautodelivery: form.value.suspendautodelivery,
-    exceptions: form.value.exceptions[0],
+    exceptions: form.value.exceptions[0] || '00',
     exceptionscust: form.value.exceptionscust,
     byemail: form.value.byemail,
     bypost: form.value.bypost,
@@ -153,6 +154,7 @@ export class SettingsComponent implements OnInit {
 
     // check letter duplicate
     this.ecolService.getdemandSettingsduplicate(body.letterid, body.daysinarr, body.onlyto).subscribe(data => {
+      console.log(data);
       if (data.length > 0) {
         // letter already added
         swal('Stop!', 'Letter already added!', 'warning');
