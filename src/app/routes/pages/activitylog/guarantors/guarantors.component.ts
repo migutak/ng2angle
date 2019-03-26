@@ -75,8 +75,8 @@ export class GuarantorsComponent implements OnInit {
     this.ecolService.guarantordetails(accnumber).subscribe(data => {
       this.guarantors = data;
     }, error => {
-      console.log(error)
-    })
+      console.log(error);
+    });
   }
 
   reset() {

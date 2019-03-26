@@ -58,13 +58,12 @@ export class SendLetterccComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       // console.log('ImageUpload:uploaded:', item, status);
       // refresh demad history notes
-      
     };
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
-      var obj = JSON.parse(response);
-      for (let i=0; i <obj.files.length; i ++) {
+      const obj = JSON.parse(response);
+      for (let i = 0; i < obj.files.length; i ++) {
         const bulk = {
             'accnumber': this.cardacct,
             'custnumber': this.cardacct,
@@ -80,12 +79,12 @@ export class SendLetterccComponent implements OnInit {
             'bypost': true,
             'demand': this.model.demand
           };
-          this.ecolService.demandshistory(bulk).subscribe(response => {
+          this.ecolService.demandshistory(bulk).subscribe(datar => {
             this.getdemandshistory(this.cardacct);
             swal('Good!', 'Demand letter uploaded successfully!', 'success');
           }, error => {
             swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
-          })
+          });
     }
     };
 
@@ -182,7 +181,7 @@ export class SendLetterccComponent implements OnInit {
       swal('Error!', ' Cannot download  file!', 'error');
     });
   }
-  
+
 
   generate() {
     this.ecolService.loader();
@@ -224,6 +223,7 @@ export class SendLetterccComponent implements OnInit {
   }
 
   generateletter(letter, emaildata: any) {
+    // console.log(letter);
     this.ecolService.generateLettercc(letter).subscribe(dataupload => {
       console.log('generateLetterccoverdue==>', dataupload);
       // sucess
@@ -247,7 +247,7 @@ export class SendLetterccComponent implements OnInit {
         };
         this.demandshistory(bulk);
         this.getdemandshistory(this.cardacct);
-        this.downloadDemand(letter.message, dataupload.filename);
+       // this.downloadDemand(letter.message, dataupload.filename);
       } else {
         swal('Error!', 'Error occured during letter generation!', 'error');
       }
@@ -256,8 +256,12 @@ export class SendLetterccComponent implements OnInit {
       // add file full path
       emaildata.file = dataupload.message;
       this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
-        console.log(response);
-        swal('Success!', 'Letter sent on email!', 'success');
+        // console.log(response);
+        if (response.result === 'fail') {
+          swal('Error!', 'Letter NOT sent on email!', 'error');
+        } else {
+          swal('Success!', 'Letter sent on email!', 'success');
+        }
       });
       // send sms
       // get message

@@ -60,8 +60,8 @@ export class SendLetterComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
-      var obj = JSON.parse(response);
-      for (let i=0; i <obj.files.length; i ++) {
+      const obj = JSON.parse(response);
+      for (let i = 0; i < obj.files.length; i ++) {
         const bulk = {
             'accnumber': this.accnumber,
             'custnumber': this.custnumber,
@@ -77,12 +77,13 @@ export class SendLetterComponent implements OnInit {
             'bypost': true,
             'demand': this.model.demand
           };
-          this.ecolService.demandshistory(bulk).subscribe(response => {
+          this.ecolService.demandshistory(bulk).subscribe(datar => {
+            // console.log(datar);
             this.getdemandshistory(this.accnumber);
             swal('Good!', 'Demand letter uploaded successfully!', 'success');
           }, error => {
             swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
-          })
+          });
     }
     };
 
@@ -269,13 +270,18 @@ export class SendLetterComponent implements OnInit {
         };
         //
         this.demandshistory(bulk);
+        this.getdemandshistory(this.accnumber);
         // send email
         // add file full path
         this.emaildata.file = uploaddata.message;
-        console.log('sendDemandEmail==>', this.emaildata);
+        // console.log('sendDemandEmail==>', this.emaildata);
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
-          console.log(response);
-          swal('Success!', 'Letter sent on email!', 'success');
+          // console.log(response);
+          if (response.result === 'fail') {
+            swal('Error!', 'Letter NOT sent on email!', 'error');
+          } else {
+            swal('Success!', 'Letter sent on email!', 'success');
+          }
         });
         // send sms
         this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
@@ -307,21 +313,8 @@ export class SendLetterComponent implements OnInit {
     });
   }  // end generateletter
 
-  /*sendemail(emaildata) {
-    this.ecolService.sendDemandEmail(emaildata).subscribe(data => {
-      if (data.result === 'success') {
-        swal('Successful!', 'Letter sent on email!', 'success');
-      } else {
-        swal('Error!', 'Error occurred during sending email!', 'error');
-      }
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred during sending email!', 'error');
-    });
-  }*/
-
   sendsms(smsdata) {
-    console.log('sendsms==data==', smsdata);
+    // console.log('sendsms==data==', smsdata);
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter SMS sent!', 'success');
     }, error => {
