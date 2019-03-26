@@ -33,8 +33,9 @@ export class ActivityActionComponent implements OnInit {
   submitted = false;
   cmdstatus: any = [];
 
-  message: string = 'Hello Kevin';
-  @Output() MessageEvent = new EventEmitter<String>();
+  message: string = "9!"
+
+  @Output() messageEvent = new EventEmitter<string>();
 
   actions = [
     { code: 'OC', name: 'OUTGOING CALL' },
@@ -138,8 +139,9 @@ export class ActivityActionComponent implements OnInit {
   }
 
   sendMessage() {
-    this.MessageEvent.emit(this.message);
-  };
+    this.messageEvent.emit(this.message);
+    console.log('msg sent');
+  }
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
