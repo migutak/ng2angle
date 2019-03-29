@@ -6,17 +6,17 @@ const Home = {
 };
 
 const Dashboard = {
-    text: 'Dashboard',
+    text: 'Dashboard & Reports',
     link: '/dashboard',
     icon: 'icon-speedometer',
     submenu: [
         {
-            text: 'Dashbord Portfolio',
-            link: '/dashboard/v1'
+            text: 'Reports',
+            link: '/reports/allreports'
         },
         {
-            text: 'Dashbord Activity',
-            link: '/dashboard/v2'
+            text: 'Dashboards',
+            link: '/reports/dashboards'
         }
     ]
 };
@@ -38,10 +38,6 @@ const Letters = {
     link: '/letters',
     icon: 'icon-note',
     submenu: [
-        /*{
-            text: 'Settings',
-            link: '/letters/settings'
-        },*/
         {
             text: 'Guarantors',
             link: '/guarantors',
@@ -67,28 +63,30 @@ const Letters = {
                 {
                     text: 'Sent History',
                     link: '/demand/demandhistory'
-                },
-                /*{
-                    text: 'Pre Listing',
-                    link: '/demand/prelisting'
-                },
-                {
-                    text: 'Post Listing',
-                    link: '/demand/postlisting'
-                },
-                {
-                    text: '40 Day',
-                    link: '/demand/day40'
-                },
-                {
-                    text: '90 Day',
-                    link: '/demand/day90'
-                }*/
+                }
             ]
         }
     ],
     'alert': '23',
-    'label': 'badge badge-warning'
+    'label': 'badge badge-danger'
+};
+
+const Letterscc = {
+    text: 'Demand Letters',
+    link: '/letters',
+    icon: 'icon-note',
+    submenu: [
+        {
+            text: 'Demands due',
+            link: '/creditcards/creditcarddemands/demandsdue'
+        },
+        {
+            text: 'Demands history',
+            link: '/creditcards/creditcarddemands/demandshistory'
+        }
+    ],
+    'alert': '23',
+    'label': 'badge badge-danger'
 };
 
 const Administration = {
@@ -211,54 +209,6 @@ const Forms = {
     ]
 };
 
-const Charts = {
-    text: 'Charts',
-    link: '/charts',
-    icon: 'icon-graph',
-    submenu: [
-        {
-            text: 'Flot',
-            link: '/charts/flot'
-        },
-        {
-            text: 'Radial',
-            link: '/charts/radial'
-        },
-        {
-            text: 'ChartJS',
-            link: '/charts/chartjs'
-        }
-    ]
-};
-
-const Tables = {
-    text: 'Tables',
-    link: '/tables',
-    icon: 'icon-grid',
-    submenu: [
-        {
-            text: 'Standard',
-            link: '/tables/standard'
-        },
-        {
-            text: 'Extended',
-            link: '/tables/extended'
-        },
-        {
-            text: 'Data-Tables',
-            link: '/tables/datatable'
-        },
-        {
-            text: 'Angular Grid',
-            link: '/tables/aggrid'
-        },
-        {
-            text: 'NGxDatatables',
-            link: '/tables/ngxdatatable'
-        }
-    ]
-};
-
 const Collectionrpt = {
     text: 'Collection Reports',
     link: '/collectionrpts',
@@ -357,82 +307,6 @@ const Remedialrpt = {
     ]
 };
 
-const Maps = {
-    text: 'Maps',
-    link: '/maps',
-    icon: 'icon-map',
-    submenu: [
-        {
-            text: 'Google',
-            link: '/maps/google'
-        },
-        {
-            text: 'Vector',
-            link: '/maps/vector'
-        }
-    ]
-};
-
-const Pages = {
-    text: 'Pages',
-    link: '/pages',
-    icon: 'icon-doc',
-    submenu: [
-        {
-            text: 'Login',
-            link: '/login'
-        },
-        {
-            text: 'Register',
-            link: '/register'
-        },
-        {
-            text: 'Recover',
-            link: '/recover'
-        },
-        {
-            text: 'Lock',
-            link: '/lock'
-        },
-        {
-            text: '404',
-            link: '/404'
-        },
-        {
-            text: '500',
-            link: '/500'
-        },
-        {
-            text: 'Maintenance',
-            link: '/maintenance'
-        }
-    ]
-};
-
-const Blog = {
-    text: 'Blog',
-    link: '/blog',
-    icon: 'icon-notebook',
-    submenu: [
-        {
-            text: 'List',
-            link: '/blog/list'
-        },
-        {
-            text: 'Post',
-            link: '/blog/post'
-        },
-        {
-            text: 'Articles',
-            link: '/blog/articles'
-        },
-        {
-            text: 'Article View',
-            link: '/blog/articleview'
-        }
-    ]
-};
-
 const Work = {
     text: 'Work Queue',
     link: '/work',
@@ -501,53 +375,6 @@ const Work_cc = {
         {
             text: 'View all loans',
             link: '/creditcards/loans'
-        }
-        ,
-        {
-            text: 'Demand Letters',
-            link: '/creditcards/creditcarddemands',
-            icon: 'icon-note',
-            submenu: [
-                {
-                    text: 'Demands due',
-                    link: '/creditcards/creditcarddemands/demandsdue'
-                },
-                {
-                    text: 'Demands history',
-                    link: '/creditcards/creditcarddemands/demandshistory'
-                }
-            ]
-        },
-        {
-            text: 'Reports Credit cards',
-            link: '/creditcards/reports',
-            icon: 'icon-chart',
-            submenu: [
-                {
-                    text: 'Collector activity',
-                    link: '/creditcards/reports/activity'
-                },
-                {
-                    text: 'Daily notes',
-                    link: '/creditcards/reports/dailynotes'
-                },
-                {
-                    text: 'bulk notes',
-                    link: '/creditcards/reports/bulknotes'
-                },
-                {
-                    text: 'Amount collected',
-                    link: '/creditcards/reports/amntcollected'
-                },
-                {
-                    text: 'Allocation summary',
-                    link: '/creditcards/reports/allocation summary'
-                },
-                {
-                    text: 'Overdue report',
-                    link: '/creditcards/reports/overduereportcc'
-                }
-            ]
         }
     ]
 };
@@ -699,6 +526,7 @@ const creditcards_menu = [
     headingMain,
     Home,
     Dashboard,
+    Letterscc,
     headingComponents,
     Work_cc
 ];

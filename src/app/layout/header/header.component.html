@@ -4,7 +4,7 @@
     <div class="navbar-header">
         <a class="navbar-brand" href="#/">
             <div class="brand-logo">
-                <!---<img class="img-fluid" src="assets/img/logo.png" alt="App Logo" />--> 
+                <!---<img class="img-fluid" src="assets/img/logo.png" alt="App Logo" />-->
                 <span style="color: white"><strong>E-Collect&reg;</strong></span>
             </div>
             <div class="brand-logo-collapsed">
@@ -17,11 +17,13 @@
     <ul class="navbar-nav mr-auto flex-row">
         <li class="nav-item">
             <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-            <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize="" (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
+            <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize=""
+                (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
                 <em class="fas fa-bars"></em>
             </a>
             <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
-            <a class="nav-link sidebar-toggle d-md-none" (click)="settings.toggleLayoutSetting('asideToggled'); $event.stopPropagation()">
+            <a class="nav-link sidebar-toggle d-md-none"
+                (click)="settings.toggleLayoutSetting('asideToggled'); $event.stopPropagation()">
                 <em class="fas fa-bars"></em>
             </a>
         </li>
@@ -72,43 +74,43 @@
                 <div class="dropdown-item">
                     <!-- START list group-->
                     <div class="list-group">
-                       <!-- list item-->
-                       <div class="list-group-item list-group-item-action">
-                          <div class="media">
-                             <div class="align-self-start mr-2">
-                                <em class="fas fa-hand-holding-usd fa-2x text-info"></em>
-                             </div>
-                             <div class="media-body">
-                                <p class="m-0">PTPs</p>
-                                <p class="m-0 text-muted text-sm">1 PTP to followup</p>
-                             </div>
-                          </div>
-                       </div>
-                       <!-- list item-->
-                       <div class="list-group-item list-group-item-action">
-                          <div class="media">
-                             <div class="align-self-start mr-2">
-                                <em class="fa fa-envelope fa-2x text-warning"></em>
-                             </div>
-                             <div class="media-body">
-                                <p class="m-0">Demand Letters</p>
-                                <p class="m-0 text-muted text-sm">You have 10 demands to send</p>
-                             </div>
-                          </div>
-                       </div>
-                       <!-- list item-->
-                       <div class="list-group-item list-group-item-action">
-                          <div class="media">
-                             <div class="align-self-start mr-2">
-                                <em class="fa fa-tasks fa-2x text-success"></em>
-                             </div>
-                             <div class="media-body">
-                                <p class="m-0">Pending Tasks</p>
-                                <p class="m-0 text-muted text-sm">11 pending task</p>
-                             </div>
-                          </div>
-                       </div>
-                       <!-- last list item
+                        <!-- list item-->
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fas fa-hand-holding-usd fa-2x text-info"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">PTPs</p>
+                                    <p class="m-0 text-muted text-sm">1 PTP to followup</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- list item-->
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-envelope fa-2x text-warning"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">Demand Letters</p>
+                                    <p class="m-0 text-muted text-sm">You have 10 demands to send</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- list item-->
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-tasks fa-2x text-success"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">Pending Tasks</p>
+                                    <p class="m-0 text-muted text-sm">11 pending task</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- last list item
                        <div class="list-group-item list-group-item-action">
                           <span class="d-flex align-items-center">
                              <span class="text-sm">More notifications</span>
@@ -124,53 +126,56 @@
         <!-- END Alert menu-->
         <!-- User menu-->
         <li class="nav-item dropdown dropdown-list" dropdown>
-                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
-                    <em class="icon-user"></em>
-                    
-                </a>
-                <!-- START Dropdown menu-->
-                <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
-                    <div class="dropdown-item">
-                        <!-- START list group-->
-                        <div class="list-group">
-                           <!-- list item-->
-                           <div class="list-group-item list-group-item-action">
-                              <div class="media">
-                                 <div class="align-self-start mr-2">
+            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
+                <em class="icon-user"></em>
+
+            </a>
+            <!-- START Dropdown menu-->
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
+                <div class="dropdown-item">
+                    <!-- START list group-->
+                    <div class="list-group">
+                        <!-- list item-->
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
                                     <em class="fas fa-user-tie fa-2x text-info"></em>
-                                 </div>
-                                 <div class="media-body">
+                                </div>
+                                <div class="media-body">
                                     <p class="m-0">My Details</p>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- list item-->
-                           <div class="list-group-item list-group-item-action">
-                              <div class="media">
-                                 <div class="align-self-start mr-2">
-                                    
-                                 </div>
-                                 <div class="media-body">
-                                    <a class="nav-link"  title="Logout" (click)="logout()">
-                                            <em class="fa fa-sign-out-alt fa-2x text-warning"></em> Logout
+                                    <p class="m-0 text-muted text-sm">View my user details</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- list item-->
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-sign-out-alt fa-2x text-warning"></em>
+                                </div>
+                                <div class="media-body">
+                                        <a class="nav-link m-0" title="Logout" (click)="logout()">
+                                             Logout
                                         </a>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- last list item
+                                    
+                                    <p class="m-0 text-muted text-sm">logout from the system</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- last list item
                            <div class="list-group-item list-group-item-action">
                               <span class="d-flex align-items-center">
                                  <span class="text-sm">More notifications</span>
                                  <span class="badge badge-danger ml-auto">14</span>
                               </span>
                            </div>-->
-                        </div>
-                        <!-- END list group-->
                     </div>
+                    <!-- END list group-->
                 </div>
-                <!-- END Dropdown menu-->
-            </li>
-            <!-- END Alert menu-->
+            </div>
+            <!-- END Dropdown menu-->
+        </li>
+        <!-- END Alert menu-->
         <!-- START Offsidebar button-->
         <li class="nav-item">
             <a class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()">
