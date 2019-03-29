@@ -14,10 +14,13 @@ export class ThemesService {
 
     styleTag: any
     defaultTheme = 'C';
-
+    myShows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    show: string;
     constructor() {
+        this.show = this.myShows[Math.floor(Math.random() * this.myShows.length)];
         this.createStyle();
-        this.setTheme(this.defaultTheme);
+        //this.setTheme(this.defaultTheme);
+        this.setTheme(this.show);
     }
 
     private createStyle() {
