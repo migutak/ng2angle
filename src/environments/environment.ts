@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
- /*api: 'http://localhost:8800',
+ api: 'http://localhost:8800',
   letters_api: 'http://localhost:8004/',
-  // letters_path: '/users/kevinabongo/Demands/',
-  letters_path: 'c:\\logs\\',
+  letters_path: '/users/kevinabongo/Demands/',
+  // letters_path: 'c:\\logs\\',
   // letters_path: '/home/ecollectadmin/demand_letters/',
   uploadurl: 'http://localhost:4000',
   valor: 'http://localhost:3000/api/',
@@ -17,9 +17,9 @@ export const environment = {
   applink: 'http://localhost:4500',
   emailapi: 'http://localhost:8005/demand/email',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
-  filesapi: 'http://localhost:3100/api',*/
+  filesapi: 'http://localhost:3100/api',
 
-  api: 'http://ecollecttst.co-opbank.co.ke:8000',
+  /*api: 'http://ecollecttst.co-opbank.co.ke:8000',
   letters_path: 'c:\\logs\\',
   letters_api: 'http://ecollecttst.co-opbank.co.ke:8004/',
   uploadurl: 'http://ecollecttst.co-opbank.co.ke:4000',
@@ -30,5 +30,5 @@ export const environment = {
   xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
   emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
-  filesapi: 'http://localhost:3100/api',
+  filesapi: 'http://localhost:3100/api',*/
 };

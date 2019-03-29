@@ -1,3 +1,4 @@
+
 <div class="content-heading">
     <div>Credit cards
       <small>view all</small></div>
@@ -6,10 +7,28 @@
   <div class="card card-default">
   
     <!-- END box placeholder-->
-    <jqxGrid #myGrid [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns" [columnsresize]="true"
-      [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true" [altrows]="true"
-      [enabletooltips]="true" [filterable]="true">
+    <jqxGrid #myGrid 
+    [theme]="'energyblue'"
+    [width]="'100%'"
+    [source]="dataAdapter"
+    [columns]="columns" 
+    [columnsresize]="true"
+    [sortable]="true"
+    [pageable]="true"
+    [autoheight]="false" 
+    [height]="550" 
+    [sortable]="true" 
+    [altrows]="true"
+    [enabletooltips]="true" 
+    [filterable]="true"
+    [pagesize]="50"
+    [pagesizeoptions]="['30', '40', '50']" 
+    [showfilterrow]="true"
+    [virtualmode]= "true"
+    [rendergridrows] = "rendergridrows"
+    
+    >
     </jqxGrid>
-  
+
   </div>
   

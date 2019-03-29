@@ -12,8 +12,8 @@ const themeH = require('../../shared/styles/themes/theme-h.scss');
 @Injectable()
 export class ThemesService {
 
-    styleTag: any;
-    defaultTheme = 'A';
+    styleTag: any
+    defaultTheme = 'C';
 
     constructor() {
         this.createStyle();

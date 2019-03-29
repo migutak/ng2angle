@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { EcolService } from '../../../services/ecol.service';
+import * as $ from 'jquery'
 
 @Component({
   selector: 'app-viewall',
@@ -17,35 +18,51 @@ export class ViewallComponent implements OnInit {
   public radioModel: string;
 
   total: any = {};
-  username = JSON.parse(localStorage.getItem('currentUser'));
+  // source: any = {};
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
-  }
-  source: any =
+  };
+  
+  source =
     {
-      url: environment.api + '/api/demandsduecc?filter[status]=PENDING&filter[limit]=150',
+      url: environment.api + '/api/tbl_q_all/viewallcc',
+      totalrecords: 1000000,
+      filter: function() {
+        // update the grid and send a request to the server.
+        $("#myGrid").jqxGrid('updatebounddata', 'filter');
+    },
+    sort: function() {
+        // update the grid and send a request to the server.
+        $("#myGrid").jqxGrid('updatebounddata', 'sort');
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ,
       datafields:
         [
-          { name: 'cardacct', type: 'string' },
-          { name: 'cardnumber', type: 'string' },
-          { name: 'cardname', type: 'string' },
-          { name: 'outbalance', type: 'number' },
-          { name: 'exppmnt', type: 'number' },
-          { name: 'daysinarrears', type: 'number' },
-          { name: 'address', type: 'string' },
-          { name: 'rpcode', type: 'string' },
-          { name: 'city', type: 'string' },
-          { name: 'mobile', type: 'string' },
-          { name: 'emailaddress', type: 'string' },
+          { name: 'CARDACCT', type: 'string' },
+          { name: 'ACCOUNTNO', type: 'string' },
+          { name: 'CARDNUMBER', type: 'string' },
+          { name: 'CARDNAME', type: 'string' },
+          { name: 'OUTBALANCE', type: 'number' },
+          { name: 'EXPPMNT', type: 'number' },
+          { name: 'DAYSINARREARS', type: 'number' },
+          { name: 'ADDRESS', type: 'string' },
+          { name: 'RPCODE', type: 'string' },
+          { name: 'CITY', type: 'string' },
+          { name: 'MOBILE', type: 'string' },
+          { name: 'EMAILADDRESS', type: 'string' },
           { name: 'colofficer', type: 'string' },
-          { name: 'demandletter', type: 'string' },
-          { name: 'datedue', type: 'string' },
-          { name: 'status', type: 'string' }
+          { name: 'DUEDATE', type: 'string' },
+          { name: 'CYCLE', type: 'string' },
+          { name: 'SQNUMBER', type: 'string' }
         ],
       datatype: 'json'
     };
 
   dataAdapter: any = new jqx.dataAdapter(this.source);
+  
+  rendergridrows (obj) {
+    return obj.data;
+  };
 
   columns: any[] =
     [
@@ -65,26 +82,28 @@ export class ViewallComponent implements OnInit {
         },
         initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
       },
-      { text: 'CARDNUMBER', datafield: 'cardnumber', width: 100, filtertype: 'input' },
-      { text: 'CARDNAME', datafield: 'cardname', width: 150, filtertype: 'input' },
-      { text: 'OUTBALANCE', datafield: 'outbalance', filtertype: 'input', cellsformat: 'd' },
-      { text: 'EXPPMNT', datafield: 'exppmnt', filtertype: 'input', cellsformat: 'd' },
-      { text: 'DAYSINARR', datafield: 'daysinarrears', filtertype: 'input', cellsformat: 'd' },
-      { text: 'TELNUMBER', datafield: 'mobile', filtertype: 'input' },
-      { text: 'EMAILADDRESS', datafield: 'emailaddress', filtertype: 'input' },
+      { text: 'CARDNUMBER', datafield: 'CARDNUMBER', width: 100, filtertype: 'input' },
+      { text: 'CARDNAME', datafield: 'CARDNAME', width: 150, filtertype: 'input' },
+      { text: 'OUTBALANCE', datafield: 'OUTBALANCE', filtertype: 'input', cellsformat: 'd' },
+      { text: 'EXPPMNT', datafield: 'EXPPMNT', filtertype: 'input', cellsformat: 'd' },
+      { text: 'DAYSINARR', datafield: 'DAYSINARREARS', filtertype: 'input', cellsformat: 'd' },
+      { text: 'CYCLE', datafield: 'CYCLE', filtertype: 'input' },
       { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'DEMANDLETTER', datafield: 'demandletter', filtertype: 'input' },
-      { text: 'DATEDUE', datafield: 'datedue', filtertype: 'input' },
-      { text: 'STATUS', datafield: 'status', filtertype: 'input' }
+      { text: 'SQNUMBER', datafield: 'SQNUMBER', filtertype: 'input' },
+      { text: 'DUEDATE', datafield: 'DUEDATE', filtertype: 'input' }
 
     ];
+
+    // render grid
+
+    
 
   cardacct: String;
 
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
     // open page
-    window.open(environment.applink + '/sendlettercc?cardacct=' + this.cardacct + '&username=' + this.username, '_blank');
+    window.open(environment.applink + '/activitylog?cardacct=' + this.cardacct + '&username=' + this.currentUser.username, '_blank');
   }
 
   ngOnInit() {
@@ -92,17 +111,6 @@ export class ViewallComponent implements OnInit {
 
   filterfunction(column, value) {
     console.log(column, value);
-  }
-
-  refreshgrid() {
-    this.source.url = environment.api + '/api/demandsduecc?filter[where][demandletter]='
-      + this.radioModel.toUpperCase() + '&filter[limit]=150',
-
-      // console.log(this.source.url, this.dataAdapter);
-      // tslint:disable-next-line:max-line-length
-      // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
-      //
-      this.myGrid.updatebounddata('cells');
   }
 
 }
