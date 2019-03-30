@@ -3,7 +3,6 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 
 const URL = environment.valor;
@@ -19,7 +18,9 @@ export class CustContactsComponent implements OnInit {
   custnumber: string;
   contacts: [];
   model: any = {};
+  addcontact: any = {};
   username: string;
+  edit: boolean = false;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -43,15 +44,85 @@ export class CustContactsComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
-    // get account details
+    // get contacts
+    this.getcontacts(this.custnumber);
   }
 
   savecontact(form) {
-    console.log(form);
+    this.addcontact.custnumber = this.custnumber;
+    this.addcontact.telephone = form.contactnumber;
+    this.addcontact.email = form.email;
+    this.addcontact.active = form.active;
+    this.addcontact.owner = this.username;
+    this.addcontact.updatedby = this.username;
+    this.addcontact.updatedlast = new Date();
+    // save to db
+    this.ecolService.postteles(this.addcontact).subscribe(response => {
+      swal(
+        'Good!',
+        'Contact saved!',
+        'success'
+      )
+      this.getcontacts(this.custnumber);
+    }, error=> {
+      console.log(error);
+      swal({
+        title: 'Ooops!',
+        text: 'Contact Not saved!',
+        type: 'error',
+        footer: '<a href="http://helpdesk.co-opbank.co.ke" target="_blank">Report issue to helpdesk?</a>'
+      })
+    })
   }
 
-  updatecontact(model) {
-    console.log('feee')
+  editcontact(contact){
+    this.model.id = contact.id;
+    this.model.custnumber = contact.custnumber;
+    this.model.contactnumber = contact.telephone;
+    this.model.email = contact.email;
+    this.model.active = contact.active;
+    this.model.owner = this.username;
+    this.model.updatedby = this.username;
+    this.model.updatedlast = new Date();
+    //
+    this.edit = true;
+  }
+
+  updatecontact(form) {
+    this.model.id = form.id;
+    this.model.custnumber = this.custnumber;
+    this.model.telephone = form.contactnumber;
+    this.model.email = form.email;
+    this.model.active = form.active;
+    this.model.owner = this.username;
+    this.model.updatedby = this.username;
+    this.model.updatedlast = new Date();
+    // save to db
+    this.ecolService.putteles(this.model).subscribe(response => {
+      swal(
+        'Good!',
+        'Contact updated!',
+        'success'
+      )
+      this.getcontacts(this.custnumber);
+    }, error=> {
+      console.log(error);
+      swal(
+        'Ooops!',
+        'Contact Not updated!',
+        'error'
+      )
+    })
+  }
+
+  getcontacts(custnumber){
+    this.ecolService.getteles(custnumber).subscribe(data => {
+      this.contacts = data;
+    })
+  }
+
+  cancel(){
+    this.edit = false;
   }
 
 }

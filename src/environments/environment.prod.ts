@@ -12,4 +12,5 @@ export const environment = {
   emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email',
   auth: 'http://ecollecttst.co-opbank.co.ke:8080/ecol_apis/api/restlogin',
   filesapi: 'http://ecollecttst.co-opbank.co.ke:3100/api',
+  accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
 };

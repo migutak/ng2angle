@@ -8,7 +8,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-lg-4">
-                  <form #custcontactsform class="form-horizontal" (ngsubmit)="savecontact(model)" autocomplete="off" novalidate>
+                  <form #custcontactsform="ngForm" class="form-horizontal" (ngSubmit)="savecontact(model)" autocomplete="off" novalidate>
                       <div class="form-group row">
                         <label class="col-xl-4 col-form-label">Contact Number</label>
                         <div class="col-xl-8">
@@ -17,10 +17,10 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-xl-4 col-form-label">Contact Name</label>
+                        <label class="col-xl-4 col-form-label">Email</label>
                         <div class="col-xl-8">
-                          <input class="form-control" type="text" name="contactname" id="contactname" [(ngModel)]="model.contactname"
-                            #contactname="ngModel" [ngClass]="{ 'is-invalid': contactname.invalid }" required />
+                          <input class="form-control" type="text" name="email" id="email" [(ngModel)]="model.email"
+                            #email="ngModel" [ngClass]="{ 'is-invalid': email.invalid }" required />
                         </div>
                       </div>
                       <div class="form-group row">
@@ -36,10 +36,12 @@
                       <div class="form-group row">
                         <label class="col-xl-4 col-form-label"></label>
                         <div class="col-xl-8">
-                          <button [disabled]="custcontactsform.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
+                          <button *ngIf="!edit" [disabled]="!custcontactsform.valid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
                             type="submit" >Submit</button>
-                          <button [disabled]="custcontactsform.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
+                          <button *ngIf="edit" [disabled]="custcontactsform.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label"
                             type="button" (click)="updatecontact(model)">Update</button>
+                          <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label"
+                            type="button" (click)="cancel()">Cancel</button>
                         </div>
                       </div>
                     </form>
@@ -48,24 +50,24 @@
                   <table class="table table-hover table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>custnumber#</th>
-                          <th>contactNumber</th>
-                          <th>contactName</th>
-                          <th>owner</th>
+                          <th>#</th>
+                          <th>ContactNumber</th>
+                          <th>Email</th>
+                          <th>Added by</th>
                           <th class="text-center">active</th>
                           <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr *ngFor="let c of contacts">
-                          <td>{{d.custnumber}}</td>
-                          <td>{{d.contact}}</td>
-                          <td>{{d.name}}</td>
-                          <td>{{d.owner}}</td>
-                          <td>{{d.active}}</td>
+                          <td>{{c.custnumber}}</td>
+                          <td>{{c.telephone}}</td>
+                          <td>{{c.email}}</td>
+                          <td>{{c.owner}}</td>
+                          <td>{{c.active}}</td>
                           <td class="text-center">
-                            <button class="btn btn-outline-success btn-sm" (click)="editcontact(d.id)">
-                              <i class="fa fa-download"></i>
+                            <button class="btn btn-outline-success btn-sm" (click)="editcontact(c)">
+                              <i class="fas fa-edit"></i> edit
                             </button>
                           </td>
                         </tr>

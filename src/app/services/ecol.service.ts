@@ -52,6 +52,11 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+  postnotes(body) {
+    const url = environment.api + '/api/notehis';
+    return this.httpClient.post(url, body);
+  }
+
   recordupdate(body) {
     const url = environment.api + '/api/activitylogs/action';
     return this.httpClient.post(url, body);
@@ -197,6 +202,18 @@ export class EcolService {
 
   generateLettercc(data) {
     return this.httpClient.post<any>(environment.letters_api + data.demand + '/download', data);
+  }
+
+  postteles(data) {
+    return this.httpClient.post<any>(environment.api + '/api/teles', data);
+  }
+
+  putteles(data) {
+    return this.httpClient.put<any>(environment.api + '/api/teles/' + data.id, data);
+  }
+
+  getteles(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber);
   }
 
   getsmsmessage(demand) {

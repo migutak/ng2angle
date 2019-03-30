@@ -3,10 +3,8 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 
-const URL = environment.valor;
 
 @Component({
   selector: 'app-accplan',
@@ -44,7 +42,7 @@ export class AccPlanComponent implements OnInit {
   }
 
   openaccplan(){
-    window.open('http://google.com', '_blank');
+    window.open(environment.accplanlink + '/?accnumber='+this.accnumber+"&custnumber="+ this.custnumber+"&username="+ this.username +"&nationid=00", '_blank');
   }
 
 }

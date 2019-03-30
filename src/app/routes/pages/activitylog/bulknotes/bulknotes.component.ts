@@ -71,24 +71,39 @@ export class BulknotesComponent implements OnInit {
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     let data = JSON.parse(response); //success server response
+    console.log(data)
     if (data.success == false) {
       swal({
         type: 'error',
         title: 'Oops...',
-        text: 'Something went wrong! - ' + data.message,
+        text: 'Something went wrong!',
       })
     } else {
-      swal({
-        type: 'success',
-        title: 'All Good!',
-        text: 'Excel bulk notes upload is a success',
+      this.ecolService.postnotes(data.notes).subscribe(resp =>{
+        swal({
+          type: 'success',
+          title: 'All Good!',
+          text: 'Excel bulk notes upload is a success',
+        })
+      }, error => {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
       })
+      
     }
   }
 
   onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     let error = JSON.parse(response); //error server response
-    console.log('error', error)
+    console.log('error', error);
+    swal({
+      type: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong with xlxs upload!',
+    })
   }
 
   downloadFile() {
@@ -96,7 +111,7 @@ export class BulknotesComponent implements OnInit {
     this.ecolService.downloadFile(template).subscribe(data => {
       saveAs(data, 'ECollect_bulk_notes_upload_template.xlsx');
     }, error => {
-      console.log(error.error);
+      console.log(error);
       swal('Error!', ' Cannot upload template  file!', 'error');
     });
   }
