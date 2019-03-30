@@ -29,6 +29,9 @@ export class ActivityLogComponent implements OnInit {
   username: string;
   date = new Date();
   notesTotal = 0;
+  sys: string;
+  collateralmenu: boolean = true;
+  guarantorsmenu: boolean = true;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
@@ -77,13 +80,36 @@ export class ActivityLogComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
+    this.sys = this.route.snapshot.queryParamMap.get('sys');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.sys = queryParams.get('sys');
+    });
+
     // get account details
-    this.getaccount(this.accnumber);
+    if (this.sys === 'cc') {
+      this.getcard(this.accnumber);
+      this.collateralmenu = false;
+      this.guarantorsmenu = false;
+    } else {
+      this.getaccount(this.accnumber);
+    }
     this.getdemandshistory(this.accnumber);
   }
 
   receiveMessage($event) {
     this.notesTotal = $event;
+  }
+
+  getcard(cardacct) {
+    this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.accountdetails = data[0];
+      this.model.accnumber = data[0].cardacct;
+      this.model.custnumber = data[0].cardacct;
+      this.model.addressline1 = data[0].address;
+      this.model.postcode = data[0].rpcode;
+      this.model.emailaddress = data[0].emailaddress;
+      this.model.celnumber = data[0].celnumber;
+    });
   }
 
   getaccount(accnumber) {

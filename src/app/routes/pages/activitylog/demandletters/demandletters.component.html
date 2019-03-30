@@ -88,7 +88,7 @@
                     <label class="col-xl-4 col-form-label"></label>
                     <div class="col-xl-8">
                       <button [disabled]="demand.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
-                        type="button" (click)="openletter(model)">click to preview letter</button>
+                        type="button" (click)="openletter_choose(model)">click to preview letter</button>
                     </div>
                   </div>
                 </form>
@@ -320,7 +320,7 @@
     <div class="form-group row">
       <label class="col-xl-4 col-form-label"></label>
       <div class="col-xl-8">
-        <button [disabled]="!sendemail || !sendpostal" class="btn btn-sm btn-secondary" type="button" (click)="generate()">Generate
+        <button [disabled]="!sendemail || !sendpostal" class="btn btn-sm btn-secondary" type="button" (click)="generate_choose()">Generate
           & Send</button>
       </div>
     </div>

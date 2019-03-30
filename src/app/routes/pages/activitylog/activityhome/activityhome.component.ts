@@ -21,6 +21,7 @@ export class ActivityHomeComponent implements OnInit {
   model: any = {};
   date = new Date();
   account: any;
+  sys: string;
   loader = true;
   cards: any = [];
   ptps: any = [];
@@ -55,14 +56,30 @@ export class ActivityHomeComponent implements OnInit {
       this.nationid = queryParams.get('nationid');
     });
 
+    this.sys = this.route.snapshot.queryParamMap.get('sys');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.sys = queryParams.get('sys');
+    });
+
 
     // get account details
-    this.getaccount(this.accnumber);
+    if (this.sys === 'cc') {
+      this.getcard(this.accnumber);
+    } else {
+      this.getaccount(this.accnumber);
+    }
 
   }
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
+      this.account = data[0];
+      this.loader = false;
+    });
+  }
+
+  getcard(cardacct) {
+    this.ecolService.getcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
       this.loader = false;
     });

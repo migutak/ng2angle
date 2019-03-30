@@ -6,8 +6,8 @@
         <div class="media-body">
           <div class="d-flex">
             <div>
-              <h4 class="m-0">Name: {{accountdetails?.client_name}}</h4>
-              <p>Address: {{accountdetails?.addressline1}}</p>
+              <h4 class="m-0">Name: {{accountdetails?.client_name || accountdetails?.cardname}}</h4>
+              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel: {{accountdetails?.cellnumber || accountdetails?.mobile}}</p>
             </div>
           </div>
         </div>
@@ -22,14 +22,14 @@
         <ul class="list-unstyled">
           <li>
             <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Client Home
             </a>
           </li>
           <li>
             <a [routerLink]="['./notes']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Notes History &nbsp;<span
                 class="badge badge-success">{{notesTotal}}</span>
@@ -37,58 +37,58 @@
           </li>
           <li>
             <a [routerLink]="['./activityaction']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Collector Activity
             </a>
           </li>
           <li>
             <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Demand letters
             </a>
           </li>
           <li>
             <a [routerLink]="['./files']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Upload Files
             </a>
           </li>
           <li>
             <a [routerLink]="['./sms']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Send/Schedule sms
             </a>
           </li>
           <li>
             <a [routerLink]="['./accplan']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span> Account plan
             </a>
           </li>
           <li>
             <a [routerLink]="['./contacts']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Customer contacts
             </a>
           </li>
-          <li>
+          <li *ngIf="collateralmenu"> 
             <a [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Remedial collaterals
             </a>
           </li>
-          <li>
+          <li *ngIf="guarantorsmenu">
             <a [routerLink]="['./guarantors']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Guarantors
             </a>
           </li>
           <li>
             <a [routerLink]="['./bulknotes']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username}">
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Bulk note upload
             </a>
           </li>

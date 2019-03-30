@@ -30,10 +30,7 @@ export class NotesComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.cust = params['custnumber'];
     });
-    // this.cust = localStorage.getItem('mycustnumber');
     this.getAll(this.cust);
-    console.log('this customer', this.cust);
-    // console.log('global custnumber _from_ activity ===', custnumber);
   }
 
   getAll(cust) {

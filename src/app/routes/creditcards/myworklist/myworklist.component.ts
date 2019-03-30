@@ -116,7 +116,7 @@ export class MyworklistComponent implements OnInit {
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
     // open page
-    window.open(environment.applink + '/activitylog?cardacct=' + this.cardacct + '&username=' + this.currentUser.username, '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=cc', '_blank');
   }
 
   ngOnInit() {

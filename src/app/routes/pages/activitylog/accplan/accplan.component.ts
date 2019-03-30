@@ -5,7 +5,6 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
-import { FileUploader } from 'ng2-file-upload';
 
 const URL = environment.valor;
 
@@ -42,6 +41,10 @@ export class AccPlanComponent implements OnInit {
     });
 
     // get account details
+  }
+
+  openaccplan(){
+    window.open('http://google.com', '_blank');
   }
 
 }

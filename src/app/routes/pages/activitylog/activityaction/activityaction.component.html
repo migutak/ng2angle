@@ -10,7 +10,7 @@
           <div class="col-xl-2 col-md-3">
             Collector activity
           </div>
-          <div class="col-md-3">
+          <div class="col-md-9">
             <div class="col-md-12">
               <select id="collectoraction" name="collectoraction" class="form-control" formControlName="collectoraction"
                 class="form-control" [ngClass]="{ 'is-invalid': f.collectoraction.errors }">
@@ -108,7 +108,7 @@
           <div class="col-md-3">
             <div class="col-md-12">
                 <div class="input-group">
-                    <input class="form-control" placeholder="dd-mmm-yyyy"
+                    <input class="form-control" placeholder="yyyy-mm-dd"
                     id="ptpdate" name="ptpdate" name="ptpdate" ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate"
                     />
                     <div class="input-group-append">
@@ -171,7 +171,7 @@
                 <div class="input-group">
                     <input class="form-control" placeholder="yyyy-mm-dd"
                     id="reviewdate" name="reviewdate" name="reviewdate" ngbDatepicker #d="ngbDatepicker" formControlName="reviewdate"
-                    />
+                    [ngClass]="{ 'is-invalid': f.reviewdate.errors }" />
                     <div class="input-group-append">
                       <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i class="fa fa-calendar"></i>
                       </span></button>
@@ -195,7 +195,7 @@
             <label>Collector note</label>
             <textarea class="form-control" rows="5" id="collectornote" name="collectornote" name="collectornote"
               class="form-control" formControlName="collectornote" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.collectornote.errors }"></textarea>
+              [ngClass]="{ 'is-invalid': f.collectornote.errors }"></textarea>
           </div>
 
         </div>
@@ -211,7 +211,7 @@
       <div class="card-footer">
         <button type="submit" [disabled]="actionForm.invalid" class="btn btn-sm btn-primary"><i
             class="fa fa-dot-circle-o"></i> Submit</button>
-        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="reset()"><i class="fa fa-ban"></i> Reset</button>
       </div>
     </form>
   </div>

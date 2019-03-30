@@ -90,7 +90,7 @@ export class ViewallComponent implements OnInit {
     // document.getElementById('openModalButton').click();
     // open page
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.user.username, '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.user.username + '&sys=collections', '_blank');
   }
 
   ngOnInit() {

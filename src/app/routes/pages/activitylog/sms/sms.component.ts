@@ -21,7 +21,7 @@ export class SmsComponent implements OnInit {
   smsMessage: [];
   model: any = {};
   username: string;
-
+  sys: string;
   sms: any = [];
   dataSms: any = {};
   account: any = [];
@@ -48,8 +48,17 @@ export class SmsComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
+    this.sys = this.route.snapshot.queryParamMap.get('sys');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.sys = queryParams.get('sys');
+    });
+
     this.getsms();
-    this.getaccount(this.accnumber);
+    if (this.sys === 'cc') {
+      this.getcard(this.accnumber);
+    } else {
+      this.getaccount(this.accnumber);
+    }
   }
 
   getsms() {
@@ -78,17 +87,21 @@ export class SmsComponent implements OnInit {
 }
 
 changetemplate($event) {
-// console.log('this is  the event ==>', $event.target.value);
 this.gettemplate($event.target.value);
 }
 
 getaccount(account) {
 this.ecolService.getaccount(account).subscribe(data => {
-  // console.log('getaccount==>', data);
   this.account = data;
   this.dataSms.smsNumber = data.celnumber;
-  // this.spinner.hide();
 });
+}
+
+getcard(cardacct) {
+  this.ecolService.getcardAccount(cardacct).subscribe(data => {
+    this.account = data;
+    this.dataSms.smsNumber = data.mobile;
+  });
 }
 
 sendsmsfunc (form) {

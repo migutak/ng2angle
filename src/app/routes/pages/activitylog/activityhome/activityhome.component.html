@@ -9,7 +9,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Accnumber:</label>
                         <div class="col-lg-10">
-                            <strong>{{account?.accnumber}}</strong>
+                            <strong>{{account?.accnumber || account?.cardacct}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -17,7 +17,7 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Oustbalance:</label>
                         <div class="col-lg-10">
-                            <strong>{{account?.oustnumber}}</strong>
+                            <strong>{{account?.oustnumber || account?.cardnumber}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -25,15 +25,15 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Totalarrears:</label>
                         <div class="col-lg-10">
-                            <strong>{{account?.totalarrears}}</strong>
+                            <strong>{{account?.totalarrears || account?.outbalance}}</strong>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Bucket:</label>
+                        <label class="col-lg-2 col-form-label">Bucket/cycle:</label>
                         <div class="col-lg-10">
-                            <strong>{{account?.bucket}}</strong>
+                            <strong>{{account?.bucket || account?.cycle}}</strong>
                         </div>
                     </div>
                 </fieldset>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
+import { DataService } from '../../../../services/data.service';
 import swal from 'sweetalert2';
 import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
@@ -33,7 +34,7 @@ export class ActivityActionComponent implements OnInit {
   submitted = false;
   cmdstatus: any = [];
 
-  message: string = "9!"
+  message: string;
 
   @Output() messageEvent = new EventEmitter<string>();
 
@@ -95,6 +96,7 @@ export class ActivityActionComponent implements OnInit {
 
   branchstatus: any = [];
   account: any = [];
+  sys: string = 'collections';
 
   currentDate() {
     const currentDate = new Date();
@@ -108,7 +110,8 @@ export class ActivityActionComponent implements OnInit {
     public settings: SettingsService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private ecolService: EcolService) {
+    private ecolService: EcolService
+    ) {
     //
   }
 
@@ -128,6 +131,11 @@ export class ActivityActionComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
+    this.sys = this.route.snapshot.queryParamMap.get('sys');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.sys = queryParams.get('sys');
+    });
+
     // build form
     this.buildForm();
 
@@ -135,16 +143,25 @@ export class ActivityActionComponent implements OnInit {
     this.getcmdstatus();
     this.getbranchstatus();
     // get account details
-    this.getaccount(this.accnumber);
+    if (this.sys === 'cc') {
+      this.getcard(this.accnumber);
+    } else {
+      this.getaccount(this.accnumber);
+    }
   }
 
   sendMessage() {
-    this.messageEvent.emit(this.message);
-    console.log('msg sent');
+    // this.data.changeMessage("90")
   }
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
+      this.account = data[0];
+    });
+  }
+
+  getcard(cardacct) {
+    this.ecolService.getcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
     });
   }
@@ -169,9 +186,9 @@ export class ActivityActionComponent implements OnInit {
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
       party: ['', Validators.required],
-      ptpamount: [''],
-      ptp: ['', [Validators.required]],
-      ptpdate: [Date],
+      ptpamount: [0],
+      ptp: [''],
+      ptpdate: ['2019-12-12'],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [Date, Validators.required],
       reason: ['', Validators.required],
@@ -188,6 +205,7 @@ export class ActivityActionComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.actionForm.invalid) {
+      alert('Please fill all required fields');
       return;
     }
 
@@ -225,7 +243,7 @@ export class ActivityActionComponent implements OnInit {
     }, error => {
       console.log(error);
       // fire error service
-      swal('Error!', 'postactivitylogs - service is currently not available', 'error');
+      swal('Error!', 'activitylogs - service is currently not available', 'error');
     });
     //update portfolio add notes and ptp
     this.ecolService.recordupdate(body).subscribe(data => {
@@ -235,5 +253,9 @@ export class ActivityActionComponent implements OnInit {
       // fire error service
       swal('Error!', 'recordupdate - service is currently not available', 'error');
     });
+  }
+
+  reset (){
+    this.buildForm();
   }
 }
