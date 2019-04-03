@@ -16,6 +16,8 @@ export class ZerobalanceComponent implements OnInit {
   @ViewChild('myGrid') myGrid: jqxGridComponent;
 
   total: any = {};
+  cardacct: string;
+  cardnumber: string;
   // source: any = {};
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
@@ -111,12 +113,17 @@ export class ZerobalanceComponent implements OnInit {
 
   //renger grid end
 
-  cardacct: String;
-
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
     // open page
     window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=cc', '_blank');
+  }
+
+  myGridOnRowSelect(event: any): void {
+    const args = event.args;
+    let selectedRowIndex = args.rowindex;
+    let value = this.myGrid.getrowdata(selectedRowIndex);
+    console.log('clicked!!');
   }
 
   ngOnInit() {

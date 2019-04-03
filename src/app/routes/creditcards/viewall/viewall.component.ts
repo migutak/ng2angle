@@ -16,6 +16,8 @@ export class ViewallComponent implements OnInit {
   @ViewChild('myGrid') myGrid: jqxGridComponent;
 
   total: any = {};
+  cardnumber: string;
+  cardacct: string;
   // source: any = {};
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
@@ -109,12 +111,9 @@ export class ViewallComponent implements OnInit {
       { text: 'DUEDATE', datafield: 'DUEDATE', filtertype: 'range' }
     ];
 
-  //renger grid end
-
-  cardacct: String;
-
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
+    console.log(rowdata)
     // open page
     window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=cc', '_blank');
   }

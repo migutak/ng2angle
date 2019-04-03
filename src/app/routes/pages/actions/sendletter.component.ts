@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
 const URL = environment.valor;
 
@@ -19,7 +20,8 @@ export class SendLetterComponent implements OnInit {
   accnumber: string;
   custnumber: string;
   accountdetails: any;
-  guarantors: [];
+  guarantors: any = [];
+  guarantoremails: string = "";
   model: any = {};
   bodyletter: any = {};
   filepath: string;
@@ -43,7 +45,17 @@ export class SendLetterComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
-  constructor(public settings: SettingsService,
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
+
+  constructor(
+    public settings: SettingsService,
+    public toasterService: ToasterService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
     //
@@ -61,30 +73,30 @@ export class SendLetterComponent implements OnInit {
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
       const obj = JSON.parse(response);
-      for (let i = 0; i < obj.files.length; i ++) {
+      for (let i = 0; i < obj.files.length; i++) {
         const bulk = {
-            'accnumber': this.accnumber,
-            'custnumber': this.custnumber,
-            'address': 'none',
-            'email': 'none',
-            'telnumber': 'none',
-            'filepath': obj.files[i].path,
-            'filename': obj.files[i].originalname,
-            'datesent': new Date(),
-            'owner': this.username,
-            'byemail': false,
-            'byphysical': true,
-            'bypost': true,
-            'demand': this.model.demand
-          };
-          this.ecolService.demandshistory(bulk).subscribe(datar => {
-            // console.log(datar);
-            this.getdemandshistory(this.accnumber);
-            swal('Good!', 'Demand letter uploaded successfully!', 'success');
-          }, error => {
-            swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
-          });
-    }
+          'accnumber': this.accnumber,
+          'custnumber': this.custnumber,
+          'address': 'none',
+          'email': 'none',
+          'telnumber': 'none',
+          'filepath': obj.files[i].path,
+          'filename': obj.files[i].originalname,
+          'datesent': new Date(),
+          'owner': this.username,
+          'byemail': false,
+          'byphysical': true,
+          'bypost': true,
+          'demand': this.model.demand
+        };
+        this.ecolService.demandshistory(bulk).subscribe(datar => {
+          // console.log(datar);
+          this.getdemandshistory(this.accnumber);
+          swal('Good!', 'Demand letter uploaded successfully!', 'success');
+        }, error => {
+          swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
+        });
+      }
     };
 
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
@@ -123,6 +135,13 @@ export class SendLetterComponent implements OnInit {
       this.model.postcode = data[0].postcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+
+      if (this.guarantors || this.guarantors.length > 0) {
+        // loop
+        for (let i = 0; i < this.guarantors.length; i++) {
+          this.guarantoremails += this.guarantors[i].email + ',';
+        }
+      }
     });
   }
 
@@ -138,13 +157,23 @@ export class SendLetterComponent implements OnInit {
     this.getdemandshistory(this.accnumber);
   }
 
+  popsuccessToast(msg) {
+    this.toasterService.pop('success', 'Success', msg);
+  }
+
+  poperrorToast(error) {
+    this.toasterService.pop('error', 'Error', error);
+  }
+
+  popinfoToast(info) {
+    this.toasterService.pop('info', 'Info', info);
+  }
+
   openletter(letter) {
-    // console.log('letter==>', letter);
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
       // if account is there
       if (data && data.length > 0) {
-        // console.log('getAccount=>', data);
         this.bodyletter.demand = letter.demand;
         this.bodyletter.showlogo = letter.showlogo;
         this.bodyletter.format = letter.format;
@@ -159,7 +188,7 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.manager = data[0].manager;
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = null;
-        this.bodyletter.guarantors = data[0].guarantors;
+        this.bodyletter.guarantors = data[0].guarantors || [];
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           // add accounts to the array
@@ -174,19 +203,25 @@ export class SendLetterComponent implements OnInit {
             this.ecolService.generateLetter(this.bodyletter).subscribe(generateletterdata => {
               // sucess
               if (generateletterdata.result === 'success') {
-                swal('Good!', generateletterdata.message, 'success');
+                // swal('Good!', generateletterdata.message, 'success');
+                swal.close();
+                this.popsuccessToast('Letter ready for preview');
                 this.downloadDemand(generateletterdata.message, generateletterdata.filename);
               } else {
-                swal('Error!', 'Error occured during letter generation!', 'error');
+                swal.close();
+                // swal('Error!', 'Error occured during letter generation!', 'error');
+                this.poperrorToast('Error occured during letter generation!');
               }
               //
             }, error => {
               console.log('error==>', error);
-              swal('Error!', 'Error occured during letter generation!', 'error');
+              swal.close();
+              this.poperrorToast('Error occured during letter generation!');
             });
           }, error => {
             console.log('demand1history==>', error);
-            swal('Error!', 'Error generating previous demand date!', 'error');
+            swal.close();
+            this.poperrorToast('Error generating previous demand date!');
           });
         }, error => {
           console.log('error==>', error);
@@ -202,10 +237,8 @@ export class SendLetterComponent implements OnInit {
   }
 
   processletter(letter: any, accnumber, emailaddress) {
-    // console.log('processletter==>', letter);
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data && data.length > 0) {
-        // console.log('getAccount=>', data);
         this.bodyletter.demand = letter.demand;
         this.bodyletter.showlogo = true;
         this.bodyletter.format = 'pdf';
@@ -224,18 +257,18 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.guarantors = data[0].guarantors;
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
-          // add accounts to the array
           this.bodyletter.accounts = accounts;
           this.emaildata = {
             name: data[0].client_name,
             email: emailaddress,
             branchemail: this.bodyletter.branchemail,
-            title: letter.demand
+            title: letter.demand,
+            guarantor: this.bodyletter.guarantors || 0
           };
           // generate letter
           this.generateletter(this.bodyletter);
         }, error => {
-          console.log('error==>', error);
+          console.log('getcustwithAccount error==>', error);
           swal('Error!', 'unable to retrieve customer accounts!', 'error');
         });
       } else {
@@ -248,16 +281,19 @@ export class SendLetterComponent implements OnInit {
   }
 
   generateletter(letter) {
+    swal.close();
+    this.popinfoToast('Letter Queued to be sent')
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
         //
-        swal('Success!', 'Letter generated!', 'success');
+        // swal('Success!', 'Letter generated!', 'success');
+        this.popsuccessToast('Letter generated and queued to be sent');
         // save to history
         const bulk = {
           'accnumber': this.model.accnumber,
           'custnumber': this.model.custnumber,
           'address': this.model.addressline1,
-          'email': this.model.email,
+          'email': this.model.emailaddress,
           'telnumber': this.model.telnumber,
           'filepath': uploaddata.message,
           'filename': uploaddata.filename,
@@ -266,21 +302,25 @@ export class SendLetterComponent implements OnInit {
           'byemail': this.model.sendemail,
           'byphysical': this.model.sendphysical,
           'bypost': this.model.sendpostal,
-          'demand': letter.demand
+          'demand': letter.demand,
+          "customeremail": this.model.emailaddress,
+          'status': 'queued',
+          'reissued': 'N',
+          'guarantorsno': this.guarantors.length || 0,
+          'guarantorsemail': this.guarantoremails,
+          'sendemail': letter.branchemail || 'Contact Centre Team <ContactCentreTeam@co-opbank.co.ke>'
         };
         //
         this.demandshistory(bulk);
         this.getdemandshistory(this.accnumber);
-        // send email
-        // add file full path
         this.emaildata.file = uploaddata.message;
-        // console.log('sendDemandEmail==>', this.emaildata);
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
-          // console.log(response);
           if (response.result === 'fail') {
-            swal('Error!', 'Letter NOT sent on email!', 'error');
+            swal.close();
+            this.poperrorToast('Letter NOT sent on email!');
           } else {
-            swal('Success!', 'Letter sent on email!', 'success');
+            swal.close();
+            this.popsuccessToast('Letter sent on email!')
           }
         });
         // send sms
@@ -289,13 +329,13 @@ export class SendLetterComponent implements OnInit {
             this.smsMessage = result[0].message;
           } else {
             // tslint:disable-next-line:max-line-length
-            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+            this.smsMessage = 'Dear Customer, We have sent a Demand  Notice to your address. To enquire call  0711049000';
           }
 
           const smsdata = {
             'demand': letter.demand,
             'custnumber': this.model.custnumber,
-            'telnumber': this.model.telnumber,
+            'telnumber': this.model.celnumber,
             'owner': this.username,
             'message': this.smsMessage,
           };
@@ -314,19 +354,19 @@ export class SendLetterComponent implements OnInit {
   }  // end generateletter
 
   sendsms(smsdata) {
-    // console.log('sendsms==data==', smsdata);
     this.ecolService.sendsms(smsdata).subscribe(result => {
-      swal('Successful!', 'Demand letter SMS sent!', 'success');
+      // swal('Successful!', 'Demand letter SMS sent!', 'success');
+      this.popsuccessToast('Demand letter SMS sent!')
     }, error => {
       console.log(error);
-      swal('Error!', 'Error occurred during sending email!', 'error');
+      // swal('Error!', 'Error occurred during sending email!', 'error');
+      this.poperrorToast('Error occurred during sending email!');
     });
   }
 
   demandshistory(body) {
-    console.log('demandshistory', body);
+    console.log('saved demandshistory==', body);
     this.ecolService.demandshistory(body).subscribe(data => {
-      // console.log('saved demandshistory==', data);
       this.getdemandshistory(this.accnumber);
     });
   }
@@ -357,10 +397,10 @@ export class SendLetterComponent implements OnInit {
     });
   }
 
-  resend(filepath) {
+  resend(datafile) {
     swal({
-      title: 'confirm email address',
-      input: 'text',
+      title: 'confirm re-send',
+      text: JSON.stringify(datafile),
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Send Email',
@@ -369,12 +409,75 @@ export class SendLetterComponent implements OnInit {
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {
-        swal(
-          'Sent!',
-          'Email has been sent',
-          'success'
-        );
-      }
+        // resend letter
+        //
+        const emaildata = {
+          email: datafile.customeremail,
+          branchemail: datafile.sendemail,
+          title: datafile.demand,
+          guarantor: datafile.guarantors
+        };
+
+        const bulk = {
+          'accnumber': datafile.accnumber,
+          'custnumber': datafile.custnumber,
+          'address': datafile.address,
+          'email': datafile.customeremail,
+          'telnumber': datafile.telnumber,
+          'filepath': datafile.filepath,
+          'filename': datafile.filename,
+          'datesent': new Date(),
+          'owner': this.username,
+          'byemail': 'Y',
+          'byphysical': 'N',
+          'bypost': 'N',
+          'demand': datafile.demand,
+          "customeremail": datafile.customeremail,
+          'status': 'queued',
+          'reissued': 'N',
+          'guarantorsno': datafile.guarantorsno,
+          'guarantorsemail': datafile.guarantorsemail,
+          'sendemail': datafile.sendemail
+        };
+        //
+        // this.demandshistory(bulk);
+        this.getdemandshistory(this.accnumber);
+        this.emaildata.file = datafile.filepath;
+        this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
+          if (response.result === 'fail') {
+            swal.close();
+            this.poperrorToast('Letter NOT sent on email!');
+          } else {
+            swal.close();
+            this.popsuccessToast('Letter sent on email!')
+          }
+        });
+        // send sms
+        this.ecolService.getsmsmessage(datafile.demand).subscribe(result => {
+          if (result && result.length > 0) {
+            this.smsMessage = result[0].message;
+          } else {
+            // tslint:disable-next-line:max-line-length
+            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+          }
+
+          const smsdata = {
+            'demand': datafile.demand,
+            'custnumber': datafile.custnumber,
+            'telnumber': datafile.celnumber,
+            'owner': this.username,
+            'message': this.smsMessage,
+          };
+          this.sendsms(smsdata);
+        }, error => {
+          console.log(error);
+        });
+          swal(
+            'Sent!',
+            'Email has been sent',
+            'success'
+          );
+        }
     });
   }
 }

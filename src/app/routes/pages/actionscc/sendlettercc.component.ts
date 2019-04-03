@@ -123,14 +123,12 @@ export class SendLetterccComponent implements OnInit {
           this.letterbody.address = letter.addressline1,
           this.letterbody.rpcode = letter.postcode,
           this.letterbody.city = letter.city,
-          this.letterbody.EXP_PMNT = carddata[0].exppmnt,
-          this.letterbody.OUT_BALANCE = carddata[0].outbalance,
+          this.letterbody.exp_pmnt = carddata[0].exppmnt,
+          this.letterbody.out_balance = carddata[0].outbalance,
           this.letterbody.demand1date = new Date();
 
-        // console.log(body);
         // call generate letter api
         this.ecolService.generateLetter(this.letterbody).subscribe(data => {
-          // sucess
           if (data.result === 'success') {
             swal('Good!', data.message, 'success');
             this.downloadDemand(data.message, data.filename);
@@ -154,7 +152,6 @@ export class SendLetterccComponent implements OnInit {
 
   getcardaccount(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
-      // console.log('this is getcardAccount==>', data);
       this.accountdetails = data[0];
       this.guarantors = data[0].guarantors;
       this.model.accnumber = data[0].cardacct;
@@ -201,8 +198,9 @@ export class SendLetterccComponent implements OnInit {
           address: this.model.addressline1,
           postcode: this.model.postcode,
           exp_pmnt: data[0].exppmnt,
-          out_balance: data[0].exppmnt,
+          out_balance: data[0].outbalance,
           manager: 'ROSE KARAMBU'
+
         };
         const emaildata = {
           name: data[0].cardname,
@@ -223,9 +221,7 @@ export class SendLetterccComponent implements OnInit {
   }
 
   generateletter(letter, emaildata: any) {
-    // console.log(letter);
     this.ecolService.generateLettercc(letter).subscribe(dataupload => {
-      console.log('generateLetterccoverdue==>', dataupload);
       // sucess
       if (dataupload.result === 'success') {
         swal('Good!', dataupload.message, 'success');
@@ -234,16 +230,21 @@ export class SendLetterccComponent implements OnInit {
           'accnumber': this.model.accnumber,
           'custnumber': this.model.accnumber,
           'address': this.model.addressline1,
-          'email': this.model.email,
+          'email': this.model.emailaddress,
           'telnumber': this.model.telnumber,
           'filepath': dataupload.message,
           'filename': dataupload.filename,
           'datesent': new Date(),
           'owner': this.username,
-          'byemail': this.model.emailaddress,
+          'byemail': this.model.sendemail,
           'byphysical': this.model.sendphysical,
           'bypost': this.model.sendpostal,
-          'demand': letter.demand
+          'demand': letter.demand,
+          'status': 'queued',
+          "customeremail": this.model.emailaddress,
+          'reissued': 'N',
+          'guarantorsno': 0,
+          'guarantorsemail': 0
         };
         this.demandshistory(bulk);
         this.getdemandshistory(this.cardacct);
@@ -276,7 +277,7 @@ export class SendLetterccComponent implements OnInit {
         const smsdata = {
           'demand': letter.demand,
           'custnumber': this.model.accnumber,
-          'telnumber': this.model.telnumber,
+          'telnumber': this.model.celnumber,
           'owner': this.username,
           'message': this.smsMessage,
         };
@@ -290,21 +291,7 @@ export class SendLetterccComponent implements OnInit {
     });
   }
 
-  /*sendemail(emaildata) {
-    this.ecolService.sendDemandEmail(emaildata).subscribe(data => {
-      if (data.result === 'success') {
-        swal('Successful!', 'Letter sent on email!', 'success');
-      } else {
-        swal('Error!', 'Error occurred during sending email!', 'error');
-      }
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred during sending email!', 'error');
-    });
-  }*/
-
   sendsms(smsdata) {
-    console.log('sendsms==data==', smsdata);
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter sent!', 'success');
     }, error => {
@@ -322,7 +309,6 @@ export class SendLetterccComponent implements OnInit {
   }
 
   demandshistory(body) {
-    console.log('demandshistory body', body);
     this.ecolService.demandshistory(body).subscribe(data => {
       console.log(data);
     });
@@ -345,10 +331,10 @@ export class SendLetterccComponent implements OnInit {
     });
   }
 
-  resend(filepath) {
+  resend(file) {
     swal({
-      title: 'confirm email address',
-      input: 'text',
+      title: 'confirm re-send',
+      text: JSON.stringify(file),
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Send Email',

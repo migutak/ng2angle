@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';  
+import { Subject } from 'rxjs';  
+import { Observable } from 'rxjs'; 
 
 @Injectable()
 export class DataService {
 
-  private messageSource = new BehaviorSubject('default message');
-  currentMessage = this.messageSource.asObservable();
-
-  constructor() { }
-
-  changeMessage(message: string) {
-    this.messageSource.next(message)
-  }
+    private subject = new Subject<any>();  
+    constructor() { }  
+    
+    sendProductID(message: string) {  
+      this.subject.next({ text: message });  
+    }  
+    
+    getProductID(): Observable<any> {  
+      return this.subject.asObservable();  
+    }
 
 }

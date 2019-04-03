@@ -327,10 +327,6 @@ const Work = {
             link: '/work/myworklist'
         },
         {
-            text: 'Todays',
-            link: '/work/todays'
-        },
-        {
             text: 'Pre Delinquent',
             link: '/work/predelq'
         },
@@ -514,8 +510,8 @@ const collection_menu = [
     Remedial,
     mcoopcash,
     serviceproviders,
-    headingMore,
-    Collectionrpt,
+    // headingMore,
+    // Collectionrpt,
     headingConfigurations,
     Demandletters,
     Allocations,
@@ -549,8 +545,8 @@ const teamleader_menu = [
     Letters,
     headingComponents,
     Work,
-    headingMore,
-    Collectionrpt,
+    //headingMore,
+    //Collectionrpt,
     headingConfigurations,
     Demandletters,
     Allocations,

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../../environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -24,11 +25,15 @@ export class CustContactsComponent implements OnInit {
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
-    private ecolService: EcolService) {
+    private ecolService: EcolService,
+    private spinner: NgxSpinnerService) {
     //
   }
 
   ngOnInit() {
+    /** spinner starts on init */
+    // this.spinner.show();
+
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
@@ -116,8 +121,13 @@ export class CustContactsComponent implements OnInit {
   }
 
   getcontacts(custnumber){
+    this.spinner.show();
     this.ecolService.getteles(custnumber).subscribe(data => {
       this.contacts = data;
+      this.spinner.hide();
+    }, error => {
+      console.log(error);
+      this.spinner.hide();
     })
   }
 

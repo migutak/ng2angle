@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -42,7 +44,9 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
     imports: [
         SharedModule,
         FileUploadModule,
-        NgbModule
+        NgbModule,
+        NgxSpinnerModule,
+        ToasterModule.forRoot()
         // RouterModule.forChild(routes)
     ],
     declarations: [
@@ -67,6 +71,9 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
         BulknotesComponent,
         CollateralsComponent,
         ActivitydashComponent
+    ],
+    providers: [
+        ToasterService
     ],
     exports: [
         RouterModule,

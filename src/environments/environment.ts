@@ -15,7 +15,7 @@ export const environment = {
   metrics: 'http://localhost:8800/appmetrics-dash',
   xlstemplate: '/Users/Kevinabongo/Documents/upload_notes.xlsx',
   applink: 'http://localhost:4500',
-  emailapi: 'http://localhost:8005/demand/email',
+  emailapi: 'http://localhost:8800/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   filesapi: 'http://localhost:3100/api',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',

@@ -174,6 +174,7 @@ export class ActivityHomeComponent implements OnInit {
   loadptps(accnumber) {
     this.loader = true;
     this.ecolService.ptps(accnumber).subscribe(data => {
+      console.log(data);
       this.ptps = data;
       this.loader = false;
     }, error => {
