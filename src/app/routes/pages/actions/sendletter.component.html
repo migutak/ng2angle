@@ -1,13 +1,14 @@
-<div>
+<div class="wrapper container">
   <toaster-container [toasterconfig]="config"></toaster-container>
+  <ngx-spinner></ngx-spinner>
   <div class="card b text-white">
-    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/profile-bg.jpg);">
+    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
         <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image" />
         <div class="media-body">
           <div class="d-flex">
             <div>
-              <h4 class="m-0">Name: {{accountdetails?.client_name}}</h4>
+              <h4 class="m-0" style="color:black">Name: {{accountdetails?.client_name}}</h4>
               <p>Address: {{accountdetails?.addressline1}}</p>
             </div>
           </div>
@@ -81,6 +82,14 @@
                     </div>
                   </div>
                   <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Save to contacts</label>
+                      <div class="col-xl-8">
+                          <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts()">
+                              <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
+                              </span>Save this contact</button>
+                      </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-xl-4 col-form-label">Preview</label>
                     <div class="col-xl-8">
                       <div class="form-check form-check-inline">
@@ -105,9 +114,6 @@
                     <div class="col-xl-4">
                       <button [disabled]="demand.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
                         type="button" (click)="openletter(model)">click to preview letter</button>
-                        <div class="col-xl-4">
-                            <button [disabled]="emailaddress.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button" (click)="savecontacts(model)">Save this contact</button>
-                        </div>
                     </div>
                   </div>
                 </form>
@@ -202,9 +208,9 @@
                     </div>
                   </td>
                   <td class="wd-xs d-none d-lg-table-cell">
-                    <div class="px-2">
+                    <div class="px-2" *ngIf="d.sendemail || d.customeremail">
                       <p class="m-0 text-muted">
-                        <em class="icon-envelop mr-2 fa-lg"></em><button *ngIf="d.sendemail" class="btn btn-link" (click)="resend(d)">resend letter</button></p>
+                        <em class="icon-envelop mr-2 fa-lg"></em><button class="btn btn-link" (click)="resend(d)">resend letter</button></p>
                     </div>
                   </td>
                 </tr>

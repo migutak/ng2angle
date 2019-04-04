@@ -6,6 +6,8 @@ import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -26,7 +28,7 @@ export class SendLetterccComponent implements OnInit {
   smsMessage: string;
   file: string;
   username: string;
-  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension'];
+  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
 
   public uploader: FileUploader = new FileUploader({
     url: URL
@@ -42,10 +44,18 @@ export class SendLetterccComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
-  // Add in the other upload form parameters.
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
+    public toasterService: ToasterService,
+    private spinner: NgxSpinnerService,
     private ecolService: EcolService) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -107,6 +117,18 @@ export class SendLetterccComponent implements OnInit {
     // get account details
     this.getcardaccount(this.cardacct);
     this.getdemandshistory(this.cardacct);
+  }
+
+  popsuccessToast(msg) {
+    this.toasterService.pop('success', 'Success', msg);
+  }
+
+  poperrorToast(error) {
+    this.toasterService.pop('error', 'Error', error);
+  }
+
+  popinfoToast(info) {
+    this.toasterService.pop('info', 'Info', info);
   }
 
   openletter(letter) {
@@ -244,7 +266,8 @@ export class SendLetterccComponent implements OnInit {
           "customeremail": this.model.emailaddress,
           'reissued': 'N',
           'guarantorsno': 0,
-          'guarantorsemail': 0
+          'guarantorsemail': 0,
+          'sendemail': 'Collection Support <collectionssupport@co-opbank.co.ke>'
         };
         this.demandshistory(bulk);
         this.getdemandshistory(this.cardacct);
@@ -331,10 +354,10 @@ export class SendLetterccComponent implements OnInit {
     });
   }
 
-  resend(file) {
+  resend(datafile) {
     swal({
       title: 'confirm re-send',
-      text: JSON.stringify(file),
+      text: JSON.stringify(datafile),
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Send Email',
@@ -343,6 +366,68 @@ export class SendLetterccComponent implements OnInit {
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {
+
+        let emaildata = {
+          email: datafile.customeremail,
+          branchemail: datafile.sendemail,
+          title: datafile.demand,
+          guarantor: datafile.guarantors,
+          file: datafile.filepath
+        };
+
+        const bulk = {
+          'accnumber': datafile.accnumber,
+          'custnumber': datafile.custnumber,
+          'address': datafile.address,
+          'email': datafile.customeremail,
+          'telnumber': datafile.telnumber,
+          'filepath': datafile.filepath,
+          'filename': datafile.filename,
+          'datesent': new Date(),
+          'owner': this.username,
+          'byemail': 'Y',
+          'byphysical': 'N',
+          'bypost': 'N',
+          'demand': datafile.demand,
+          "customeremail": datafile.customeremail,
+          'status': 'queued',
+          'reissued': 'Y',
+          'guarantorsno': datafile.guarantorsno,
+          'guarantorsemail': datafile.guarantorsemail,
+          'sendemail': datafile.sendemail
+        };
+        //
+        this.demandshistory(bulk);
+        this.getdemandshistory(datafile.accnumber);
+        this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
+          if (response.result === 'fail') {
+            swal.close();
+            this.poperrorToast('Letter NOT sent on email!');
+          } else {
+            swal.close();
+            this.popsuccessToast('Letter sent on email!')
+          }
+        });
+        // send sms
+        this.ecolService.getsmsmessage(datafile.demand).subscribe(result => {
+          if (result && result.length > 0) {
+            this.smsMessage = result[0].message;
+          } else {
+            // tslint:disable-next-line:max-line-length
+            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+          }
+
+          const smsdata = {
+            'demand': datafile.demand,
+            'custnumber': datafile.custnumber,
+            'telnumber': datafile.celnumber,
+            'owner': this.username,
+            'message': this.smsMessage,
+          };
+          this.sendsms(smsdata);
+        }, error => {
+          console.log(error);
+        });
         swal(
           'Sent!',
           'Email has been sent',
@@ -350,5 +435,15 @@ export class SendLetterccComponent implements OnInit {
         );
       }
     });
+  }
+
+  savecontacts() {
+    /** spinner starts on init */
+    this.spinner.show();
+ 
+    setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+    }, 5000);
   }
 }

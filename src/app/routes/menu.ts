@@ -34,7 +34,7 @@ const DashboardAdmin = {
 };
 
 const Letters = {
-    text: 'Letters',
+    text: 'Demand Letters',
     link: '/letters',
     icon: 'icon-note',
     submenu: [
@@ -53,7 +53,7 @@ const Letters = {
             ]
         },
         {
-            text: 'Demand Letters',
+            text: 'Letters',
             link: '/demand',
             submenu: [
                 {
@@ -67,12 +67,12 @@ const Letters = {
             ]
         }
     ],
-    'alert': '23',
+    'alert': '0',
     'label': 'badge badge-danger'
 };
 
 const Letterscc = {
-    text: 'Demand Letters',
+    text: 'Demand Letters cc',
     link: '/letters',
     icon: 'icon-note',
     submenu: [
@@ -85,7 +85,7 @@ const Letterscc = {
             link: '/creditcards/creditcarddemands/demandshistory'
         }
     ],
-    'alert': '23',
+    'alert': '0',
     'label': 'badge badge-danger'
 };
 
@@ -532,6 +532,7 @@ const remedial_menu = [
     Home,
     Dashboard,
     Letters,
+    Letterscc,
     headingComponents,
     Work,
     headingMore,

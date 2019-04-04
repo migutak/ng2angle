@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -31,7 +32,7 @@ export class SendLetterComponent implements OnInit {
   username: string;
   emaildata: any = {};
   // tslint:disable-next-line:max-line-length
-  itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
+  itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
@@ -57,6 +58,7 @@ export class SendLetterComponent implements OnInit {
     public settings: SettingsService,
     public toasterService: ToasterService,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
     private ecolService: EcolService) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -189,10 +191,9 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = null;
         this.bodyletter.guarantors = data[0].guarantors || [];
+        this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
-          // add accounts to the array
-          // console.log('accounts=>', accounts);
           this.bodyletter.accounts = accounts;
           // get demand1 date
           this.ecolService.demand1history(this.accnumber).subscribe(dd1date => {
@@ -255,6 +256,7 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = new Date();
         this.bodyletter.guarantors = data[0].guarantors;
+        this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           this.bodyletter.accounts = accounts;
@@ -308,7 +310,7 @@ export class SendLetterComponent implements OnInit {
           'reissued': 'N',
           'guarantorsno': this.guarantors.length || 0,
           'guarantorsemail': this.guarantoremails,
-          'sendemail': letter.branchemail || 'Contact Centre Team <ContactCentreTeam@co-opbank.co.ke>'
+          'sendemail': letter.branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>'
         };
         //
         this.demandshistory(bulk);
@@ -365,7 +367,6 @@ export class SendLetterComponent implements OnInit {
   }
 
   demandshistory(body) {
-    console.log('saved demandshistory==', body);
     this.ecolService.demandshistory(body).subscribe(data => {
       this.getdemandshistory(this.accnumber);
     });
@@ -434,16 +435,16 @@ export class SendLetterComponent implements OnInit {
           'demand': datafile.demand,
           "customeremail": datafile.customeremail,
           'status': 'queued',
-          'reissued': 'N',
+          'reissued': 'Y',
           'guarantorsno': datafile.guarantorsno,
           'guarantorsemail': datafile.guarantorsemail,
           'sendemail': datafile.sendemail
         };
         //
-        // this.demandshistory(bulk);
-        this.getdemandshistory(this.accnumber);
+        this.demandshistory(bulk);
+        this.getdemandshistory(datafile.accnumber);
         this.emaildata.file = datafile.filepath;
-        this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
+        this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
           if (response.result === 'fail') {
             swal.close();
             this.poperrorToast('Letter NOT sent on email!');
@@ -458,7 +459,7 @@ export class SendLetterComponent implements OnInit {
             this.smsMessage = result[0].message;
           } else {
             // tslint:disable-next-line:max-line-length
-            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+            this.smsMessage = 'Dear Customer, We have sent a Demand  Notice to your address. To enquire call  0711049000';
           }
 
           const smsdata = {
@@ -479,5 +480,15 @@ export class SendLetterComponent implements OnInit {
           );
         }
     });
+  }
+
+  savecontacts() {
+    /** spinner starts on init */
+    this.spinner.show();
+ 
+    setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+    }, 5000);
   }
 }
