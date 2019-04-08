@@ -154,7 +154,7 @@
         </div>
         <div id="collapseThree" class="collapse" data-parent="#accordion">
           <div class="card-body">
-            <form #globalForm="ngForm" class="form-horizontal" (ngSubmit)="globalSubmit(globalForm)" autocomplete="off">
+            <!--<form #globalForm="ngForm" class="form-horizontal" (ngSubmit)="globalSubmit(globalForm)" autocomplete="off">
 
               <div class="form-group">
                 <p>Letter Footer</p>
@@ -177,7 +177,7 @@
                   </div>
                 </div>
               </fieldset>
-            </form>
+            </form>-->
           </div>
         </div>
       </div>
@@ -209,18 +209,18 @@
                     <div class="col-md-10">
                       <label class="checkbox c-checkbox">
                         <input type="checkbox" name="suspendletter" id="suspendletter" #suspendletter="ngModel"
-                          [(ngModel)]="model.suspendletter" [checked]="model.suspendletter=='true'" />
+                          [(ngModel)]="model.suspendletter" [checked]="model.suspendletter" />
                         <span class="fa fa-check"></span> Whole Letter</label>
                       <label class="c-checkbox">
                         <input type="checkbox" name="suspendsms" id="suspendsms" #suspendsms="ngModel"
-                          [(ngModel)]="model.suspendsms" [checked]="model.suspendsms==='true'" />
+                          [(ngModel)]="model.suspendsms" [checked]="model.suspendsms" />
                         <span class="fa fa-check"></span> SMS</label>
                       <label class="c-checkbox">
                         <input type="checkbox" name="suspendautodelivery" id="suspendautodelivery"
-                          #suspendautodelivery="ngModel" [(ngModel)]="model.suspendautodelivery" [checked]="model.suspendautodelivery==='true'" />
+                          #suspendautodelivery="ngModel" [(ngModel)]="model.suspendautodelivery" [checked]="model.suspendautodelivery" />
                         <span class="fa fa-check"></span> Automatic delivery</label>
                     </div>
-                    <pre>{{model | json }}</pre>
+                    <!--<pre>{{model | json }}</pre>-->
                   </div>
                 </fieldset>
                 <fieldset>

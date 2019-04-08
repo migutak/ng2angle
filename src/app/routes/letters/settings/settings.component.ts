@@ -32,11 +32,8 @@ export class SettingsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.username = this.route.snapshot.queryParamMap.get('username');
-    this.route.queryParamMap.subscribe(queryParams => {
-      this.username = queryParams.get('username');
-    });
-
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
     this.getblobal();
   }
 
@@ -51,8 +48,18 @@ export class SettingsComponent implements OnInit {
   getLetter(letter) {
     this.ecolService.getLetter(letter).subscribe(letter => {
       this.model = letter;
+      this.model.bysms = (letter.bysms).toLowerCase() == 'true' ? true : false; 
+      this.model.byphysical = (letter.byphysical).toLowerCase() == 'true' ? true : false; 
+      this.model.byemail = (letter.byemail).toLowerCase() == 'true' ? true : false; 
+
+      this.model.suspendsms = (letter.suspendsms).toLowerCase() == 'true' ? true : false; 
+      this.model.suspendletter = (letter.suspendletter).toLowerCase() == 'true' ? true : false; 
+      this.model.suspendautodelivery = (letter.suspendautodelivery).toLowerCase() == 'true' ? true : false; 
+
       this.spinner.hide();
     }, error => {
+      this.spinner.hide();
+      alert('error!')
       console.log(error);
     });
   }
@@ -87,7 +94,7 @@ export class SettingsComponent implements OnInit {
     templatepath: this.model.templatepath || '0',
     autodelivered: this.model.autodelivered,
     suspendautodelivery: this.model.suspendautodelivery,
-    suspendsms: this.model.suspendsms || 'N',
+    suspendsms: this.model.suspendsms,
     datelastupdated: new Date(),
     updatedby: this.username,
     byemail: this.model.byemail,

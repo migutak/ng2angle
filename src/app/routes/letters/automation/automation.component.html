@@ -20,8 +20,6 @@
                   <div class="card-body">
                     <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(settingsForm)">
                       <p class="my-2">Type</p>
-                      <!--<ngx-select (data)="valueCategory" [multiple]="false" [items]="itemsCategories" ></ngx-select>
-                                              <span><button class="btn btn-small btn-primary" type="button"><em class="fa fa-sync fa-fw"></em> Letter details</button></span>-->
                       <div class="input-group">
                         <select class="form-control" name="letterid" id="letterid" #letterid="ngModel" [(ngModel)]="model.letterid"
                           [ngClass]="{ 'is-invalid': letterid.invalid }" required>
@@ -55,7 +53,7 @@
                       <div>
                         <div class="clearfix">
                           <div class="float-left">
-                            <button class="btn btn-outline-primary" type="button" [disabled]="disable" (click)="update()">
+                            <button class="btn btn-outline-primary" type="button" [disabled]="true" (click)="update()">
                               <em class="fa fa-pencil fa-fw"></em>Update {{model.lettername}} </button>
                           </div>
                           <div class="float-left">
@@ -63,7 +61,7 @@
                               <em class="fa fa-check fa-fw"></em>Add New</button>
                           </div>
                           <div class="float-right">
-                            <button class="btn btn-danger" type="button" [disabled]="disable" (click)="delete()">
+                            <button class="btn btn-danger" type="button" [disabled]="true" (click)="delete()">
                               <em class="fas fa-trash-alt fa-fw"></em>Delete</button>
                           </div>
                         </div>
