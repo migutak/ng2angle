@@ -66,14 +66,24 @@
                     <div class="col-xl-8">
                       <input class="form-control" type="text" name="addressline1" id="addressline1"
                         [(ngModel)]="model.addressline1" #addressline1="ngModel"
-                        [ngClass]="{ 'is-invalid': addressline1.invalid }" required />
+                        [ngClass]="{ 'is-invalid': addressline1.invalid }" required list="daddress"/>
+
+                        <datalist id="daddress">
+                            <option *ngFor="let a of addresses">{{a.address}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">postcode</label>
                     <div class="col-xl-8">
                       <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
-                        #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" required />
+                        #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" required list="dpostcode"/>
+
+                        <datalist id="dpostcode">
+                            <option *ngFor="let p of postcodes">{{p.postcode}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
@@ -81,7 +91,12 @@
                     <div class="col-xl-8">
                       <input class="form-control" type="email" name="emailaddress" id="emailaddress"
                         [(ngModel)]="model.emailaddress" #emailaddress="ngModel"
-                        [ngClass]="{ 'is-invalid': emailaddress.invalid }" required email />
+                        [ngClass]="{ 'is-invalid': emailaddress.invalid }" required email list="browsers"/>
+
+                        <datalist id="browsers">
+                            <option *ngFor="let e of emails">{{e.email}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
@@ -89,7 +104,12 @@
                     <div class="col-xl-8">
                       <input class="form-control" type="text" name="celnumber" id="celnumber"
                         [(ngModel)]="model.celnumber" #celnumber="ngModel"
-                        [ngClass]="{ 'is-invalid': celnumber.invalid }" required />
+                        [ngClass]="{ 'is-invalid': celnumber.invalid }" required list="cellnumber"/>
+
+                        <datalist id="cellnumber">
+                            <option *ngFor="let t of teles">{{t.telephone}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
@@ -97,7 +117,7 @@
                     <div class="col-xl-8">
                       <button [disabled]="emailaddress.invalid || celnumber.invalid"
                         class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button"
-                        (click)="savecontacts()">
+                        (click)="savecontacts(model)">
                         <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
                         </span>Save this contact</button>
                     </div>

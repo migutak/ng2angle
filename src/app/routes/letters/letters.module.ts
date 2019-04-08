@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { SettingsComponent } from './settings/settings.component';
+import { AutomationComponent } from './automation/automation.component';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { FilterPipe} from './filter.pipe';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
-  { path: 'settings', component: SettingsComponent }
+  { path: 'settings', component: SettingsComponent },
+  { path: 'automation', component: AutomationComponent }
 ];
 
 @NgModule({
@@ -17,10 +19,13 @@ const routes: Routes = [
       SharedModule,
       CommonModule,
       NgxSelectModule,
+      NgxSpinnerModule,
       RouterModule.forChild(routes)
   ],
   declarations: [
-    SettingsComponent, FilterPipe
+    SettingsComponent,
+    AutomationComponent,
+    FilterPipe
   ],
   exports: [
       RouterModule

@@ -45,7 +45,8 @@
   
 
   <!-- END box placeholder-->
-  <jqxGrid #myGrid [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns" [columnsresize]="true"
+  <jqxGrid #myGrid (onCellselect)="myGridOnCellSelect($event)" 
+    [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns" [selectionmode]="'singlecell'" [columnsresize]="true"
     [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true" [altrows]="true"
     [enabletooltips]="true" [filterable]="true">
   </jqxGrid>

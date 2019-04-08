@@ -27,7 +27,7 @@ export class MyworklistComponent implements OnInit {
       datatype: 'json',
       totalrecords: 100,
       // root: 'Rows',
-      url: environment.api + '/api/tbl_q_all/viewallcc',
+      url: environment.api + '/api/tbl_q_all/viewall',
       filter: function () {
         // update the grid and send a request to the server.
         this.myGrid.applyfilters();
@@ -44,18 +44,18 @@ export class MyworklistComponent implements OnInit {
       },
       datafields:
         [
-          { name: 'CARDACCT', type: 'string' },
-          { name: 'ACCOUNTNO', type: 'string' },
+          { name: 'ACCNUMBER', type: 'string' },
+          { name: 'CUSTNUMBER', type: 'string' },
           { name: 'CARDNUMBER', type: 'string' },
-          { name: 'CARDNAME', type: 'string' },
-          { name: 'OUTBALANCE', type: 'number' },
-          { name: 'EXPPMNT', type: 'number' },
-          { name: 'DAYSINARREARS', type: 'number' },
-          { name: 'ADDRESS', type: 'string' },
+          { name: 'CLIENT_NAME', type: 'string' },
+          { name: 'OUSTBALANCE', type: 'number' },
+          { name: 'DAYSINARR', type: 'number' },
+          { name: 'TOTALARREARS', type: 'number' },
+          { name: 'BUCKET', type: 'string' },
           { name: 'RPCODE', type: 'string' },
           { name: 'CITY', type: 'string' },
-          { name: 'MOBILE', type: 'string' },
-          { name: 'EMAILADDRESS', type: 'string' },
+          { name: 'BRANCHNAME', type: 'string' },
+          { name: 'AROCODE', type: 'string' },
           { name: 'COLOFFICER', type: 'string' },
           { name: 'DUEDATE', type: 'date' },
           { name: 'CYCLE', type: 'string' },
@@ -83,7 +83,7 @@ export class MyworklistComponent implements OnInit {
   columns: any[] =
     [
       {
-        text: 'CARDACCT', datafield: 'CARDACCT', width: 150, filtertype: 'input',
+        text: 'ACCNUMBER', datafield: 'ACCNUMBER', width: 150, filtertype: 'input',
         createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
           const that = this;
           const container = document.createElement('div');
@@ -98,15 +98,15 @@ export class MyworklistComponent implements OnInit {
         },
         initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
       },
-      { text: 'CARDNUMBER', datafield: 'CARDNUMBER', width: 150, filtertype: 'input' },
-      { text: 'CARDNAME', datafield: 'CARDNAME', width: 200, filtertype: 'input' },
-      { text: 'OUTBALANCE', datafield: 'OUTBALANCE', filtertype: 'input', cellsformat: 'd', cellsrenderer: this.totalcolumnrenderer, cellsalign: 'right' },
-      { text: 'EXPPMNT', datafield: 'EXPPMNT', filtertype: 'input', cellsformat: 'd' },
-      { text: 'DAYSINARR', datafield: 'DAYSINARREARS', filtertype: 'input', cellsformat: 'c' },
-      { text: 'CYCLE', datafield: 'CYCLE', filtertype: 'input' },
+      { text: 'CUSTNUMBER', datafield: 'CUSTNUMBER', width: 150, filtertype: 'input' },
+      { text: 'CLIENT_NAME', datafield: 'CLIENT_NAME', width: 200, filtertype: 'input' },
+      { text: 'OUSTBALANCE', datafield: 'OUSTBALANCE', filtertype: 'input', cellsformat: 'd', cellsrenderer: this.totalcolumnrenderer, cellsalign: 'right' },
+      { text: 'DAYSINARR', datafield: 'DAYSINARR', filtertype: 'input', cellsformat: 'd' },
+      { text: 'TOTALARREARS', datafield: 'TOTALARREARS', filtertype: 'input', cellsformat: 'c' },
+      { text: 'BUCKET', datafield: 'BUCKET', filtertype: 'input' },
       { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'SQNUMBER', datafield: 'SQNUMBER', filtertype: 'input' },
-      { text: 'DUEDATE', datafield: 'DUEDATE', filtertype: 'range' }
+      { text: 'AROCODE', datafield: 'AROCODE', filtertype: 'input' },
+      { text: 'BRANCHNAME', datafield: 'BRANCHNAME', filtertype: 'range' }
     ];
 
   //renger grid end
@@ -116,7 +116,7 @@ export class MyworklistComponent implements OnInit {
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
     // open page
-    window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=cc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
   }
   ngOnInit() {
   }

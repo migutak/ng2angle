@@ -120,7 +120,11 @@ export class EcolService {
   }
 
   getLetter(letter) {
-    return this.httpClient.get<any>(environment.api + '/api/settings_letters/' + letter);
+    return this.httpClient.get<any>(environment.api + '/api/demandsettings/' + letter);
+  }
+
+  putLetter(letter) {
+    return this.httpClient.put<any>(environment.api + '/api/demandsettings' , letter);
   }
 
   postsms (body) {
@@ -214,6 +218,10 @@ export class EcolService {
 
   getteles(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber);
+  }
+
+  existsteles(custnumber, tel, email) {
+    return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber + '&filter[where][telephone]=' + tel + '&filter[where][email]='+ email);
   }
 
   getsmsmessage(demand) {

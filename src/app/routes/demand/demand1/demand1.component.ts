@@ -19,6 +19,7 @@ export class Demand1Component implements OnInit {
   public radioModel: string;
 
   total:  any = {};
+  rowValue: any;
   custnumber: string;
   user = JSON.parse(localStorage.getItem('currentUser'));
   constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
@@ -87,16 +88,30 @@ export class Demand1Component implements OnInit {
 
   accnumber: String;
   onClickMe(event, rowdata) {
-    // console.log('ACCNUMBER: ' + event.target.textContent);
-    // console.log('CUSTNUMBER', (event.target.textContent).slice(5, 12));
-    // open modal
     this.accnumber = event.target.textContent;
     this.custnumber = (event.target.textContent).slice(5, 12);
-    // document.getElementById('openModalButton').click();
-    // open page
     // tslint:disable-next-line:max-line-length
+    // console.log('this row', this.rowValue);
     window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.user.username, '_blank');
   }
+
+  myGridOnRowSelect(event: any): void {
+    const args = event.args;
+    let selectedRowIndex = args.rowindex;
+    let value = this.myGrid.getrowdata(selectedRowIndex);
+
+    this.rowValue = value;
+
+  };
+
+  myGridOnCellSelect(event: any): void {
+    const args = event.args;
+    let selectedRowIndex = args.rowindex;
+    let value = this.myGrid.getrowdata(selectedRowIndex);
+
+    this.rowValue = value;
+    // console.log('myGridOnCellSelect', value);
+  };
 
   ngOnInit() {
     // get total for badges
@@ -108,13 +123,7 @@ export class Demand1Component implements OnInit {
   }
 
   refreshgrid() {
-    // this.mygrid.setOptions({source:{}});
   this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=150',
-
-  // console.log(this.source.url, this.dataAdapter);
-  // tslint:disable-next-line:max-line-length
-  // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
-  //
   this.myGrid.updatebounddata('cells');
   }
 

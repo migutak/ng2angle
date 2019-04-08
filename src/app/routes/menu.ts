@@ -419,12 +419,20 @@ const serviceproviders = {
     icon: 'icon-drawer',
     submenu: [
         {
-            text: 'List',
-            link: '/blog/list'
+            text: 'Debt Collectors',
+            link: '/sp/debtcollectors'
         },
         {
-            text: 'Post',
-            link: '/blog/post'
+            text: 'Marketors',
+            link: '/sp/marketors'
+        },
+        {
+            text: 'Auctioneers',
+            link: '/sp/auctioneers'
+        },
+        {
+            text: 'Repossessors',
+            link: '/sp/repos'
         }
     ]
 };
@@ -435,26 +443,64 @@ const mcoopcash = {
     icon: 'icon-wallet',
     submenu: [
         {
-            text: 'List',
-            link: '/blog/list'
+            text: 'View all',
+            link: '/mcoopcash/viewall',
+            'alert': '23',
+            'label': 'badge badge-warning'
         },
         {
-            text: 'Post',
-            link: '/blog/post'
+            text: 'My allocations',
+            link: '/mcoopcash/myallocations'
+        },
+        {
+            text: 'My worklist',
+            link: '/mcoopcash/myworklist'
         }
     ]
 };
 
 const Demandletters = {
     text: 'Demand Letters',
-    link: '/letters/settings',
-    icon: 'icon-envelope-letter'
+    link: '/letters',
+    icon: 'icon-envelope-letter',
+    submenu: [
+        {
+            text: 'Demand settings',
+            link: '/letters/settings'
+        },
+        {
+            text: 'Demand automation',
+            link: '/letters/automation'
+        }
+    ]
 };
 
 const Allocations = {
     text: 'Account allocations',
-    link: '/configurations/allocations',
-    icon: 'icon-people'
+    link: '/allocations',
+    icon: 'icon-people',
+    submenu: [
+        {
+            text: 'Collection',
+            link: '/allocations/collections'
+        },
+        {
+            text: 'Remedial',
+            link: '/allocations/remedial'
+        },
+        {
+            text: 'Credit cards',
+            link: '/allocations/creditcards'
+        },
+        {
+            text: 'MCoop-Cash',
+            link: '/allocations/mcoopcash'
+        },
+        {
+            text: 'Pre Delq',
+            link: '/allocations/predelq'
+        }
+    ]
 };
 
 const SMS = {

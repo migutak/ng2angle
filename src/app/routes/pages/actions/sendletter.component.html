@@ -1,6 +1,8 @@
 <div class="wrapper container">
   <toaster-container [toasterconfig]="config"></toaster-container>
-  <ngx-spinner></ngx-spinner>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+      <p style="font-size: 20px; color: white">Processing ...</p>
+    </ngx-spinner>
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
@@ -57,34 +59,53 @@
                     <label class="col-xl-4 col-form-label">address</label>
                     <div class="col-xl-8">
                       <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
-                        #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" required />
+                        #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
+
+                        <datalist id="daddress">
+                            <option *ngFor="let a of addresses">{{a.address}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">postcode</label>
                     <div class="col-xl-8">
                       <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
-                        #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" required />
+                        #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" list="dpostcode" required />
+
+                        <datalist id="dpostcode">
+                            <option *ngFor="let p of postcodes">{{p.postcode}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">email address</label>
                     <div class="col-xl-8">
                       <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
-                        #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" required email />
+                        #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
+
+                        <datalist id="browsers">
+                            <option *ngFor="let e of emails">{{e.email}}</option>
+                        </datalist>
+
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">cellnumber</label>
                     <div class="col-xl-8">
                       <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
-                        #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" required />
+                        #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
+
+                        <datalist id="cellnumber">
+                            <option *ngFor="let t of teles">{{t.telephone}}</option>
+                        </datalist>
                     </div>
                   </div>
                   <div class="form-group row">
                       <label class="col-xl-4 col-form-label">Save to contacts</label>
                       <div class="col-xl-8">
-                          <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts()">
+                          <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts(model)">
                               <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
                               </span>Save this contact</button>
                       </div>

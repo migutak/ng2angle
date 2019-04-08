@@ -21,7 +21,11 @@ export class SendLetterccComponent implements OnInit {
   cardacct: string;
   accountdetails: any;
   guarantors: [];
+  teles: [];
   model: any = {};
+  emails: any = [];
+  postcodes: any = [];
+  addresses: any = [];
   letterbody: any = {};
   filepath: string;
   demands: any;
@@ -117,6 +121,16 @@ export class SendLetterccComponent implements OnInit {
     // get account details
     this.getcardaccount(this.cardacct);
     this.getdemandshistory(this.cardacct);
+    this.getteles(this.cardacct);
+  }
+
+  getteles(cust){
+    this.ecolService.getteles(cust).subscribe(data_teles => {
+      this.teles = data_teles;
+      this.emails = data_teles;
+      this.postcodes = data_teles;
+      this.addresses = data_teles;
+    })
   }
 
   popsuccessToast(msg) {
@@ -437,13 +451,54 @@ export class SendLetterccComponent implements OnInit {
     });
   }
 
-  savecontacts() {
-    /** spinner starts on init */
+  savecontacts(model) {
     this.spinner.show();
- 
-    setTimeout(() => {
-        /** spinner ends after 5 seconds */
+
+    //save contact
+    this.ecolService.existsteles(this.cardacct,model.celnumber,model.emailaddress).subscribe(contact => {
+      if(contact.length > 0){
+        swal(
+          'Warning!',
+          'Contact already exists',
+          'info'
+        );
         this.spinner.hide();
-    }, 5000);
+      } else {
+        //save
+        let body = {
+          custnumber: this.cardacct,
+          telephone: model.celnumber,
+          email: model.emailaddress,
+          active: 'Yes',
+          owner: this.username,
+          updatedby: this.username,
+          updatedlast: new Date(),
+          address: model.addressline1,
+          postcode: model.postcode
+        }
+
+        this.ecolService.postteles(body).subscribe(teles => {
+          this.spinner.hide();
+          this.getteles(this.cardacct);
+          swal(
+            'Good!',
+            'Contact has been added',
+            'success'
+          );
+        })
+      }
+    }, error =>{
+      console.log('error-existsteles', error);
+      swal(
+        'Ooops!',
+        'Something went wrong',
+        'error'
+      );
+      this.spinner.hide();
+    })
+ 
+    /*setTimeout(() => {
+        this.spinner.hide();
+    }, 5000);*/
   }
 }

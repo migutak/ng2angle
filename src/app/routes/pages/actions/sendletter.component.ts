@@ -22,6 +22,10 @@ export class SendLetterComponent implements OnInit {
   custnumber: string;
   accountdetails: any;
   guarantors: any = [];
+  teles: any = [];
+  emails: any = [];
+  addresses: any = [];
+  postcodes: any = [];
   guarantoremails: string = "";
   model: any = {};
   bodyletter: any = {};
@@ -31,6 +35,7 @@ export class SendLetterComponent implements OnInit {
   smsMessage: string;
   username: string;
   emaildata: any = {};
+  section: string;
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
@@ -125,6 +130,16 @@ export class SendLetterComponent implements OnInit {
     // get account details
     this.getaccount(this.accnumber);
     this.getdemandshistory(this.accnumber);
+    this.getteles(this.custnumber);
+  }
+
+  getteles(cust){
+    this.ecolService.getteles(cust).subscribe(data_teles => {
+      this.teles = data_teles;
+      this.emails = data_teles;
+      this.postcodes = data_teles;
+      this.addresses = data_teles;
+    })
   }
 
   getaccount(accnumber) {
@@ -137,6 +152,8 @@ export class SendLetterComponent implements OnInit {
       this.model.postcode = data[0].postcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+
+      this.section = data[0].section
 
       if (this.guarantors || this.guarantors.length > 0) {
         // loop
@@ -192,7 +209,9 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.demand1date = null;
         this.bodyletter.guarantors = data[0].guarantors || [];
         this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
-        // Get all cust accounts
+        this.bodyletter.section = this.section;
+        this.bodyletter.kbbr = data[0].kbbr;
+        //
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           this.bodyletter.accounts = accounts;
           // get demand1 date
@@ -252,18 +271,20 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.branchname = data[0].branchname;
         this.bodyletter.branchcode = data[0].branchcode;
         this.bodyletter.manager = data[0].manager;
-        this.bodyletter.branchemail = data[0].branchemail;
+        this.bodyletter.branchemail = data[0].branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>';
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = new Date();
         this.bodyletter.guarantors = data[0].guarantors;
         this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
+        this.bodyletter.section = this.section;
+        this.bodyletter.kbbr = data[0].kbbr;
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           this.bodyletter.accounts = accounts;
           this.emaildata = {
             name: data[0].client_name,
             email: emailaddress,
-            branchemail: this.bodyletter.branchemail,
+            branchemail: this.bodyletter.branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>',
             title: letter.demand,
             guarantor: this.bodyletter.guarantors || 0
           };
@@ -482,13 +503,54 @@ export class SendLetterComponent implements OnInit {
     });
   }
 
-  savecontacts() {
-    /** spinner starts on init */
+  savecontacts(model) {
     this.spinner.show();
- 
-    setTimeout(() => {
-        /** spinner ends after 5 seconds */
+
+    //save contact
+    this.ecolService.existsteles(this.custnumber,model.celnumber,model.emailaddress).subscribe(contact => {
+      if(contact.length > 0){
+        swal(
+          'Warning!',
+          'Contact already exists',
+          'info'
+        );
         this.spinner.hide();
-    }, 5000);
+      } else {
+        //save
+        let telesbody = {
+          custnumber: this.custnumber,
+          telephone: model.celnumber,
+          email: model.emailaddress,
+          active: 'Yes',
+          owner: this.username,
+          updatedby: this.username,
+          updatedlast: new Date(),
+          address: model.addressline1,
+          postcode: model.postcode
+        }
+
+        this.ecolService.postteles(telesbody).subscribe(teles => {
+          this.spinner.hide();
+          this.getteles(this.custnumber);
+          swal(
+            'Good!',
+            'Contact has been added',
+            'success'
+          );
+        })
+      }
+    }, error =>{
+      console.log('error-existsteles', error);
+      this.spinner.hide();
+      swal(
+        'Ooops!',
+        'Something went wrong',
+        'error'
+      );
+    })
+ 
+    /*setTimeout(() => {
+        this.spinner.hide();
+    }, 5000);*/
   }
 }
