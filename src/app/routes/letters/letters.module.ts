@@ -7,6 +7,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { AutomationComponent } from './automation/automation.component';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { FilterPipe} from './filter.pipe';
+import { AgGridModule } from 'ag-grid-angular';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -20,6 +21,7 @@ const routes: Routes = [
       CommonModule,
       NgxSelectModule,
       NgxSpinnerModule,
+      AgGridModule.withComponents([]),
       RouterModule.forChild(routes)
   ],
   declarations: [

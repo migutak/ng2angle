@@ -123,6 +123,22 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/demandsettings/' + letter);
   }
 
+  getautoLetter() {
+    return this.httpClient.get<any>(environment.api + '/api/autoletters');
+  }
+
+  putautoLetter(letter) {
+    return this.httpClient.put<any>(environment.api + '/api/autoletters' , letter);
+  }
+
+  postcheckautoLetter(data) {
+    return this.httpClient.post<any>(environment.api + '/api/autoletters/checkduplicate' , data);
+  }
+
+  postautoLetter(letter) {
+    return this.httpClient.post<any>(environment.api + '/api/autoletters' , letter);
+  }
+
   putLetter(letter) {
     return this.httpClient.put<any>(environment.api + '/api/demandsettings' , letter);
   }
