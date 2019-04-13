@@ -116,10 +116,9 @@ export class AutomationComponent implements OnInit {
     this.model = {};
   }
 
-  editSubmit(form) {
+  fneditSubmit(form) {
     this.spinner.show();
     this.ecolService.putautoLetter(this.model).subscribe(resp => {
-      console.log(resp);
       swal('Success!', 'Update successful!', 'success');
       this.getData();
       this.spinner.hide();
@@ -137,31 +136,18 @@ export class AutomationComponent implements OnInit {
   }
 
   //postautoLetter
+  
   addNew(form){
-    console.log('entry top', this.postBody);
-    console.log('form', form.value);
-    const memogroup = form.value.memogroup;
-
-    for(let i=0; i<memogroup.length; i++){
-      console.log('loop='+ i);
-      console.log('entry postBody', this.postBody);
-      this.postModel.letterid = this.model.letterid;
-      this.postModel.daysinarr = this.model.daysinarr;
-      this.postModel.lastupdateby = this.username;
-      this.postModel.lastupdate = new Date();
-      this.postModel.memogroup = this.model.memogroup[i];
-      this.postBody[i] = this.postModel;
-
-      
-      console.log('this.postModel body', this.postModel);
-      console.log('postBody', this.postBody);
-
-    }
-  }
-  addNew1(form){
-    console.log('this.postModel', this.postBody);
+    const body = {
+      "letterid": form.value.letterid,
+      "memogroup": form.value.memogroup,
+      "daysinarr": form.value.daysinarr,
+      "lastupdate": new Date(),
+      "lastupdateby": this.username,
+      "active": true
+    };
     // check duplicate
-    this.ecolService.postcheckautoLetter(this.postBody).subscribe(resp => {
+    this.ecolService.postcheckautoLetter(body).subscribe(resp => {
       //
       let reject = false;
       let acceptModel = []
@@ -186,6 +172,7 @@ export class AutomationComponent implements OnInit {
         this.ecolService.postautoLetter(acceptModel).subscribe(data => {
           swal('Success!', 'Successfully added!', 'success');
           this.spinner.hide();
+          this.getData();
         })
       }
     }, error => {
@@ -194,52 +181,8 @@ export class AutomationComponent implements OnInit {
     });
   }
 
-  onSubmit(form) {
-    const body = {
-      letterid: form.value.letterid,
-      templatepath: form.value.accnumber,
-      daysinarr: form.value.daysinarr,
-      sms: form.value.sms,
-      suspendletter: form.value.suspendletter,
-      suspendsms: form.value.suspendsms,
-      suspendautodelivery: form.value.suspendautodelivery,
-      exceptions: form.value.exceptions[0] || '00',
-      exceptionscust: form.value.exceptionscust,
-      byemail: form.value.byemail,
-      bypost: form.value.bypost,
-      byphysical: form.value.byphysical,
-      onlyto: form.value.onlyto
-    };
-    this.ecolService.getdemandSettingsduplicate(body.letterid, body.daysinarr, body.onlyto).subscribe(data => {
-      console.log(data);
-      if (data.length > 0) {
-        // letter already added
-        swal('Stop!', 'Letter already added!', 'warning');
-      } else {
-        // add letter
-        this.ecolService.demandSettings(body).subscribe(response => {
-          swal('Successful!', 'saved successfully!', 'success');
-          this.getdemandSettings();
-        }, error => {
-          console.log(error);
-          swal('Error!', 'Error occurred during processing!', 'error');
-        });
-      }
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred during processing!', 'error');
-    });
-  }
 
-  getdemandSettings() {
-    this.ecolService.getdemandSettings().subscribe(response => {
-      this.model = response;
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  update() {
+  editSubmit(form) {
     swal({
       title: 'Are you sure?',
       text: 'You want to Update!',
@@ -247,10 +190,10 @@ export class AutomationComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete!'
+      confirmButtonText: 'Yes, Update!'
     }).then((result) => {
       if (result.value) {
-        //
+        this.fneditSubmit(form);
       }
     });
   }
