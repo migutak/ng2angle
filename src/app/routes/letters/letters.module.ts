@@ -8,6 +8,7 @@ import { AutomationComponent } from './automation/automation.component';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { FilterPipe} from './filter.pipe';
 import { AgGridModule } from 'ag-grid-angular';
+import { CustomFormsModule } from 'ng2-validation'
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -22,7 +23,8 @@ const routes: Routes = [
       NgxSelectModule,
       NgxSpinnerModule,
       AgGridModule.withComponents([]),
-      RouterModule.forChild(routes)
+      RouterModule.forChild(routes),
+      CustomFormsModule
   ],
   declarations: [
     SettingsComponent,

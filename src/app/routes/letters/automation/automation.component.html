@@ -44,13 +44,14 @@
                     <div class="form-group">
                       <p>Day in arrears when the letter will be sent (Between 0 and 120)</p>
                       <input class="form-control" type="number" name="daysinarr" id="daysinarr" #daysinarr="ngModel"
-                        [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.invalid }" min="1"
+                        [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.invalid }" [range]="[1, 120]"
                         required />
+                        <p *ngIf="daysinarr.errors?.range">Range accepted is 1 - 120</p>
                       <!--<div *ngIf="daysinarr.errors.min">Minimum required is 0</div>
                             <div *ngIf="daysinarr.errors.max">Maximum required is 120</div>-->
                     </div>
 
-                    <pre>{{model | json}}</pre>
+                    <!--<pre>{{model | json}}</pre>-->
 
                     <!--
                       
@@ -88,6 +89,19 @@
                       <input class="form-control" name="memogroup" id="memogroup" #memogroup="ngModel"
                         [(ngModel)]="model.memogroup" [disabled]="true" />
                     </div>
+                    <fieldset>
+                        <div class="form-group row">
+                          <label class="col-md-2 col-form-label">Suspend</label>
+                          <p></p>
+                          <div class="col-md-10">
+                            <label class="checkbox c-checkbox">
+                              <input type="checkbox" name="active" id="active" #active="ngModel"
+                                [(ngModel)]="model.active" [checked]="model.active" />
+                              <span class="fa fa-check"></span> Active</label>
+                          </div>
+                        </div>
+                      </fieldset>
+
                     <div class="float-left">
                       <button type="submit" class="btn btn-outline-primary" type="submit">
                         <em class="fa fa-pencil fa-fw"></em>Update</button>
@@ -97,10 +111,10 @@
                         <em class="fa fa-check fa-fw"></em>Cancel</button>
                     </div>
 
-                    <div class="float-right">
+                    <!--<div class="float-right">
                       <button class="btn btn-danger" type="button" (click)="delete()">
                         <em class="fas fa-trash-alt fa-fw"></em>Delete</button>
-                    </div>
+                    </div>-->
 
                   </form>
                 </div>

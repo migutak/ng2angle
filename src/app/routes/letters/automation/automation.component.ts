@@ -93,6 +93,7 @@ export class AutomationComponent implements OnInit {
     this.model = event.node.data;
     this.model.lastupdateby = this.username;
     this.model.lastupdate = new Date();
+    this.model.active = (event.node.data.active).toLowerCase() == 'true' ? true : false; 
   };
 
   onQuickFilterChanged($event) {
@@ -161,11 +162,15 @@ export class AutomationComponent implements OnInit {
           acceptModel[i] = resp[i]
         }
       }
-      console.log('accept', acceptModel);
-      console.log('reject', rejectModel);
       if(reject){
         // reject request
-        swal('Error!', 'Request contains duplicates ... please correct and resubmit!', 'error');
+        swal('Error!', 'Request contains duplicates!', 'error');
+        swal({
+          type: 'error',
+          title: 'Duplicates detected...',
+          text:   JSON.stringify(rejectModel),
+          footer: '<a href>Find help on this issue?</a>'
+        })
       } else {
         // acccepts and post
         this.spinner.show();
