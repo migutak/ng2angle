@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import * as $ from 'jquery';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { EcolService } from '../../../services/ecol.service';
+import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
 
 @Component({
   selector: 'app-viewall',
@@ -14,177 +12,100 @@ import { EcolService } from '../../../services/ecol.service';
 })
 export class ViewallComponent implements OnInit {
 
-  @ViewChild('myModal') myModal;
-  @ViewChild('myGrid') myGrid: jqxGridComponent;
-  public radioModel: string;
-
-  total:  any = {};
-  custnumber: string;
   user = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
-  }
+  resizeEvent = 'resize.ag-grid';
+  $win = $(window);
+  new = true;
+  username: string;
+  model:any = {};
 
-  source: any =
+  gridOptions: GridOptions;
+  gridApi: GridApi;
+  columnDefs = [
     {
-      url: environment.api + '/api/demandsdue?filter[status]=PENDING&filter[limit]=150',
-      datafields:
-        [
-          { name: 'accnumber', type: 'string' },
-          { name: 'custnumber', type: 'string' },
-          { name: 'client_name', type: 'string' },
-          { name: 'oustbalance', type: 'number' },
-          { name: 'totalarrears', type: 'number' },
-          { name: 'daysinarr', type: 'number' },
-          { name: 'address', type: 'string' },
-          { name: 'postalcode', type: 'string' },
-          { name: 'section', type: 'string' },
-          { name: 'telnumber', type: 'string' },
-          { name: 'emailaddress', type: 'string' },
-          { name: 'colofficer', type: 'string' },
-          { name: 'demandletter', type: 'string' },
-          { name: 'datedue', type: 'string' },
-          { name: 'status', type: 'string' }
-        ],
-      datatype: 'json'
+      headerName: "loanaccnumber",
+      field: "loanaccnumber",
+      cellRenderer: function(params) {
+        return '<a  href="#" target="_blank">'+ params.value+'</a>'
+     }
+    },
+    {
+      headerName: "clientname",
+      field: "clientname"
+    },
+    {
+      headerName: "amountdisbursed",
+      field: "amountdisbursed"
+    },
+    {
+      headerName: "arrears_category",
+      field: "arrears_category"
+    },
+    {
+      headerName: "loan_type",
+      field: "loan_type"
+    },
+    {
+      headerName: "employer",
+      field: "employer"
+    }
+  ];
+  rowData1: any;
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
     };
-
-  dataAdapter: any = new jqx.dataAdapter(this.source);
-
-  columns: any[] =
-    [
-      {
-        text: 'ACCNUMBER', datafield: 'accnumber', width: 150, filtertype: 'input',
-        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
-          const that = this;
-          const container = document.createElement('div');
-          htmlElement.appendChild(container);
-          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
-          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
-          // tslint:disable-next-line:no-shadowed-variable
-          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
-            that.onClickMe(clickEvent, rowdata);
-          });
-          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
-        },
-        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
-      },
-      { text: 'CUSTNUMBER', datafield: 'custnumber', width: 100, filtertype: 'input' },
-      { text: 'CLIENT_NAME', datafield: 'client_name', width: 200, filtertype: 'input' },
-      { text: 'OUSTBALANCE', datafield: 'oustbalance', filtertype: 'input', cellsformat: 'd' },
-      { text: 'TOTALARREARS', datafield: 'totalarrears', filtertype: 'input', cellsformat: 'd' },
-      { text: 'DAYSINARR', datafield: 'daysinarr', filtertype: 'input', cellsformat: 'd' },
-      { text: 'SECTION', datafield: 'section', filtertype: 'input' },
-      { text: 'BRANCHNAME', datafield: 'branchname', filtertype: 'input' },
-      { text: 'TELNUMBER', datafield: 'telnumber', filtertype: 'input' },
-      { text: 'EMAILADDRESS', datafield: 'emailaddress', filtertype: 'input' },
-      { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'DEMANDLETTER', datafield: 'demandletter', filtertype: 'input' },
-      { text: 'DATEDUE', datafield: 'datedue', filtertype: 'input' },
-      { text: 'STATUS', datafield: 'status', filtertype: 'input' }
-
-    ];
-
-  accnumber: String;
-  onClickMe(event, rowdata) {
-    // console.log('ACCNUMBER: ' + event.target.textContent);
-    // console.log('CUSTNUMBER', (event.target.textContent).slice(5, 12));
-    // open modal
-    this.accnumber = event.target.textContent;
-    this.custnumber = (event.target.textContent).slice(5, 12);
-    // document.getElementById('openModalButton').click();
-    // open page
-    // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.user.username, '_blank');
   }
 
-  ngOnInit() {
-    // get total for badges
-    this.gettotals();
+  onRowDoubleClicked(event: any) { 
+    this.model = event.node.data;
+    // console.log(this.model);
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.loanaccnumber + '&custnumber=' + this.model.loanaccnumber + '&username=' + this.username + '&sys=mcoopcash', '_blank');
+  };
+
+  onQuickFilterChanged($event) {
+    // this.gridOptions.api.setQuickFilter($event.target.value);
+    console.log($event.target.value);
   }
 
-  filterfunction (column, value) {
-    console.log(column, value);
+  public ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
   }
 
-  refreshgrid() {
-    // this.mygrid.setOptions({source:{}});
-  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=150',
+  gridReady(params) {
+    this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource)
+  }
+  
 
-  // console.log(this.source.url, this.dataAdapter);
-  // tslint:disable-next-line:max-line-length
-  // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
-  //
-  this.myGrid.updatebounddata('cells');
+  dataSource: IDatasource = {
+    getRows: (params: IGetRowsParams) => {
+
+      // Use startRow and endRow for sending pagination to Backend
+      // params.startRow : Start Page
+      // params.endRow : End Page
+
+      console.log('params', params);
+      //
+      this.apiService(20, params.startRow).subscribe(response => {
+        console.log(response);
+        params.successCallback(
+          response, 500
+        );
+      })
+    }
   }
 
-  gettotal (column, value, letter) {
-    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
-      if (data.length > 0) {
-        this.total.DEMAND1 =  data[0].TOTAL;
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  gettotal1 (column, value, letter) {
-    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
-      if (data.length > 0) {
-        this.total.DEMAND2 =  data[0].TOTAL;
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  gettotal2 (column, value, letter) {
-    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
-      if (data.length > 0) {
-        this.total.PRELISTING =  data[0].TOTAL;
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  gettotal3 (column, value, letter) {
-    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
-      if (data.length > 0) {
-        this.total.POSTLISTING =  data[0].TOTAL;
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  gettotal4 (column, value, letter) {
-    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
-      if (data.length > 0) {
-        this.total.DAY40 =  data[0].TOTAL;
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  gettotal5 (column, value, letter) {
-    this.ecolService.gettotalletters(column, value, letter).subscribe(data => {
-      if (data.length > 0) {
-        this.total.DAY90 =  data[0].TOTAL;
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  gettotals () {
-    this.gettotal(null, null, 'DEMAND1');
-    this.gettotal1(null, null, 'DEMAND2');
-    this.gettotal2(null, null, 'PRELISTING');
-    this.gettotal3(null, null, 'POSTLISTING');
-    this.gettotal4(null, null, 'DAY40');
-    this.gettotal5(null, null, 'DAY90');
+  apiService(perPage, currentPos) {
+    return this.http.get<any>(environment.api + '/api/mcoopcash_stage?filter[limit]='+perPage+'&filter[skip]='+currentPos)
   }
 
 }

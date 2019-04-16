@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
+import { DataService } from '../../../../services/data.service';
 import { isNullOrUndefined } from 'util';
 
 @Component({
@@ -23,14 +24,24 @@ export class NotesComponent implements OnInit {
     skip: this.pager.limit * this.pager.current
   };
 
-  constructor(private ecolservice: EcolService, private route: ActivatedRoute) {
+  message:string;
+  constructor(
+    private ecolservice: EcolService,
+    private route: ActivatedRoute,
+    // private data: DataService
+    ) {
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.cust = params['custnumber'];
     });
+    //this.data.currentMessage.subscribe(message => this.message = message)
     this.getAll(this.cust);
+  }
+
+  newMessage() {
+    //this.data.changeMessage("Hello from Sibling")
   }
 
   getAll(cust) {

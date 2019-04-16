@@ -139,12 +139,14 @@ export class ActivityActionComponent implements OnInit {
     // build form
     this.buildForm();
 
-    // get cmd status
+    //
     this.getcmdstatus();
     this.getbranchstatus();
-    // get account details
+    //
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
+    } else if(this.sys == 'mcoopcash') {
+      this.getmcoop(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
     }
@@ -162,6 +164,12 @@ export class ActivityActionComponent implements OnInit {
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.account = data[0];
+    });
+  }
+
+  getmcoop(loanaccnumber) {
+    this.ecolService.getmcoopcashAccount(loanaccnumber).subscribe(data => {
       this.account = data[0];
     });
   }

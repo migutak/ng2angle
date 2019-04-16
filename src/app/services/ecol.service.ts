@@ -169,6 +169,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
   }
 
+  getmcoopcashAccount(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage?filter[include]=mcoopcash_static&filter[where][loanaccnumber]=' + accnumber);
+  }
+
   getcustwithAccount(custnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[where][custnumber]=' + custnumber);

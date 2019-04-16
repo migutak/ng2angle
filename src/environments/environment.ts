@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
- api: 'http://localhost:8800',
+ api: 'http://localhost:8000',
   letters_api: 'http://localhost:8004/',
   letters_path: '/users/kevinabongo/Demands/',
   // letters_path: 'c:\\logs\\',
@@ -12,10 +12,10 @@ export const environment = {
   uploadurl: 'http://localhost:4000',
   valor: 'http://localhost:3000/api/',
   xlsuploadapi: 'http://localhost:3001/api/',
-  metrics: 'http://localhost:8800/appmetrics-dash',
+  metrics: 'http://localhost:8000/appmetrics-dash',
   xlstemplate: '/Users/Kevinabongo/Documents/upload_notes.xlsx',
   applink: 'http://localhost:4500',
-  emailapi: 'http://localhost:8800/api/email/send',
+  emailapi: 'http://localhost:8000/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   filesapi: 'http://localhost:3100/api',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',

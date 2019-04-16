@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../services/ecol.service';
+import { DataService } from '../../../services/data.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
@@ -32,6 +33,7 @@ export class ActivityLogComponent implements OnInit {
   sys: string;
   collateralmenu: boolean = true;
   guarantorsmenu: boolean = true;
+  demandlettersmenu: boolean = true;
   itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
@@ -46,9 +48,20 @@ export class ActivityLogComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
-  constructor(public settings: SettingsService,
+  message:string;
+
+  constructor(
+    public settings: SettingsService,
     private route: ActivatedRoute,
-    private ecolService: EcolService) {
+    private ecolService: EcolService,
+    // private data: DataService
+    ) {
+      // test service
+      /*this.subscription = this.message_service.getProductID().subscribe(message => {  
+       
+        this.productName = message.text;  
+        console.log(message);
+      });*/
     //
     this.uploader.onBuildItemForm = (item, form) => {
       form.append('demand', this.model.demand);
@@ -58,7 +71,7 @@ export class ActivityLogComponent implements OnInit {
     };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      console.log('ImageUpload:uploaded:', item, status);
+      // console.log('ImageUpload:uploaded:', item, status);
       // refresh demad history notes
       this.getdemandshistory(this.accnumber);
     };
@@ -85,11 +98,19 @@ export class ActivityLogComponent implements OnInit {
       this.sys = queryParams.get('sys');
     });
 
+    // this.data.currentMessage.subscribe(message => this.message = message)
+
     // get account details
-    if (this.sys === 'cc') {
+    if (this.sys == 'cc') {
       this.getcard(this.accnumber);
       this.collateralmenu = false;
       this.guarantorsmenu = false;
+    } else if(this.sys == 'mcoopcash') {
+      console.log('i am mcoopcash');
+      this.getmcoopcashaccount(this.accnumber);
+      this.collateralmenu = false;
+      this.guarantorsmenu = false;
+      this.demandlettersmenu = false
     } else {
       this.getaccount(this.accnumber);
     }
@@ -125,8 +146,19 @@ export class ActivityLogComponent implements OnInit {
     });
   }
 
+  getmcoopcashaccount(accnumber) {
+    this.ecolService.getmcoopcashAccount(accnumber).subscribe(data => {
+      console.log('mcoopcash', data);
+      this.accountdetails = data[0];
+      this.model.accnumber = data[0].loanaccnumber;
+      this.model.custnumber = data[0].loanaccnumber;
+      this.model.addressline1 = data[0].address;
+      this.model.postcode = data[0].postcode;
+      this.model.celnumber = data[0].phonenumber;
+    });
+  }
+
   getdemandshistory(accnumber) {
-    // console.log('getdemandshistory called ...');
     this.ecolService.getdemandshistory(accnumber).subscribe(data => {
       this.demands = data;
     });
@@ -224,7 +256,6 @@ export class ActivityLogComponent implements OnInit {
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           // add accounts to the array
           this.bodyletter.accounts = accounts;
-          // console.log(this.bodyletter);
           const emaildata = {
             name: data[0].client_name,
             email: emailaddress,
@@ -271,10 +302,6 @@ export class ActivityLogComponent implements OnInit {
         // send email
         // add file full path
         emaildata.file = uploaddata.filepath;
-        /*this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
-          console.log(response);
-          swal('Success!', 'Letter sent on email!', 'success');
-        });*/
         // send sms
         this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
           if (result && result.length > 0) {
@@ -319,7 +346,6 @@ export class ActivityLogComponent implements OnInit {
   }*/
 
   sendsms(smsdata) {
-    console.log('sendsms==data==', smsdata);
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter SMS sent!', 'success');
     }, error => {
@@ -329,9 +355,7 @@ export class ActivityLogComponent implements OnInit {
   }
 
   demandshistory(body) {
-    console.log('demandshistory', body);
     this.ecolService.demandshistory(body).subscribe(data => {
-      console.log('saved demandshistory==', data);
       this.getdemandshistory(this.accnumber);
     });
   }

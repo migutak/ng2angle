@@ -43,7 +43,7 @@ export const routes = [
             { path: 'work', loadChildren: './work/work.module#WorkModule' },
             { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
             { path: 'remedial', loadChildren: './remedial/remedial.module#RemedialModule' },
-            { path: 'blog', loadChildren: './blog/blog.module#BlogModule' },
+            { path: 'mcoopcash', loadChildren: './mcoopcash/mcoopcash.module#McoopcashModule' },
             { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },
             { path: 'extras', loadChildren: './extras/extras.module#ExtrasModule' }
         ],

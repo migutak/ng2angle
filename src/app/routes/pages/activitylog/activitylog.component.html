@@ -1,13 +1,13 @@
 <div>
   <div class="card b text-white">
-    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/profile-bg.jpg);">
+    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
         <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image" />
         <div class="media-body">
           <div class="d-flex">
             <div>
-              <h4 class="m-0">Name: {{accountdetails?.client_name || accountdetails?.cardname}}</h4>
-              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel: {{accountdetails?.cellnumber || accountdetails?.mobile}}</p>
+              <h4 class="m-0">Name: {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname}}</h4>
+              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel: {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber}}</p>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
               <span class="fa fa-angle-double-right text-primary"></span>Notes History &nbsp;<span
-                class="badge badge-success">{{notesTotal}}</span>
+                class="badge badge-success">{{notesTotal}} {{message}}</span>
             </a>
           </li>
           <li>
@@ -42,7 +42,7 @@
               <span class="fa fa-angle-double-right text-primary"></span>Collector Activity
             </a>
           </li>
-          <li>
+          <li *ngIf="demandlettersmenu">
             <a [routerLink]="['./demandletters']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
               queryParamsHandling="merge">
@@ -62,7 +62,7 @@
               <span class="fa fa-angle-double-right text-primary"></span>Send/Schedule sms
             </a>
           </li>
-          <li>
+          <li *ngIf="collateralmenu">
             <a [routerLink]="['./accplan']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span> Account plan

@@ -1,123 +1,25 @@
 <div class="content-heading">
   <div>Viewall:
-    <small>view all accounts in arrears</small></div>
+    <small>mcoopcash accounts in arrears</small></div>
 </div>
 <!-- START card-->
 <div class="card card-default">
-  <!-- START box placeholder
-<div class="box-placeholder"></div>-->
-  
-
-  <!-- END box placeholder-->
-  <jqxGrid #myGrid [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns" [columnsresize]="true"
-    [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true" [altrows]="true"
-    [enabletooltips]="true" [filterable]="true">
-  </jqxGrid>
-  <!-- Classc modal -->
-  <div class="modal fade" bsModal #classicModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Name: {{accnumber}}</h4>
-          <button class="mr-1 btn btn-link btn-outline-success mb-2" type="button">
-                <span>
-                  <i class="fa fa-file-download"></i>
-                </span> Preview
-              </button>
-          <button type="button" class="close" aria-label="Close" (click)="classicModal.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <!-- START card-->
-              <div class="card card-default">
-                <div class="card-header">Customer Details</div>
-                <div class="card-body">
-                  <form class="form-horizontal">
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">accnumber</label>
-                      <div class="col-xl-8">
-                        <input class="form-control" type="text" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">custnumber</label>
-                      <div class="col-xl-8">
-                        <input class="form-control" type="text" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">postaladdress</label>
-                      <div class="col-xl-8">
-                        <input class="form-control" type="text" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">postalcode</label>
-                      <div class="col-xl-8">
-                        <input class="form-control" type="text" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">emailaddress</label>
-                      <div class="col-xl-8">
-                        <input class="form-control" type="email" />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">telnumber</label>
-                      <div class="col-xl-8">
-                        <input class="form-control" type="text" />
-                      </div>
-                    </div>
-                    <hr />
-                    Guarantors
-                    
-                    <fieldset>
-                            <div class="form-group row">
-                                <label class="col-md-0 col-form-label"></label>
-                                <div class="col-md-12">
-                                    <label class="checkbox c-checkbox c-checkbox-rounded">
-                                        <input id="roundedcheckbox10" type="checkbox" checked="checked" />
-                                        <span class="fa fa-check"></span>Send to email</label>
-                                    <label class="checkbox c-checkbox c-checkbox-rounded">
-                                        <input id="roundedcheckbox20" type="checkbox" />
-                                        <span class="fa fa-check"></span>Send to postal address</label>
-                                    <label class="checkbox c-checkbox c-checkbox-rounded">
-                                            <input id="roundedcheckbox20" type="checkbox" />
-                                            <span class="fa fa-check"></span>Physical</label>
-                                </div>
-                            </div>
-                    </fieldset>
-                    
-                    <div class="form-group row">
-                      <label class="col-xl-4 col-form-label"></label>
-                      <div class="col-xl-8">
-                        <button class="btn btn-sm btn-secondary" type="submit">Submit</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <!-- END card-->
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
+    <div class="col-xl-12">
+        <!--<h4 class="page-header">View all
+          <small>search, sorting, filter ...</small>
+        </h4>-->
+        <div class="page-header">
+            <div class="col-xl-4 col-lg-6">
+              <input class="mb form-control" placeholder="Filter..." type="text"
+                (keyup)="onQuickFilterChanged($event)" />
             </div>
           </div>
-
-
-
-        </div>
-      </div>
+          <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 600px;"
+            [gridOptions]="gridOptions"
+            (gridReady)="gridReady($event)"
+            [columnDefs]="columnDefs"
+            (rowDoubleClicked) = 'onRowDoubleClicked($event)'
+            >
+          </ag-grid-angular>
     </div>
-  </div>
-  <!--hidden button-->
-  <button id="openModalButton" [hidden]="true" type="button" class="btn btn-primary mr-1" (click)="classicModal.show()">Classc
-    modal</button>
-
 </div>

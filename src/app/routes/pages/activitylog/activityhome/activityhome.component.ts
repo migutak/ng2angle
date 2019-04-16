@@ -65,7 +65,9 @@ export class ActivityHomeComponent implements OnInit {
     // get account details
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
-    } else {
+    } else if(this.sys == 'mcoopcash') {
+      this.getmcoop(this.accnumber);
+    }else {
       this.getaccount(this.accnumber);
     }
 
@@ -80,6 +82,13 @@ export class ActivityHomeComponent implements OnInit {
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.account = data[0];
+      this.loader = false;
+    });
+  }
+
+  getmcoop(loanaccnumber) {
+    this.ecolService.getmcoopcashAccount(loanaccnumber).subscribe(data => {
       this.account = data[0];
       this.loader = false;
     });

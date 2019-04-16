@@ -56,7 +56,10 @@ export class SmsComponent implements OnInit {
     this.getsms();
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
-    } else {
+    } else if(this.sys == 'mcoopcash') {
+      console.log('i am mcoopcash');
+      this.getmcoopcashaccount(this.accnumber);
+    }else {
       this.getaccount(this.accnumber);
     }
   }
@@ -91,16 +94,23 @@ this.gettemplate($event.target.value);
 }
 
 getaccount(account) {
-this.ecolService.getaccount(account).subscribe(data => {
-  this.account = data;
-  this.dataSms.smsNumber = data.celnumber;
-});
+  this.ecolService.getaccount(account).subscribe(data => {
+    this.account = data;
+    this.dataSms.smsNumber = data.celnumber;
+  });
+  }
+
+getmcoopcashaccount(loanaccaccount) {
+  this.ecolService.getmcoopcashAccount(loanaccaccount).subscribe(data => {
+    this.account = data;
+    this.dataSms.smsNumber = data.celnumber;
+  });
 }
 
 getcard(cardacct) {
   this.ecolService.getcardAccount(cardacct).subscribe(data => {
     this.account = data;
-    this.dataSms.smsNumber = data.mobile;
+    this.dataSms.smsNumber = data.telnumber;
   });
 }
 

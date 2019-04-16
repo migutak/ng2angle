@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { ViewallComponent } from './viewall/viewall.component';
 import { MyallocationsComponent } from './myallocations/myallocations.component';
@@ -39,10 +38,10 @@ const routes: Routes = [
   imports: [
     SharedModule,
     CommonModule,
-    NgxDatatableModule,
+    AgGridModule.withComponents([]),
     RouterModule.forChild(routes)
   ],
-  entryComponents: [jqxButtonComponent],
+  entryComponents: [],
   providers: [
     JqxDomService
   ],
@@ -50,4 +49,4 @@ const routes: Routes = [
     RouterModule
 ]
 })
-export class WorkModule { }
+export class McoopcashModule { }
