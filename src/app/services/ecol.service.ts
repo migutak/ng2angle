@@ -325,4 +325,8 @@ export class EcolService {
     localStorage.removeItem('profile');
   }
 
+  totalmcoopcashviewall(){
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalviewall')
+  }
+
 }

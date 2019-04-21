@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { DataService } from '../../../../services/data.service';
 import { isNullOrUndefined } from 'util';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-notes',
@@ -24,12 +25,13 @@ export class NotesComponent implements OnInit {
     skip: this.pager.limit * this.pager.current
   };
 
-  message:string;
+  message: string;
   constructor(
     private ecolservice: EcolService,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
     // private data: DataService
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class NotesComponent implements OnInit {
     });
     //this.data.currentMessage.subscribe(message => this.message = message)
     this.getAll(this.cust);
+    console.log(this.notes);
   }
 
   newMessage() {
@@ -55,7 +58,7 @@ export class NotesComponent implements OnInit {
 
       // append posts
       if (!isNullOrUndefined(data) && this.notes.length) {
-       this.noteData = this.noteData.concat(data);
+        this.noteData = this.noteData.concat(data);
       } else {
         this.pager.reachedend = true;
       }
@@ -65,12 +68,17 @@ export class NotesComponent implements OnInit {
   }
 
   loadmore(event) {
+    this.spinner.show();
     // increase the current by 1
     // if current = 0, skip = limit*current
     event.preventDefault();
     this.pager.current = this.pager.current + 1;
     this.getAll(this.cust);
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1500);
   }
-  
+
 }
 

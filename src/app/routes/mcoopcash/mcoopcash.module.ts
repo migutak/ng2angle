@@ -13,6 +13,7 @@ import { PtpsComponent } from './ptps/ptps.component';
 import { WithfundsComponent } from './withfunds/withfunds.component';
 
 import { JqxDomService } from '../../shared/jqwidgets-dom.service';
+import { CustomFormsModule } from 'ng2-validation'
 
 const routes: Routes = [
   { path: '', redirectTo: 'viewall' },
@@ -39,7 +40,8 @@ const routes: Routes = [
     SharedModule,
     CommonModule,
     AgGridModule.withComponents([]),
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CustomFormsModule
   ],
   entryComponents: [],
   providers: [

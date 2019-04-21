@@ -71,7 +71,7 @@ export class BulknotesComponent implements OnInit {
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     let data = JSON.parse(response); //success server response
-    console.log(data)
+    // console.log(data)
     if (data.success == false) {
       swal({
         type: 'error',
