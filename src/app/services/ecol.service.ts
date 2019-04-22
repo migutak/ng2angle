@@ -329,4 +329,12 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalviewall')
   }
 
+  totalmcoopcashmyworklist(username){
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyworklist?colofficer='+ username)
+  }
+
+  totalmcoopcashmyallocations(username){
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyallocations?colofficer='+ username)
+  }
+
 }
