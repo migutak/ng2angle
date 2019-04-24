@@ -39,30 +39,30 @@ export class SendLetterccComponent implements OnInit {
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
       const obj = JSON.parse(response);
-      for (let i = 0; i < obj.files.length; i ++) {
+      for (let i = 0; i < obj.files.length; i++) {
         const bulk = {
-            'accnumber': this.cardacct,
-            'custnumber': this.cardacct,
-            'address': 'none',
-            'email': 'none',
-            'telnumber': 'none',
-            'filepath': obj.files[i].path,
-            'filename': obj.files[i].originalname,
-            'datesent': new Date(),
-            'owner': this.username,
-            'byemail': false,
-            'byphysical': true,
-            'bypost': true,
-            'demand': this.model.demand
-          };
-          this.uploadedfilepath = obj.files[i].path;
-          this.ecolService.demandshistory(bulk).subscribe(datar => {
-            this.getdemandshistory(this.cardacct);
-            swal('Good!', 'Demand letter uploaded successfully!', 'success');
-          }, error => {
-            swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
-          });
-    }
+          'accnumber': this.cardacct,
+          'custnumber': this.cardacct,
+          'address': 'none',
+          'email': 'none',
+          'telnumber': 'none',
+          'filepath': obj.files[i].path,
+          'filename': obj.files[i].originalname,
+          'datesent': new Date(),
+          'owner': this.username,
+          'byemail': false,
+          'byphysical': true,
+          'bypost': true,
+          'demand': this.model.demand
+        };
+        this.uploadedfilepath = obj.files[i].path;
+        this.ecolService.demandshistory(bulk).subscribe(datar => {
+          this.getdemandshistory(this.cardacct);
+          swal('Good!', 'Demand letter uploaded successfully!', 'success');
+        }, error => {
+          swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
+        });
+      }
     };
 
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
@@ -259,10 +259,13 @@ export class SendLetterccComponent implements OnInit {
   }
 
   generateletter(letter, emaildata: any) {
+    swal.close();
+    this.popinfoToast('Letter Generation process started');
     this.ecolService.generateLettercc(letter).subscribe(dataupload => {
       // sucess
       if (dataupload.result === 'success') {
-        swal('Good!', dataupload.message, 'success');
+        // swal('Good!', dataupload.message, 'success');
+        this.popsuccessToast('Letter generated and queued to be sent');
         // save to history
         const bulk = {
           'accnumber': this.model.accnumber,
@@ -287,7 +290,7 @@ export class SendLetterccComponent implements OnInit {
         };
         this.demandshistory(bulk);
         this.getdemandshistory(this.cardacct);
-       // this.downloadDemand(letter.message, dataupload.filename);
+        // this.downloadDemand(letter.message, dataupload.filename);
       } else {
         swal('Error!', 'Error occured during letter generation!', 'error');
       }
@@ -301,10 +304,17 @@ export class SendLetterccComponent implements OnInit {
       }
       this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
         // console.log(response);
-        if (response.result === 'fail') {
+        /*if (response.result === 'fail') {
           swal('Error!', 'Letter NOT sent on email!', 'error');
         } else {
           swal('Success!', 'Letter sent on email!', 'success');
+        }*/
+        if (response.result === 'fail') {
+          swal.close();
+          this.poperrorToast('Letter NOT sent on email!');
+        } else {
+          swal.close();
+          this.popsuccessToast('Letter sent on email!');
         }
       });
       // send sms
@@ -349,7 +359,7 @@ export class SendLetterccComponent implements OnInit {
 
   demandshistory(body) {
     this.ecolService.demandshistory(body).subscribe(data => {
-     // console.log(data);
+      // console.log(data);
     });
   }
 

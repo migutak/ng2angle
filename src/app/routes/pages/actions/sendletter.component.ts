@@ -58,7 +58,6 @@ export class SendLetterComponent implements OnInit {
         // use file on email
         this.uploadedfilepath = obj.files[i].path;
         this.ecolService.demandshistory(bulk).subscribe(datar => {
-          // console.log(datar);
           this.getdemandshistory(this.accnumber);
           swal('Good!', 'Demand letter uploaded successfully!', 'success');
         }, error => {
@@ -357,12 +356,6 @@ export class SendLetterComponent implements OnInit {
         this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
           const sms = respo.smstemplate;
           this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
-          /*if (result && result.length > 0) {
-            this.smsMessage = result[0].message;
-          } else {
-            // tslint:disable-next-line:max-line-length
-            this.smsMessage = 'Dear Customer, We have sent a Demand  Notice to your address. To enquire call  0711049000';
-          }*/
 
           const smsdata = {
             'demand': letter.demand,
