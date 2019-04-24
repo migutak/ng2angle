@@ -340,7 +340,8 @@ export class SendLetterComponent implements OnInit {
         this.demandshistory(bulk);
         this.getdemandshistory(this.accnumber);
         this.emaildata.file = uploaddata.message;
-        if (this.model.uploadedfile === 'Y') {
+        // use uplaoded fie on email
+        if (this.model.uploadedfile) {
           this.emaildata.file = this.uploadedfilepath;
         }
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {

@@ -55,6 +55,7 @@ export class SendLetterccComponent implements OnInit {
             'bypost': true,
             'demand': this.model.demand
           };
+          this.uploadedfilepath = obj.files[i].path;
           this.ecolService.demandshistory(bulk).subscribe(datar => {
             this.getdemandshistory(this.cardacct);
             swal('Good!', 'Demand letter uploaded successfully!', 'success');
@@ -83,6 +84,7 @@ export class SendLetterccComponent implements OnInit {
   smsMessage: string;
   file: string;
   username: string;
+  uploadedfilepath: string;
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
 
   public uploader: FileUploader = new FileUploader({
@@ -293,6 +295,10 @@ export class SendLetterccComponent implements OnInit {
       // send email
       // add file full path
       emaildata.file = dataupload.message;
+      // use uplaoded fie on email
+      if (this.model.uploadedfile) {
+        emaildata.file = this.uploadedfilepath;
+      }
       this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
         // console.log(response);
         if (response.result === 'fail') {
@@ -343,7 +349,7 @@ export class SendLetterccComponent implements OnInit {
 
   demandshistory(body) {
     this.ecolService.demandshistory(body).subscribe(data => {
-      console.log(data);
+     // console.log(data);
     });
   }
 
