@@ -96,7 +96,7 @@ export class ActivityActionComponent implements OnInit {
 
   branchstatus: any = [];
   account: any = [];
-  sys: string = 'collections';
+  sys = 'collections';
 
   currentDate() {
     const currentDate = new Date();
@@ -145,7 +145,7 @@ export class ActivityActionComponent implements OnInit {
     //
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
-    } else if(this.sys == 'mcoopcash') {
+    } else if (this.sys === 'mcoopcash') {
       this.getmcoop(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
@@ -243,7 +243,7 @@ export class ActivityActionComponent implements OnInit {
       rfdother: this.f.rfdother.value,
       owner: this.username
     };
-    //add action
+    // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
       swal('Success!', 'activity saved', 'success');
       // build form
@@ -253,7 +253,7 @@ export class ActivityActionComponent implements OnInit {
       // fire error service
       swal('Error!', 'activitylogs - service is currently not available', 'error');
     });
-    //update portfolio add notes and ptp
+    // update portfolio add notes and ptp
     this.ecolService.recordupdate(body).subscribe(data => {
       swal('Success!', 'Records updated', 'success');
     }, error => {
@@ -263,7 +263,7 @@ export class ActivityActionComponent implements OnInit {
     });
   }
 
-  reset (){
+  reset () {
     this.buildForm();
   }
 }

@@ -56,10 +56,10 @@ export class SmsComponent implements OnInit {
     this.getsms();
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
-    } else if(this.sys == 'mcoopcash') {
+    } else if (this.sys === 'mcoopcash') {
       console.log('i am mcoopcash');
       this.getmcoopcashaccount(this.accnumber);
-    }else {
+    } else {
       this.getaccount(this.accnumber);
     }
   }

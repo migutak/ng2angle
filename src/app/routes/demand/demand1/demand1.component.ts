@@ -92,26 +92,27 @@ export class Demand1Component implements OnInit {
     this.custnumber = (event.target.textContent).slice(5, 12);
     // tslint:disable-next-line:max-line-length
     // console.log('this row', this.rowValue);
+    // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/sendletter?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.user.username, '_blank');
   }
 
   myGridOnRowSelect(event: any): void {
     const args = event.args;
-    let selectedRowIndex = args.rowindex;
-    let value = this.myGrid.getrowdata(selectedRowIndex);
+    const selectedRowIndex = args.rowindex;
+    const value = this.myGrid.getrowdata(selectedRowIndex);
 
     this.rowValue = value;
 
-  };
+  }
 
   myGridOnCellSelect(event: any): void {
     const args = event.args;
-    let selectedRowIndex = args.rowindex;
-    let value = this.myGrid.getrowdata(selectedRowIndex);
+    const selectedRowIndex = args.rowindex;
+    const value = this.myGrid.getrowdata(selectedRowIndex);
 
     this.rowValue = value;
     // console.log('myGridOnCellSelect', value);
-  };
+  }
 
   ngOnInit() {
     // get total for badges

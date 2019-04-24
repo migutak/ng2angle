@@ -60,10 +60,12 @@ export class AutomationComponent implements OnInit {
   postBody: any = [];
   public singleData;
 
+  // tslint:disable-next-line:max-line-length
   public itemsDemands: Array<string> = ['demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30',
     'prelistingremedial', 'overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
 
-  public items: Array<string> = ['613', '630', '9K3', '739', '6M4', '792', '601', '6M1', '6G6', '6J2', '649'];
+  public items: Array<string> = ['C16', 'C17', 'C11', 'C13', 'C23', 'C24', 'C25', 'C09', 'C07', 'C14',
+  '613', '630', '9K3', '739', '6M4', '792', '601', '6M1', '6G6', '6J2', '649'];
   model: any = {};
   dataList: any;
 
@@ -80,21 +82,21 @@ export class AutomationComponent implements OnInit {
       rowData: null,
       enableFilter: true,
       rowSelection: 'single',
-      //onRowClicked: this.RowSelected,
+      // onRowClicked: this.RowSelected,
     };
-    
+
     http.get<any>(environment.api + '/api/autoletters').subscribe(resp => {
       this.rowData1 = resp;
-    })
+    });
   }
 
-  onRowClicked(event: any) { 
+  onRowClicked(event: any) {
     this.new = false;
     this.model = event.node.data;
     this.model.lastupdateby = this.username;
     this.model.lastupdate = new Date();
-    this.model.active = (event.node.data.active).toLowerCase() == 'true' ? true : false; 
-  };
+    this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
+  }
 
   onQuickFilterChanged($event) {
     this.gridOptions.api.setQuickFilter($event.target.value);
@@ -127,42 +129,42 @@ export class AutomationComponent implements OnInit {
       console.log(error);
       swal('Eror!', 'Update was not completed!', 'error');
       this.spinner.hide();
-    })
+    });
   }
 
-  getData(){
+  getData() {
     this.ecolService.getautoLetter().subscribe(res => {
       this.rowData1 = res;
-    })
+    });
   }
 
-  //postautoLetter
-  
-  addNew(form){
+  // postautoLetter
+
+  addNew(form) {
     const body = {
-      "letterid": form.value.letterid,
-      "memogroup": form.value.memogroup,
-      "daysinarr": form.value.daysinarr,
-      "lastupdate": new Date(),
-      "lastupdateby": this.username,
-      "active": true
+      'letterid': form.value.letterid,
+      'memogroup': form.value.memogroup,
+      'daysinarr': form.value.daysinarr,
+      'lastupdate': new Date(),
+      'lastupdateby': this.username,
+      'active': true
     };
     // check duplicate
     this.ecolService.postcheckautoLetter(body).subscribe(resp => {
       //
       let reject = false;
-      let acceptModel = []
-      let rejectModel = []
-      for(let i=0; i<resp.length; i++){
-        if(resp[i].isduplicate == true){
+      const acceptModel = [];
+      const rejectModel = [];
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].isduplicate === true) {
           // add to reject
-          reject = true
-          rejectModel[i] = resp[i]
+          reject = true;
+          rejectModel[i] = resp[i];
         } else {
-          acceptModel[i] = resp[i]
+          acceptModel[i] = resp[i];
         }
       }
-      if(reject){
+      if (reject) {
         // reject request
         swal('Error!', 'Request contains duplicates!', 'error');
         swal({
@@ -170,7 +172,7 @@ export class AutomationComponent implements OnInit {
           title: 'Duplicates detected...',
           text:   JSON.stringify(rejectModel),
           footer: '<a href>Find help on this issue?</a>'
-        })
+        });
       } else {
         // acccepts and post
         this.spinner.show();
@@ -178,7 +180,7 @@ export class AutomationComponent implements OnInit {
           swal('Success!', 'Successfully added!', 'success');
           this.spinner.hide();
           this.getData();
-        })
+        });
       }
     }, error => {
       console.log(error);

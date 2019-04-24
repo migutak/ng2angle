@@ -37,29 +37,27 @@ export class SettingsComponent implements OnInit {
     this.getblobal();
   }
 
-  setradio(e: string): void   
-  {  
+  setradio(e: string): void {
         this.spinner.show();
         this.getLetter(e.toLowerCase());
         this.model.letterid = e.toLowerCase();
-          
-  }  
+  }
 
   getLetter(letter) {
-    this.ecolService.getLetter(letter).subscribe(letter => {
-      this.model = letter;
-      this.model.bysms = (letter.bysms).toLowerCase() == 'true' ? true : false; 
-      this.model.byphysical = (letter.byphysical).toLowerCase() == 'true' ? true : false; 
-      this.model.byemail = (letter.byemail).toLowerCase() == 'true' ? true : false; 
+    this.ecolService.getLetter(letter).subscribe(dletter => {
+      this.model = dletter;
+      this.model.bysms = (dletter.bysms).toLowerCase() === 'true' ? true : false;
+      this.model.byphysical = (dletter.byphysical).toLowerCase() === 'true' ? true : false;
+      this.model.byemail = (dletter.byemail).toLowerCase() === 'true' ? true : false;
 
-      this.model.suspendsms = (letter.suspendsms).toLowerCase() == 'true' ? true : false; 
-      this.model.suspendletter = (letter.suspendletter).toLowerCase() == 'true' ? true : false; 
-      this.model.suspendautodelivery = (letter.suspendautodelivery).toLowerCase() == 'true' ? true : false; 
+      this.model.suspendsms = (dletter.suspendsms).toLowerCase() === 'true' ? true : false;
+      this.model.suspendletter = (dletter.suspendletter).toLowerCase() === 'true' ? true : false;
+      this.model.suspendautodelivery = (dletter.suspendautodelivery).toLowerCase() === 'true' ? true : false;
 
       this.spinner.hide();
     }, error => {
       this.spinner.hide();
-      alert('error!')
+      alert('error!');
       console.log(error);
     });
   }

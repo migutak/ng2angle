@@ -12,6 +12,17 @@ import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-commu
 })
 export class MyallocationsComponent implements OnInit {
 
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
+    };
+  }
+
   user = JSON.parse(localStorage.getItem('currentUser'));
 
   resizeEvent = 'resize.ag-grid';
@@ -29,26 +40,26 @@ export class MyallocationsComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'LOANACCNUMBER',
-      field: "loanaccnumber",
+      field: 'LOANACCNUMBER',
       cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>'
+        return '<a  href="#" target="_blank">' + params.value + '</a>';
       }
     },
     {
-      headerName: "CLIENTNAME",
-      field: "clientname"
+      headerName: 'CLIENTNAME',
+      field: 'clientname'
     },
     {
-      headerName: "AMOUNTDISBURCED",
-      field: "amountdisbursed"
+      headerName: 'AMOUNTDISBURCED',
+      field: 'amountdisbursed'
     },
     {
-      headerName: "ARREARS CATEGIRY",
-      field: "arrears_category",
+      headerName: 'ARREARS CATEGIRY',
+      field: 'arrears_category',
       cellStyle: function (params) {
-        if (params.value == '90+') {
+        if (params.value === '90+') {
           return { color: 'red'};
-        }else if (params.value == '180+') {
+        } else if (params.value === '180+') {
           return { color: 'red'};
         } else {
           return null;
@@ -56,40 +67,47 @@ export class MyallocationsComponent implements OnInit {
       }
     },
     {
-      headerName: "LOAN TYPE",
-      field: "loan_type"
+      headerName: 'LOAN TYPE',
+      field: 'loan_type'
     },
     {
-      headerName: "EMPLOYER",
-      field: "employer"
+      headerName: 'EMPLOYER',
+      field: 'employer'
     },
     {
-      headerName: "IDNUMBER",
-      field: "idnumber"
+      headerName: 'IDNUMBER',
+      field: 'idnumber'
     },
     {
-      headerName: "AROCODE",
-      field: "arocode"
+      headerName: 'AROCODE',
+      field: 'arocode'
     }
   ];
   rowData1: any;
-  
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
-  }
+
+
+  dataSource: IDatasource = {
+    getRows: (params: IGetRowsParams) => {
+
+      // Use startRow and endRow for sending pagination to Backend
+      // params.startRow : Start Page
+      // params.endRow : End Page
+      //
+      this.apiService(20, params.startRow).subscribe(response => {
+        console.log(response);
+        params.successCallback(
+          response, this.noTotal
+        );
+      });
+    }
+  };
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);
+    // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.loanaccnumber + '&custnumber=' + this.model.loanaccnumber + '&username=' + this.username + '&sys=mcoopcash', '_blank');
-  };
+  }
 
   onQuickFilterChanged($event) {
     // this.gridOptions.api.setQuickFilter($event.target.value);
@@ -97,18 +115,18 @@ export class MyallocationsComponent implements OnInit {
   }
 
   onSearch() {
-    if (this.model.searchText == undefined) {
+    if (this.model.searchText === undefined) {
       return;
     }
     this.clear();
     this.http.get<any>(environment.api + '/api/mcoopcash_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-    })
+    });
   }
 
   clear() {
-    let dataSource = {
+    const dataSource = {
       getRows(params: any) {
         params.successCallback([], 0);
       }
@@ -120,7 +138,7 @@ export class MyallocationsComponent implements OnInit {
     // location.reload();
     this.clear();
     this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource)
+    this.gridApi.setDatasource(this.dataSource);
   }
 
   public ngOnInit(): void {
@@ -129,7 +147,7 @@ export class MyallocationsComponent implements OnInit {
 
     this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
-    })
+    });
   }
 
   gridReady(params) {
@@ -138,25 +156,9 @@ export class MyallocationsComponent implements OnInit {
     this.gridApi.setDatasource(this.dataSource);
   }
 
-
-  dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
-      this.apiService(20, params.startRow).subscribe(response => {
-        console.log(response)
-        params.successCallback(
-          response, this.noTotal
-        );
-      })
-    }
-  }
-
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/mcoopcash_stage/myallocations?filter[colofficer]='+this.username+'filter[limit]=' + perPage + '&filter[skip]=' + currentPos)
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/mcoopcash_stage/myallocations?filter[colofficer]=' + this.username + 'filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
   }
 
 }

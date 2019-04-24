@@ -18,47 +18,6 @@ const URL = environment.valor;
 })
 export class SendLetterComponent implements OnInit {
 
-  accnumber: string;
-  custnumber: string;
-  accountdetails: any;
-  guarantors: any = [];
-  teles: any = [];
-  emails: any = [];
-  addresses: any = [];
-  postcodes: any = [];
-  guarantoremails: string = "";
-  model: any = {};
-  bodyletter: any = {};
-  filepath: string;
-  demands: any;
-  file: string;
-  smsMessage: string;
-  username: string;
-  emaildata: any = {};
-  section: string;
-  // tslint:disable-next-line:max-line-length
-  itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
-
-  public uploader: FileUploader = new FileUploader({ url: URL });
-  public hasBaseDropZoneOver = false;
-  public hasAnotherDropZoneOver = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  public config: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      positionClass: 'toast-top-right',
-      animation: 'fade'
-    });
-
   constructor(
     public settings: SettingsService,
     public toasterService: ToasterService,
@@ -96,6 +55,8 @@ export class SendLetterComponent implements OnInit {
           'bypost': true,
           'demand': this.model.demand
         };
+        // use file on email
+        this.uploadedfilepath = obj.files[i].path;
         this.ecolService.demandshistory(bulk).subscribe(datar => {
           // console.log(datar);
           this.getdemandshistory(this.accnumber);
@@ -109,6 +70,48 @@ export class SendLetterComponent implements OnInit {
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
       // error server response
     };
+  }
+
+  accnumber: string;
+  custnumber: string;
+  accountdetails: any;
+  guarantors: any = [];
+  teles: any = [];
+  emails: any = [];
+  addresses: any = [];
+  postcodes: any = [];
+  guarantoremails = '';
+  model: any = {};
+  bodyletter: any = {};
+  filepath: string;
+  demands: any;
+  file: string;
+  smsMessage: string;
+  username: string;
+  emaildata: any = {};
+  section: string;
+  uploadedfilepath: string;
+  // tslint:disable-next-line:max-line-length
+  itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
+
+  public uploader: FileUploader = new FileUploader({ url: URL });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
+
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
   }
 
   ngOnInit() {
@@ -133,13 +136,13 @@ export class SendLetterComponent implements OnInit {
     this.getteles(this.custnumber);
   }
 
-  getteles(cust){
+  getteles(cust) {
     this.ecolService.getteles(cust).subscribe(data_teles => {
       this.teles = data_teles;
       this.emails = data_teles;
       this.postcodes = data_teles;
       this.addresses = data_teles;
-    })
+    });
   }
 
   getaccount(accnumber) {
@@ -153,7 +156,7 @@ export class SendLetterComponent implements OnInit {
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
 
-      this.section = data[0].section
+      this.section = data[0].section;
 
       if (this.guarantors || this.guarantors.length > 0) {
         // loop
@@ -305,7 +308,7 @@ export class SendLetterComponent implements OnInit {
 
   generateletter(letter) {
     swal.close();
-    this.popinfoToast('Letter Queued to be sent')
+    this.popinfoToast('Letter Queued to be sent');
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
         //
@@ -326,7 +329,7 @@ export class SendLetterComponent implements OnInit {
           'byphysical': this.model.sendphysical,
           'bypost': this.model.sendpostal,
           'demand': letter.demand,
-          "customeremail": this.model.emailaddress,
+          'customeremail': this.model.emailaddress,
           'status': 'queued',
           'reissued': 'N',
           'guarantorsno': this.guarantors.length || 0,
@@ -337,23 +340,28 @@ export class SendLetterComponent implements OnInit {
         this.demandshistory(bulk);
         this.getdemandshistory(this.accnumber);
         this.emaildata.file = uploaddata.message;
+        if (this.model.uploadedfile === 'Y') {
+          this.emaildata.file = this.uploadedfilepath;
+        }
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
           if (response.result === 'fail') {
             swal.close();
             this.poperrorToast('Letter NOT sent on email!');
           } else {
             swal.close();
-            this.popsuccessToast('Letter sent on email!')
+            this.popsuccessToast('Letter sent on email!');
           }
         });
         // send sms
-        this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
-          if (result && result.length > 0) {
+        this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+          const sms = respo.smstemplate;
+          this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+          /*if (result && result.length > 0) {
             this.smsMessage = result[0].message;
           } else {
             // tslint:disable-next-line:max-line-length
             this.smsMessage = 'Dear Customer, We have sent a Demand  Notice to your address. To enquire call  0711049000';
-          }
+          }*/
 
           const smsdata = {
             'demand': letter.demand,
@@ -379,7 +387,7 @@ export class SendLetterComponent implements OnInit {
   sendsms(smsdata) {
     this.ecolService.sendsms(smsdata).subscribe(result => {
       // swal('Successful!', 'Demand letter SMS sent!', 'success');
-      this.popsuccessToast('Demand letter SMS sent!')
+      this.popsuccessToast('Demand letter SMS sent!');
     }, error => {
       console.log(error);
       // swal('Error!', 'Error occurred during sending email!', 'error');
@@ -454,7 +462,7 @@ export class SendLetterComponent implements OnInit {
           'byphysical': 'N',
           'bypost': 'N',
           'demand': datafile.demand,
-          "customeremail": datafile.customeremail,
+          'customeremail': datafile.customeremail,
           'status': 'queued',
           'reissued': 'Y',
           'guarantorsno': datafile.guarantorsno,
@@ -471,17 +479,19 @@ export class SendLetterComponent implements OnInit {
             this.poperrorToast('Letter NOT sent on email!');
           } else {
             swal.close();
-            this.popsuccessToast('Letter sent on email!')
+            this.popsuccessToast('Letter sent on email!');
           }
         });
         // send sms
-        this.ecolService.getsmsmessage(datafile.demand).subscribe(result => {
-          if (result && result.length > 0) {
-            this.smsMessage = result[0].message;
+        this.ecolService.getsmsmessage(datafile.demand).subscribe(respo => {
+          const sms = respo.smstemplate;
+          this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+          /*if (respo && respo.length > 0) {
+            this.smsMessage = respo.smstemplate;
           } else {
             // tslint:disable-next-line:max-line-length
             this.smsMessage = 'Dear Customer, We have sent a Demand  Notice to your address. To enquire call  0711049000';
-          }
+          }*/
 
           const smsdata = {
             'demand': datafile.demand,
@@ -506,9 +516,9 @@ export class SendLetterComponent implements OnInit {
   savecontacts(model) {
     this.spinner.show();
 
-    //save contact
-    this.ecolService.existsteles(this.custnumber,model.celnumber,model.emailaddress).subscribe(contact => {
-      if(contact.length > 0){
+    // save contact
+    this.ecolService.existsteles(this.custnumber, model.celnumber, model.emailaddress).subscribe(contact => {
+      if (contact.length > 0) {
         swal(
           'Warning!',
           'Contact already exists',
@@ -516,8 +526,8 @@ export class SendLetterComponent implements OnInit {
         );
         this.spinner.hide();
       } else {
-        //save
-        let telesbody = {
+        // save
+        const telesbody = {
           custnumber: this.custnumber,
           telephone: model.celnumber,
           email: model.emailaddress,
@@ -527,7 +537,7 @@ export class SendLetterComponent implements OnInit {
           updatedlast: new Date(),
           address: model.addressline1,
           postcode: model.postcode
-        }
+        };
 
         this.ecolService.postteles(telesbody).subscribe(teles => {
           this.spinner.hide();
@@ -537,9 +547,9 @@ export class SendLetterComponent implements OnInit {
             'Contact has been added',
             'success'
           );
-        })
+        });
       }
-    }, error =>{
+    }, error => {
       console.log('error-existsteles', error);
       this.spinner.hide();
       swal(
@@ -547,8 +557,8 @@ export class SendLetterComponent implements OnInit {
         'Something went wrong',
         'error'
       );
-    })
- 
+    });
+
     /*setTimeout(() => {
         this.spinner.hide();
     }, 5000);*/

@@ -13,7 +13,7 @@ import { PtpsComponent } from './ptps/ptps.component';
 import { WithfundsComponent } from './withfunds/withfunds.component';
 
 import { JqxDomService } from '../../shared/jqwidgets-dom.service';
-import { CustomFormsModule } from 'ng2-validation'
+import { CustomFormsModule } from 'ng2-validation';
 
 const routes: Routes = [
   { path: '', redirectTo: 'viewall' },

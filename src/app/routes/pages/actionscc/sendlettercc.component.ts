@@ -18,44 +18,6 @@ const URL = environment.valor;
 })
 export class SendLetterccComponent implements OnInit {
 
-  cardacct: string;
-  accountdetails: any;
-  guarantors: [];
-  teles: [];
-  model: any = {};
-  emails: any = [];
-  postcodes: any = [];
-  addresses: any = [];
-  letterbody: any = {};
-  filepath: string;
-  demands: any;
-  smsMessage: string;
-  file: string;
-  username: string;
-  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
-
-  public uploader: FileUploader = new FileUploader({
-    url: URL
-  });
-  public hasBaseDropZoneOver = false;
-  public hasAnotherDropZoneOver = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  public config: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      positionClass: 'toast-top-right',
-      animation: 'fade'
-    });
-
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     public toasterService: ToasterService,
@@ -107,6 +69,44 @@ export class SendLetterccComponent implements OnInit {
     };
   }
 
+  cardacct: string;
+  accountdetails: any;
+  guarantors: [];
+  teles: [];
+  model: any = {};
+  emails: any = [];
+  postcodes: any = [];
+  addresses: any = [];
+  letterbody: any = {};
+  filepath: string;
+  demands: any;
+  smsMessage: string;
+  file: string;
+  username: string;
+  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
+
+  public uploader: FileUploader = new FileUploader({
+    url: URL
+  });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
+
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
+  }
+
   ngOnInit() {
     this.cardacct = this.route.snapshot.queryParamMap.get('cardacct');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -124,13 +124,13 @@ export class SendLetterccComponent implements OnInit {
     this.getteles(this.cardacct);
   }
 
-  getteles(cust){
+  getteles(cust) {
     this.ecolService.getteles(cust).subscribe(data_teles => {
       this.teles = data_teles;
       this.emails = data_teles;
       this.postcodes = data_teles;
       this.addresses = data_teles;
-    })
+    });
   }
 
   popsuccessToast(msg) {
@@ -189,7 +189,6 @@ export class SendLetterccComponent implements OnInit {
   getcardaccount(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
       this.accountdetails = data[0];
-      this.guarantors = data[0].guarantors;
       this.model.accnumber = data[0].cardacct;
       this.model.custnumber = data[0].cardnumber;
       this.model.addressline1 = data[0].address + ' ' + data[0].city;
@@ -228,11 +227,12 @@ export class SendLetterccComponent implements OnInit {
         const letter = {
           demand: demand.toLowerCase(),
           cardacct: data[0].cardacct,
+          cardnumber: data[0].cardnumber,
           cardname: data[0].cardname,
           showlogo: true,
           format: 'pdf',
           address: this.model.addressline1,
-          postcode: this.model.postcode,
+          rpcode: this.model.postcode,
           exp_pmnt: data[0].exppmnt,
           out_balance: data[0].outbalance,
           manager: 'ROSE KARAMBU'
@@ -277,7 +277,7 @@ export class SendLetterccComponent implements OnInit {
           'bypost': this.model.sendpostal,
           'demand': letter.demand,
           'status': 'queued',
-          "customeremail": this.model.emailaddress,
+          'customeremail': this.model.emailaddress,
           'reissued': 'N',
           'guarantorsno': 0,
           'guarantorsemail': 0,
@@ -303,13 +303,9 @@ export class SendLetterccComponent implements OnInit {
       });
       // send sms
       // get message
-      this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
-        if (result && result.length > 0) {
-          this.smsMessage = result[0].message;
-        } else {
-          // tslint:disable-next-line:max-line-length
-          this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
-        }
+      this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+        const sms = respo.smstemplate;
+        this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
 
         const smsdata = {
           'demand': letter.demand,
@@ -381,11 +377,11 @@ export class SendLetterccComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let emaildata = {
+        const emaildata = {
           email: datafile.customeremail,
           branchemail: datafile.sendemail,
           title: datafile.demand,
-          guarantor: datafile.guarantors,
+          // guarantor: datafile.guarantors,
           file: datafile.filepath
         };
 
@@ -403,7 +399,7 @@ export class SendLetterccComponent implements OnInit {
           'byphysical': 'N',
           'bypost': 'N',
           'demand': datafile.demand,
-          "customeremail": datafile.customeremail,
+          'customeremail': datafile.customeremail,
           'status': 'queued',
           'reissued': 'Y',
           'guarantorsno': datafile.guarantorsno,
@@ -419,17 +415,13 @@ export class SendLetterccComponent implements OnInit {
             this.poperrorToast('Letter NOT sent on email!');
           } else {
             swal.close();
-            this.popsuccessToast('Letter sent on email!')
+            this.popsuccessToast('Letter sent on email!');
           }
         });
         // send sms
-        this.ecolService.getsmsmessage(datafile.demand).subscribe(result => {
-          if (result && result.length > 0) {
-            this.smsMessage = result[0].message;
-          } else {
-            // tslint:disable-next-line:max-line-length
-            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
-          }
+        this.ecolService.getsmsmessage(datafile.demand).subscribe(respo => {
+          const sms = respo.smstemplate;
+          this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
 
           const smsdata = {
             'demand': datafile.demand,
@@ -454,9 +446,9 @@ export class SendLetterccComponent implements OnInit {
   savecontacts(model) {
     this.spinner.show();
 
-    //save contact
-    this.ecolService.existsteles(this.cardacct,model.celnumber,model.emailaddress).subscribe(contact => {
-      if(contact.length > 0){
+    // save contact
+    this.ecolService.existsteles(this.cardacct, model.celnumber, model.emailaddress).subscribe(contact => {
+      if (contact.length > 0) {
         swal(
           'Warning!',
           'Contact already exists',
@@ -464,8 +456,8 @@ export class SendLetterccComponent implements OnInit {
         );
         this.spinner.hide();
       } else {
-        //save
-        let body = {
+        // save
+        const body = {
           custnumber: this.cardacct,
           telephone: model.celnumber,
           email: model.emailaddress,
@@ -475,7 +467,7 @@ export class SendLetterccComponent implements OnInit {
           updatedlast: new Date(),
           address: model.addressline1,
           postcode: model.postcode
-        }
+        };
 
         this.ecolService.postteles(body).subscribe(teles => {
           this.spinner.hide();
@@ -485,9 +477,9 @@ export class SendLetterccComponent implements OnInit {
             'Contact has been added',
             'success'
           );
-        })
+        });
       }
-    }, error =>{
+    }, error => {
       console.log('error-existsteles', error);
       swal(
         'Ooops!',
@@ -495,8 +487,8 @@ export class SendLetterccComponent implements OnInit {
         'error'
       );
       this.spinner.hide();
-    })
- 
+    });
+
     /*setTimeout(() => {
         this.spinner.hide();
     }, 5000);*/

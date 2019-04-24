@@ -32,7 +32,7 @@
                             [ngClass]="{ 'is-invalid': letterid.invalid }" required>
                           </ngx-select>
 
-                          <label class="mt">Send to [MemoGroups]</label>
+                          <label class="mt">Select Memo group(s) to send to</label>
                           <ngx-select (data)="value" [multiple]="true" [items]="items" name="memogroup" id="memogroup"
                             #memogroup="ngModel" [(ngModel)]="model.memogroup" [disabled]="disabled"
                             (data)="refreshValue($event)" (selected)="selected($event)" placeholder="No memo selected">

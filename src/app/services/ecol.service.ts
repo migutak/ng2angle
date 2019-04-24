@@ -242,11 +242,12 @@ export class EcolService {
   }
 
   existsteles(custnumber, tel, email) {
-    return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber + '&filter[where][telephone]=' + tel + '&filter[where][email]='+ email);
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber + '&filter[where][telephone]=' + tel + '&filter[where][email]=' + email);
   }
 
   getsmsmessage(demand) {
-    return this.httpClient.get<any>(environment.api + '/api/tbl_smstemplate?filter[where][title]=' + demand);
+    return this.httpClient.get<any>(environment.api + '/api/demandsettings/' + demand.toLowerCase());
   }
 
   sendDemandEmail(data) {
@@ -325,16 +326,20 @@ export class EcolService {
     localStorage.removeItem('profile');
   }
 
-  totalmcoopcashviewall(){
-    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalviewall')
+  totalmcoopcashviewall() {
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalviewall');
   }
 
-  totalmcoopcashmyworklist(username){
-    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyworklist?colofficer='+ username)
+  totalmcoopcashmyworklist(username) {
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyworklist?colofficer=' + username);
   }
 
-  totalmcoopcashmyallocations(username){
-    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyallocations?colofficer='+ username)
+  totalmcoopcashmyallocations(username) {
+    return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyallocations?colofficer=' + username);
   }
 
+
+  totaldemandsdue() {
+    return this.httpClient.get<any>(environment.api + '/api/demandsdue/total');
+  }
 }

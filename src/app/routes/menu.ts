@@ -342,7 +342,7 @@ const Work = {
 };
 
 const Work_cc = {
-    text: 'Work Queue',
+    text: 'CreditCards Queue',
     link: '/creditcards',
     icon: 'icon-credit-card',
     submenu: [
@@ -581,6 +581,7 @@ const remedial_menu = [
     Letterscc,
     headingComponents,
     Work,
+    Remedial,
     headingMore,
     Collectionrpt
 ];
@@ -590,10 +591,15 @@ const teamleader_menu = [
     Home,
     Dashboard,
     Letters,
+    Letterscc,
     headingComponents,
     Work,
-    //headingMore,
-    //Collectionrpt,
+    Work_cc,
+    Remedial,
+    mcoopcash,
+    serviceproviders,
+    // headingMore,
+    // Collectionrpt,
     headingConfigurations,
     Demandletters,
     Allocations,
