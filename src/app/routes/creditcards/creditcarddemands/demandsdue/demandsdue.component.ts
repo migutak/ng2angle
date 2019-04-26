@@ -186,7 +186,8 @@ export class DemandsdueComponent implements OnInit {
     },
     {
       headerName: 'OUTBALANCE',
-      field: 'outbalance'
+      field: 'outbalance',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'DEMANDLETTER',
@@ -213,6 +214,16 @@ export class DemandsdueComponent implements OnInit {
       });
     }
   };
+
+currencyFormatter(params) {
+    return '£' + this.formatNumber(params.value);
+}
+
+formatNumber(number) {
+    // this puts commas into the number eg 1000 goes to 1,000,
+    // i pulled this from stack overflow, i have no idea how it works
+    return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;

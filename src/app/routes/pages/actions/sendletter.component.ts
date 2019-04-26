@@ -290,6 +290,7 @@ export class SendLetterComponent implements OnInit {
             title: letter.demand,
             guarantor: this.bodyletter.guarantors || 0
           };
+          // console.log('emaildata...', this.emaildata);
           // generate letter
           this.generateletter(this.bodyletter);
         }, error => {
