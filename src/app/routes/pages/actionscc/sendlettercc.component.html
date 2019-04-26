@@ -221,19 +221,10 @@
                   <h4 class="page-header mt0">Select files</h4>
                   <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
                     [uploader]="uploader" class="box-placeholder my-drop-zone">
-                    Base drop zone
+                    Drop file here
                   </div>
-                  <div ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
-                    (fileOver)="fileOverAnother($event)" [uploader]="uploader" class="box-placeholder my-drop-zone">
-                    Another drop zone
-                  </div>
-                  <p class="text-bold">Upload options</p>
-                  <label for="file1" class="file-upload">
-                    <button class="btn btn-secondary btn-block">Multiple</button>
-                    <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
-                  </label>
                   <label for="file2" class="file-upload">
-                    <button class="btn btn-secondary btn-block">Single</button>
+                    <button class="btn btn-secondary btn-block">Select File</button>
                     <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
                   </label>
                 </div>
@@ -310,6 +301,11 @@
                       [disabled]="!uploader.queue.length">
                       <span class="icon-trash mr"></span> Remove all
                     </button>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="uploadedfile" type="checkbox" [(ngModel)]="model.uploadedfile"
+                      name="uploadedfile" value="Y" />
+                    <label class="form-check-label" for="uploadedfile">Use this file in demand letter email</label>
                   </div>
                 </div>
               </div>

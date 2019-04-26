@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { EcolService } from '../../../services/ecol.service';
-import * as $ from 'jquery'
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-myworklist',
@@ -12,15 +12,15 @@ import * as $ from 'jquery'
   styleUrls: ['./myworklist.component.scss']
 })
 export class MyworklistComponent implements OnInit {
+  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
+
+  }
 
   @ViewChild('myGrid') myGrid: jqxGridComponent;
 
   total: any = {};
   // source: any = {};
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
-
-  };
 
   source: any =
     {
@@ -38,7 +38,7 @@ export class MyworklistComponent implements OnInit {
       },
       beforeprocessing: function (data) {
         if (data != null && data.length > 0) {
-          //this.totalrecords = data.length;
+          // this.totalrecords = data.length;
           this.totalrecords = data[0].totalRecords;
         }
       },
@@ -61,7 +61,7 @@ export class MyworklistComponent implements OnInit {
           { name: 'CYCLE', type: 'string' },
           { name: 'SQNUMBER', type: 'string' }
         ],
-    }
+    };
   dataAdapter: any = new jqx.dataAdapter(this.source, {
     downloadComplete: function (data, status, xhr) {
       if (!this.totalrecords) {
@@ -72,14 +72,7 @@ export class MyworklistComponent implements OnInit {
       throw new Error(error);
     }
   });
-  rendergridrows = (params: any): any[] => {
-    let data = params.data;
-    return data;
-  }
-  totalcolumnrenderer = (row: number, column: any, cellvalue: any): string => {
-    // let newCellValue = jqx.dataFormat.formatnumber(cellvalue, 'c2');
-    return '<span style="margin: 6px 3px; font-size: 12px; float: right; font-weight: bold;">' + cellvalue + '</span>';
-  }
+  // tslint:disable-next-line:member-ordering
   columns: any[] =
     [
       {
@@ -100,7 +93,7 @@ export class MyworklistComponent implements OnInit {
       },
       { text: 'CARDNUMBER', datafield: 'CARDNUMBER', width: 150, filtertype: 'input' },
       { text: 'CARDNAME', datafield: 'CARDNAME', width: 200, filtertype: 'input' },
-      { text: 'OUTBALANCE', datafield: 'OUTBALANCE', filtertype: 'input', cellsformat: 'd', cellsrenderer: this.totalcolumnrenderer, cellsalign: 'right' },
+      // tslint:disable-next-line:max-line-length
       { text: 'EXPPMNT', datafield: 'EXPPMNT', filtertype: 'input', cellsformat: 'd' },
       { text: 'DAYSINARR', datafield: 'DAYSINARREARS', filtertype: 'input', cellsformat: 'c' },
       { text: 'CYCLE', datafield: 'CYCLE', filtertype: 'input' },
@@ -109,13 +102,22 @@ export class MyworklistComponent implements OnInit {
       { text: 'DUEDATE', datafield: 'DUEDATE', filtertype: 'range' }
     ];
 
-  //renger grid end
+  // renger grid end
 
   cardacct: String;
+  rendergridrows = (params: any): any[] => {
+    const data = params.data;
+    return data;
+  }
+  totalcolumnrenderer = (row: number, column: any, cellvalue: any): string => {
+    // let newCellValue = jqx.dataFormat.formatnumber(cellvalue, 'c2');
+    return '<span style="margin: 6px 3px; font-size: 12px; float: right; font-weight: bold;">' + cellvalue + '</span>';
+  }
 
   onClickMe(event, rowdata) {
     this.cardacct = event.target.textContent;
     // open page
+    // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=cc', '_blank');
   }
 

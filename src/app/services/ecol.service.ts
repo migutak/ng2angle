@@ -221,7 +221,6 @@ export class EcolService {
 
 
   generateLetter(data) {
-    console.log('data received', data);
     return this.httpClient.post<any>(environment.letters_api + data.demand + '/download', data);
   }
 

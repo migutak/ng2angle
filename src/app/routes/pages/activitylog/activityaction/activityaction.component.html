@@ -95,7 +95,7 @@
               <select id="cmdstatus" name="cmdstatus" class="form-control" formControlName="cmdstatus"
                 class="form-control" [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let cmd of cmdstatus" [value]="cmd.code">{{cmd.name}}</option>
+                <option *ngFor="let cmd of cmdstatus" [value]="cmd.id">{{cmd.cmdstatus}}</option>
               </select>
             </div>
           </div>

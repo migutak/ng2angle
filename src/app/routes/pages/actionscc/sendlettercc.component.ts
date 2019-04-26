@@ -55,6 +55,7 @@ export class SendLetterccComponent implements OnInit {
           'bypost': true,
           'demand': this.model.demand
         };
+        // use file on email
         this.uploadedfilepath = obj.files[i].path;
         this.ecolService.demandshistory(bulk).subscribe(datar => {
           this.getdemandshistory(this.cardacct);
@@ -244,7 +245,7 @@ export class SendLetterccComponent implements OnInit {
           name: data[0].cardname,
           email: emailaddress,
           title: demand,
-          branchemail: 'Contact Centre Team <ContactCentreTeam@co-opbank.co.ke>'
+          branchemail: 'Collection Support <collectionssupport@co-opbank.co.ke>'
         };
         // generate letter
         this.generateletter(letter, emaildata);

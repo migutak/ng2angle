@@ -38,13 +38,12 @@ export class NotesComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.cust = params['custnumber'];
     });
-    //this.data.currentMessage.subscribe(message => this.message = message)
+    // this.data.currentMessage.subscribe(message => this.message = message)
     this.getAll(this.cust);
-    console.log(this.notes);
   }
 
   newMessage() {
-    //this.data.changeMessage("Hello from Sibling")
+    // this.data.changeMessage("Hello from Sibling")
   }
 
   getAll(cust) {
@@ -55,7 +54,7 @@ export class NotesComponent implements OnInit {
     // console.log('this.query ', this.query);
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
-
+      console.log(this.notes);
       // append posts
       if (!isNullOrUndefined(data) && this.notes.length) {
         this.noteData = this.noteData.concat(data);

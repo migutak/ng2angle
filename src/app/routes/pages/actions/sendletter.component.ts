@@ -343,6 +343,7 @@ export class SendLetterComponent implements OnInit {
         if (this.model.uploadedfile) {
           this.emaildata.file = this.uploadedfilepath;
         }
+
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
           if (response.result === 'fail') {
             swal.close();
