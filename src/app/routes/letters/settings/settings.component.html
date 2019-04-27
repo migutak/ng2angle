@@ -5,11 +5,11 @@
   </div>
 </div>
 <div class="container-fluid">
-    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
-        <p style="font-size: 20px; color: white">Processing ...</p>
-      </ngx-spinner>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+    <p style="font-size: 20px; color: white">Processing ...</p>
+  </ngx-spinner>
   <div class="row">
-    <div id="accordion" class="col-xl-6">
+    <div id="accordion" class="col-xl-4">
       <div class="card">
         <div class="card-header">
           <a class="card-link" data-toggle="collapse" href="#collapseOne">
@@ -25,120 +25,102 @@
                     <fieldset>
                       <div class="form-check mb-2 mr-sm-2">
                         <div class="form-check">
-                          <input class="form-check-input" id="demand1" type="radio" (click)="setradio('demand1')" [checked]='true' ngModel
-                            name="format" value="demand1" />
+                          <input class="form-check-input" id="demand1" type="radio" (click)="setradio('demand1')"
+                            [checked]='true' ngModel name="format" value="demand1" />
                           <label class="form-check-label" for="demand1">Demand 1</label>
                         </div>
                       </div>
-                    </fieldset>
-                    <fieldset>
                       <div class="form-check mb-2 mr-sm-2">
                         <div class="form-check">
-                          <input class="form-check-input" id="demand2" type="radio" (click)="setradio('demand2')" [checked]='false' ngModel
-                            name="format" value="demand2" />
+                          <input class="form-check-input" id="demand2" type="radio" (click)="setradio('demand2')"
+                            [checked]='false' ngModel name="format" value="demand2" />
                           <label class="form-check-label" for="demand2">Demand 2</label>
                         </div>
                       </div>
-                    </fieldset>
-                    <fieldset>
                       <div class="form-check mb-2 mr-sm-2">
                         <div class="form-check">
-                          <input class="form-check-input" id="prelisting" type="radio" (click)="setradio('prelisting')" [checked]='false' ngModel
-                            name="format" value="prelisting" />
+                          <input class="form-check-input" id="prelisting" type="radio" (click)="setradio('prelisting')"
+                            [checked]='false' ngModel name="format" value="prelisting" />
                           <label class="form-check-label" for="prelisting">Pre Listing</label>
                         </div>
                       </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="overduecc" type="radio" (click)="setradio('overduecc')"
+                            [checked]='false' ngModel name="format" value="overduecc" />
+                          <label class="form-check-label" for="overduecc">Overdue cc</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="prelistingcc" type="radio"
+                            (click)="setradio('prelistingcc')" [checked]='false' ngModel name="format"
+                            value="prelistingcc" />
+                          <label class="form-check-label" for="prelistingcc">Prelisting cc</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="suspension" type="radio" (click)="setradio('suspension')"
+                            [checked]='false' ngModel name="format" value="suspension" />
+                          <label class="form-check-label" for="suspension">Suspension cc</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="prelistingremedial" type="radio"
+                            (click)="setradio('prelistingremedial')" [checked]='false' ngModel name="format"
+                            value="prelistingremedial" />
+                          <label class="form-check-label" for="prelistingremedial">Prelisting Remedial
+                            (ex-Staff)</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="postlistingsecured" type="radio"
+                            (click)="setradio('postlistingsecured')" [checked]='false' ngModel name="format"
+                            value="postlistingsecured" />
+                          <label class="form-check-label" for="postlistingsecured">Postlisting Secured</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="postlistingunsecuredcc" type="radio"
+                            (click)="setradio('postlistingunsecuredcc')" [checked]='false' ngModel name="format"
+                            value="postlistingunsecuredcc" />
+                          <label class="form-check-label" for="postlistingunsecuredcc">Postlisting Un-Secured cc</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="PostlistingUnsecured" type="radio"
+                            (click)="setradio('postlistingunsecured')" [checked]='false' ngModel name="format"
+                            value="PostlistingUnsecured" />
+                          <label class="form-check-label" for="PostlistingUnsecured">Postlisting Unsecured</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="Day90" type="radio" (click)="setradio('day90')"
+                            [checked]='false' ngModel name="format" value="Day90" />
+                          <label class="form-check-label" for="Day90">90 Day</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="Day40" type="radio" (click)="setradio('day40')"
+                            [checked]='false' ngModel name="format" value="Day40" />
+                          <label class="form-check-label" for="Day40">40 Day</label>
+                        </div>
+                      </div>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check">
+                          <input class="form-check-input" id="Day30" type="radio" (click)="setradio('day30')"
+                            [checked]='false' ngModel name="format" value="Day30" />
+                          <label class="form-check-label" for="Day30">30 Day</label>
+                        </div>
+                      </div>
                     </fieldset>
-                    <fieldset>
-                        <div class="form-check mb-2 mr-sm-2">
-                          <div class="form-check">
-                            <input class="form-check-input" id="overduecc" type="radio" (click)="setradio('overduecc')" [checked]='false' ngModel
-                              name="format" value="overduecc" />
-                            <label class="form-check-label" for="overduecc">Overdue cc</label>
-                          </div>
-                        </div>
-                      </fieldset>
-                      <fieldset>
-                        <div class="form-check mb-2 mr-sm-2">
-                          <div class="form-check">
-                            <input class="form-check-input" id="prelistingcc" type="radio" (click)="setradio('prelistingcc')" [checked]='false' ngModel
-                              name="format" value="prelistingcc" />
-                            <label class="form-check-label" for="prelistingcc">Prelisting cc</label>
-                          </div>
-                        </div>
-                      </fieldset>
-                      <fieldset>
-                        <div class="form-check mb-2 mr-sm-2">
-                          <div class="form-check">
-                            <input class="form-check-input" id="suspension" type="radio" (click)="setradio('suspension')" [checked]='false' ngModel
-                              name="format" value="suspension" />
-                            <label class="form-check-label" for="suspension">Suspension cc</label>
-                          </div>
-                        </div>
-                      </fieldset>
-                      <fieldset>
-                          <div class="form-check mb-2 mr-sm-2">
-                            <div class="form-check">
-                              <input class="form-check-input" id="prelistingremedial" type="radio" (click)="setradio('prelistingremedial')" [checked]='false' ngModel
-                                name="format" value="prelistingremedial" />
-                              <label class="form-check-label" for="prelistingremedial">Prelisting Remedial (ex-Staff)</label>
-                            </div>
-                          </div>
-                        </fieldset>
-                      <fieldset>
-                          <div class="form-check mb-2 mr-sm-2">
-                            <div class="form-check">
-                              <input class="form-check-input" id="postlistingsecured" type="radio" (click)="setradio('postlistingsecured')" [checked]='false' ngModel
-                                name="format" value="postlistingsecured" />
-                              <label class="form-check-label" for="postlistingsecured">Postlisting Secured</label>
-                            </div>
-                          </div>
-                        </fieldset>
-                        <fieldset>
-                          <div class="form-check mb-2 mr-sm-2">
-                            <div class="form-check">
-                              <input class="form-check-input" id="postlistingunsecuredcc" type="radio" (click)="setradio('postlistingunsecuredcc')" [checked]='false' ngModel
-                                name="format" value="postlistingunsecuredcc" />
-                              <label class="form-check-label" for="postlistingunsecuredcc">Postlisting Un-Secured cc</label>
-                            </div>
-                          </div>
-                        </fieldset>
-                        <fieldset>
-                          <div class="form-check mb-2 mr-sm-2">
-                            <div class="form-check">
-                              <input class="form-check-input" id="PostlistingUnsecured" type="radio" (click)="setradio('postlistingunsecured')" [checked]='false' ngModel
-                                name="format" value="PostlistingUnsecured" />
-                              <label class="form-check-label" for="PostlistingUnsecured">Postlisting Unsecured</label>
-                            </div>
-                          </div>
-                        </fieldset>
-                        <fieldset>
-                            <div class="form-check mb-2 mr-sm-2">
-                              <div class="form-check">
-                                <input class="form-check-input" id="Day90" type="radio" (click)="setradio('day90')" [checked]='false' ngModel
-                                  name="format" value="Day90" />
-                                <label class="form-check-label" for="Day90">90 Day</label>
-                              </div>
-                            </div>
-                          </fieldset>
-                          <fieldset>
-                            <div class="form-check mb-2 mr-sm-2">
-                              <div class="form-check">
-                                <input class="form-check-input" id="Day40" type="radio" (click)="setradio('day40')" [checked]='false' ngModel
-                                  name="format" value="Day40" />
-                                <label class="form-check-label" for="Day40">40 Day</label>
-                              </div>
-                            </div>
-                          </fieldset>
-                          <fieldset>
-                            <div class="form-check mb-2 mr-sm-2">
-                              <div class="form-check">
-                                <input class="form-check-input" id="Day30" type="radio" (click)="setradio('day30')" [checked]='false' ngModel
-                                  name="format" value="Day30" />
-                                <label class="form-check-label" for="Day30">30 Day</label>
-                              </div>
-                            </div>
-                          </fieldset>
                   </div>
                 </div>
               </div>
@@ -149,7 +131,7 @@
       <div class="card">
         <div class="card-header">
           <a class="card-link" data-toggle="collapse" href="#collapseThree">
-            Demand Letter global settings (Footer, directors, and logo)
+            Demand Letter global settings (Footer and logo)
           </a>
         </div>
         <div id="collapseThree" class="collapse" data-parent="#accordion">
@@ -159,14 +141,14 @@
               <div class="form-group">
                 <p>Letter Footer</p>
                 <textarea class="form-control" rows="4" name="footer" id="footer" #footer="ngModel"
-                  [(ngModel)]="global.footer" required></textarea>
+                  [(ngModel)]="model.footer" required></textarea>
               </div>
 
               <p class="lead mt-3"></p>
               <div class="form-group">
                 <p>Bank Directors</p>
                 <textarea class="form-control" rows="3" name="directors" id="directors" #directors="ngModel"
-                  [(ngModel)]="global.directors" required></textarea>
+                  [(ngModel)]="model.directors" required></textarea>
               </div>
 
               <fieldset>
@@ -182,12 +164,12 @@
         </div>
       </div>
     </div>
-    <div id="accordion" class="col-xl-6">
+    <div id="accordion" class="col-xl-8">
       <div class="col-xl-12">
         <div class="card card-default">
           <div class="card-header">
             <a class="card-link" data-toggle="collapse" href="#collapseDemand1">
-              Demand1: Settings
+              {{selected_demand}} Settings:
             </a>
           </div>
           <div id="collapseDemand1" class="collapse show" data-parent="#accordion">
@@ -196,8 +178,9 @@
                 <p class="lead mt-3"></p>
                 <div class="form-group">
                   <p>sms template</p>
-                  <textarea class="form-control" rows="3" placeholder="sms message.." name="sms" id="smstemplate" #smstemplate="ngModel"
-                    [(ngModel)]="model.smstemplate" [ngClass]="{ 'is-invalid': smstemplate.invalid }" required></textarea>
+                  <textarea class="form-control" rows="3" placeholder="sms message.." name="sms" id="smstemplate"
+                    #smstemplate="ngModel" [(ngModel)]="model.smstemplate"
+                    [ngClass]="{ 'is-invalid': smstemplate.invalid }" required></textarea>
                 </div>
                 <fieldset>
 
@@ -217,7 +200,8 @@
                         <span class="fa fa-check"></span> SMS</label>
                       <label class="c-checkbox">
                         <input type="checkbox" name="suspendautodelivery" id="suspendautodelivery"
-                          #suspendautodelivery="ngModel" [(ngModel)]="model.suspendautodelivery" [checked]="model.suspendautodelivery" />
+                          #suspendautodelivery="ngModel" [(ngModel)]="model.suspendautodelivery"
+                          [checked]="model.suspendautodelivery" />
                         <span class="fa fa-check"></span> Automatic delivery</label>
                     </div>
                     <!--<pre>{{model | json }}</pre>-->
@@ -233,13 +217,13 @@
                           [(ngModel)]="model.byemail" />
                         <span class="fa fa-check"></span>Email</label>
                       <label class="c-checkbox">
-                        <input id="inlineCheckbox20" type="checkbox" name="byphysical" id="byphysical" #byphysical="ngModel"
-                          [(ngModel)]="model.byphysical" />
+                        <input id="inlineCheckbox20" type="checkbox" name="byphysical" id="byphysical"
+                          #byphysical="ngModel" [(ngModel)]="model.byphysical" />
                         <span class="fa fa-check"></span>Post</label>
                       <label class="c-checkbox">
-                            <input id="inlineCheckbox20" type="checkbox" name="bysms" id="bysms" #bysms="ngModel"
-                              [(ngModel)]="model.bysms" />
-                            <span class="fa fa-check"></span>SMS</label>
+                        <input id="inlineCheckbox20" type="checkbox" name="bysms" id="bysms" #bysms="ngModel"
+                          [(ngModel)]="model.bysms" />
+                        <span class="fa fa-check"></span>SMS</label>
                     </div>
                   </div>
                 </fieldset>

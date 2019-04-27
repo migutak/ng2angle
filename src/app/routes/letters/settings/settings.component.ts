@@ -13,8 +13,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class SettingsComponent implements OnInit {
 
     model: any = {};
-    test: any = {};
-    global: any = {};
     valueCategory;
     valueTag;
     valueReview;
@@ -24,6 +22,7 @@ export class SettingsComponent implements OnInit {
     disable = true;
     selectedLink: string;
     username: string;
+    selected_demand: string;
 
   constructor(
     private ecolService: EcolService,
@@ -41,6 +40,7 @@ export class SettingsComponent implements OnInit {
         this.spinner.show();
         this.getLetter(e.toLowerCase());
         this.model.letterid = e.toLowerCase();
+        this.selected_demand = e.toUpperCase();
   }
 
   getLetter(letter) {
@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit {
 
   globalSubmit(form) {
     this.ecolService.loader();
-    this.ecolService.global(this.global).subscribe(response => {
+    this.ecolService.global(this.model).subscribe(response => {
       swal('Success!', 'Settngs saved!', 'success');
     }, error => {
       console.log(error);
@@ -74,7 +74,8 @@ export class SettingsComponent implements OnInit {
 
   getblobal() {
     this.ecolService.getglobal().subscribe(response => {
-      this.global = response[0];
+      console.log(response);
+     // this.model = response[0];
     }, error => {
       console.log(error);
     });

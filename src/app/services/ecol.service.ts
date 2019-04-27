@@ -236,6 +236,14 @@ export class EcolService {
     return this.httpClient.put<any>(environment.api + '/api/teles/' + data.id, data);
   }
 
+  putcustomersuspensions(data) {
+    return this.httpClient.put<any>(environment.api + '/api/customersuspensions', data);
+  }
+
+  getcustomersuspensions() {
+    return this.httpClient.get<any>(environment.api + '/api/customersuspensions');
+  }
+
   getteles(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber);
   }
