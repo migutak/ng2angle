@@ -332,7 +332,7 @@ export class SendLetterComponent implements OnInit {
           'customeremail': this.model.emailaddress,
           'status': 'queued',
           'reissued': 'N',
-          'guarantorsno': this.guarantors.length || 0,
+          'guarantorsno': this.guarantors.length || [],
           'guarantorsemail': this.guarantoremails,
           'sendemail': letter.branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>'
         };

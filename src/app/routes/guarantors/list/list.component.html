@@ -2,8 +2,18 @@
   <div>Guarantors
      <small>list of guarantors by custnumber</small></div>
 </div>
-<input class="form-control mb-2 mr-sm-2" type="text" id="accnumber" name="accnumber" #accnumber placeholder="accnumber" />
-<span><button class="mr-1 mb-1 btn btn-outline-primary" type="button" (click)="getguarantors(accnumber.value)">Search</button></span>
+<div class="row">
+   <div class="col-xl-4 col-lg-6 form-inline">
+     <input class="form-control mb" type="text" id="accnumber" name="accnumber" #accnumber placeholder="accnumber" />
+     <button type="button" class="btn btn-outline-inverse" (click)="getguarantors(accnumber.value)" ><span
+         class="fa fa-search"></span>
+       Search</button>
+     
+   </div>
+   <div class="col-xl-4 col-lg-6 form-inline">
+     
+   </div>
+ </div>
 <div class="card card-default">
  <div class="card-header">
    Custnumber {{guarantors?.length}}

@@ -471,6 +471,10 @@ const Demandletters = {
         {
             text: 'Demand automation',
             link: '/letters/automation'
+        },
+        {
+            text: 'Customer suspensions',
+            link: '/letters/customersuspensions'
         }
     ]
 };
@@ -580,10 +584,13 @@ const remedial_menu = [
     Letters,
     Letterscc,
     headingComponents,
-    Work,
+    // Work,
     Remedial,
-    headingMore,
-    Collectionrpt
+    Work_cc,
+    mcoopcash,
+    serviceproviders,
+    headingComponents,
+    Demandletters
 ];
 
 const teamleader_menu = [
