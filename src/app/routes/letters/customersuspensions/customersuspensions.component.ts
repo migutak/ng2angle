@@ -121,9 +121,14 @@ export class CustomerSuspensionsComponent implements OnInit {
       });
     }
 
+    onQuickFilterChanged($event) {
+      this.gridOptions.api.setQuickFilter($event.target.value);
+    }
+
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
+    this.model.owner = currentUser.username;
   }
 
   gridReady(params) {
@@ -134,6 +139,7 @@ export class CustomerSuspensionsComponent implements OnInit {
   }
 
   putSuspension(form) {
+    console.log(form);
     this.spinner.show();
     this.ecolService.putcustomersuspensions(form).subscribe(cust => {
       swal('Success!', 'Update successful!', 'success');

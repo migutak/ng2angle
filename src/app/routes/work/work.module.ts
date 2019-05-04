@@ -14,6 +14,7 @@ import { PtpsComponent } from './ptps/ptps.component';
 import { WithfundsComponent } from './withfunds/withfunds.component';
 
 import { JqxDomService } from '../../shared/jqwidgets-dom.service';
+import { AgGridModule } from 'ag-grid-angular';
 
 const routes: Routes = [
   { path: '', redirectTo: 'viewall' },
@@ -40,6 +41,7 @@ const routes: Routes = [
     SharedModule,
     CommonModule,
     NgxDatatableModule,
+    AgGridModule.withComponents([]),
     RouterModule.forChild(routes)
   ],
   entryComponents: [jqxButtonComponent],

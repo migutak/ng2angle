@@ -52,7 +52,8 @@ export class DemandsdueComponent implements OnInit {
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance'
+      field: 'oustbalance',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'DAYSINARR',
@@ -69,7 +70,8 @@ export class DemandsdueComponent implements OnInit {
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'totalarrears'
+      field: 'totalarrears',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'ADDRESS',
@@ -114,6 +116,10 @@ export class DemandsdueComponent implements OnInit {
     // this.gridOptions.api.setQuickFilter($event.target.value);
     this.searchText = $event.target.value;
   }
+
+currencyFormatter(params) {
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
 
   onSearch() {
     if (this.model.searchText === undefined) {

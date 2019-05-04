@@ -193,7 +193,7 @@ export class SendLetterComponent implements OnInit {
   openletter(letter) {
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
-      // if account is there
+       // if account is there
       if (data && data.length > 0) {
         this.bodyletter.demand = letter.demand;
         this.bodyletter.showlogo = letter.showlogo;
@@ -213,10 +213,15 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
         this.bodyletter.section = this.section;
         this.bodyletter.kbbr = data[0].kbbr;
+        this.bodyletter.instamount = data[0].instamount;
+        this.bodyletter.oustbalance = data[0].oustbalance;
+        this.bodyletter.currency = data[0].currency;
         //
-        this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
-          this.bodyletter.accounts = accounts;
+        this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(inaccounts => {
+          console.log(inaccounts);
+          this.bodyletter.accounts = inaccounts;
           // get demand1 date
+          console.log(this.bodyletter);
           this.ecolService.demand1history(this.accnumber).subscribe(dd1date => {
             if (dd1date && dd1date.length > 0) {
               this.bodyletter.demand1date = dd1date[0].datesent;
@@ -280,6 +285,9 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
         this.bodyletter.section = this.section;
         this.bodyletter.kbbr = data[0].kbbr;
+        this.bodyletter.instamount = data[0].instamount;
+        this.bodyletter.oustbalance = data[0].oustbalance;
+        this.bodyletter.currency = data[0].currency;
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
           this.bodyletter.accounts = accounts;
@@ -340,7 +348,7 @@ export class SendLetterComponent implements OnInit {
         this.demandshistory(bulk);
         this.getdemandshistory(this.accnumber);
         this.emaildata.file = uploaddata.message;
-        // use uplaoded fie on email
+        // use uploaded fie on email
         if (this.model.uploadedfile) {
           this.emaildata.file = this.uploadedfilepath;
         }
@@ -441,7 +449,8 @@ export class SendLetterComponent implements OnInit {
           email: datafile.customeremail,
           branchemail: datafile.sendemail,
           title: datafile.demand,
-          guarantor: datafile.guarantors
+          guarantor: datafile.guarantors,
+          file: datafile.filepath
         };
 
         const bulk = {
@@ -468,7 +477,6 @@ export class SendLetterComponent implements OnInit {
         //
         this.demandshistory(bulk);
         this.getdemandshistory(datafile.accnumber);
-        this.emaildata.file = datafile.filepath;
         this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
           if (response.result === 'fail') {
             swal.close();

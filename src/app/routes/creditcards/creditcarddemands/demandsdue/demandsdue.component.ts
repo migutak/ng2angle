@@ -182,7 +182,8 @@ export class DemandsdueComponent implements OnInit {
     },
     {
       headerName: 'EXPPMNT',
-      field: 'exppmnt'
+      field: 'exppmnt',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUTBALANCE',
@@ -216,7 +217,7 @@ export class DemandsdueComponent implements OnInit {
   };
 
 currencyFormatter(params) {
-    return '£' + this.formatNumber(params.value);
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
 
 formatNumber(number) {
@@ -267,8 +268,8 @@ formatNumber(number) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
-      this.noTotal = viewall[0].TOTALVIEWALL;
+    this.ecolService.totalcardsdue().subscribe(cards => {
+      this.noTotal = cards[0].TOTALVIEWALL;
     });
   }
 

@@ -2,9 +2,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { environment } from '../../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-viewall',
@@ -13,113 +14,151 @@ import { environment } from '../../../../environments/environment';
 })
 export class ViewallComponent implements OnInit {
 
-  
-  @ViewChild('myGrid') myGrid: jqxGridComponent;
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
+    };
+  }
 
-  total: any = {};
-  // source: any = {};
+
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
-  };
+  resizeEvent = 'resize.ag-grid';
+  $win = $(window);
+  new = true;
+  username: string;
+  searchText: string;
+  model: any = {};
+  noTotal: number;
 
-  source: any =
+  gridOptions: GridOptions;
+  gridApi: GridApi;
+  // private rowClassRules;
+
+  columnDefs = [
     {
-      datatype: 'json',
-      totalrecords: 100,
-      // root: 'Rows',
-      url: environment.api + '/api/tbl_q_all/viewall',
-      filter: function () {
-        // update the grid and send a request to the server.
-        this.myGrid.applyfilters();
-      },
-      sort: function () {
-        // update the grid and send a request to the server.
-        // $("#jqxgrid").jqxGrid('updatebounddata', 'sort');
-      },
-      beforeprocessing: function (data) {
-        if (data != null && data.length > 0) {
-          //this.totalrecords = data.length;
-          this.totalrecords = data[0].totalRecords;
-        }
-      },
-      datafields:
-        [
-          { name: 'ACCNUMBER', type: 'string' },
-          { name: 'CUSTNUMBER', type: 'string' },
-          { name: 'CARDNUMBER', type: 'string' },
-          { name: 'CLIENT_NAME', type: 'string' },
-          { name: 'OUSTBALANCE', type: 'number' },
-          { name: 'DAYSINARR', type: 'number' },
-          { name: 'TOTALARREARS', type: 'number' },
-          { name: 'BUCKET', type: 'string' },
-          { name: 'RPCODE', type: 'string' },
-          { name: 'CITY', type: 'string' },
-          { name: 'BRANCHNAME', type: 'string' },
-          { name: 'AROCODE', type: 'string' },
-          { name: 'COLOFFICER', type: 'string' },
-          { name: 'DUEDATE', type: 'date' },
-          { name: 'CYCLE', type: 'string' },
-          { name: 'SQNUMBER', type: 'string' }
-        ],
-    }
-  dataAdapter: any = new jqx.dataAdapter(this.source, {
-    downloadComplete: function (data, status, xhr) {
-      if (!this.totalrecords) {
-        this.totalrecords = data.length;
+      headerName: 'ACCNUMBER',
+      field: 'accnumber',
+      cellRenderer: function (params) {
+        return '<a  href="#" target="_blank">' + params.value + '</a>';
       }
     },
-    loadError: function (xhr, status, error) {
-      throw new Error(error);
+    {
+      headerName: 'CUSTNUMBER',
+      field: 'custnumber'
+    },
+    {
+      headerName: 'CUST_NAME',
+      field: 'cust_name'
+    },
+    {
+      headerName: 'DAYSINARREARS',
+      field: 'daysinarr',
+      cellStyle: function (params) {
+        if (params.value < '30') {
+          return { color: 'red' };
+        } else if (params.value > '90') {
+          return { color: 'red' };
+        } else {
+          return null;
+        }
+      }
+    },
+    {
+      headerName: 'TOTALARREARS',
+      field: 'instamount'
+    },
+    {
+      headerName: 'OUSTBALANCE',
+      field: 'oustbalance'
+    },
+    {
+      headerName: 'BUCKET',
+      field: 'bucket'
+    },
+    {
+      headerName: 'SQNUMBER',
+      field: 'sqnumber'
     }
-  });
-  rendergridrows = (params: any): any[] => {
-    let data = params.data;
-    return data;
-  }
-  totalcolumnrenderer = (row: number, column: any, cellvalue: any): string => {
-    // let newCellValue = jqx.dataFormat.formatnumber(cellvalue, 'c2');
-    return '<span style="margin: 6px 3px; font-size: 12px; float: right; font-weight: bold;">' + cellvalue + '</span>';
-  }
-  columns: any[] =
-    [
-      {
-        text: 'ACCNUMBER', datafield: 'ACCNUMBER', width: 150, filtertype: 'input',
-        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
-          const that = this;
-          const container = document.createElement('div');
-          htmlElement.appendChild(container);
-          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
-          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
-          // tslint:disable-next-line:no-shadowed-variable
-          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
-            that.onClickMe(clickEvent, rowdata);
-          });
-          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
-        },
-        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
-      },
-      { text: 'CUSTNUMBER', datafield: 'CUSTNUMBER', width: 150, filtertype: 'input' },
-      { text: 'CLIENT_NAME', datafield: 'CLIENT_NAME', width: 200, filtertype: 'input' },
-      { text: 'OUSTBALANCE', datafield: 'OUSTBALANCE', filtertype: 'input', cellsformat: 'd', cellsrenderer: this.totalcolumnrenderer, cellsalign: 'right' },
-      { text: 'DAYSINARR', datafield: 'DAYSINARR', filtertype: 'input', cellsformat: 'd' },
-      { text: 'TOTALARREARS', datafield: 'TOTALARREARS', filtertype: 'input', cellsformat: 'c' },
-      { text: 'BUCKET', datafield: 'BUCKET', filtertype: 'input' },
-      { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'AROCODE', datafield: 'AROCODE', filtertype: 'input' },
-      { text: 'BRANCHNAME', datafield: 'BRANCHNAME', filtertype: 'range' }
-    ];
+  ];
+  rowData1: any;
 
-  //renger grid end
+  dataSource: IDatasource = {
+    getRows: (params: IGetRowsParams) => {
 
-  cardacct: String;
+      // Use startRow and endRow for sending pagination to Backend
+      // params.startRow : Start Page
+      // params.endRow : End Page
+      //
+      this.apiService(20, params.startRow).subscribe(response => {
+        params.successCallback(
+          response, this.noTotal
+        );
+      });
+    }
+  };
 
-  onClickMe(event, rowdata) {
-    this.cardacct = event.target.textContent;
-    // open page
-    window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
+  onRowDoubleClicked(event: any) {
+    this.model = event.node.data;
+    // console.log(this.model);
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
   }
-  ngOnInit() {
+
+  onQuickFilterChanged($event) {
+    // this.gridOptions.api.setQuickFilter($event.target.value);
+    this.searchText = $event.target.value;
+  }
+
+  onSearch() {
+    if (this.model.searchText === undefined) {
+      return;
+    }
+    this.clear();
+    this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
+      //
+      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+    });
+  }
+
+  clear() {
+    const ds = {
+      getRows(params: any) {
+        params.successCallback([], 0);
+      }
+    };
+    this.gridOptions.api.setDatasource(ds);
+  }
+
+  reset() {
+    // location.reload();
+    this.clear();
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  public ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
+    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
+      this.noTotal = viewall[0].TOTALVIEWALL;
+    });
+  }
+
+  gridReady(params) {
+    this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  apiService(perPage, currentPos) {
+    return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
   }
 
 }

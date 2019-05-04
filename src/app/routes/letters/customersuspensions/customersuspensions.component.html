@@ -28,8 +28,11 @@
                         <div class="form-group row mb">
                           <div class="col-md-12">
                             <label class="mt">Customer Number/ Card account</label>
-                            <input class="form-control" name="custnumber" id="custnumber" #custnumber="ngModel"
+                            <input type="text" class="form-control" name="custnumber" id="custnumber" #custnumber="ngModel"
                             [(ngModel)]="model.custnumber" [ngClass]="{ 'is-invalid': custnumber.invalid }" required/>
+
+                            <input type="hidden" class="form-control" name="owner" id="owner" #owner="ngModel"
+                            [(ngModel)]="model.owner"/>
                             <hr />
                             <label class="mt">Select Demand Letter to suspend</label>
                             <div class="col-md-10">

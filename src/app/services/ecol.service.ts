@@ -108,7 +108,8 @@ export class EcolService {
   }
 
   getaccount (accnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
+    // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
+    return this.httpClient.get<any>(environment.api + '/api/qall/' + accnumber);
   }
 
   getfileshistory (custnumber) {
@@ -166,7 +167,9 @@ export class EcolService {
 
   getAccount(accnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
+    // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/qall?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
   }
 
   getmcoopcashAccount(accnumber) {
@@ -176,7 +179,7 @@ export class EcolService {
 
   getcustwithAccount(custnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[where][custnumber]=' + custnumber);
+    return this.httpClient.get<any>(environment.api + '/api/qall?filter[where][custnumber]=' + custnumber);
   }
 
   getcardAccount(cardacct) {
@@ -335,6 +338,10 @@ export class EcolService {
 
   totalmcoopcashviewall() {
     return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalviewall');
+  }
+
+  totalcardsdue() {
+    return this.httpClient.get<any>(environment.api + '/api/demandsduecc/total');
   }
 
   totalmcoopcashmyworklist(username) {
