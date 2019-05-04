@@ -5,6 +5,12 @@ const Home = {
     icon: 'icon-home'
 };
 
+const Guarantors = {
+    text: 'Guarantors',
+    link: '/guarantors/list',
+    icon: 'icon-people'
+};
+
 const Dashboard = {
     text: 'Dashboard & Reports',
     link: '/dashboard',
@@ -39,6 +45,18 @@ const Letters = {
     icon: 'icon-note',
     submenu: [
         {
+            text: 'Letters Due',
+            link: '/demand/demands',
+            alert: '0',
+            label: 'badge badge-danger'
+        },
+        {
+            text: 'Sent History',
+            link: '/demand/demandhistory',
+            alert: '0',
+            label: 'badge badge-danger'
+        }
+        /*{
             text: 'Guarantors',
             link: '/guarantors',
             submenu: [
@@ -65,14 +83,14 @@ const Letters = {
                     link: '/demand/demandhistory'
                 }
             ]
-        }
+        }*/
     ],
-    'alert': '0',
+    'alert': 'new',
     'label': 'badge badge-danger'
 };
 
 const Letterscc = {
-    text: 'Demand Letters cc',
+    text: 'Demands Credit Cards',
     link: '/letters',
     icon: 'icon-note',
     submenu: [
@@ -554,6 +572,7 @@ const collection_menu = [
     headingMain,
     Home,
     Dashboard,
+    Guarantors,
     Letters,
     headingComponents,
     Work,
@@ -581,6 +600,7 @@ const remedial_menu = [
     headingMain,
     Home,
     Dashboard,
+    Guarantors,
     Letters,
     Letterscc,
     headingComponents,
@@ -597,6 +617,7 @@ const teamleader_menu = [
     headingMain,
     Home,
     Dashboard,
+    Guarantors,
     Letters,
     Letterscc,
     headingComponents,

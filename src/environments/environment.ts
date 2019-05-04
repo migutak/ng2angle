@@ -20,7 +20,7 @@ export const environment = {
   filesapi: 'http://localhost:3100/api',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',*/
 
-  api: 'http://ecollecttst.co-opbank.co.ke:8000',
+  api: 'https://ecollecttst.co-opbank.co.ke:8000',
   letters_path: 'c:\\logs\\',
   letters_api: 'http://ecollecttst.co-opbank.co.ke:8004/',
   uploadurl: 'http://ecollecttst.co-opbank.co.ke:4000',

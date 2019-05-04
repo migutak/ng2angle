@@ -38,4 +38,9 @@ export class ListComponent implements OnInit {
     this.router.navigate(['/guarantors/editguarantor/' + id]);
   }
 
+  addnew () {
+    // redirect to ListComponent
+    this.router.navigate(['/guarantors/newguarantor']);
+  }
+
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../services/ecol.service';
-import { DataService } from '../../../services/data.service';
+import { DataShareService } from '../../../services/data.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';

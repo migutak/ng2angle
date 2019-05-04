@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
-import { DataService } from '../../../../services/data.service';
+import { DataShareService } from '../../../../services/data.service';
 import swal from 'sweetalert2';
 import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
@@ -35,9 +35,6 @@ export class ActivityActionComponent implements OnInit {
   cmdstatus: any = [];
 
   message: string;
-
-  @Output() messageEvent = new EventEmitter<string>();
-
   actions = [
     { code: 'OC', name: 'OUTGOING CALL' },
     { code: 'IC', name: 'INCOMING CALL' },
@@ -110,7 +107,8 @@ export class ActivityActionComponent implements OnInit {
     public settings: SettingsService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private ecolService: EcolService
+    private ecolService: EcolService,
+    private dataShareService: DataShareService
     ) {
     //
   }
@@ -152,8 +150,8 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
-  sendMessage() {
-    // this.data.changeMessage("90")
+  sendMessage(){
+    this.dataShareService.sendDataToOtherComponent("90");
   }
 
   getaccount(accnumber) {
