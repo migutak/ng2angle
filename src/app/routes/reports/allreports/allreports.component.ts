@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 declare var $: any;
 
+
 @Component({
     selector: 'app-allreports',
     templateUrl: './allreports.component.html',

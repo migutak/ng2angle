@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 import { AppComponent } from './app.component';
 
@@ -31,6 +32,7 @@ export function createTranslateLoader(http: HttpClient) {
         LayoutModule,
         SharedModule.forRoot(),
         RoutesModule,
+        SlimLoadingBarModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

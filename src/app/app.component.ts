@@ -2,6 +2,14 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 
 import { SettingsService } from './core/settings/settings.service';
 
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import { NavigationCancel,
+        Event,
+        NavigationEnd,
+        NavigationError,
+        NavigationStart,
+        Router } from '@angular/router';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -20,7 +28,27 @@ export class AppComponent implements OnInit {
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.getLayoutSetting('asideToggled'); }
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.getLayoutSetting('isCollapsedText'); }
 
-    constructor(public settings: SettingsService) { }
+    // constructor(public settings: SettingsService) { }
+
+    constructor(public settings: SettingsService, private _loadingBar: SlimLoadingBarService, private _router: Router) {
+        this._router.events.subscribe((event: Event) => {
+          this.navigationInterceptor(event);
+        });
+      }
+      private navigationInterceptor(event: Event): void {
+        if (event instanceof NavigationStart) {
+          this._loadingBar.start();
+        }
+        if (event instanceof NavigationEnd) {
+          this._loadingBar.complete();
+        }
+        if (event instanceof NavigationCancel) {
+          this._loadingBar.stop();
+        }
+        if (event instanceof NavigationError) {
+          this._loadingBar.stop();
+        }
+      }
 
     ngOnInit() {
         document.addEventListener('click', e => {

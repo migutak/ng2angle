@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
 import { SharedModule } from '../../shared/shared.module';
 import { DashboardsComponent } from './dashboards/dashboards.component';
 import { AllReportsComponent } from './allreports/allreports.component';
