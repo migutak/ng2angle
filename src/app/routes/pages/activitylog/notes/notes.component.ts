@@ -29,12 +29,12 @@ export class NotesComponent implements OnInit {
   constructor(
     private ecolservice: EcolService,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
-    private dataShareService: DataShareService
+    private spinner: NgxSpinnerService
+    // private dataShareService: DataShareService
   ) {
-    this.dataShareService.shareDataSubject.subscribe(receiveddata => {
+    /*this.dataShareService.shareDataSubject.subscribe(receiveddata => {
       console.log(receiveddata);
-    });
+    });*/
   }
 
   ngOnInit() {

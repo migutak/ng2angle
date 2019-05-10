@@ -108,7 +108,7 @@ export class ActivityActionComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
-    private dataShareService: DataShareService
+    // private dataShareService: DataShareService
     ) {
     //
   }
@@ -150,8 +150,8 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
-  sendMessage(){
-    this.dataShareService.sendDataToOtherComponent("90");
+  sendMessage() {
+    // this.dataShareService.sendDataToOtherComponent('90');
   }
 
   getaccount(accnumber) {
@@ -191,10 +191,10 @@ export class ActivityActionComponent implements OnInit {
     // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: ['', Validators.required],
+      party: [''],
       ptpamount: [0],
       ptp: [''],
-      ptpdate: ['2019-12-12'],
+      ptpdate: [''],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [Date, Validators.required],
       reason: ['', Validators.required],
@@ -239,26 +239,26 @@ export class ActivityActionComponent implements OnInit {
       notesrc: 'made a note',
       noteimp: 'N',
       rfdother: this.f.rfdother.value,
-      owner: this.username
+      owner: this.username,
+      product: 'MORTGAGE'
     };
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
+      console.log('response ...', data);
       swal('Success!', 'activity saved', 'success');
       // build form
-      this.buildForm();
+     // this.buildForm();
     }, error => {
       console.log(error);
-      // fire error service
       swal('Error!', 'activitylogs - service is currently not available', 'error');
     });
     // update portfolio add notes and ptp
-    this.ecolService.recordupdate(body).subscribe(data => {
+    /* this.ecolService.recordupdate(body).subscribe(data => {
       swal('Success!', 'Records updated', 'success');
     }, error => {
       console.log(error);
-      // fire error service
       swal('Error!', 'recordupdate - service is currently not available', 'error');
-    });
+    });*/
   }
 
   reset () {

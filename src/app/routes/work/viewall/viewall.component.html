@@ -1,7 +1,7 @@
 
 <div class="content-heading">
-    <div>Work List
-      <small>view all</small></div>
+    <div>View ALL
+      <small>work: view all</small></div>
   </div>
   <!-- START card-->
   <div class="card card-default">
@@ -28,6 +28,7 @@
         [gridOptions]="gridOptions"
         (gridReady)="gridReady($event)"
         [columnDefs]="columnDefs"
+        
         (rowDoubleClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
     </div>

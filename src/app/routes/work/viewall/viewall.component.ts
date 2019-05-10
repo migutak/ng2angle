@@ -36,6 +36,10 @@ export class ViewallComponent implements OnInit {
   model: any = {};
   noTotal: number;
 
+  private frameworkComponents;
+  private loadingOverlayComponent;
+  private loadingOverlayComponentParams;
+
   gridOptions: GridOptions;
   gridApi: GridApi;
   // private rowClassRules;
@@ -54,7 +58,7 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'CUST_NAME',
-      field: 'cust_name'
+      field: 'client_name'
     },
     {
       headerName: 'DAYSINARREARS',
@@ -71,22 +75,34 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'instamount'
+      field: 'instamount',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance'
+      field: 'oustbalance',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'BUCKET',
       field: 'bucket'
     },
     {
-      headerName: 'SQNUMBER',
-      field: 'sqnumber'
+      headerName: 'AROCODE',
+      field: 'arocode'
+    },
+    {
+      headerName: 'SECTION',
+      field: 'section'
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'colofficer'
     }
   ];
+
   rowData1: any;
+
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
@@ -103,6 +119,9 @@ export class ViewallComponent implements OnInit {
     }
   };
 
+  currencyFormatter(params) {
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);
@@ -146,7 +165,7 @@ export class ViewallComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
+    this.ecolService.totaltqall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
     });
   }
