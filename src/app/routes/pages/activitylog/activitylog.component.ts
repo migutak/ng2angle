@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../services/ecol.service';
-import { DataShareService } from '../../../services/data.service';
+import { DataService } from '../../../services/data.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../environments/environment';
@@ -17,18 +17,23 @@ const URL = environment.valor;
 })
 export class ActivityLogComponent implements OnInit {
 
+  ptp = 0;
+  notes = 0;
+
   constructor(
     public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService,
-    // private data: DataService
+    private dataService: DataService
     ) {
       // test service
-      /*this.subscription = this.message_service.getProductID().subscribe(message => {
-
-        this.productName = message.text;
-        console.log(message);
-      });*/
+      dataService.getTestData().subscribe(data=> {
+        this.ptp = data;
+      });
+  
+      dataService.getNotesData().subscribe(data=> {
+        this.notes = data;
+      });
     //
     this.uploader.onBuildItemForm = (item, form) => {
       form.append('demand', this.model.demand);

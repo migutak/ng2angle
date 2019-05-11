@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
-import { DataShareService } from '../../../../services/data.service';
+import { DataService } from '../../../../services/data.service';
 import swal from 'sweetalert2';
 import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
@@ -108,7 +108,7 @@ export class ActivityActionComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
-    // private dataShareService: DataShareService
+    private dataService: DataService
     ) {
     //
   }
@@ -150,8 +150,8 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
-  sendMessage() {
-    // this.dataShareService.sendDataToOtherComponent('90');
+  sendNotesData() {
+    this.dataService.pustNotesData(Math.floor(Math.random() * 100));
   }
 
   getaccount(accnumber) {
@@ -244,7 +244,6 @@ export class ActivityActionComponent implements OnInit {
     };
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
-      console.log('response ...', data);
       swal('Success!', 'activity saved', 'success');
       // build form
      // this.buildForm();
