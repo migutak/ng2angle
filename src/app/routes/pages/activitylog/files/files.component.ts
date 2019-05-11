@@ -18,7 +18,7 @@ export class FilesComponent implements OnInit {
 
   accnumber: string;
   custnumber: string;
-  
+
   model: any = {};
   demands: any;
   files: any = [];
@@ -49,13 +49,13 @@ export class FilesComponent implements OnInit {
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       // refresh demad history notes
-      
+
     };
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
-      var obj = JSON.parse(response);
-      for (let i=0; i <obj.files.length; i ++) {
+      const obj = JSON.parse(response);
+      for (let i = 0; i < obj.files.length; i ++) {
         const bulk = {
             'accnumber': this.accnumber,
             'custnumber': this.custnumber,
@@ -68,12 +68,12 @@ export class FilesComponent implements OnInit {
             'docdesc': this.model.filedesc,
             'colofficer': this.username,
           };
-          this.ecolService.uploads(bulk).subscribe(response => {
+          this.ecolService.uploads(bulk).subscribe(resp => {
             this.getfileshistory(this.custnumber);
             swal('Good!', 'File uploaded successfully!', 'success');
           }, error => {
-            swal('Oooops!', 'File uploaded but unable to add to demands history!', 'warning');
-          })
+            swal('Oooops!', 'File uploaded but unable to add to files history!', 'warning');
+          });
     }
     };
 
@@ -108,9 +108,9 @@ export class FilesComponent implements OnInit {
     });
   }
 
-  downloadFile(filepath) {
+  downloadFile(filepath, filename) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-      saveAs(data, 'filename');
+      saveAs(data, filename);
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');

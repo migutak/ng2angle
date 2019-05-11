@@ -218,7 +218,7 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.currency = data[0].currency;
         //
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(inaccounts => {
-          console.log(inaccounts);
+          // console.log(inaccounts);
           this.bodyletter.accounts = inaccounts;
           // get demand1 date
           console.log(this.bodyletter);

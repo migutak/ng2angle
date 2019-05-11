@@ -48,7 +48,7 @@ export class EcolService {
 
 
   postactivitylogs(body) {
-    const url = environment.api + '/api/activitylogs';
+    const url = environment.api + '/api/activitylog';
     return this.httpClient.post(url, body);
   }
 
@@ -352,8 +352,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyallocations?colofficer=' + username);
   }
 
-
   totaldemandsdue() {
     return this.httpClient.get<any>(environment.api + '/api/demandsdue/total');
+  }
+
+  totaltqall() {
+    return this.httpClient.get<any>(environment.api + '/api/qall/total');
   }
 }

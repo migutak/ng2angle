@@ -14,6 +14,9 @@ import * as $ from 'jquery';
 })
 export class ViewallComponent implements OnInit {
 
+  private overlayLoadingTemplate;
+  private overlayNoRowsTemplate;
+
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
       headerHeight: 40,
@@ -23,6 +26,13 @@ export class ViewallComponent implements OnInit {
       cacheBlockSize: 20,
       paginationPageSize: 20
     };
+
+    this.overlayLoadingTemplate =
+      // tslint:disable-next-line:max-line-length
+      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Please wait while your rows are loading</span>';
+    this.overlayNoRowsTemplate =
+      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>';
+
   }
 
 
@@ -54,7 +64,7 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'CUST_NAME',
-      field: 'cust_name'
+      field: 'client_name'
     },
     {
       headerName: 'DAYSINARREARS',
@@ -71,22 +81,34 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'instamount'
+      field: 'instamount',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance'
+      field: 'oustbalance',
+      valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'BUCKET',
       field: 'bucket'
     },
     {
-      headerName: 'SQNUMBER',
-      field: 'sqnumber'
+      headerName: 'AROCODE',
+      field: 'arocode'
+    },
+    {
+      headerName: 'SECTION',
+      field: 'section'
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'colofficer'
     }
   ];
+
   rowData1: any;
+
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
@@ -99,10 +121,14 @@ export class ViewallComponent implements OnInit {
         params.successCallback(
           response, this.noTotal
         );
+        this.gridOptions.api.hideOverlay();
       });
     }
   };
 
+  currencyFormatter(params) {
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);
@@ -120,9 +146,11 @@ export class ViewallComponent implements OnInit {
       return;
     }
     this.clear();
+    this.gridApi.showLoadingOverlay();
     this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+      this.gridApi.hideOverlay();
     });
   }
 
@@ -136,7 +164,7 @@ export class ViewallComponent implements OnInit {
   }
 
   reset() {
-    // location.reload();
+    this.gridApi.showLoadingOverlay();
     this.clear();
     this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
@@ -146,7 +174,7 @@ export class ViewallComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
+    this.ecolService.totaltqall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
     });
   }
@@ -155,6 +183,7 @@ export class ViewallComponent implements OnInit {
     this.gridApi = params.api;
     this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
+    this.gridOptions.api.showLoadingOverlay();
   }
 
   apiService(perPage, currentPos) {
