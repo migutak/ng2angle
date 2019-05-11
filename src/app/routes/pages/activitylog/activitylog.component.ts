@@ -17,39 +17,6 @@ const URL = environment.valor;
 })
 export class ActivityLogComponent implements OnInit {
 
-  accnumber: string;
-  custnumber: string;
-  accountdetails: any;
-  guarantors: [];
-  model: any = {};
-  bodyletter: any = {};
-  filepath: string;
-  demands: any;
-  file: string;
-  smsMessage: string;
-  username: string;
-  date = new Date();
-  notesTotal = 0;
-  sys: string;
-  collateralmenu: boolean = true;
-  guarantorsmenu: boolean = true;
-  demandlettersmenu: boolean = true;
-  itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
-
-  public uploader: FileUploader = new FileUploader({ url: URL });
-  public hasBaseDropZoneOver = false;
-  public hasAnotherDropZoneOver = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  message:string;
-
   constructor(
     public settings: SettingsService,
     private route: ActivatedRoute,
@@ -57,9 +24,9 @@ export class ActivityLogComponent implements OnInit {
     // private data: DataService
     ) {
       // test service
-      /*this.subscription = this.message_service.getProductID().subscribe(message => {  
-       
-        this.productName = message.text;  
+      /*this.subscription = this.message_service.getProductID().subscribe(message => {
+
+        this.productName = message.text;
         console.log(message);
       });*/
     //
@@ -75,6 +42,40 @@ export class ActivityLogComponent implements OnInit {
       // refresh demad history notes
       this.getdemandshistory(this.accnumber);
     };
+  }
+
+  accnumber: string;
+  custnumber: string;
+  accountdetails: any;
+  guarantors: [];
+  model: any = {};
+  bodyletter: any = {};
+  filepath: string;
+  demands: any;
+  file: string;
+  smsMessage: string;
+  username: string;
+  date = new Date();
+  notesTotal = 0;
+  sys: string;
+  collateralmenu = true;
+  guarantorsmenu = true;
+  demandlettersmenu = true;
+  files: any = [];
+  // itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
+
+  public uploader: FileUploader = new FileUploader({ url: URL });
+  public hasBaseDropZoneOver = false;
+  public hasAnotherDropZoneOver = false;
+
+  message;
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
+
+  public fileOverAnother(e: any): void {
+    this.hasAnotherDropZoneOver = e;
   }
 
   ngOnInit() {
@@ -101,20 +102,23 @@ export class ActivityLogComponent implements OnInit {
     // this.data.currentMessage.subscribe(message => this.message = message)
 
     // get account details
-    if (this.sys == 'cc') {
+    if (this.sys === 'cc') {
       this.getcard(this.accnumber);
       this.collateralmenu = false;
       this.guarantorsmenu = false;
-    } else if(this.sys == 'mcoopcash') {
+    } else if (this.sys === 'mcoopcash') {
       console.log('i am mcoopcash');
       this.getmcoopcashaccount(this.accnumber);
       this.collateralmenu = false;
       this.guarantorsmenu = false;
-      this.demandlettersmenu = false
+      this.demandlettersmenu = false;
     } else {
       this.getaccount(this.accnumber);
     }
     this.getdemandshistory(this.accnumber);
+
+    // get files
+    this.getfileshistory(this.custnumber);
   }
 
   receiveMessage($event) {
@@ -130,6 +134,12 @@ export class ActivityLogComponent implements OnInit {
       this.model.postcode = data[0].rpcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+    });
+  }
+
+  getfileshistory(custnumber) {
+    this.ecolService.getfileshistory(custnumber).subscribe(data => {
+      this.files = data;
     });
   }
 

@@ -72,7 +72,7 @@ export class FilesComponent implements OnInit {
             this.getfileshistory(this.custnumber);
             swal('Good!', 'File uploaded successfully!', 'success');
           }, error => {
-            swal('Oooops!', 'File uploaded but unable to add to demands history!', 'warning');
+            swal('Oooops!', 'File uploaded but unable to add to files history!', 'warning');
           });
     }
     };
@@ -108,9 +108,9 @@ export class FilesComponent implements OnInit {
     });
   }
 
-  downloadFile(filepath) {
+  downloadFile(filepath, filename) {
     this.ecolService.downloadFile(filepath).subscribe(data => {
-      saveAs(data, 'filename');
+      saveAs(data, filename);
     }, error => {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');

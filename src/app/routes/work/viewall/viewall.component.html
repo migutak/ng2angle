@@ -28,7 +28,8 @@
         [gridOptions]="gridOptions"
         (gridReady)="gridReady($event)"
         [columnDefs]="columnDefs"
-        
+        [overlayLoadingTemplate]="overlayLoadingTemplate"
+        [overlayNoRowsTemplate]="overlayNoRowsTemplate"
         (rowDoubleClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
     </div>
