@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
-import { DataShareService } from '../../../../services/data.service';
 import { isNullOrUndefined } from 'util';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -30,11 +29,7 @@ export class NotesComponent implements OnInit {
     private ecolservice: EcolService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-    // private dataShareService: DataShareService
   ) {
-    /*this.dataShareService.shareDataSubject.subscribe(receiveddata => {
-      console.log(receiveddata);
-    });*/
   }
 
   ngOnInit() {

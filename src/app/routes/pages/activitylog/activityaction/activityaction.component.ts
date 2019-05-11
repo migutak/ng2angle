@@ -33,63 +33,12 @@ export class ActivityActionComponent implements OnInit {
   actionForm: FormGroup;
   submitted = false;
   cmdstatus: any = [];
+  party: any = [];
+  cure: any = [];
+  collectoraction: any = [];
+  excuse: any = [];
 
   message: string;
-  actions = [
-    { code: 'OC', name: 'OUTGOING CALL' },
-    { code: 'IC', name: 'INCOMING CALL' },
-    { code: 'MET', name: 'DEBTOR VISITED' },
-    { code: 'REVW', name: 'ACCOUNT REVIEW' },
-    { code: 'SC', name: 'SENT CORRESPONDENCE' },
-    { code: 'FT', name: 'FUNDS TRANSFER' },
-  ];
-
-  party = [
-    { code: '1', name: 'Account Holder' },
-    { code: '2', name: 'No Answer' },
-    { code: '3', name: 'Number not in service' },
-    { code: '4', name: 'Secondary accountHolder' },
-    { code: '5', name: 'Third Party' },
-    { code: '6', name: 'Disconnected' },
-    { code: '7', name: 'Not applicable' }
-  ];
-
-  cure = [
-    { code: 'REST', name: 'Restructure' },
-    { code: 'MERG', name: 'Loan Merging' },
-    { code: 'DCNH', name: 'Pay Date Change' },
-    { code: 'MORAT', name: 'Moratorium' },
-    { code: 'TAKEOVER', name: 'Take Over' },
-    { code: 'TOPUP', name: 'Top Ups' }
-  ];
-
-  reasons = [
-    { code: 'Hardship', name: 'Hardship' },
-    { code: 'Bankruptcy', name: 'Bankruptcy' },
-    { code: 'Death in Family', name: 'Death in Family' },
-    { code: 'Deceased', name: 'Deceased' },
-    { code: 'Dispute', name: 'Dispute' },
-    { code: 'Divorce', name: 'Divorce' },
-    { code: 'Delay in proceeds', name: 'Delay in proceeds' },
-    { code: 'Diversion of proceeds', name: 'Diversion of proceeds' },
-    { code: 'Death in Family', name: 'Death in Family' },
-    { code: 'Crop failure', name: 'Crop failure' },
-    { code: 'AWOL/Left employment', name: 'AWOL/Left employment' },
-    { code: 'Discharged', name: 'Discharged' },
-    { code: 'Dismissed', name: 'Dismissed' },
-    { code: 'Interdicted', name: 'Interdicted' },
-    { code: 'Left Employment', name: 'Left Employment' },
-    { code: 'Resigned', name: 'Resigned' },
-    { code: 'Retired', name: 'Retired' },
-    { code: 'Retrenched', name: 'Retrenched' },
-    { code: 'Sacked', name: 'Sacked' },
-    { code: 'Self Employed', name: 'Self Employed' },
-    { code: 'Summary Dismissal', name: 'Summary Dismissal' },
-    { code: 'Suspended', name: 'Suspended' },
-    { code: 'Terminated', name: 'Terminated' },
-    { code: 'Business Failure', name: 'Business Failure' },
-    { code: 'Business Loss', name: 'Business Loss' }
-  ];
 
   branchstatus: any = [];
   account: any = [];
@@ -114,6 +63,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ecolService.loader();
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
@@ -140,6 +90,10 @@ export class ActivityActionComponent implements OnInit {
     //
     this.getcmdstatus();
     this.getbranchstatus();
+    this.getparty();
+    this.getcollectoraction();
+    this.getcure();
+    this.getexcuse();
     //
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
@@ -148,15 +102,15 @@ export class ActivityActionComponent implements OnInit {
     } else {
       this.getaccount(this.accnumber);
     }
-  }
 
-  sendNotesData() {
-    this.dataService.pustNotesData(Math.floor(Math.random() * 100));
   }
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
       this.account = data[0];
+      // build form
+      this.buildForm();
+      if (swal.isVisible) {swal.close(); }
     });
   }
 
@@ -179,8 +133,32 @@ export class ActivityActionComponent implements OnInit {
   }
 
   getbranchstatus() {
-    this.ecolService.getcmdstatus().subscribe(branchstatus => {
+    this.ecolService.getbranchstatus().subscribe(branchstatus => {
       this.branchstatus = branchstatus;
+    });
+  }
+
+  getparty() {
+    this.ecolService.getparty().subscribe(party => {
+      this.party = party;
+    });
+  }
+
+  getcollectoraction() {
+    this.ecolService.getcollectoraction().subscribe(collectoraction => {
+      this.collectoraction = collectoraction;
+    });
+  }
+
+  getexcuse() {
+    this.ecolService.getexcuse().subscribe(excuse => {
+      this.excuse = excuse;
+    });
+  }
+
+  getcure() {
+    this.ecolService.getcure().subscribe(cure => {
+      this.cure = cure;
     });
   }
 
@@ -197,12 +175,12 @@ export class ActivityActionComponent implements OnInit {
       ptpdate: [''],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [Date, Validators.required],
-      reason: ['', Validators.required],
-      cmdstatus: [''],
-      branchstatus: [''],
-      route: [''],
+      reason: [this.account.excuse, Validators.required],
+      cmdstatus: [this.account.cmdstatus],
+      branchstatus: [this.account.branchstatus],
+      route: [this.account.excuse],
       paymode: [''],
-      cure: [''],
+      cure: [this.account.cure],
       rfdother: ['']
     });
   }
@@ -232,7 +210,7 @@ export class ActivityActionComponent implements OnInit {
       route: this.f.route.value,
       paymode: this.f.paymode.value,
       cure: this.f.cure.value,
-      accnumber: this.accnumber,
+      accountnumber: this.accnumber,
       custnumber: this.custnumber,
       arramount: this.account.totalarrears || 0,
       oustamount: this.account.oustbalance || 0,
@@ -244,6 +222,7 @@ export class ActivityActionComponent implements OnInit {
     };
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
+      this.sendNotesData(this.custnumber);
       swal('Success!', 'activity saved', 'success');
       // build form
      // this.buildForm();
@@ -260,7 +239,15 @@ export class ActivityActionComponent implements OnInit {
     });*/
   }
 
+  sendNotesData(custnumber) {
+    this.ecolService.totalnotes(custnumber).subscribe(data => {
+      this.dataService.pustNotesData( data[0].TOTAL);
+    });
+  }
+
   reset () {
-    this.buildForm();
+    // this.buildForm();
+    this.ecolService.loader();
+    this.getaccount(this.accnumber);
   }
 }

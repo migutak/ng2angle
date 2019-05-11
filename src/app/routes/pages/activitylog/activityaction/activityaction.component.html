@@ -3,7 +3,6 @@
     <div class="card-header">
       <strong>Collector activity </strong> capture
     </div>
-    <button (click)="sendNotesData()">TEST</button>
     <form [formGroup]="actionForm" (ngSubmit)="onSubmit()">
       <div class="card-body">
         <div class="row">
@@ -15,7 +14,7 @@
               <select id="collectoraction" name="collectoraction" class="form-control" formControlName="collectoraction"
                 class="form-control" [ngClass]="{ 'is-invalid': f.collectoraction.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let action of actions" [value]="action.code">{{action.name}}</option>
+                <option *ngFor="let action of collectoraction" [value]="action.collectoractionid">{{action.collectoraction}}</option>
               </select>
             </div>
           </div>
@@ -30,7 +29,7 @@
               <select id="party" name="party" class="form-control" name="party" class="form-control"
                 formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let p of party" [value]="p.code">{{p.name}}</option>
+                <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
               </select>
             </div>
           </div>
@@ -42,7 +41,7 @@
               <select id="reason" name="reason" class="form-control" name="reason" class="form-control"
                 formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': f.reason.errors }">
                 <option value="0">Please select</option>
-                <option *ngFor="let reason of reasons" [value]="reason.code">{{reason.name}}</option>
+                <option *ngFor="let ex of excuse" [value]="ex.excuseid">{{ex.excuse}}</option>
               </select>
             </div>
           </div>
@@ -126,7 +125,7 @@
               <select id="branchstatus" name="branchstatus" class="form-control" formControlName="branchstatus"
                 class="form-control" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let br of branchstatus" [value]="br.code">{{br.name}}</option>
+                <option *ngFor="let br of branchstatus" [value]="br.id">{{br.branchstatus}}</option>
               </select>
             </div>
           </div>
@@ -156,7 +155,7 @@
               <select id="cure" name="cure" class="form-control" formControlName="cure" class="form-control"
                 [ngClass]="{ 'is-invalid': f.cure.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let c of cure" [value]="c.code">{{c.name}}</option>
+                <option *ngFor="let c of cure" [value]="c.cureid">{{c.cure}}</option>
               </select>
             </div>
           </div>

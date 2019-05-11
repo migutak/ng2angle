@@ -42,10 +42,26 @@ export class EcolService {
   }
 
   getbranchstatus() {
-    const url = environment.api + '/api/cmdstatus';
+    const url = environment.api + '/api/branchstatus';
     return this.httpClient.get(url);
   }
 
+  getcollectoraction() {
+    const url = environment.api + '/api/collectoraction';
+    return this.httpClient.get(url);
+  }
+  getexcuse() {
+    const url = environment.api + '/api/excuse';
+    return this.httpClient.get(url);
+  }
+  getcure() {
+    const url = environment.api + '/api/cure';
+    return this.httpClient.get(url);
+  }
+  getparty() {
+    const url = environment.api + '/api/party';
+    return this.httpClient.get(url);
+  }
 
   postactivitylogs(body) {
     const url = environment.api + '/api/activitylog';
@@ -358,5 +374,9 @@ export class EcolService {
 
   totaltqall() {
     return this.httpClient.get<any>(environment.api + '/api/qall/total');
+  }
+
+  totalnotes(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/notehis/total?custnumber=' + custnumber);
   }
 }

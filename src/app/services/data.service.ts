@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class DataService {
- 
+
   constructor() { }
 
   public dataSubject = new BehaviorSubject<number>(0);

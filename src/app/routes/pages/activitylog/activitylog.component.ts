@@ -18,7 +18,7 @@ const URL = environment.valor;
 export class ActivityLogComponent implements OnInit {
 
   ptp = 0;
-  notes = 0;
+  notes: number;
 
   constructor(
     public settings: SettingsService,
@@ -27,11 +27,11 @@ export class ActivityLogComponent implements OnInit {
     private dataService: DataService
     ) {
       // test service
-      dataService.getTestData().subscribe(data=> {
+      dataService.getTestData().subscribe(data => {
         this.ptp = data;
       });
-  
-      dataService.getNotesData().subscribe(data=> {
+
+      dataService.getNotesData().subscribe(data => {
         this.notes = data;
       });
     //
@@ -61,7 +61,6 @@ export class ActivityLogComponent implements OnInit {
   smsMessage: string;
   username: string;
   date = new Date();
-  notesTotal = 0;
   sys: string;
   collateralmenu = true;
   guarantorsmenu = true;
@@ -72,8 +71,6 @@ export class ActivityLogComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
-
-  message;
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
@@ -112,7 +109,6 @@ export class ActivityLogComponent implements OnInit {
       this.collateralmenu = false;
       this.guarantorsmenu = false;
     } else if (this.sys === 'mcoopcash') {
-      console.log('i am mcoopcash');
       this.getmcoopcashaccount(this.accnumber);
       this.collateralmenu = false;
       this.guarantorsmenu = false;
@@ -124,11 +120,11 @@ export class ActivityLogComponent implements OnInit {
 
     // get files
     this.getfileshistory(this.custnumber);
+
+    // notes
+    this.getNotes(this.custnumber);
   }
 
-  receiveMessage($event) {
-    this.notesTotal = $event;
-  }
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
@@ -139,6 +135,12 @@ export class ActivityLogComponent implements OnInit {
       this.model.postcode = data[0].rpcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+    });
+  }
+
+  getNotes(custnumber) {
+    this.ecolService.totalnotes(custnumber).subscribe(data => {
+      this.notes = data[0].TOTAL;
     });
   }
 
