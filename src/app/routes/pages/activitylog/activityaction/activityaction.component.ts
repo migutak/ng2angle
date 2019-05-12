@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -57,13 +58,14 @@ export class ActivityActionComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
-    private dataService: DataService
+    private dataService: DataService,
+    private spinner: NgxSpinnerService,
     ) {
     //
   }
 
   ngOnInit() {
-    this.ecolService.loader();
+    this.spinner.show();
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
@@ -111,18 +113,21 @@ export class ActivityActionComponent implements OnInit {
       // build form
       this.buildForm();
       if (swal.isVisible) {swal.close(); }
+      this.spinner.hide();
     });
   }
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
+      this.spinner.hide();
     });
   }
 
   getmcoop(loanaccnumber) {
     this.ecolService.getmcoopcashAccount(loanaccnumber).subscribe(data => {
       this.account = data[0];
+      this.spinner.hide();
     });
   }
 
@@ -246,8 +251,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   reset () {
-    // this.buildForm();
-    this.ecolService.loader();
+    this.spinner.show();
     this.getaccount(this.accnumber);
   }
 }
