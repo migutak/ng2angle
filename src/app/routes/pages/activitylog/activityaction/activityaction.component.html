@@ -1,8 +1,8 @@
 <div>
   <div class="card">
-      <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
-          <p style="font-size: 20px; color: white">Processing ...</p>
-        </ngx-spinner>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+      <p style="font-size: 20px; color: white">Processing ...</p>
+    </ngx-spinner>
     <div class="card-header">
       <strong>Collector activity </strong> capture
     </div>
@@ -14,10 +14,11 @@
           </div>
           <div class="col-md-9">
             <div class="col-md-12">
-              <select id="collectoraction" name="collectoraction" class="form-control" formControlName="collectoraction"
+              <select id="collectoraction" name="collectoraction" formControlName="collectoraction"
                 class="form-control" [ngClass]="{ 'is-invalid': f.collectoraction.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let action of collectoraction" [value]="action.collectoractionid">{{action.collectoraction}}</option>
+                <option *ngFor="let action of collectoraction" [value]="action.collectoractionid">
+                  {{action.collectoraction}}</option>
               </select>
             </div>
           </div>
@@ -29,7 +30,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="party" name="party" class="form-control" name="party" class="form-control"
+              <select id="party" name="party"
                 formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
@@ -41,11 +42,14 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="reason" name="reason" class="form-control" name="reason" class="form-control"
-                formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': f.reason.errors }">
+              <!--<select id="reason" name="reason" class="form-control" name="reason"
+                formControlName="reason" [ngClass]="{ 'is-invalid': f.reason.errors }">
                 <option value="0">Please select</option>
                 <option *ngFor="let ex of excuse" [value]="ex.excuseid">{{ex.excuse}}</option>
-              </select>
+              </select>-->
+              <ng-select id="reason" name="reason" formControlName="reason" [ngClass]="{ 'is-invalid': f.reason.errors }">
+                  <ng-option *ngFor="let ex of excuse" [value]="ex.excuse" >{{ex.excuse}}</ng-option>
+              </ng-select>
             </div>
           </div>
         </div>
@@ -75,6 +79,7 @@
                 <option value="NO">NO</option>
                 <option value="YES">YES</option>
               </select>
+
             </div>
           </div>
         </div>
@@ -94,11 +99,14 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="cmdstatus" name="cmdstatus" class="form-control" formControlName="cmdstatus"
+              <!---<select id="cmdstatus" name="cmdstatus" formControlName="cmdstatus"
                 class="form-control" [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
                 <option value="">Please select</option>
-                <option *ngFor="let cmd of cmdstatus" [value]="cmd.id">{{cmd.cmdstatus}}</option>
-              </select>
+                <option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus">{{cmd.cmdstatus}}</option>
+              </select>-->
+              <ng-select id="cmdstatus" name="cmdstatus" formControlName="cmdstatus" [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
+                  <ng-option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus" >{{cmd.cmdstatus}}</ng-option>
+              </ng-select>
             </div>
           </div>
         </div>
@@ -109,14 +117,14 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-                <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd"
-                    id="ptpdate" name="ptpdate" name="ptpdate" ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate"
-                    />
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i class="fa fa-calendar"></i>
-                      </span></button>
-                    </div>
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" id="ptpdate" name="ptpdate" name="ptpdate"
+                  ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i
+                        class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
               </div>
             </div>
           </div>
@@ -125,11 +133,14 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="branchstatus" name="branchstatus" class="form-control" formControlName="branchstatus"
+              <!--<select id="branchstatus" name="branchstatus" formControlName="branchstatus"
                 class="form-control" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let br of branchstatus" [value]="br.id">{{br.branchstatus}}</option>
-              </select>
+              </select>-->
+              <ng-select id="branchstatus" name="branchstatus" formControlName="branchstatus" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
+                  <ng-option *ngFor="let br of branchstatus" [value]="br.branchstatus" >{{br.branchstatus}}</ng-option>
+              </ng-select>
             </div>
           </div>
         </div>
@@ -155,11 +166,14 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="cure" name="cure" class="form-control" formControlName="cure" class="form-control"
+              <!--<select id="cure" name="cure" class="form-control" formControlName="cure" class="form-control"
                 [ngClass]="{ 'is-invalid': f.cure.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let c of cure" [value]="c.cureid">{{c.cure}}</option>
-              </select>
+              </select>-->
+              <ng-select id="cure" name="cure" formControlName="cure" [ngClass]="{ 'is-invalid': f.cure.errors }">
+                  <ng-option *ngFor="let c of cure" [value]="c.cure" >{{c.cure}}</ng-option>
+              </ng-select>
             </div>
           </div>
         </div>
@@ -170,14 +184,14 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-                <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd"
-                    id="reviewdate" name="reviewdate" name="reviewdate" ngbDatepicker #d="ngbDatepicker" formControlName="reviewdate"
-                     />
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i class="fa fa-calendar"></i>
-                      </span></button>
-                    </div>
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" id="reviewdate" name="reviewdate" name="reviewdate"
+                  ngbDatepicker #d="ngbDatepicker" formControlName="reviewdate" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i
+                        class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
               </div>
 
             </div>
@@ -187,7 +201,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother" class="form-control"></textarea>
+              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
+                class="form-control"></textarea>
             </div>
           </div>
         </div>

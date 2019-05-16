@@ -14,8 +14,8 @@ import * as $ from 'jquery';
 })
 export class ViewallComponent implements OnInit {
 
-  private overlayLoadingTemplate;
-  private overlayNoRowsTemplate;
+  public overlayLoadingTemplate;
+  public overlayNoRowsTemplate;
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{

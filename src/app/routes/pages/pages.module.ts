@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSelectModule } from 'ngx-select-ex';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { DataService } from '../../services/data.service';
 
@@ -47,6 +50,9 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
         FileUploadModule,
         NgbModule,
         NgxSpinnerModule,
+        NgxSelectModule,
+        FormsModule,
+        NgSelectModule,
         ToasterModule.forRoot()
         // RouterModule.forChild(routes)
     ],
