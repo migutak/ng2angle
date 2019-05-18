@@ -21,7 +21,7 @@ export class CustContactsComponent implements OnInit {
   model: any = {};
   addcontact: any = {};
   username: string;
-  edit: boolean = false;
+  edit = false;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -67,20 +67,20 @@ export class CustContactsComponent implements OnInit {
         'Good!',
         'Contact saved!',
         'success'
-      )
+      );
       this.getcontacts(this.custnumber);
-    }, error=> {
+    }, error => {
       console.log(error);
       swal({
         title: 'Ooops!',
         text: 'Contact Not saved!',
         type: 'error',
         footer: '<a href="http://helpdesk.co-opbank.co.ke" target="_blank">Report issue to helpdesk?</a>'
-      })
-    })
+      });
+    });
   }
 
-  editcontact(contact){
+  editcontact(contact) {
     this.model.id = contact.id;
     this.model.custnumber = contact.custnumber;
     this.model.contactnumber = contact.telephone;
@@ -108,19 +108,19 @@ export class CustContactsComponent implements OnInit {
         'Good!',
         'Contact updated!',
         'success'
-      )
+      );
       this.getcontacts(this.custnumber);
-    }, error=> {
+    }, error => {
       console.log(error);
       swal(
         'Ooops!',
         'Contact Not updated!',
         'error'
-      )
-    })
+      );
+    });
   }
 
-  getcontacts(custnumber){
+  getcontacts(custnumber) {
     this.spinner.show();
     this.ecolService.getteles(custnumber).subscribe(data => {
       this.contacts = data;
@@ -128,10 +128,10 @@ export class CustContactsComponent implements OnInit {
     }, error => {
       console.log(error);
       this.spinner.hide();
-    })
+    });
   }
 
-  cancel(){
+  cancel() {
     this.edit = false;
   }
 

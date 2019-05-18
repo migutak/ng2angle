@@ -19,6 +19,8 @@ export class CollateralsComponent implements OnInit {
   username: string;
   model: any = {};
   collaterals: any = [];
+  edit = false;
+  //
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
@@ -44,7 +46,7 @@ export class CollateralsComponent implements OnInit {
     });
 
     // get guarantors history
-    this.getGuarantors(this.accnumber);
+    this.getCollateral(this.custnumber);
   }
 
   onSubmit(form) {
@@ -52,27 +54,29 @@ export class CollateralsComponent implements OnInit {
     this.ecolService.loader();
     //
    const body = {
-      nationid: form.value.nationid,
-      guarantorname: form.value.guarantorname,
+      regowner: form.value.regowner,
+      collateralname: form.value.collateralname,
       accnumber: this.model.accnumber,
       custnumber: this.model.custnumber,
-      address: form.value.address,
-      postalcode: form.value.postalcode,
-      telnumber: form.value.telnumber,
-      email: form.value.email,
-      active: form.value.active
+      colofficer: this.username,
+      forcedsale: form.value.forcedsale,
+      insurancevalue: form.value.insurancevalue,
+      marketvalue: form.value.marketvalue,
+      tenure: form.value.tenure,
+      valuationdate: form.value.valuationdate,
+      valuer: form.value.valuer
     };
-    this.ecolService.submitGuarantor(body).subscribe(data => {
+    this.ecolService.submitCollateral(body).subscribe(data => {
       swal('Successful!', 'saved successfully!', 'success');
-      this.getGuarantors(this.accnumber);
+      this.getCollateral(this.accnumber);
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
     });
   }
 
-  getGuarantors(accnumber) {
-    this.ecolService.guarantordetails(accnumber).subscribe(data => {
+  getCollateral(custnumber) {
+    this.ecolService.retrieveCollateral(custnumber).subscribe(data => {
       this.collaterals = data;
     }, error => {
       console.log(error);
@@ -80,7 +84,54 @@ export class CollateralsComponent implements OnInit {
   }
 
   reset() {
-    console.log('please!!!');
+    this.model.regowner = '';
+    this.model.collateralname = '';
+    this.model.forcedsale = '';
+    this.model.insurancevalue = '';
+    this.model.marketvalue = '';
+    this.model.tenure = '';
+    this.model.valuationdate = '';
+    this.model.valuer = '';
+  }
+
+  cancel() {
+    this.edit = false;
+    this.reset();
+  }
+
+  updatecollateral(form) {
+    // save to db
+    this.ecolService.updateCollateral(this.model.id, form).subscribe(response => {
+      swal(
+        'Good!',
+        'Collateral updated!',
+        'success'
+      );
+      this.getCollateral(this.custnumber);
+    }, error => {
+      console.log(error);
+      swal(
+        'Ooops!',
+        'Contact Not updated!',
+        'error'
+      );
+    });
+  }
+
+  editcollateral(collateral) {
+    this.model.id = collateral.id;
+    this.model.regowner = collateral.regowner;
+    this.model.collateralname = collateral.collateralname;
+    this.model.accnumber = collateral.accnumber;
+    this.model.custnumber = collateral.custnumber;
+    this.model.forcedsale = collateral.forcedsale;
+    this.model.insurancevalue = collateral.insurancevalue;
+    this.model.marketvalue = collateral.marketvalue;
+    this.model.tenure = collateral.tenure;
+    this.model.valuationdate = collateral.valuationdate;
+    this.model.valuer = collateral.valuer;
+    //
+    this.edit = true;
   }
 
 }

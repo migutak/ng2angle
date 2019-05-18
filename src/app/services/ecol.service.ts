@@ -82,8 +82,20 @@ export class EcolService {
     return this.httpClient.put(environment.api + '/api/guarantordetails/' + id, body);
   }
 
+  updateCollateral(id, body) {
+    return this.httpClient.put(environment.api + '/api/deptcollateral/' + id, body);
+  }
+
   retrieveGuarantors(accnumber) {
     return this.httpClient.get(environment.api + '/api/guarantordetails?filter[where][accnumber]=' + accnumber);
+  }
+
+  retrieveCollateral(custnumber) {
+    return this.httpClient.get(environment.api + '/api/deptcollateral?filter[where][custnumber]=' + custnumber);
+  }
+
+  submitCollateral(body) {
+    return this.httpClient.post(environment.api + '/api/deptcollateral', body);
   }
 
   retrieve_a_Guarantor(id) {
@@ -378,5 +390,17 @@ export class EcolService {
 
   totalnotes(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/notehis/total?custnumber=' + custnumber);
+  }
+
+  totalguarantors(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/guarantordetails/total?custnumber=' + custnumber);
+  }
+
+  totalcontacts(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/teles/total?custnumber=' + custnumber);
+  }
+
+  totalcollaterals(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/deptcollateral/total?custnumber=' + custnumber);
   }
 }
