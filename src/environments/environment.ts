@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  adlogin: false,
   api: 'http://ecollect.inteligen.co.ke:8000',
   letters_api: 'http://ecollect.inteligen.co.ke:8004/',
   // letters_path: '/users/kevinabongo/Demands/',
