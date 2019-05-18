@@ -56,7 +56,8 @@ export class ViewallComponent implements OnInit {
       field: 'accnumber',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
-      }
+      },
+      width: 250
     },
     {
       headerName: 'CUSTNUMBER',
@@ -64,7 +65,8 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'CUST_NAME',
-      field: 'client_name'
+      field: 'client_name',
+      width: 350
     },
     {
       headerName: 'DAYSINARREARS',
@@ -119,7 +121,7 @@ export class ViewallComponent implements OnInit {
       //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response, this.noTotal
+          response.rows, response.total
         );
         this.gridOptions.api.hideOverlay();
       });
@@ -147,11 +149,28 @@ export class ViewallComponent implements OnInit {
     }
     this.clear();
     this.gridApi.showLoadingOverlay();
-    this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
+    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
       this.gridApi.hideOverlay();
-    });
+    });*/
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiServiceSearch(20, params.startRow).subscribe(response => {
+          console.log(response);
+          params.successCallback(
+            response.rows, response.total
+          );
+          this.gridOptions.api.hideOverlay();
+        });
+      }
+    };
+
+    this.gridApi.setDatasource(this.dataSource);
   }
 
   clear() {
@@ -166,6 +185,20 @@ export class ViewallComponent implements OnInit {
   reset() {
     this.gridApi.showLoadingOverlay();
     this.clear();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiService(20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response.rows, response.total
+          );
+          this.gridOptions.api.hideOverlay();
+        });
+      }
+    };
     this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
   }
@@ -174,9 +207,9 @@ export class ViewallComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totaltqall().subscribe(viewall => {
+    /*this.ecolService.totaltqall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
-    });
+    });*/
   }
 
   gridReady(params) {
@@ -187,7 +220,13 @@ export class ViewallComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/tqall/paged?limit=' + perPage + '&page=' + currentPos);
+  }
+
+  apiServiceSearch(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
   }
 
 }

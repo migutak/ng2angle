@@ -40,7 +40,7 @@ const DashboardAdmin = {
 };
 
 const Letters = {
-    text: 'Demand Letters',
+    text: 'Demands Loans',
     link: '/letters',
     icon: 'icon-note',
     submenu: [
@@ -90,7 +90,7 @@ const Letters = {
 };
 
 const Letterscc = {
-    text: 'Demands Credit Cards',
+    text: 'Demands C-Cards',
     link: '/letters',
     icon: 'icon-note',
     submenu: [
