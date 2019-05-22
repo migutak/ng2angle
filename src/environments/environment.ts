@@ -20,6 +20,7 @@ export const environment = {
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   filesapi: 'http://localhost:3100/api',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
+  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
 
   /*api: 'http://ecollecttst.co-opbank.co.ke:8000',
   letters_path: 'c:\\logs\\',

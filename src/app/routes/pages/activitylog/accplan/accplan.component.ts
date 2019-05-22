@@ -15,7 +15,7 @@ export class AccPlanComponent implements OnInit {
 
   custnumber;
   accnumber;
-  username
+  username;
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
@@ -41,8 +41,9 @@ export class AccPlanComponent implements OnInit {
     // get account details
   }
 
-  openaccplan(){
-    window.open(environment.accplanlink + '/?accnumber='+this.accnumber+"&custnumber="+ this.custnumber+"&username="+ this.username +"&nationid=00", '_blank');
+  openaccplan() {
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.accplanlink + '/?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&nationid=00', '_blank');
   }
 
 }

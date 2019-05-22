@@ -45,6 +45,13 @@ export const routes = [
             { path: 'remedial', loadChildren: './remedial/remedial.module#RemedialModule' },
             { path: 'mcoopcash', loadChildren: './mcoopcash/mcoopcash.module#McoopcashModule' },
             { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },
+            { path: 'debtcollectors', loadChildren: './debtcollectors/debtcollectors.module#DebtcollectorsModule' },
+            { path: 'marketors', loadChildren: './marketors/marketors.module#MarketorsModule' },
+            { path: 'auctioneers', loadChildren: './auctioneers/auctioneers.module#AuctioneersModule' },
+            { path: 'repossessors', loadChildren: './repossessors/repossessors.module#RepossessorsModule' },
+            { path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule' },
+            { path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule' },
+            { path: 'yards', loadChildren: './yards/yards.module#YardsModule' },
             { path: 'extras', loadChildren: './extras/extras.module#ExtrasModule' }
         ],
         canActivate: [AuthGuard]
