@@ -60,18 +60,18 @@ export class ViewallComponent implements OnInit {
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250, 
+      width: 250,
       resizable: true
     },
     {
       headerName: 'CUSTNUMBER',
-      field: 'custnumber', 
+      field: 'custnumber',
       resizable: true
     },
     {
       headerName: 'CUSTNAME',
       field: 'client_name',
-      width: 450, 
+      width: 450,
       resizable: true
     },
     {
