@@ -66,7 +66,7 @@ export class ViewallComponent implements OnInit {
     {
       headerName: 'CUST_NAME',
       field: 'client_name',
-      width: 350
+      width: 450
     },
     {
       headerName: 'DAYSINARREARS',

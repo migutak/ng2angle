@@ -84,9 +84,10 @@ const Letters = {
                 }
             ]
         }*/
-    ],
+    ]
+   /* ,
     'alert': 'new',
-    'label': 'badge badge-danger'
+    'label': 'badge badge-danger'*/
 };
 
 const Letterscc = {
@@ -102,9 +103,10 @@ const Letterscc = {
             text: 'Demands history',
             link: '/creditcards/creditcarddemands/demandshistory'
         }
-    ],
+    ]
+   /* ,
     'alert': '0',
-    'label': 'badge badge-danger'
+    'label': 'badge badge-danger'*/
 };
 
 const Administration = {
@@ -438,19 +440,31 @@ const serviceproviders = {
     submenu: [
         {
             text: 'Debt Collectors',
-            link: '/sp/debtcollectors'
+            link: '/debtcollectors/allcases'
         },
         {
             text: 'Marketors',
-            link: '/sp/marketors'
+            link: '/marketors/allcases'
         },
         {
             text: 'Auctioneers',
-            link: '/sp/auctioneers'
+            link: '/auctioneers/allcases'
         },
         {
             text: 'Repossessors',
-            link: '/sp/repos'
+            link: '/repossessors/allcases'
+        },
+        {
+            text: 'Investigators',
+            link: '/investigators/allcases'
+        },
+        {
+            text: 'Valuers',
+            link: '/valuers/allcases'
+        },
+        {
+            text: 'Yards',
+            link: '/yards/allcases'
         }
     ]
 };

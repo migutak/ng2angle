@@ -64,7 +64,7 @@ export class EcolService {
   }
 
   postactivitylogs(body) {
-    const url = environment.api + '/api/activitylog';
+    const url = environment.api + '/api/activitylog/action';
     return this.httpClient.post(url, body);
   }
 
@@ -118,8 +118,8 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tblusers/' + username);
   }
 
-  auth(username: string, password: string) {
-    return this.httpClient.get<any>(environment.auth + '?username=' + username + '&password=' + password);
+  auth(body: object) {
+    return this.httpClient.post<any>(environment.auth,  body);
   }
 
   putuser(user: object) {

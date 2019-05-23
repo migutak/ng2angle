@@ -32,7 +32,7 @@
                     (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                         <span class="float-right" *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
                         <em class="{{item.icon}}" *ngIf="item.icon"></em>
-                        <span>{{(item.translate | translate) || item.text}}</span>
+                        <span>{{(item.translate | translate) || item.text}} </span> <em class="fa fa-angle-right"></em>
                 </a>
                 <!-- SUBLEVEL -->
                 <ul *ngIf="item.submenu" class="sidebar-nav sidebar-subnav" [routerLinkActive]="['opening']">

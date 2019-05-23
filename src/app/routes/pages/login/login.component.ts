@@ -59,7 +59,11 @@ export class LoginComponent implements OnInit {
         }*/
         // AD login
         if (ADLOGIN) {
-            this.ecolService.auth(value.username, value.password).subscribe(response => {
+            const body = {
+                username : value.username,
+                password: value.password
+            };
+            this.ecolService.auth(body).subscribe(response => {
                 console.log(response);
                 if (response.auth) {
                     // get user

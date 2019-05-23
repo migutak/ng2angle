@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 declare var $: any;
-
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-allreports',
@@ -14,6 +14,10 @@ export class AllReportsComponent implements OnInit {
 
     onNavigate(reportname) {
         window.open('activitydash?report=' + reportname, '_blank');
+    }
+
+    openactivityrpt() {
+        window.open(environment.kibanarpt + '/app/kibana', '_blank');
     }
 
 }
