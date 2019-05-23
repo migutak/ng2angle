@@ -25,7 +25,12 @@ export class HeaderComponent implements OnInit {
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
 
-    constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService, public ecolService: EcolService, public router: Router) {
+    constructor(
+        public menu: MenuService,
+        public userblockService: UserblockService,
+        public settings: SettingsService,
+        public ecolService: EcolService,
+        public router: Router) {
 
         // show only a few items on demo
         this.menuItems = menu.getMenu().slice(0, 4); // for horizontal layout
@@ -46,6 +51,9 @@ export class HeaderComponent implements OnInit {
             if (el)
                 el.className = screenfull.isFullscreen ? 'fa fa-compress' : 'fa fa-expand';
         });
+
+        // get notifications
+       // ptps, overdue and demand letters
     }
 
     toggleUserBlock(event) {
