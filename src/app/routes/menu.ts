@@ -229,22 +229,6 @@ const Forms = {
     ]
 };
 
-const Collectionrpt = {
-    text: 'Collection Reports',
-    link: '/collectionrpts',
-    icon: 'icon-grid',
-    submenu: [
-        {
-            text: 'Reports',
-            link: '/reports/allreports'
-        },
-        {
-            text: 'Dashboards',
-            link: '/reports/dashboards'
-        }
-    ]
-};
-
 const Remedialrpts = {
     text: 'Remedial Reports',
     link: '/collectionrpts',
@@ -351,7 +335,7 @@ const Work = {
             link: '/work/predelq'
         },
         {
-            text: 'PTP Due',
+            text: 'Broken PTPs',
             link: '/work/ptps'
         },
         {
@@ -368,9 +352,9 @@ const Work_cc = {
     submenu: [
         {
             text: 'View all',
-            link: '/creditcards/viewall',
-            'alert': '23',
-            'label': 'badge badge-warning'
+            link: '/creditcards/viewall'
+            /*'alert': '23',
+            'label': 'badge badge-warning'*/
         },
         {
             text: 'My allocations',
@@ -402,9 +386,9 @@ const Remedial = {
     submenu: [
         {
             text: 'View all',
-            link: '/work/viewall',
-            'alert': '23',
-            'label': 'badge badge-warning'
+            link: '/work/viewall'
+            /*'alert': '23',
+            'label': 'badge badge-warning'*/
         },
         {
             text: 'My allocations',
@@ -423,7 +407,7 @@ const Remedial = {
             link: '/work/predelq'
         },
         {
-            text: 'PTP Due',
+            text: 'Broken PTPs',
             link: '/work/ptps'
         },
         {
@@ -588,17 +572,18 @@ const collection_menu = [
     Dashboard,
     Guarantors,
     Letters,
+    Letterscc,
     headingComponents,
     Work,
-    Remedial,
+    // Remedial,
     mcoopcash,
     serviceproviders,
     // headingMore,
     // Collectionrpt,
-    headingConfigurations,
-    Demandletters,
-    Allocations,
-    SMS
+    // headingConfigurations,
+    // Demandletters,
+    // Allocations,
+    // SMS
 ];
 
 const creditcards_menu = [
@@ -623,8 +608,8 @@ const remedial_menu = [
     Work_cc,
     mcoopcash,
     serviceproviders,
-    headingComponents,
-    Demandletters
+    // headingComponents,
+    // Demandletters
 ];
 
 const teamleader_menu = [
@@ -640,8 +625,6 @@ const teamleader_menu = [
     Remedial,
     mcoopcash,
     serviceproviders,
-    // headingMore,
-    // Collectionrpt,
     headingConfigurations,
     Demandletters,
     Allocations,

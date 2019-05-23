@@ -20,7 +20,7 @@ export class ViewallComponent implements OnInit {
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
       defaultColDef:{
-        resizable:true
+        resizable:true,
       },
       headerHeight: 40,
       pagination: true,
@@ -113,7 +113,9 @@ export class ViewallComponent implements OnInit {
     {
       headerName: 'RROCODE',
       field: 'rrocode',
-      resizable: true
+      resizable: true,
+      filter: true,
+      sortable: true,
     },
     {
       headerName: 'SECTION',

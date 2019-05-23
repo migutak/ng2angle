@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   adlogin: false,
-  api: 'http://ecollect.inteligen.co.ke:8000',
+  /*api: 'http://ecollect.inteligen.co.ke:8000',
   letters_api: 'http://ecollect.inteligen.co.ke:8004/',
   // letters_path: '/users/kevinabongo/Demands/',
   letters_path: 'c:\\logs\\',
@@ -20,10 +20,10 @@ export const environment = {
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   filesapi: 'http://localhost:3100/api',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
-  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
+  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',*/
 
-  /*api: 'http://ecollecttst.co-opbank.co.ke:8000',
-  letters_path: 'c:\\logs\\',
+  api: 'http://ecollecttst.co-opbank.co.ke:8000',
+  letters_path: '/users/kevinabongo/Demands/',
   letters_api: 'http://ecollecttst.co-opbank.co.ke:8004/',
   uploadurl: 'http://ecollecttst.co-opbank.co.ke:4000',
   valor: 'http://ecollecttst.co-opbank.co.ke:3000/api',
@@ -34,5 +34,6 @@ export const environment = {
   emailapi: 'http://ecollecttst.co-opbank.co.ke:8005/demand/email',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   filesapi: 'http://localhost:3100/api',
-  accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001'*/
+  accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
+  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
 };
