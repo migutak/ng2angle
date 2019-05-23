@@ -10,9 +10,9 @@
                 <img class="img-fluid" src="assets/img/logo-single.png" alt="App Logo" />
             </div>
         </a>
-       <button class="navbar-toggler" type="button" (click)="navCollapsed = !navCollapsed">
-          <span class="navbar-toggler-icon"></span>
-       </button>
+        <button class="navbar-toggler" type="button" (click)="navCollapsed = !navCollapsed">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
     <!-- END navbar header-->
     <!-- START Nav wrapper-->
@@ -28,7 +28,8 @@
                 </a>
                 <!-- START Dropdown menu-->
                 <div *dropdownMenu class="dropdown-menu animated fadeInUp">
-                    <a class="dropdown-item" *ngFor="let subitem of item.submenu" [routerLink]="subitem.link" [title]="subitem.text" >
+                    <a class="dropdown-item" *ngFor="let subitem of item.submenu" [routerLink]="subitem.link"
+                        [title]="subitem.text">
                         <span>{{(subitem.translate | translate) || subitem.text}}</span>
                     </a>
                 </div>
@@ -60,56 +61,67 @@
             <li class="nav-item dropdown dropdown-list" dropdown>
                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
                     <em class="icon-bell"></em>
-                    <span class="badge badge-danger">11</span>
+                    <span class="badge badge-danger">{{nu_of_alerts}}</span>
                 </a>
                 <!-- START Dropdown menu-->
                 <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
                     <div class="dropdown-item">
                         <!-- START list group-->
-                        <div class="list-group">
-                           <!-- list item-->
-                           <div class="list-group-item list-group-item-action">
-                              <div class="media">
-                                 <div class="align-self-start mr-2">
-                                    <em class="fab fa-twitter fa-2x text-info"></em>
-                                 </div>
-                                 <div class="media-body">
-                                    <p class="m-0">PTPs</p>
-                                    <p class="m-0 text-muted text-sm">1 overdue ptp</p>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- list item-->
-                           <div class="list-group-item list-group-item-action">
-                              <div class="media">
-                                 <div class="align-self-start mr-2">
-                                    <em class="fa fa-envelope fa-2x text-warning"></em>
-                                 </div>
-                                 <div class="media-body">
-                                    <p class="m-0">Letters</p>
-                                    <p class="m-0 text-muted text-sm">10 demand letters</p>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- list item-->
-                           <div class="list-group-item list-group-item-action">
-                              <div class="media">
-                                 <div class="align-self-start mr-2">
-                                    <em class="fa fa-tasks fa-2x text-success"></em>
-                                 </div>
-                                 <div class="media-body">
-                                    <p class="m-0">Pending Tasks</p>
-                                    <p class="m-0 text-muted text-sm">11 overdue task</p>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- last list item-->
-                           <div class="list-group-item list-group-item-action">
-                              <!--<span class="d-flex align-items-center">
+                        <div [routerLink]="['/work/ptps']" class="list-group">
+                            <!-- list item-->
+                            <div class="list-group-item list-group-item-action">
+                                <div class="media">
+                                    <div class="align-self-start mr-2">
+                                        <em class="fab fa-twitter fa-2x text-info"></em>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="m-0">PTPs</p>
+                                        <p class="m-0 text-muted text-sm">{{nu_of_ptps}} overdue PTP(s)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- list item-->
+                            <div [routerLink]="['/demand/demands']" class="list-group-item list-group-item-action">
+                                <div class="media">
+                                    <div class="align-self-start mr-2">
+                                        <em class="fa fa-envelope fa-2x text-warning"></em>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="m-0">Letters</p>
+                                        <p class="m-0 text-muted text-sm">{{nu_of_demands}} demand letter(s)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [routerLink]="['/creditcards/creditcarddemands/demandsdue']" class="list-group-item list-group-item-action">
+                                <div class="media">
+                                    <div class="align-self-start mr-2">
+                                        <em class="fa fa-envelope fa-2x text-warning"></em>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="m-0">Letters</p>
+                                        <p class="m-0 text-muted text-sm">{{nu_of_demands}} demand letter(s)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- list item-->
+                            <div [routerLink]="['/work/overdue']" class="list-group-item list-group-item-action">
+                                <div class="media">
+                                    <div class="align-self-start mr-2">
+                                        <em class="fa fa-tasks fa-2x text-success"></em>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="m-0">Overdue actions</p>
+                                        <p class="m-0 text-muted text-sm">{{nu_of_overdue}} overdue task(s)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- last list item-->
+                            <div class="list-group-item list-group-item-action">
+                                <!--<span class="d-flex align-items-center">
                                  <span class="text-sm">More notifications</span>
                                  <span class="badge badge-danger ml-auto">14</span>
                               </span>-->
-                           </div>
+                            </div>
                         </div>
                         <!-- END list group-->
                     </div>

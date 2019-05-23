@@ -17,6 +17,10 @@ export class HeaderComponent implements OnInit {
 
     navCollapsed = true; // for horizontal layout
     menuItems = []; // for horizontal layout
+    nu_of_alerts = 3;
+    nu_of_ptps = 0;
+    nu_of_demands = 0;
+    nu_of_overdue = 0
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button

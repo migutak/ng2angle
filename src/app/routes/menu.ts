@@ -334,9 +334,9 @@ const Work = {
     submenu: [
         {
             text: 'View all',
-            link: '/work/viewall',
-            'alert': '23',
-            'label': 'badge badge-warning'
+            link: '/work/viewall'
+            /*'alert': '23',
+            'label': 'badge badge-warning'*/
         },
         {
             text: 'My allocations',
