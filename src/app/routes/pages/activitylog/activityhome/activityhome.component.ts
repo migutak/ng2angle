@@ -65,9 +65,9 @@ export class ActivityHomeComponent implements OnInit {
     // get account details
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
-    } else if(this.sys == 'mcoopcash') {
+    } else if (this.sys === 'mcoopcash') {
       this.getmcoop(this.accnumber);
-    }else {
+    } else {
       this.getaccount(this.accnumber);
     }
 
@@ -150,7 +150,7 @@ export class ActivityHomeComponent implements OnInit {
       this.collaterals = data;
       this.loader = false;
     }, error => {
-      console.log('directors error ==>', error);
+      console.log('collaterals error ==>', error);
       alert('unable to retrieve collaterals');
       this.loader = false;
     });
@@ -174,7 +174,7 @@ export class ActivityHomeComponent implements OnInit {
       this.accwithid = data;
       this.loader = false;
     }, error => {
-      console.log('accwithid error ==>', error);
+      console.log('loadaccwithid error ==>', error);
       alert('unable to retrieve accwithid');
       this.loader = false;
     });
@@ -183,11 +183,10 @@ export class ActivityHomeComponent implements OnInit {
   loadptps(accnumber) {
     this.loader = true;
     this.ecolService.ptps(accnumber).subscribe(data => {
-      console.log(data);
       this.ptps = data;
       this.loader = false;
     }, error => {
-      console.log('loadcards error ==>', error);
+      console.log('loadptps error ==>', error);
       alert('unable to retrieve ptps');
       this.loader = false;
     });

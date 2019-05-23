@@ -1,10 +1,9 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
-import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { environment } from '../../../../environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-todays',
@@ -13,113 +12,228 @@ import { environment } from '../../../../environments/environment';
 })
 export class TodaysComponent implements OnInit {
 
-  
-  @ViewChild('myGrid') myGrid: jqxGridComponent;
+  public overlayLoadingTemplate;
+  public overlayNoRowsTemplate;
 
-  total: any = {};
-  // source: any = {};
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
+    };
+
+    this.overlayLoadingTemplate =
+      // tslint:disable-next-line:max-line-length
+      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Please wait while your rows are loading</span>';
+    this.overlayNoRowsTemplate =
+      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Response: \'no rows\' found</span>';
+
+  }
+
+
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  constructor(private jqxDomService: JqxDomService, private ecolService: EcolService) {
 
-  };
+  resizeEvent = 'resize.ag-grid';
+  $win = $(window);
+  new = true;
+  username: string;
+  searchText: string;
+  model: any = {};
+  noTotal: number;
 
-  source: any =
+  gridOptions: GridOptions;
+  gridApi: GridApi;
+  // private rowClassRules;
+
+  columnDefs = [
     {
-      datatype: 'json',
-      totalrecords: 100,
-      // root: 'Rows',
-      url: environment.api + '/api/tbl_q_all/viewallcc',
-      filter: function () {
-        // update the grid and send a request to the server.
-        this.myGrid.applyfilters();
+      headerName: 'ACCNUMBER',
+      field: 'accnumber',
+      cellRenderer: function (params) {
+        return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      sort: function () {
-        // update the grid and send a request to the server.
-        // $("#jqxgrid").jqxGrid('updatebounddata', 'sort');
-      },
-      beforeprocessing: function (data) {
-        if (data != null && data.length > 0) {
-          //this.totalrecords = data.length;
-          this.totalrecords = data[0].totalRecords;
+      width: 250
+    },
+    {
+      headerName: 'CUSTNUMBER',
+      field: 'custnumber'
+    },
+    {
+      headerName: 'CUST_NAME',
+      field: 'client_name',
+      width: 350
+    },
+    {
+      headerName: 'DAYSINARREARS',
+      field: 'daysinarr',
+      cellStyle: function (params) {
+        if (params.value < '30') {
+          return { color: 'red' };
+        } else if (params.value > '90') {
+          return { color: 'red' };
+        } else {
+          return null;
         }
-      },
-      datafields:
-        [
-          { name: 'CARDACCT', type: 'string' },
-          { name: 'ACCOUNTNO', type: 'string' },
-          { name: 'CARDNUMBER', type: 'string' },
-          { name: 'CARDNAME', type: 'string' },
-          { name: 'OUTBALANCE', type: 'number' },
-          { name: 'EXPPMNT', type: 'number' },
-          { name: 'DAYSINARREARS', type: 'number' },
-          { name: 'ADDRESS', type: 'string' },
-          { name: 'RPCODE', type: 'string' },
-          { name: 'CITY', type: 'string' },
-          { name: 'MOBILE', type: 'string' },
-          { name: 'EMAILADDRESS', type: 'string' },
-          { name: 'COLOFFICER', type: 'string' },
-          { name: 'DUEDATE', type: 'date' },
-          { name: 'CYCLE', type: 'string' },
-          { name: 'SQNUMBER', type: 'string' }
-        ],
-    }
-  dataAdapter: any = new jqx.dataAdapter(this.source, {
-    downloadComplete: function (data, status, xhr) {
-      if (!this.totalrecords) {
-        this.totalrecords = data.length;
       }
     },
-    loadError: function (xhr, status, error) {
-      throw new Error(error);
+    {
+      headerName: 'TOTALARREARS',
+      field: 'instamount',
+      valueFormatter: this.currencyFormatter
+    },
+    {
+      headerName: 'OUSTBALANCE',
+      field: 'oustbalance',
+      valueFormatter: this.currencyFormatter
+    },
+    {
+      headerName: 'BUCKET',
+      field: 'bucket'
+    },
+    {
+      headerName: 'AROCODE',
+      field: 'arocode'
+    },
+    {
+      headerName: 'SECTION',
+      field: 'section'
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'colofficer'
     }
-  });
-  rendergridrows = (params: any): any[] => {
-    let data = params.data;
-    return data;
-  }
-  totalcolumnrenderer = (row: number, column: any, cellvalue: any): string => {
-    // let newCellValue = jqx.dataFormat.formatnumber(cellvalue, 'c2');
-    return '<span style="margin: 6px 3px; font-size: 12px; float: right; font-weight: bold;">' + cellvalue + '</span>';
-  }
-  columns: any[] =
-    [
-      {
-        text: 'CARDACCT', datafield: 'CARDACCT', width: 150, filtertype: 'input',
-        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
-          const that = this;
-          const container = document.createElement('div');
-          htmlElement.appendChild(container);
-          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
-          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
-          // tslint:disable-next-line:no-shadowed-variable
-          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
-            that.onClickMe(clickEvent, rowdata);
-          });
-          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
-        },
-        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
-      },
-      { text: 'CARDNUMBER', datafield: 'CARDNUMBER', width: 150, filtertype: 'input' },
-      { text: 'CARDNAME', datafield: 'CARDNAME', width: 200, filtertype: 'input' },
-      { text: 'OUTBALANCE', datafield: 'OUTBALANCE', filtertype: 'input', cellsformat: 'd', cellsrenderer: this.totalcolumnrenderer, cellsalign: 'right' },
-      { text: 'EXPPMNT', datafield: 'EXPPMNT', filtertype: 'input', cellsformat: 'd' },
-      { text: 'DAYSINARR', datafield: 'DAYSINARREARS', filtertype: 'input', cellsformat: 'c' },
-      { text: 'CYCLE', datafield: 'CYCLE', filtertype: 'input' },
-      { text: 'COLOFFICER', datafield: 'colofficer', filtertype: 'input' },
-      { text: 'SQNUMBER', datafield: 'SQNUMBER', filtertype: 'input' },
-      { text: 'DUEDATE', datafield: 'DUEDATE', filtertype: 'range' }
-    ];
+  ];
 
-  //renger grid end
+  rowData1: any;
 
-  cardacct: String;
 
-  onClickMe(event, rowdata) {
-    this.cardacct = event.target.textContent;
-    // open page
-    window.open(environment.applink + '/activitylog?accnumber=' + this.cardacct + '&custnumber=' + this.cardacct + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
+  dataSource: IDatasource = {
+    getRows: (params: IGetRowsParams) => {
+
+      // Use startRow and endRow for sending pagination to Backend
+      // params.startRow : Start Page
+      // params.endRow : End Page
+      //
+      this.apiService(20, params.startRow).subscribe(response => {
+        params.successCallback(
+          response.rows, response.total
+        );
+        if (response.rows.length > 0) {
+          this.gridOptions.api.hideOverlay();
+        } else {
+          this.gridOptions.api.showNoRowsOverlay();
+        }
+      });
+    }
+  };
+
+  currencyFormatter(params) {
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+  onRowDoubleClicked(event: any) {
+    this.model = event.node.data;
+    // console.log(this.model);
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
   }
-  ngOnInit() {
+
+  onQuickFilterChanged($event) {
+    // this.gridOptions.api.setQuickFilter($event.target.value);
+    this.searchText = $event.target.value;
+  }
+
+  onSearch() {
+    if (this.model.searchText === undefined) {
+      return;
+    }
+    this.clear();
+    this.gridApi.showLoadingOverlay();
+    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
+      //
+      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+      this.gridApi.hideOverlay();
+    });*/
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiServiceSearch(20, params.startRow).subscribe(response => {
+          console.log(response);
+          params.successCallback(
+            response.rows, response.total
+          );
+          if (response.rows.length > 0) {
+            this.gridOptions.api.hideOverlay();
+          } else {
+            this.gridOptions.api.showNoRowsOverlay();
+          }
+        });
+      }
+    };
+
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  clear() {
+    const ds = {
+      getRows(params: any) {
+        params.successCallback([], 0);
+      }
+    };
+    this.gridOptions.api.setDatasource(ds);
+  }
+
+  reset() {
+    this.gridApi.showLoadingOverlay();
+    this.clear();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiService(20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response.rows, response.total
+          );
+          if (response.rows.length > 0) {
+            this.gridOptions.api.hideOverlay();
+          } else {
+            this.gridOptions.api.showNoRowsOverlay();
+          }
+        });
+      }
+    };
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  public ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+  }
+
+  gridReady(params) {
+    this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+    this.gridOptions.api.showLoadingOverlay();
+  }
+
+  apiService(perPage, currentPos) {
+    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username + '&limit=' + perPage + '&page=' + currentPos);
+  }
+
+  apiServiceSearch(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
   }
 
 }

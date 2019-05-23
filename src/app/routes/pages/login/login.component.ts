@@ -5,6 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 import { EcolService } from '../../../services/ecol.service';
 import { getDefaultService } from 'selenium-webdriver/chrome';
+import { environment } from '../../../../environments/environment';
+
+const ADLOGIN = environment.adlogin;
 
 @Component({
     selector: 'app-login',
@@ -55,22 +58,24 @@ export class LoginComponent implements OnInit {
             console.log(value);
         }*/
         // AD login
-        /*this.ecolService.auth(value.username, value.password).subscribe(response => {
-            //
-            if (response.result === 'success') {
-                // get user
-                this.getuser(value.username, value.password);
-            } else {
-                this.error = 'Wrong username and/or password';
+        if (ADLOGIN) {
+            this.ecolService.auth(value.username, value.password).subscribe(response => {
+                console.log(response);
+                if (response.auth) {
+                    // get user
+                    this.getuser(value.username, value.password);
+                } else {
+                    this.error = 'Wrong username and/or password';
+                    this.loading = false;
+                }
+            }, error => {
+                console.log(error);
+                this.error = 'Error during login';
                 this.loading = false;
-            }
-        }, error => {
-            console.log(error);
-            this.error = 'Error during login';
-            this.loading = false;
-        });*/
-        this.getuser(value.username, value.password);
-
+            });
+        } else {
+            this.getuser(value.username, value.password);
+        }
     }
 
     ngOnInit() {

@@ -19,12 +19,15 @@ export class ActivityLogComponent implements OnInit {
 
   ptp = 0;
   notes: number;
+  totalcontacts: number;
+  totalcollaterals: number;
+  totalguarantors: number;
 
   constructor(
     public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService,
-    private dataService: DataService
+    public dataService: DataService
     ) {
       // test service
       dataService.getTestData().subscribe(data => {
@@ -33,6 +36,18 @@ export class ActivityLogComponent implements OnInit {
 
       dataService.getNotesData().subscribe(data => {
         this.notes = data;
+      });
+
+      dataService.getCollateral().subscribe(data => {
+        this.totalcollaterals = data;
+      });
+
+      dataService.getContacts().subscribe(data => {
+        this.totalcontacts = data;
+      });
+
+      dataService.getGuarantors().subscribe(data => {
+        this.totalguarantors = data;
       });
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -123,6 +138,12 @@ export class ActivityLogComponent implements OnInit {
 
     // notes
     this.getNotes(this.custnumber);
+    // notes
+    this.getCollateral(this.custnumber);
+    // notes
+    this.getContacts(this.custnumber);
+    // notes
+    this.getGuarantors(this.custnumber);
   }
 
 
@@ -150,6 +171,24 @@ export class ActivityLogComponent implements OnInit {
     });
   }
 
+  getGuarantors(custnumber) {
+    this.ecolService.totalguarantors(custnumber).subscribe(data => {
+      this.totalguarantors = data[0].TOTAL;
+    });
+  }
+
+  getContacts(custnumber) {
+    this.ecolService.totalcontacts(custnumber).subscribe(data => {
+      this.totalcontacts = data[0].TOTAL;
+    });
+  }
+
+  getCollateral(custnumber) {
+    this.ecolService.totalcollaterals(custnumber).subscribe(data => {
+      this.totalcollaterals = data[0].TOTAL;
+    });
+  }
+
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
       this.accountdetails = data[0];
@@ -165,7 +204,6 @@ export class ActivityLogComponent implements OnInit {
 
   getmcoopcashaccount(accnumber) {
     this.ecolService.getmcoopcashAccount(accnumber).subscribe(data => {
-      console.log('mcoopcash', data);
       this.accountdetails = data[0];
       this.model.accnumber = data[0].loanaccnumber;
       this.model.custnumber = data[0].loanaccnumber;
