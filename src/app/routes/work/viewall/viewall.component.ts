@@ -57,16 +57,19 @@ export class ViewallComponent implements OnInit {
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250
+      width: 250, 
+      resizable: true
     },
     {
       headerName: 'CUSTNUMBER',
-      field: 'custnumber'
+      field: 'custnumber', 
+      resizable: true
     },
     {
-      headerName: 'CUST_NAME',
+      headerName: 'CUSTNAME',
       field: 'client_name',
-      width: 450
+      width: 450, 
+      resizable: true
     },
     {
       headerName: 'DAYSINARREARS',
@@ -79,25 +82,30 @@ export class ViewallComponent implements OnInit {
         } else {
           return null;
         }
-      }
+      },
+      resizable: true
     },
     {
       headerName: 'TOTALARREARS',
       field: 'instamount',
+      resizable: true,
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUSTBALANCE',
       field: 'oustbalance',
-      valueFormatter: this.currencyFormatter
+      valueFormatter: this.currencyFormatter,
+      resizable: true
     },
     {
       headerName: 'BUCKET',
-      field: 'bucket'
+      field: 'bucket',
+      resizable: true
     },
     {
       headerName: 'AROCODE',
-      field: 'arocode'
+      field: 'arocode',
+      resizable: true
     },
     {
       headerName: 'SECTION',
