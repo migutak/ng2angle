@@ -14,8 +14,9 @@
           </div>
           <div class="col-md-9">
             <div class="col-md-12">
-              <select id="collectoraction" name="collectoraction" formControlName="collectoraction"
-                class="form-control" [ngClass]="{ 'is-invalid': f.collectoraction.errors }">
+              <select id="collectoraction" name="collectoraction" formControlName="collectoraction" class="form-control"
+                [ngClass]="{ 'is-invalid': f.collectoraction.errors }"
+                (change)="changeAction(actionForm.value.collectoraction)">
                 <option value="">Please select</option>
                 <option *ngFor="let action of collectoraction" [value]="action.collectoractionid">
                   {{action.collectoraction}}</option>
@@ -30,11 +31,15 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="party" name="party" [disabled] = "collectoraction"
+              <!--<select id="party" name="party"
                 formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
-              </select>
+              </select>-->
+              <ng-select id="party" name="party" formControlName="party" placeholder="Select party"
+                (ngModelChange)="changeParty(actionForm.value)">
+                <ng-option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</ng-option>
+              </ng-select>
             </div>
           </div>
           <div class="col-md-3">
@@ -42,13 +47,11 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <!--<select id="reason" name="reason" class="form-control" name="reason"
-                formControlName="reason" [ngClass]="{ 'is-invalid': f.reason.errors }">
-                <option value="0">Please select</option>
-                <option *ngFor="let ex of excuse" [value]="ex.excuseid">{{ex.excuse}}</option>
-              </select>-->
-              <ng-select id="reason" name="reason" formControlName="reason" [ngClass]="{ 'is-invalid': f.reason.errors }">
-                  <ng-option *ngFor="let ex of excuse" [value]="ex.excuse" >{{ex.excuse}}</ng-option>
+              <ng-select id="reason" name="reason" formControlName="reason"
+                [ngClass]="{ 'is-invalid': f.reason.errors }"
+                (ngModelChange)="changeReason(actionForm.value.reason)"
+                >
+                <ng-option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</ng-option>
               </ng-select>
             </div>
           </div>
@@ -60,28 +63,21 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="ptp" name="ptp" class="form-control" name="ptp" class="form-control" formControlName="ptp"
-                class="form-control" [ngClass]="{ 'is-invalid': f.ptp.errors }">
-                <option value="">Please select</option>
-                <option value="NO">NO</option>
-                <option value="YES">YES</option>
-              </select>
+              <ng-select id="ptp" name="ptp" formControlName="ptp" placeholder="Select PTP"
+                (ngModelChange)="changePtp(actionForm.value.ptp)">
+                <ng-option *ngFor="let p of ptp" [value]="p.name">{{p.name}}</ng-option>
+              </ng-select>
             </div>
           </div>
           <div class="col-md-3">
-            Route for review
-          </div>
-          <div class="col-md-3">
-            <div class="col-md-12">
-              <select id="route" name="route" class="form-control" formControlName="route" class="form-control"
-                [ngClass]="{ 'is-invalid': f.route.errors }">
-                <option value="">Please select</option>
-                <option value="NO">NO</option>
-                <option value="YES">YES</option>
-              </select>
-
+              Other reason for default
             </div>
-          </div>
+            <div class="col-md-3">
+              <div class="col-md-12">
+                <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
+                  class="form-control"></textarea>
+              </div>
+            </div>
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -104,8 +100,9 @@
                 <option value="">Please select</option>
                 <option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus">{{cmd.cmdstatus}}</option>
               </select>-->
-              <ng-select id="cmdstatus" name="cmdstatus" formControlName="cmdstatus" [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
-                  <ng-option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus" >{{cmd.cmdstatus}}</ng-option>
+              <ng-select id="cmdstatus" name="cmdstatus" formControlName="cmdstatus"
+                [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
+                <ng-option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus">{{cmd.cmdstatus}}</ng-option>
               </ng-select>
             </div>
           </div>
@@ -128,21 +125,19 @@
               </div>
             </div>
           </div>
-          <!--<div class="col-md-3">
-            Branch status
-          </div>
           <div class="col-md-3">
-            <div class="col-md-12">
-              <select id="branchstatus" name="branchstatus" formControlName="branchstatus"
-                class="form-control" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
-                <option value="">Please select</option>
-                <option *ngFor="let br of branchstatus" [value]="br.id">{{br.branchstatus}}</option>
-              </select>
-              <ng-select id="branchstatus" name="branchstatus" formControlName="branchstatus" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
-                  <ng-option *ngFor="let br of branchstatus" [value]="br.branchstatus" >{{br.branchstatus}}</ng-option>
-              </ng-select>
+              Route for review
             </div>
-          </div>-->
+            <div class="col-md-3">
+              <div class="col-md-12">
+  
+                <ng-select id="route" name="route" formControlName="route">
+                  <ng-option *ngFor="let r of reviewers" [value]="r.username">{{r.firstname}} {{r.lastname}} {{r.surname}}
+                  </ng-option>
+                </ng-select>
+  
+              </div>
+            </div>
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -161,7 +156,7 @@
               </select>
             </div>
           </div>
-         <!-- <div class="col-md-3">
+          <!-- <div class="col-md-3">
             Curing method
           </div>
           <div class="col-md-3">
@@ -191,15 +186,7 @@
 
             </div>
           </div>
-          <div class="col-md-3">
-            Other reason for default
-          </div>
-          <div class="col-md-3">
-            <div class="col-md-12">
-              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
-                class="form-control"></textarea>
-            </div>
-          </div>
+          
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -226,6 +213,6 @@
         <button type="reset" class="btn btn-sm btn-danger" (click)="reset()"><i class="fa fa-ban"></i> Reset</button>
       </div>
     </form>
-    <pre>{{actionForm.valid | json}}</pre>
+    <pre>{{actionForm.value | json}}</pre>
   </div>
 </div>

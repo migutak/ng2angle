@@ -7,7 +7,7 @@
                 <div class="loader" *ngIf="loader"></div>
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Accnumber:</label>
+                        <label class="col-lg-2 col-form-label">account number:</label>
                         <div class="col-lg-10">
                             <strong>{{account?.accnumber || account?.cardacct || account?.loanaccnumber}}</strong>
                         </div>
@@ -15,17 +15,17 @@
                 </fieldset>
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Oustbalance:</label>
+                        <label class="col-lg-2 col-form-label">outstanding balance:</label>
                         <div class="col-lg-10">
-                            <strong>{{account?.oustnumber || account?.cardnumber || account?.loanamount}}</strong>
+                            <strong>{{account?.oustbalance || account?.outbalance || account?.loanamount}}</strong>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Totalarrears:</label>
+                        <label class="col-lg-2 col-form-label">total arrears:</label>
                         <div class="col-lg-10">
-                            <strong>{{account?.totalarrears || account?.outbalance || account?.loanaccnumber}}</strong>
+                            <strong>{{account?.instamount || account?.outbalance || account?.loanaccnumber}}</strong>
                         </div>
                     </div>
                 </fieldset>
@@ -39,9 +39,17 @@
                 </fieldset>
                 <fieldset>
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Arocode :</label>
+                        <label class="col-lg-2 col-form-label">arocode :</label>
                         <div class="col-lg-10">
                             <strong>{{account?.arocode}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">rrocode :</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.rrocode}}</strong>
                         </div>
                     </div>
                 </fieldset>

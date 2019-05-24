@@ -22,6 +22,7 @@ export class ActivityLogComponent implements OnInit {
   totalcontacts: number;
   totalcollaterals: number;
   totalguarantors: number;
+  totalfiles: number;
 
   constructor(
     public settings: SettingsService,
@@ -48,6 +49,10 @@ export class ActivityLogComponent implements OnInit {
 
       dataService.getGuarantors().subscribe(data => {
         this.totalguarantors = data;
+      });
+
+      dataService.getFiles().subscribe(data => {
+        this.totalfiles = data;
       });
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -168,6 +173,7 @@ export class ActivityLogComponent implements OnInit {
   getfileshistory(custnumber) {
     this.ecolService.getfileshistory(custnumber).subscribe(data => {
       this.files = data;
+      this.totalfiles = data.length
     });
   }
 

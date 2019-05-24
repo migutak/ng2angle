@@ -8,14 +8,16 @@
         </a>
       </div>
       <div id="collapseThree" class="collapse" data-parent="#accordion">
-        <div class="card-body">
+        <div class="card-body" style="min-height: 400px; max-height: 500px; overflow-y: scroll;">
           <table class="table table-hover table-bordered table-striped">
             <thead>
               <tr>
                 <th>custnumber#</th>
                 <th>FileName</th>
+                <th>Type</th>
                 <th>Description</th>
                 <th>Owner</th>
+                <th>Date</th>
                 <th class="text-center">Download</th>
               </tr>
             </thead>
@@ -23,8 +25,10 @@
               <tr *ngFor="let d of files">
                 <td>{{d.custnumber}}</td>
                 <td>{{d.filename}}</td>
+                <td>{{d.userdesctype}}</td>
                 <td>{{d.docdesc}}</td>
                 <td>{{d.colofficer}}</td>
+                <td>{{d.stagedate}}</td>
                 <td class="text-center">
                   <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.destpath, d.filename)">
                     <i class="fa fa-download"></i>
@@ -45,12 +49,21 @@
       <div id="collapseupload" class="collapse show" data-parent="#accordion">
         <div class="card-body">
           <div class="form-group row">
+            <label class="col-xl-4 col-form-label">Document Type</label>
+            <div class="col-xl-8">
+                <ng-select id="userdesctype" name="userdesctype" #userdesctype="ngModel" [ngModel]="model.userdesctype">
+                    <ng-option *ngFor="let f of filetype" [value]="f.filetype" >{{f.filetype}}</ng-option>
+                </ng-select>
+            </div>
+          </div>
+          <div class="form-group row">
             <label class="col-xl-4 col-form-label">File Description</label>
             <div class="col-xl-8">
               <textarea class="form-control" name="filedesc" id="filedesc" [(ngModel)]="model.filedesc"
-                #filedesc="ngModel" rows="2" required></textarea>
+                #filedesc="ngModel" rows="2"></textarea>
             </div>
           </div>
+          <pre>{{model | json}}</pre>
           <div class="row">
             <div class="col-lg-3">
               <div class="card">
@@ -58,15 +71,15 @@
                   <h4 class="page-header mt0">Select files</h4>
                   <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
                     [uploader]="uploader" class="box-placeholder my-drop-zone">
-                    Base drop zone
+                    Drop files here
                   </div>
                   <p class="text-bold">Upload options</p>
                   <label for="file1" class="file-upload">
-                    <button class="btn btn-secondary btn-block">Multiple</button>
+                    <button class="btn btn-secondary btn-block">Select Multiple</button>
                     <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
                   </label>
                   <label for="file2" class="file-upload">
-                    <button class="btn btn-secondary btn-block">Single</button>
+                    <button class="btn btn-secondary btn-block">Select Single</button>
                     <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
                   </label>
                 </div>

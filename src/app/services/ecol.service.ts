@@ -41,8 +41,8 @@ export class EcolService {
     return this.httpClient.get(url);
   }
 
-  getbranchstatus() {
-    const url = environment.api + '/api/branchstatus';
+  getreviewers() {
+    const url = environment.api + '/api/tblusers?filter[where][role]=Reviewer';
     return this.httpClient.get(url);
   }
 
@@ -141,7 +141,7 @@ export class EcolService {
   }
 
   getfileshistory (custnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber);
+    return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');
   }
 
   getsms(cust) {
@@ -301,6 +301,7 @@ export class EcolService {
   }
 
   uploads(data) {
+    console.log('upload data...', data);
     return this.httpClient.post<any>(environment.api + '/api/uploads', data);
   }
 

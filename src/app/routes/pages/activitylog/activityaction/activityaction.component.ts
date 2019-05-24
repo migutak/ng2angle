@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { DataService } from '../../../../services/data.service';
 import swal from 'sweetalert2';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DISABLED } from '@angular/forms/src/model';
+import { NgOption } from '@ng-select/ng-select';
 
 const URL = environment.valor;
 
@@ -15,7 +17,7 @@ const URL = environment.valor;
   selector: 'app-sendletter',
   templateUrl: './activityaction.component.html',
   styleUrls: ['./activityaction.component.scss'],
-  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class ActivityActionComponent implements OnInit {
 
@@ -41,9 +43,14 @@ export class ActivityActionComponent implements OnInit {
 
   message: string;
 
-  branchstatus: any = [];
+  reviewers: any = [];
   account: any = [];
   sys = 'collections';
+
+  ptp: NgOption[] = [
+    { id: 1, name: 'NO' },
+    { id: 2, name: 'YES' },
+  ];
 
   currentDate() {
     const currentDate = new Date();
@@ -60,7 +67,7 @@ export class ActivityActionComponent implements OnInit {
     private ecolService: EcolService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
-    ) {
+  ) {
     //
   }
 
@@ -91,10 +98,9 @@ export class ActivityActionComponent implements OnInit {
 
     //
     this.getcmdstatus();
-    this.getbranchstatus();
+    this.getreviewers();
     this.getparty();
     this.getcollectoraction();
-    this.getcure();
     this.getexcuse();
     //
     if (this.sys === 'cc') {
@@ -112,7 +118,7 @@ export class ActivityActionComponent implements OnInit {
       this.account = data[0];
       // build form
       this.buildForm();
-      if (swal.isVisible) {swal.close(); }
+      if (swal.isVisible) { swal.close(); }
       this.spinner.hide();
     });
   }
@@ -137,9 +143,9 @@ export class ActivityActionComponent implements OnInit {
     });
   }
 
-  getbranchstatus() {
-    this.ecolService.getbranchstatus().subscribe(branchstatus => {
-      this.branchstatus = branchstatus;
+  getreviewers() {
+    this.ecolService.getreviewers().subscribe(data => {
+      this.reviewers = data;
     });
   }
 
@@ -174,19 +180,19 @@ export class ActivityActionComponent implements OnInit {
     // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: [''],
-      ptpamount: [0],
-      ptp: [''],
-      ptpdate: [''],
+      party: [{value: 'Select party', disabled: true}],
+      ptpamount: [{value: 0, disabled: true}],
+      ptp: [{value: 'Please select', disabled: true}],
+      ptpdate: [{value: this.currentDate, disabled: true}],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate, Validators.required],
       reason: [this.account.excuse, Validators.required],
       cmdstatus: [this.account.cmdstatus],
       // branchstatus: [this.account.branchstatus],
-      route: [this.account.excuse],
+      route: [this.account.routetostate],
       paymode: [''],
       // cure: [this.account.cure],
-      rfdother: ['']
+      rfdother: [{value: this.account.rfdother, disabled: true}]
     });
   }
 
@@ -230,7 +236,7 @@ export class ActivityActionComponent implements OnInit {
       this.sendNotesData(this.custnumber);
       swal('Success!', 'activity saved', 'success');
       // build form
-     // this.buildForm();
+      // this.buildForm();
     }, error => {
       console.log(error);
       swal('Error!', 'activitylogs - service is currently not available', 'error');
@@ -246,12 +252,50 @@ export class ActivityActionComponent implements OnInit {
 
   sendNotesData(custnumber) {
     this.ecolService.totalnotes(custnumber).subscribe(data => {
-      this.dataService.pustNotesData( data[0].TOTAL);
+      this.dataService.pustNotesData(data[0].TOTAL);
     });
   }
 
-  reset () {
+  reset() {
     this.spinner.show();
     this.getaccount(this.accnumber);
+  }
+
+  changeAction(value) {
+    if (value == 1 || value == 2 || value == 3) {
+      this.actionForm.controls.party.enable();
+    } else {
+      this.actionForm.controls.party.disable();
+      this.actionForm.controls.party.setValue(null);
+    }
+  }
+
+  changeParty(form) {
+    if (form.party == 1 || form.party == 4 || form.party == 5) {
+      this.actionForm.controls.ptp.enable();
+    } else {
+      this.actionForm.controls.ptp.disable();
+      this.actionForm.controls.ptp.setValue('Select party');
+    }
+  }
+
+  changeReason(value) {
+    if (value == 'Other') {
+      this.actionForm.controls.rfdother.enable();
+    } else {
+      this.actionForm.controls.rfdother.disable();
+    }
+  }
+
+  changePtp(value) {
+    if (value == 'YES') {
+      this.actionForm.controls.ptpamount.enable();
+      this.actionForm.controls.ptpdate.enable();
+    } else {
+      this.actionForm.controls.ptpamount.disable();
+      this.actionForm.controls.ptpdate.disable();
+      this.actionForm.controls.ptpamount.setValue(0);
+      this.actionForm.controls.ptpdate.setValue(Date());
+    }
   }
 }

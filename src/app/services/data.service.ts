@@ -11,6 +11,7 @@ export class DataService {
   public guarantorsSubject = new BehaviorSubject<number>(0);
   public contactsSubject = new BehaviorSubject<number>(0);
   public collateralSubject = new BehaviorSubject<number>(0);
+  public filesSubject = new BehaviorSubject<number>(0);
 
   getTestData(): Observable<any> {
     return this.dataSubject.asObservable();
@@ -32,6 +33,10 @@ export class DataService {
     return this.guarantorsSubject.asObservable();
   }
 
+  getFiles(): Observable<any> {
+    return this.filesSubject.asObservable();
+  }
+
   pustPtpData(dataToPush: number): void {
     this.dataSubject.next(dataToPush);
   }
@@ -50,5 +55,9 @@ export class DataService {
 
   pushCollateral(dataToPush: number): void {
     this.collateralSubject.next(dataToPush);
+  }
+
+  pushFile(totalFiles: number): void {
+    this.filesSubject.next(totalFiles);
   }
 }

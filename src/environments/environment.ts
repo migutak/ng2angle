@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   adlogin: false,
-  api: 'http://ecollect.inteligen.co.ke:8000',
+  // api: 'http://ecollect.inteligen.co.ke:8000',
+  api: 'https://192.168.0.12',
   letters_api: 'http://ecollect.inteligen.co.ke:8004/',
   // letters_path: '/users/kevinabongo/Demands/',
   letters_path: 'c:\\logs\\',
@@ -18,7 +19,8 @@ export const environment = {
   applink: 'http://localhost:4500',
   emailapi: 'http://localhost:8000/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
-  filesapi: 'http://localhost:3100/api',
+  // filesapi: 'http://localhost:3100/api',
+  filesapi: 'https://ecollecttst.co-opbank.co.ke/activityupload',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
 
