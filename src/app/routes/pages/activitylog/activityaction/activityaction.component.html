@@ -6,7 +6,7 @@
     <div class="card-header">
       <strong>Collector activity </strong> capture
     </div>
-    <form [formGroup]="actionForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="actionForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
       <div class="card-body">
         <div class="row">
           <div class="col-xl-2 col-md-3">
@@ -30,7 +30,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="party" name="party"
+              <select id="party" name="party" [disabled] = "collectoraction"
                 formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
@@ -128,21 +128,21 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3">
+          <!--<div class="col-md-3">
             Branch status
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <!--<select id="branchstatus" name="branchstatus" formControlName="branchstatus"
+              <select id="branchstatus" name="branchstatus" formControlName="branchstatus"
                 class="form-control" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let br of branchstatus" [value]="br.id">{{br.branchstatus}}</option>
-              </select>-->
+              </select>
               <ng-select id="branchstatus" name="branchstatus" formControlName="branchstatus" [ngClass]="{ 'is-invalid': f.branchstatus.errors }">
                   <ng-option *ngFor="let br of branchstatus" [value]="br.branchstatus" >{{br.branchstatus}}</ng-option>
               </ng-select>
             </div>
-          </div>
+          </div>-->
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -161,21 +161,16 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3">
+         <!-- <div class="col-md-3">
             Curing method
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <!--<select id="cure" name="cure" class="form-control" formControlName="cure" class="form-control"
-                [ngClass]="{ 'is-invalid': f.cure.errors }">
-                <option value="">Please select</option>
-                <option *ngFor="let c of cure" [value]="c.cureid">{{c.cure}}</option>
-              </select>-->
               <ng-select id="cure" name="cure" formControlName="cure" [ngClass]="{ 'is-invalid': f.cure.errors }">
                   <ng-option *ngFor="let c of cure" [value]="c.cure" >{{c.cure}}</ng-option>
               </ng-select>
             </div>
-          </div>
+          </div>-->
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -231,5 +226,6 @@
         <button type="reset" class="btn btn-sm btn-danger" (click)="reset()"><i class="fa fa-ban"></i> Reset</button>
       </div>
     </form>
+    <pre>{{actionForm.valid | json}}</pre>
   </div>
 </div>

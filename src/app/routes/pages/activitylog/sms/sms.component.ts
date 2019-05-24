@@ -23,8 +23,10 @@ export class SmsComponent implements OnInit {
   username: string;
   sys: string;
   sms: any = [];
+  teles: any = [];
   dataSms: any = {};
   account: any = [];
+  charactersRemaining = 0;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -57,11 +59,19 @@ export class SmsComponent implements OnInit {
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
     } else if (this.sys === 'mcoopcash') {
-      console.log('i am mcoopcash');
       this.getmcoopcashaccount(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
     }
+
+    this.getteles(this.custnumber);
+
+  }
+
+  getteles(cust) {
+    this.ecolService.getteles(cust).subscribe(data_teles => {
+      this.teles = data_teles;
+    });
   }
 
   getsms() {
@@ -76,15 +86,15 @@ export class SmsComponent implements OnInit {
     if (template === 'LOAN') {
       // tslint:disable-next-line:max-line-length
       this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarr + ' days. Amount in arrears is Kes. '
-        + this.account.totalarrears + '. Please pay within seven days. ';
+        + this.account.instamount + '. Please pay within seven days. ';
       this.dataSms.smsCallback = ' Enquire details on 0711049000/020-3276000.';
     } else if (template === 'LOANOD') {
-      this.dataSms.smsMessage = 'Dear Customer, Your account is overdawn by  Kes. '
-          + this.account.totalarrears + '. Please regularize within seven days.';
+      this.dataSms.smsMessage = 'Dear Customer, Your account is overdrawn by  ' + this.account.currency + '. '
+          + this.account.oustbalance + '. Please regularize within seven days.';
       this.dataSms.smsCallback = ' Enquire details on 0711049000/020-3276000.';
     } else if (template === 'CC') {
       this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarr +
-       ' days. Amount in arrears is Kes. ' + this.account.totalarrears + '. Please pay within seven days. ';
+       ' days. Amount in arrears is Kes. ' + this.account.outsbalance + '. Please pay within seven days. ';
       this.dataSms.smsCallback = ' Enquire details on 0711049000/020-3276000.';
     }
 }

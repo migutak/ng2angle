@@ -19,8 +19,8 @@ export class ViewallComponent implements OnInit {
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
-      defaultColDef:{
-        resizable:true,
+      defaultColDef: {
+        resizable: true,
       },
       headerHeight: 40,
       pagination: true,

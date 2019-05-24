@@ -179,13 +179,13 @@ export class ActivityActionComponent implements OnInit {
       ptp: [''],
       ptpdate: [''],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
-      reviewdate: [Date, Validators.required],
+      reviewdate: [this.account.reviewdate, Validators.required],
       reason: [this.account.excuse, Validators.required],
       cmdstatus: [this.account.cmdstatus],
-      branchstatus: [this.account.branchstatus],
+      // branchstatus: [this.account.branchstatus],
       route: [this.account.excuse],
       paymode: [''],
-      cure: [this.account.cure],
+      // cure: [this.account.cure],
       rfdother: ['']
     });
   }

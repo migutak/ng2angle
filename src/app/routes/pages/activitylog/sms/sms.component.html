@@ -9,7 +9,12 @@
                     <div class="form-group">
                         <label>Mobile Number:</label> <input class="form-control" #smsNumber="ngModel"
                             [(ngModel)]="dataSms.smsNumber" name="smsNumber"
-                            [ngClass]="{ 'is-invalid': smsNumber.errors }" required />
+                            [ngClass]="{ 'is-invalid': smsNumber.errors }" list="cellnumber" required />
+
+                            <datalist id="cellnumber">
+                                <option *ngFor="let t of teles">{{t.telephone}}</option>
+                            </datalist>
+
                     </div>
                     <div class="form-group">
                         <label class="col-md-12 col-form-label" for="inline-radios">Select Template: </label>
@@ -36,15 +41,20 @@
                     </div>
                     <div class="form-group">
                         <label>SMS Message</label>
-                        <textarea class="form-control" rows="3" maxlength="160" required id="smsMessage"
-                            name="smsMessage" #smsMessage="ngModel" [(ngModel)]="dataSms.smsMessage" required
-                            [ngClass]="{ 'is-invalid': smsMessage.errors }"></textarea>
+                        <textarea class="form-control" rows="3" [maxlength]="160 - dataSms.smsCallback?.length" id="smsMessage"
+                            name="smsMessage" #smsMessage="ngModel" [(ngModel)]="dataSms.smsMessage"
+                            [ngClass]="{ 'is-invalid': smsMessage.errors }" required></textarea>
+                            
+                            <p><strong> Maximum allowed is 160. {{160 - dataSms.smsCallback?.length - dataSms.smsMessage?.length}} characters remaining</strong></p>
                     </div>
                     <div class="form-group">
                         <label>CallBack Number</label>
-                        <textarea class="form-control" rows="1" maxlength="50" required id="smsCallback"
-                            name="smsCallback" #smsCallback="ngModel" [(ngModel)]="dataSms.smsCallback" required
-                            [ngClass]="{ 'is-invalid': smsCallback.errors }"></textarea>
+                        <textarea class="form-control" rows="1" [maxlength]="160 - dataSms.smsMessage?.length" id="smsCallback"
+                            name="smsCallback" #smsCallback="ngModel" [(ngModel)]="dataSms.smsCallback"
+                            [ngClass]="{ 'is-invalid': smsCallback.errors }" required></textarea>
+                            
+                            <p><strong> Maximum allowed is 160. {{160 - dataSms.smsCallback?.length - dataSms.smsMessage?.length}} characters remaining </strong></p>
+                            
                     </div>
                     <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!sendsmsForm.valid">Send
                         SMS</button>
