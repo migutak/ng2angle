@@ -191,8 +191,7 @@ export class ActivityActionComponent implements OnInit {
       // branchstatus: [this.account.branchstatus],
       route: [this.account.routetostate],
       paymode: [''],
-      // cure: [this.account.cure],
-      rfdother: [{value: this.account.rfdother, disabled: true}]
+      rfdother: [{value: this.account.excuse_other, disabled: true}]
     });
   }
 
@@ -206,7 +205,6 @@ export class ActivityActionComponent implements OnInit {
 
     // post data
     this.ecolService.loader();
-    // post body
     const body = {
       collectoraction: this.f.collectoraction.value,
       party: this.f.party.value,
@@ -217,10 +215,8 @@ export class ActivityActionComponent implements OnInit {
       reviewdate: this.f.reviewdate.value,
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
-      branchstatus: this.f.branchstatus.value,
       route: this.f.route.value,
       paymode: this.f.paymode.value,
-      cure: this.f.cure.value,
       accountnumber: this.accnumber,
       custnumber: this.custnumber,
       arramount: this.account.totalarrears || 0,
@@ -229,7 +225,7 @@ export class ActivityActionComponent implements OnInit {
       noteimp: 'N',
       rfdother: this.f.rfdother.value,
       owner: this.username,
-      product: 'MORTGAGE'
+      product: this.account.section
     };
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
@@ -241,13 +237,6 @@ export class ActivityActionComponent implements OnInit {
       console.log(error);
       swal('Error!', 'activitylogs - service is currently not available', 'error');
     });
-    // update portfolio add notes and ptp
-    /* this.ecolService.recordupdate(body).subscribe(data => {
-      swal('Success!', 'Records updated', 'success');
-    }, error => {
-      console.log(error);
-      swal('Error!', 'recordupdate - service is currently not available', 'error');
-    });*/
   }
 
   sendNotesData(custnumber) {
