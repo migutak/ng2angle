@@ -37,33 +37,60 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">address</label>
-                    <div class="col-xl-8">
-                      <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
-                        #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" required />
+                      <label class="col-xl-4 col-form-label">address</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
+                          #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
+  
+                          <datalist id="daddress">
+                              <option *ngFor="let a of addresses">{{a.address}}</option>
+                          </datalist>
+  
+                      </div>
                     </div>
-                  </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">postcode</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
+                          #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" list="dpostcode" required />
+  
+                          <datalist id="dpostcode">
+                              <option *ngFor="let p of postcodes">{{p.postcode}}</option>
+                          </datalist>
+  
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">email address</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
+                          #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
+  
+                          <datalist id="browsers">
+                              <option *ngFor="let e of emails">{{e.email}}</option>
+                          </datalist>
+  
+                      </div>
+                    </div>
                   <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">postcode</label>
-                    <div class="col-xl-8">
-                      <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
-                        #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" required />
+                      <label class="col-xl-4 col-form-label">cellnumber</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
+                          #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
+  
+                          <datalist id="cellnumber">
+                              <option *ngFor="let t of teles">{{t.telephone}}</option>
+                          </datalist>
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">email address</label>
-                    <div class="col-xl-8">
-                      <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
-                        #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" required email />
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Save to contacts</label>
+                        <div class="col-xl-8">
+                            <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts(model)">
+                                <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
+                                </span>Save this contact</button>
+                        </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">cellnumber</label>
-                    <div class="col-xl-8">
-                      <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
-                        #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" required />
-                    </div>
-                  </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">Preview</label>
                     <div class="col-xl-8">
@@ -207,19 +234,15 @@
                     <h4 class="page-header mt0">Select files</h4>
                     <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
                       [uploader]="uploader" class="box-placeholder my-drop-zone">
-                      Base drop zone
-                    </div>
-                    <div ng2FileDrop [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}" (fileOver)="fileOverAnother($event)"
-                      [uploader]="uploader" class="box-placeholder my-drop-zone">
-                      Another drop zone
+                      Drop files here
                     </div>
                     <p class="text-bold">Upload options</p>
                     <label for="file1" class="file-upload">
-                      <button class="btn btn-secondary btn-block">Multiple</button>
+                      <button class="btn btn-secondary btn-block">Select Multiple</button>
                       <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
                     </label>
                     <label for="file2" class="file-upload">
-                      <button class="btn btn-secondary btn-block">Single</button>
+                      <button class="btn btn-secondary btn-block">Select Single</button>
                       <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
                     </label>
                   </div>
@@ -290,6 +313,11 @@
                         <span class="icon-trash mr"></span> Remove all
                       </button>
                     </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="uploadedfile" type="checkbox" [(ngModel)]="model.uploadedfile"
+                          name="uploadedfile" value="Y" />
+                        <label class="form-check-label" for="uploadedfile">Use this file in demand letter email</label>
+                      </div>
                   </div>
                 </div>
               </div>

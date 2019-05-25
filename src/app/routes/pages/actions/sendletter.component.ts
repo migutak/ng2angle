@@ -562,9 +562,5 @@ export class SendLetterComponent implements OnInit {
         'error'
       );
     });
-
-    /*setTimeout(() => {
-        this.spinner.hide();
-    }, 5000);*/
   }
 }

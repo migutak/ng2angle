@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders  } from 'ng2-file-upload';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -20,6 +21,10 @@ export class DemandLettersComponent implements OnInit {
   custnumber: string;
   accountdetails: any;
   guarantors: [];
+  teles: any = [];
+  emails: any = [];
+  addresses: any = [];
+  postcodes: any = [];
   model: any = {};
   bodyletter: any = {};
   letterbody: any = {};
@@ -45,7 +50,9 @@ export class DemandLettersComponent implements OnInit {
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
-    private ecolService: EcolService) {
+    private ecolService: EcolService,
+    private spinner: NgxSpinnerService,
+    ) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
       form.append('demand', this.model.demand);
@@ -119,6 +126,16 @@ export class DemandLettersComponent implements OnInit {
       this.getaccount(this.accnumber);
     }
     this.getdemandshistory(this.accnumber);
+    this.getteles(this.custnumber);
+  }
+
+  getteles(cust) {
+    this.ecolService.getteles(cust).subscribe(data_teles => {
+      this.teles = data_teles;
+      this.emails = data_teles;
+      this.postcodes = data_teles;
+      this.addresses = data_teles;
+    });
   }
 
   getaccount(accnumber) {
@@ -419,9 +436,7 @@ export class DemandLettersComponent implements OnInit {
   }
 
   generatelettercc(letter, emaildata: any) {
-    // console.log(letter);
     this.ecolService.generateLettercc(letter).subscribe(dataupload => {
-      console.log('generateLetterccoverdue==>', dataupload);
       // sucess
       if (dataupload.result === 'success') {
         swal('Good!', dataupload.message, 'success');
@@ -548,6 +563,53 @@ export class DemandLettersComponent implements OnInit {
           'success'
         );
       }
+    });
+  }
+
+  savecontacts(model) {
+    this.spinner.show();
+
+    // save contact
+    this.ecolService.existsteles(this.custnumber, model.celnumber, model.emailaddress).subscribe(contact => {
+      if (contact.length > 0) {
+        swal(
+          'Warning!',
+          'Contact already exists',
+          'info'
+        );
+        this.spinner.hide();
+      } else {
+        // save
+        const telesbody = {
+          custnumber: this.custnumber,
+          telephone: model.celnumber,
+          email: model.emailaddress,
+          active: 'Yes',
+          owner: this.username,
+          updatedby: this.username,
+          updatedlast: new Date(),
+          address: model.addressline1,
+          postcode: model.postcode
+        };
+
+        this.ecolService.postteles(telesbody).subscribe(teles => {
+          this.spinner.hide();
+          this.getteles(this.custnumber);
+          swal(
+            'Good!',
+            'Contact has been added',
+            'success'
+          );
+        });
+      }
+    }, error => {
+      console.log('error-existsteles', error);
+      this.spinner.hide();
+      swal(
+        'Ooops!',
+        'Something went wrong',
+        'error'
+      );
     });
   }
 }
