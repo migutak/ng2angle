@@ -24,6 +24,7 @@ export const environment = {
   filesapi: 'https://ecollecttst.co-opbank.co.ke/activityupload',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
+  manuals_path: '/Users/Kevinabongo/Documents/',
 
   /*api: 'http://ecollecttst.co-opbank.co.ke:8000',
   letters_path: '/users/kevinabongo/Demands/',

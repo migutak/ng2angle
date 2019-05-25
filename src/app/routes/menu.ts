@@ -11,6 +11,12 @@ const Guarantors = {
     icon: 'icon-people'
 };
 
+const Manuals = {
+    text: 'Guarantors',
+    link: '/manuals/all',
+    icon: 'icon-people'
+};
+
 const Dashboard = {
     text: 'Dashboard & Reports',
     link: '/dashboard',
@@ -427,7 +433,7 @@ const serviceproviders = {
             link: '/debtcollectors/allcases'
         },
         {
-            text: 'Marketors',
+            text: 'Marketers',
             link: '/marketors/allcases'
         },
         {
@@ -460,9 +466,7 @@ const mcoopcash = {
     submenu: [
         {
             text: 'View all',
-            link: '/mcoopcash/viewall',
-            'alert': '23',
-            'label': 'badge badge-warning'
+            link: '/mcoopcash/viewall'
         },
         {
             text: 'My allocations',
@@ -540,8 +544,8 @@ const headingComponents = {
     heading: true
 };
 
-const headingMore = {
-    text: 'Reports',
+const headingDocumentations = {
+    text: 'Documentation and Manuals',
     heading: true
 };
 
@@ -575,15 +579,10 @@ const collection_menu = [
     Letterscc,
     headingComponents,
     Work,
-    // Remedial,
     mcoopcash,
     serviceproviders,
-    // headingMore,
-    // Collectionrpt,
-    // headingConfigurations,
-    // Demandletters,
-    // Allocations,
-    // SMS
+    headingDocumentations,
+    Manuals
 ];
 
 const creditcards_menu = [
@@ -592,7 +591,9 @@ const creditcards_menu = [
     Dashboard,
     Letterscc,
     headingComponents,
-    Work_cc
+    Work_cc,
+    headingDocumentations,
+    Manuals
 ];
 
 const remedial_menu = [
@@ -628,7 +629,9 @@ const teamleader_menu = [
     headingConfigurations,
     Demandletters,
     Allocations,
-    SMS
+    SMS,
+    headingDocumentations,
+    Manuals
 ];
 // console.log('menu role==>', currentUser.role);
 if (currentUser !== null) {
