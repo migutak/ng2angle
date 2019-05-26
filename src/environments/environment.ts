@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   adlogin: false,
-  // api: 'http://ecollect.inteligen.co.ke:8000',
-  api: 'https://192.168.0.12',
+  api: 'http://ecollect.inteligen.co.ke:8000',
+  // api: 'https://192.168.0.12',
   // letters_api: 'http://ecollect.inteligen.co.ke:8004/',
   letters_api: 'https://ecollecttst.co-opbank.co.ke/docx/',
   // letters_path: '/users/kevinabongo/Demands/',
@@ -24,6 +24,7 @@ export const environment = {
   filesapi: 'https://ecollecttst.co-opbank.co.ke/activityupload',
   accplanlink: 'http://ecollecttst.co-opbank.co.ke:8001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
+  birt: 'http://ecollect.inteligen.co.ke:8090/birt',
   manuals_path: '/Users/Kevinabongo/Documents/',
 
   /*api: 'http://ecollecttst.co-opbank.co.ke:8000',

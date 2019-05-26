@@ -173,7 +173,7 @@ export class ActivityLogComponent implements OnInit {
   getfileshistory(custnumber) {
     this.ecolService.getfileshistory(custnumber).subscribe(data => {
       this.files = data;
-      this.totalfiles = data.length
+      this.totalfiles = data.length;
     });
   }
 

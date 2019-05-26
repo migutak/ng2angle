@@ -12,7 +12,7 @@ const Guarantors = {
 };
 
 const Manuals = {
-    text: 'Guarantors',
+    text: 'Manuals and scripts',
     link: '/manuals/all',
     icon: 'icon-people'
 };

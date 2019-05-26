@@ -16,7 +16,7 @@ export class AllManualsComponent implements OnInit {
     constructor(
         private ecolService: EcolService) {
         //
-        };
+        }
 
     ngOnInit() { }
 

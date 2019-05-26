@@ -14,5 +14,7 @@ export const environment = {
   auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
   filesapi: 'https://ecollectweb.co-opbank.co.ke/filesapi',
   accplanlink: 'https://ecollectweb.co-opbank.co.ke/accplan',
-  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601'
+  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
+  manuals_path: '/home/ecollectadmin/app/manuals/',
+  birt: 'http://172.16.204.37:8080/birt',
 };

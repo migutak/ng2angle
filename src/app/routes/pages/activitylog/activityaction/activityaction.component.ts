@@ -251,7 +251,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeAction(value) {
-    if (value == 1 || value == 2 || value == 3) {
+    if (value === 1 || value === 2 || value === 3) {
       this.actionForm.controls.party.enable();
     } else {
       this.actionForm.controls.party.disable();
@@ -260,7 +260,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeParty(form) {
-    if (form.party == 1 || form.party == 4 || form.party == 5) {
+    if (form.party === 1 || form.party === 4 || form.party === 5) {
       this.actionForm.controls.ptp.enable();
     } else {
       this.actionForm.controls.ptp.disable();
@@ -269,7 +269,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeReason(value) {
-    if (value == 'Other') {
+    if (value === 'Other') {
       this.actionForm.controls.rfdother.enable();
     } else {
       this.actionForm.controls.rfdother.disable();
@@ -277,7 +277,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changePtp(value) {
-    if (value == 'YES') {
+    if (value === 'YES') {
       this.actionForm.controls.ptpamount.enable();
       this.actionForm.controls.ptpdate.enable();
     } else {

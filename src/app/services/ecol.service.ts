@@ -118,6 +118,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tblusers/' + username);
   }
 
+  notifications() {
+    return this.httpClient.get<any>(environment.api + '/api/notifications');
+  }
+
   auth(body: object) {
     return this.httpClient.post<any>(environment.auth,  body);
   }
@@ -141,6 +145,7 @@ export class EcolService {
   }
 
   getfileshistory (custnumber) {
+    // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');
   }
 

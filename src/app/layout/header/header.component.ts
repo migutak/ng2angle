@@ -17,10 +17,11 @@ export class HeaderComponent implements OnInit {
 
     navCollapsed = true; // for horizontal layout
     menuItems = []; // for horizontal layout
-    nu_of_alerts = 3;
+    nu_of_alerts = 4;
     nu_of_brokenptps = 0;
     nu_of_demandsdue = 0;
-    nu_of_overdue = 0
+    nu_of_overdue = 0;
+    nu_of_cc_demands = 0;
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
@@ -34,26 +35,41 @@ export class HeaderComponent implements OnInit {
 
         // show only a few items on demo
         this.menuItems = menu.getMenu().slice(0, 4); // for horizontal layout
+        // get notifications
+       // ptps, overdue and demand letters
+       this.getnotification();
 
     }
 
     ngOnInit() {
         this.isNavSearchVisible = false;
 
-        var ua = window.navigator.userAgent;
-        if (ua.indexOf("MSIE ") > 0 || !!ua.match(/Trident.*rv\:11\./)) { // Not supported under IE
+        const ua = window.navigator.userAgent;
+        if (ua.indexOf('MSIE ') > 0 || !!ua.match(/Trident.*rv\:11\./)) { // Not supported under IE
             this.fsbutton.nativeElement.style.display = 'none';
         }
 
         // Switch fullscreen icon indicator
         const el = this.fsbutton.nativeElement.firstElementChild;
         screenfull.on('change', () => {
-            if (el)
+            if (el) {
                 el.className = screenfull.isFullscreen ? 'fa fa-compress' : 'fa fa-expand';
+            }
         });
 
-        // get notifications
-       // ptps, overdue and demand letters
+    }
+
+    getnotification() {
+        this.ecolService.notifications().subscribe(data => {
+            console.log(data[0]);
+            this.nu_of_brokenptps = data[0].brokenptp;
+            this.nu_of_cc_demands = data[0].demandsduecc;
+            this.nu_of_demandsdue = data[0].demandsdue;
+            this.nu_of_alerts = this.nu_of_brokenptps + this.nu_of_cc_demands + this.nu_of_demandsdue;
+            console.log(this.nu_of_alerts);
+        }, error => {
+            console.log(error);
+        });
     }
 
     toggleUserBlock(event) {

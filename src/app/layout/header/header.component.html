@@ -67,7 +67,7 @@
         <li class="nav-item dropdown dropdown-list" dropdown>
             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
                 <em class="icon-bell"></em>
-                <span class="badge badge-danger">11</span>
+                <span class="badge badge-danger">{{nu_of_alerts}}</span>
             </a>
             <!-- START Dropdown menu-->
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
@@ -75,38 +75,49 @@
                     <!-- START list group-->
                     <div class="list-group">
                         <!-- list item-->
-                        <div class="list-group-item list-group-item-action">
+                        <div [routerLink]="['/work/ptps']" class="list-group-item list-group-item-action">
                             <div class="media">
                                 <div class="align-self-start mr-2">
                                     <em class="fas fa-hand-holding-usd fa-2x text-info"></em>
                                 </div>
                                 <div class="media-body">
                                     <p class="m-0">PTPs</p>
-                                    <p class="m-0 text-muted text-sm">1 PTP to followup</p>
+                                    <p class="m-0 text-muted text-sm">{{nu_of_brokenptps}} Broken PTP(s)</p>
                                 </div>
                             </div>
                         </div>
                         <!-- list item-->
-                        <div class="list-group-item list-group-item-action">
+                        <div [routerLink]="['/demand/demands']" class="list-group-item list-group-item-action">
                             <div class="media">
                                 <div class="align-self-start mr-2">
                                     <em class="fa fa-envelope fa-2x text-warning"></em>
                                 </div>
                                 <div class="media-body">
-                                    <p class="m-0">Demand Letters</p>
-                                    <p class="m-0 text-muted text-sm">You have 10 demands to send</p>
+                                    <p class="m-0">Loan Letters</p>
+                                    <p class="m-0 text-muted text-sm">You have {{nu_of_demandsdue}} demands to send</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div [routerLink]="['/creditcards/creditcarddemands/demandsdue']" class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-envelope fa-2x text-warning"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">Card Letters</p>
+                                    <p class="m-0 text-muted text-sm">{{nu_of_cc_demands}} demand letter(s)</p>
                                 </div>
                             </div>
                         </div>
                         <!-- list item-->
-                        <div class="list-group-item list-group-item-action">
+                        <div [routerLink]="['/work/overdue']" class="list-group-item list-group-item-action">
                             <div class="media">
                                 <div class="align-self-start mr-2">
                                     <em class="fa fa-tasks fa-2x text-success"></em>
                                 </div>
                                 <div class="media-body">
-                                    <p class="m-0">Pending Tasks</p>
-                                    <p class="m-0 text-muted text-sm">11 pending task</p>
+                                    <p class="m-0">Overdue actions</p>
+                                    <p class="m-0 text-muted text-sm">{{nu_of_overdue}} overdue task(s)</p>
                                 </div>
                             </div>
                         </div>

@@ -61,12 +61,13 @@ export class ViewallComponent implements OnInit {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
       width: 250,
-      resizable: true
+      resizable: true,
+      // checkboxSelection: true
     },
     {
       headerName: 'CUSTNUMBER',
       field: 'custnumber',
-      resizable: true
+      resizable: true, sortable: true, filter: true
     },
     {
       headerName: 'CUSTNAME',
