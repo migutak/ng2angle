@@ -31,6 +31,8 @@ export class MyallocationsComponent implements OnInit {
     this.overlayNoRowsTemplate =
       '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Response: \'no rows\' found</span>';
 
+      this.gridOptions.rowStyle = {color: 'red'};
+
   }
 
 
@@ -62,22 +64,13 @@ export class MyallocationsComponent implements OnInit {
       field: 'custnumber'
     },
     {
-      headerName: 'CUST_NAME',
+      headerName: 'CUSTNAME',
       field: 'client_name',
       width: 350
     },
     {
       headerName: 'DAYSINARREARS',
       field: 'daysinarr',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red' };
-        } else if (params.value > '90') {
-          return { color: 'red' };
-        } else {
-          return null;
-        }
-      }
     },
     {
       headerName: 'TOTALARREARS',
@@ -96,6 +89,10 @@ export class MyallocationsComponent implements OnInit {
     {
       headerName: 'AROCODE',
       field: 'arocode'
+    },
+    {
+      headerName: 'RROCODE',
+      field: 'rrocode'
     },
     {
       headerName: 'SECTION',
@@ -163,7 +160,6 @@ export class MyallocationsComponent implements OnInit {
         // params.endRow : End Page
         //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
           params.successCallback(
             response.rows, response.total
           );

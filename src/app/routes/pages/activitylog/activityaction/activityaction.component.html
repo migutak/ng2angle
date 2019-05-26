@@ -16,7 +16,7 @@
             <div class="col-md-12">
               <select id="collectoraction" name="collectoraction" formControlName="collectoraction" class="form-control"
                 [ngClass]="{ 'is-invalid': f.collectoraction.errors }"
-                (change)="changeAction(actionForm.value.collectoraction)">
+                (ngModelChange)="changeAction(actionForm.value.collectoraction)">
                 <option value="">Please select</option>
                 <option *ngFor="let action of collectoraction" [value]="action.collectoractionid">
                   {{action.collectoraction}}</option>
@@ -48,9 +48,7 @@
           <div class="col-md-3">
             <div class="col-md-12">
               <ng-select id="reason" name="reason" formControlName="reason"
-                [ngClass]="{ 'is-invalid': f.reason.errors }"
-                (ngModelChange)="changeReason(actionForm.value.reason)"
-                >
+                [ngClass]="{ 'is-invalid': f.reason.errors }" (ngModelChange)="changeReason(actionForm.value.reason)">
                 <ng-option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</ng-option>
               </ng-select>
             </div>
@@ -70,14 +68,14 @@
             </div>
           </div>
           <div class="col-md-3">
-              Other reason for default
+            Other reason for default
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
+                class="form-control"></textarea>
             </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
-                  class="form-control"></textarea>
-              </div>
-            </div>
+          </div>
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -126,18 +124,18 @@
             </div>
           </div>
           <div class="col-md-3">
-              Route for review
+            Route for review
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+
+              <ng-select id="route" name="route" formControlName="route">
+                <ng-option *ngFor="let r of reviewers" [value]="r.username">{{r.firstname}} {{r.lastname}} {{r.surname}}
+                </ng-option>
+              </ng-select>
+
             </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-  
-                <ng-select id="route" name="route" formControlName="route">
-                  <ng-option *ngFor="let r of reviewers" [value]="r.username">{{r.firstname}} {{r.lastname}} {{r.surname}}
-                  </ng-option>
-                </ng-select>
-  
-              </div>
-            </div>
+          </div>
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -173,20 +171,26 @@
             Review date
           </div>
           <div class="col-md-3">
-            <div class="col-md-12">
-              <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" id="reviewdate" name="reviewdate" name="reviewdate"
-                  ngbDatepicker #d="ngbDatepicker" formControlName="reviewdate" />
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i
-                        class="fa fa-calendar"></i>
-                    </span></button>
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text"
+                    placeholder="Review date"
+                    class="form-control"
+                    formControlName="reviewdate"
+                    #dp="bsDatepicker"
+                    bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+                    [minDate]="minDate"
+                    >
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                          class="fa fa-calendar"></i>
+                      </span></button>
+                  </div>
                 </div>
-              </div>
-
+                </div>
+                <!--<pre *ngIf="actionForm.value.reviewdate">{{actionForm.value.reviewdate | date}}</pre>-->
             </div>
-          </div>
-          
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -213,6 +217,6 @@
         <button type="reset" class="btn btn-sm btn-danger" (click)="reset()"><i class="fa fa-ban"></i> Reset</button>
       </div>
     </form>
-    <!--<pre>{{actionForm.value | json}}</pre>-->
+    <pre>{{actionForm.value | json}}</pre>
   </div>
 </div>

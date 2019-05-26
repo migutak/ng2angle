@@ -8,8 +8,8 @@ import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstr
 import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DISABLED } from '@angular/forms/src/model';
 import { NgOption } from '@ng-select/ng-select';
+import * as moment from 'moment';
 
 const URL = environment.valor;
 
@@ -20,6 +20,10 @@ const URL = environment.valor;
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class ActivityActionComponent implements OnInit {
+
+  bsValue = new Date();
+  // bsValue = this.currentDate();
+  minDate: Date;
 
   accnumber: string;
   custnumber: string;
@@ -57,7 +61,7 @@ export class ActivityActionComponent implements OnInit {
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
-    return year + '-' + month + '-' + day;
+    return day + '-' + month + '-' + year;
   }
 
   constructor(
@@ -68,7 +72,8 @@ export class ActivityActionComponent implements OnInit {
     private dataService: DataService,
     private spinner: NgxSpinnerService,
   ) {
-    //
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() - 1);
   }
 
   ngOnInit() {
@@ -212,7 +217,7 @@ export class ActivityActionComponent implements OnInit {
       ptp: this.f.ptp.value,
       ptpdate: this.f.ptpdate.value,
       collectornote: this.f.collectornote.value,
-      reviewdate: this.f.reviewdate.value,
+      reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
       route: this.f.route.value,
@@ -235,7 +240,7 @@ export class ActivityActionComponent implements OnInit {
       // this.buildForm();
     }, error => {
       console.log(error);
-      swal('Error!', 'activitylogs - service is currently not available', 'error');
+      swal('Error!', 'activitylog ::: service is currently not available', 'error');
     });
   }
 
@@ -251,7 +256,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeAction(value) {
-    if (value === 1 || value === 2 || value === 3) {
+    if (value === '1' || value === '2' || value === '3') {
       this.actionForm.controls.party.enable();
     } else {
       this.actionForm.controls.party.disable();

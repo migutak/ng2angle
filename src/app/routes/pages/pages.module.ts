@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { DataService } from '../../services/data.service';
 import { CustomFormsModule } from 'ng2-validation';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -55,7 +56,8 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
         FormsModule,
         NgSelectModule,
         ToasterModule.forRoot(),
-        CustomFormsModule
+        CustomFormsModule,
+        BsDatepickerModule.forRoot()
         // RouterModule.forChild(routes)
     ],
     declarations: [
