@@ -28,10 +28,10 @@ export class EcolService {
 
   getallnotes(filter, cust) {
     //
-    let url = environment.api + '/api/notehis?filter[where][custnumber]=' + cust;
+    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust;
 
     if (filter !== '') {
-      url = url + '&filter[order]=notedate DESC' + '&filter[skip]=' + filter.skip + '&filter[limit]= ' + filter.limit;
+      url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
     }
     return this.httpClient.get(url);
   }
