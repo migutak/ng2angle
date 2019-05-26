@@ -40,10 +40,6 @@ export class NotesComponent implements OnInit {
     this.getAll(this.cust);
   }
 
-  newMessage() {
-    // this.data.changeMessage("Hello from Sibling")
-  }
-
   getAll(cust) {
     this.query.limit = this.pager.limit;
     this.query.skip = this.pager.limit * this.pager.current;

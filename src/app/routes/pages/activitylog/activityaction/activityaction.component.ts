@@ -269,7 +269,7 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptp.enable();
     } else {
       this.actionForm.controls.ptp.disable();
-      this.actionForm.controls.ptp.setValue('Select party');
+      this.actionForm.controls.ptp.setValue('NO');
     }
   }
 
