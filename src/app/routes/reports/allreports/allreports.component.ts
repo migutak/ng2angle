@@ -17,7 +17,7 @@ export class AllReportsComponent implements OnInit {
     }
 
     openactivityrpt() {
-        window.open(environment.birt + '/app/kibana', '_blank');
+        window.open(environment.birt + '/frameset?__report=collectoractivity_test2.rptdesign&__title=Activity Report', '_blank');
     }
 
     open(report) {

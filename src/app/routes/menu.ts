@@ -643,6 +643,8 @@ if (currentUser !== null) {
         menuitems = creditcards_menu;
     } else if (currentUser.role === 'teamleader') {
         menuitems = teamleader_menu;
+    } else if (currentUser.role === 'telecollector') {
+        menuitems = collection_menu;
     } else {
         menuitems = collection_menu;
     }

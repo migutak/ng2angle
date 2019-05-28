@@ -43,7 +43,7 @@ export class BulknotesComponent implements OnInit {
     };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      // console.log('ImageUpload:uploaded:', item, status, response); 
+      // console.log('ImageUpload:uploaded:', item, status, response);
     };
     this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
@@ -70,40 +70,40 @@ export class BulknotesComponent implements OnInit {
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
-    let data = JSON.parse(response); //success server response
+    const data = JSON.parse(response); // success server response
     // console.log(data)
-    if (data.success == false) {
+    if (data.success === false) {
       swal({
         type: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
+      });
     } else {
-      this.ecolService.postnotes(data.notes).subscribe(resp =>{
+      this.ecolService.postnotes(data.notes).subscribe(resp => {
         swal({
           type: 'success',
           title: 'All Good!',
           text: 'Excel bulk notes upload is a success',
-        })
+        });
       }, error => {
         swal({
           type: 'error',
           title: 'Oops...',
           text: 'Something went wrong!',
-        })
-      })
-      
+        });
+      });
+
     }
   }
 
   onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
-    let error = JSON.parse(response); //error server response
+    const error = JSON.parse(response); // error server response
     console.log('error', error);
     swal({
       type: 'error',
       title: 'Oops...',
       text: 'Something went wrong with xlxs upload!',
-    })
+    });
   }
 
   downloadFile() {
