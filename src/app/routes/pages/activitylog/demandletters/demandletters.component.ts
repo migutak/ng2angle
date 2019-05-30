@@ -99,15 +99,20 @@ export class DemandLettersComponent implements OnInit {
   }
 
   ngOnInit() {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
+
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
     });
 
-    this.username = this.route.snapshot.queryParamMap.get('username');
+    /*this.username = this.route.snapshot.queryParamMap.get('username');
     this.route.queryParamMap.subscribe(queryParams => {
       this.username = queryParams.get('username');
-    });
+    });*/
 
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -199,6 +204,11 @@ export class DemandLettersComponent implements OnInit {
   }
 
   openletter(letter) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
+
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
       // if account is there
@@ -260,6 +270,11 @@ export class DemandLettersComponent implements OnInit {
   }
 
   openlettercc(letter) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
+
     this.ecolService.loader();
     this.ecolService.getcardAccount(this.accnumber).subscribe(carddata => {
       // if cardacct
@@ -303,6 +318,10 @@ export class DemandLettersComponent implements OnInit {
   }
 
   processletter(letter: any, accnumber, emailaddress) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data && data.length > 0) {
         // console.log('getAccount=>', data);

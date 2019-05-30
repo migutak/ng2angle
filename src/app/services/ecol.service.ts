@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EcolService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router
+    ) { }
 
   loader() {
 
@@ -408,5 +412,16 @@ export class EcolService {
 
   totalcollaterals(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/deptcollateral/total?custnumber=' + custnumber);
+  }
+
+  ifLogged() {
+    if (!localStorage.getItem('currentUser')) {
+      alert('Please login!');
+      this.router.navigate( ['/login'] );
+      return false;
+    } else {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      return currentUser.username
+    }
   }
 }

@@ -26,16 +26,20 @@ export class GuarantorsComponent implements OnInit {
   }
 
   ngOnInit() {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
       this.model.accnumber = queryParams.get('accnumber');
     });
 
-    this.username = this.route.snapshot.queryParamMap.get('username');
+    /*this.username = this.route.snapshot.queryParamMap.get('username');
     this.route.queryParamMap.subscribe(queryParams => {
       this.username = queryParams.get('username');
-    });
+    });*/
 
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -48,6 +52,10 @@ export class GuarantorsComponent implements OnInit {
   }
 
   onSubmit(form) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
     // Loading indictor
     this.ecolService.loader();
     //

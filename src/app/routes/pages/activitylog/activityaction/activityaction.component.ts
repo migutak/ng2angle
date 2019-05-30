@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { DataService } from '../../../../services/data.service';
 import swal from 'sweetalert2';
@@ -67,6 +67,7 @@ export class ActivityActionComponent implements OnInit {
   constructor(
     public settings: SettingsService,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
     private dataService: DataService,
@@ -77,16 +78,21 @@ export class ActivityActionComponent implements OnInit {
   }
 
   ngOnInit() {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    })
+    
     this.spinner.show();
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
     });
 
-    this.username = this.route.snapshot.queryParamMap.get('username');
+    /*this.username = this.route.snapshot.queryParamMap.get('username');
     this.route.queryParamMap.subscribe(queryParams => {
       this.username = queryParams.get('username');
-    });
+    });*/
 
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -187,12 +193,12 @@ export class ActivityActionComponent implements OnInit {
       collectoraction: ['', Validators.required],
       party: [{value: 'Select party', disabled: true}],
       ptpamount: [{value: 0, disabled: true}],
-      ptp: [{value: 'Please select', disabled: true}],
+      ptp: [{value: 'NO', disabled: true}],
       ptpdate: [{value: this.currentDate, disabled: true}],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
-      reviewdate: [this.account.reviewdate, Validators.required],
+      reviewdate: [this.account.reviewdate],
       reason: [this.account.excuse, Validators.required],
-      cmdstatus: [this.account.cmdstatus],
+      cmdstatus: [this.account.cmdstatus, Validators.required],
       // branchstatus: [this.account.branchstatus],
       route: [this.account.routetostate],
       paymode: [''],
@@ -207,6 +213,11 @@ export class ActivityActionComponent implements OnInit {
       alert('Please fill all required fields');
       return;
     }
+
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    })
 
     // post data
     this.ecolService.loader();

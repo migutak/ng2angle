@@ -337,10 +337,6 @@ const Work = {
             link: '/work/myworklist'
         },
         {
-            text: 'Pre Delinquent',
-            link: '/work/predelq'
-        },
-        {
             text: 'Broken PTPs',
             link: '/work/ptps'
         },
@@ -371,16 +367,12 @@ const Work_cc = {
             link: '/creditcards/myworklist'
         },
         {
-            text: 'View all cards',
-            link: '/creditcards/allcards'
-        },
-        {
             text: 'Cards Cr/Zero Bal',
             link: '/creditcards/zerobalance'
         },
         {
-            text: 'View all loans',
-            link: '/creditcards/loans'
+            text: 'View all Cards',
+            link: '/creditcards/allcards'
         }
     ]
 };
@@ -407,10 +399,6 @@ const Remedial = {
         {
             text: 'Todays',
             link: '/work/todays'
-        },
-        {
-            text: 'Pre Delinquent',
-            link: '/work/predelq'
         },
         {
             text: 'Broken PTPs',
@@ -527,6 +515,22 @@ const Allocations = {
     ]
 };
 
+const Predelq = {
+    text: 'Paying Watch',
+    link: '/payingwatch',
+    icon: 'icon-wallet',
+    submenu: [
+        {
+            text: 'No Credit buildup',
+            link: '/watch/nocredit'
+        },
+        {
+            text: 'Credit build watch',
+            link: '/watch/creditwatch'
+        }
+    ]
+};
+
 const SMS = {
     text: 'SMS',
     link: '/configurations/sms',
@@ -579,6 +583,8 @@ const collection_menu = [
     Letterscc,
     headingComponents,
     Work,
+    Work_cc,
+    Predelq,
     mcoopcash,
     serviceproviders,
     headingDocumentations,
@@ -592,6 +598,9 @@ const creditcards_menu = [
     Letterscc,
     headingComponents,
     Work_cc,
+    Work,
+    Predelq,
+    mcoopcash,
     headingDocumentations,
     Manuals
 ];
@@ -607,6 +616,7 @@ const remedial_menu = [
     // Work,
     Remedial,
     Work_cc,
+    Predelq,
     mcoopcash,
     serviceproviders,
     // headingComponents,
@@ -623,7 +633,7 @@ const teamleader_menu = [
     headingComponents,
     Work,
     Work_cc,
-    Remedial,
+    Predelq,
     mcoopcash,
     serviceproviders,
     headingConfigurations,

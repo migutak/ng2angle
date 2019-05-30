@@ -85,7 +85,8 @@ export const routes = [
             { path: 'bulknotes', component: BulknotesComponent },
             { path: 'guarantors', component: GuarantorsComponent },
             { path: '**', redirectTo: 'activityhome' }
-          ]
+          ],
+          canActivate: [AuthGuard]
 
     },
 

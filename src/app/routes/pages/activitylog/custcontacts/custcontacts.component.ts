@@ -34,15 +34,20 @@ export class CustContactsComponent implements OnInit {
     /** spinner starts on init */
     // this.spinner.show();
 
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
+
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
     });
 
-    this.username = this.route.snapshot.queryParamMap.get('username');
+    /*this.username = this.route.snapshot.queryParamMap.get('username');
     this.route.queryParamMap.subscribe(queryParams => {
       this.username = queryParams.get('username');
-    });
+    });*/
 
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -54,6 +59,11 @@ export class CustContactsComponent implements OnInit {
   }
 
   savecontact(form) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
+
     this.addcontact.custnumber = this.custnumber;
     this.addcontact.telephone = form.contactnumber;
     this.addcontact.email = form.email;
@@ -81,6 +91,11 @@ export class CustContactsComponent implements OnInit {
   }
 
   editcontact(contact) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
+
     this.model.id = contact.id;
     this.model.custnumber = contact.custnumber;
     this.model.contactnumber = contact.telephone;
@@ -94,6 +109,10 @@ export class CustContactsComponent implements OnInit {
   }
 
   updatecontact(form) {
+    // check if logged in
+    this.ecolService.ifLogged().subscribe(resp => {
+      this.username = resp;
+    });
     this.model.id = form.id;
     this.model.custnumber = this.custnumber;
     this.model.telephone = form.contactnumber;
