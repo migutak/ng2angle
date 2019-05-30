@@ -35,9 +35,9 @@ export class CustContactsComponent implements OnInit {
     // this.spinner.show();
 
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -60,9 +60,9 @@ export class CustContactsComponent implements OnInit {
 
   savecontact(form) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.addcontact.custnumber = this.custnumber;
     this.addcontact.telephone = form.contactnumber;
@@ -92,9 +92,9 @@ export class CustContactsComponent implements OnInit {
 
   editcontact(contact) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.model.id = contact.id;
     this.model.custnumber = contact.custnumber;
@@ -110,9 +110,10 @@ export class CustContactsComponent implements OnInit {
 
   updatecontact(form) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
     this.model.id = form.id;
     this.model.custnumber = this.custnumber;
     this.model.telephone = form.contactnumber;

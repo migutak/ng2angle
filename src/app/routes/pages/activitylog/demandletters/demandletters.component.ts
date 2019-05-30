@@ -34,6 +34,7 @@ export class DemandLettersComponent implements OnInit {
   smsMessage: string;
   username: string;
   sys: string;
+  // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
@@ -67,8 +68,8 @@ export class DemandLettersComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
-      var obj = JSON.parse(response);
-      for (let i=0; i <obj.files.length; i ++) {
+      const obj = JSON.parse(response);
+      for (let i = 0; i < obj.files.length; i ++) {
         const bulk = {
             'accnumber': this.accnumber,
             'custnumber': this.custnumber,
@@ -84,12 +85,12 @@ export class DemandLettersComponent implements OnInit {
             'bypost': true,
             'demand': this.model.demand
           };
-          this.ecolService.demandshistory(bulk).subscribe(response => {
+          this.ecolService.demandshistory(bulk).subscribe(resp => {
             this.getdemandshistory(this.accnumber);
             swal('Good!', 'Demand letter uploaded successfully!', 'success');
           }, error => {
             swal('Oooops!', 'Demand letter uploaded but unable to add to demands history!', 'warning');
-          })
+          });
     }
     };
 
@@ -100,9 +101,9 @@ export class DemandLettersComponent implements OnInit {
 
   ngOnInit() {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -177,9 +178,9 @@ export class DemandLettersComponent implements OnInit {
 
   generate_choose() {
     if (this.sys === 'cc') {
-      this.generatecc()
+      this.generatecc();
     } else {
-      this.generate()
+      this.generate();
     }
   }
 
@@ -205,9 +206,9 @@ export class DemandLettersComponent implements OnInit {
 
   openletter(letter) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
@@ -271,9 +272,9 @@ export class DemandLettersComponent implements OnInit {
 
   openlettercc(letter) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.ecolService.loader();
     this.ecolService.getcardAccount(this.accnumber).subscribe(carddata => {
@@ -319,9 +320,10 @@ export class DemandLettersComponent implements OnInit {
 
   processletter(letter: any, accnumber, emailaddress) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data && data.length > 0) {
         // console.log('getAccount=>', data);

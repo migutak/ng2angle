@@ -79,10 +79,10 @@ export class ActivityActionComponent implements OnInit {
 
   ngOnInit() {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    })
-    
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
     this.spinner.show();
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -118,6 +118,8 @@ export class ActivityActionComponent implements OnInit {
       this.getcard(this.accnumber);
     } else if (this.sys === 'mcoopcash') {
       this.getmcoop(this.accnumber);
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
     }
@@ -126,6 +128,16 @@ export class ActivityActionComponent implements OnInit {
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
+      this.account = data[0];
+      // build form
+      this.buildForm();
+      if (swal.isVisible) { swal.close(); }
+      this.spinner.hide();
+    });
+  }
+
+  getwatch(accnumber) {
+    this.ecolService.getwatch(accnumber).subscribe(data => {
       this.account = data[0];
       // build form
       this.buildForm();
@@ -215,9 +227,9 @@ export class ActivityActionComponent implements OnInit {
     }
 
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    })
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     // post data
     this.ecolService.loader();

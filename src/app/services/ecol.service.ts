@@ -148,6 +148,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/qall/' + accnumber);
   }
 
+  getwatch (accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/watch_stage/' + accnumber);
+  }
+
   getfileshistory (custnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');
@@ -221,7 +225,7 @@ export class EcolService {
 
   getcardAccount(cardacct) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/cards_stage?filter[where][cardacct]=' + cardacct);
+    return this.httpClient.get<any>(environment.api + '/api/qcards?filter[where][cardacct]=' + cardacct);
   }
 
   getcardwithid(nationid) {
@@ -419,9 +423,6 @@ export class EcolService {
       alert('Please login!');
       this.router.navigate( ['/login'] );
       return false;
-    } else {
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      return currentUser.username
     }
   }
 }

@@ -50,13 +50,6 @@
             </a>
           </li>
           <li>
-            <a [routerLink]="['./files']" [routerLinkActive]="['active']"
-              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-              queryParamsHandling="merge">
-              <span class="fa fa-angle-double-right text-primary"></span>Upload Files <span class="badge badge-primary float-right">{{totalfiles}}</span>
-            </a>
-          </li>
-          <li>
             <a [routerLink]="['./sms']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Send/Schedule sms
@@ -87,6 +80,13 @@
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Guarantors &nbsp;<span
               class="badge badge-success float-right">{{totalguarantors}}</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['./files']" [routerLinkActive]="['active']"
+              [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+              queryParamsHandling="merge">
+              <span class="fa fa-angle-double-right text-primary"></span>Upload Files <span class="badge badge-primary float-right">{{totalfiles}}</span>
             </a>
           </li>
           <li>

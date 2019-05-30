@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
         this.menuItems = menu.getMenu().slice(0, 4); // for horizontal layout
         // get notifications
        // ptps, overdue and demand letters
-       this.getnotification();
+      // this.getnotification();
 
     }
 
@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
 
     }
 
-    getnotification() {
+    /*getnotification() {
         this.ecolService.notifications().subscribe(data => {
             console.log(data[0]);
             this.nu_of_brokenptps = data[0].brokenptp;
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
         }, error => {
             console.log(error);
         });
-    }
+    }*/
 
     toggleUserBlock(event) {
         event.preventDefault();

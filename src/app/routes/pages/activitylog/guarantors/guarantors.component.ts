@@ -27,9 +27,10 @@ export class GuarantorsComponent implements OnInit {
 
   ngOnInit() {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
@@ -52,10 +53,11 @@ export class GuarantorsComponent implements OnInit {
   }
 
   onSubmit(form) {
-    // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+   // check if logged in
+   this.ecolService.ifLogged();
+   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+   this.username = currentUser.username;
+
     // Loading indictor
     this.ecolService.loader();
     //

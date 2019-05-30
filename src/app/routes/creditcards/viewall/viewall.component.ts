@@ -12,6 +12,9 @@ import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-commu
 })
 export class ViewallComponent implements OnInit {
 
+  public overlayLoadingTemplate;
+  public overlayNoRowsTemplate;
+
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
       headerHeight: 40,
@@ -21,6 +24,12 @@ export class ViewallComponent implements OnInit {
       cacheBlockSize: 20,
       paginationPageSize: 20
     };
+
+    this.overlayLoadingTemplate =
+      // tslint:disable-next-line:max-line-length
+      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Please wait while your rows are loading</span>';
+    this.overlayNoRowsTemplate =
+      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>';
   }
 
 
@@ -44,44 +53,41 @@ export class ViewallComponent implements OnInit {
       field: 'cardacct',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
-      }
+      },
+      resizable: true,
     },
     {
       headerName: 'CARDNUMBER',
-      field: 'cardnumber'
+      field: 'cardnumber',
+      resizable: true,
+      filter: true
     },
     {
       headerName: 'CARDNAME',
-      field: 'cardname'
+      field: 'cardname',
+      resizable: true,
+      filter: true
     },
     {
       headerName: 'DAYSINARREARS',
       field: 'daysinarrears',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red'};
-        } else if (params.value > '90') {
-          return { color: 'red'};
-        } else {
-          return null;
-        }
-      }
+      resizable: true,
+      filter: true
     },
     {
       headerName: 'EXPPMNT',
-      field: 'exppmnt'
+      field: 'exppmnt',
+      resizable: true,
     },
     {
       headerName: 'OUTBALANCE',
-      field: 'outbalance'
+      field: 'outbalance',
+      resizable: true,
     },
     {
       headerName: 'CYCLE',
-      field: 'cycle'
-    },
-    {
-      headerName: 'SQNUMBER',
-      field: 'sqnumber'
+      field: 'cycle',
+      resizable: true,
     }
   ];
   rowData1: any;

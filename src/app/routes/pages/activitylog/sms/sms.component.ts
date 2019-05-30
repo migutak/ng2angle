@@ -33,9 +33,10 @@ export class SmsComponent implements OnInit {
 
   ngOnInit() {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -128,9 +129,9 @@ export class SmsComponent implements OnInit {
 
   sendsmsfunc(form) {
     // check if logged in
-    this.ecolService.ifLogged().subscribe(resp => {
-      this.username = resp;
-    });
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     this.ecolService.loader();
     const body = {
