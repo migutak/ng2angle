@@ -138,6 +138,11 @@ export class ActivityLogComponent implements OnInit {
       this.collateralmenu = false;
       this.guarantorsmenu = false;
       this.demandlettersmenu = false;
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
+      this.collateralmenu = false;
+      this.guarantorsmenu = true;
+      this.demandlettersmenu = false;
     } else {
       this.getaccount(this.accnumber);
     }
@@ -221,6 +226,19 @@ export class ActivityLogComponent implements OnInit {
       this.model.addressline1 = data[0].address;
       this.model.postcode = data[0].postcode;
       this.model.celnumber = data[0].phonenumber;
+    });
+  }
+
+  getwatch(accnumber) {
+    this.ecolService.getwatch(accnumber).subscribe(data => {
+      this.accountdetails = data[0];
+      this.guarantors = data[0].guarantors;
+      this.model.accnumber = data[0].accnumber;
+      this.model.custnumber = data[0].custnumber;
+      this.model.addressline1 = data[0].addressline1;
+      this.model.postcode = data[0].postcode;
+      this.model.emailaddress = data[0].emailaddress;
+      this.model.celnumber = data[0].celnumber;
     });
   }
 

@@ -364,7 +364,7 @@ export class EcolService {
   downloadFile(file: string) {
     const body = { filename: file };
 
-    return this.httpClient.post(environment.uploadurl + '/download', body, {
+    return this.httpClient.post(environment.uploadurl + '/filesapi/download', body, {
       responseType: 'blob',
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
