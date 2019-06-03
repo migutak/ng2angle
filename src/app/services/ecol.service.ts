@@ -30,6 +30,30 @@ export class EcolService {
     return this.httpClient.post(environment.api + '/api/guarantordetails', body);
   }
 
+  newmarketer(body) {
+    return this.httpClient.post(environment.api + '/api/marketor', body);
+  }
+
+  newauctioneer(body) {
+    return this.httpClient.post(environment.api + '/api/auctioneer', body);
+  }
+
+  newdebtcollector(body) {
+    return this.httpClient.post(environment.api + '/api/debtcollector', body);
+  }
+
+  newvaluer(body) {
+    return this.httpClient.post(environment.api + '/api/valuers', body);
+  }
+
+  newrepo(body) {
+    return this.httpClient.post(environment.api + '/api/repossessions', body);
+  }
+
+  newinvestigators(body) {
+    return this.httpClient.post(environment.api + '/api/investigators', body);
+  }
+
   getallnotes(filter, cust) {
     //
     let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust;
@@ -376,6 +400,10 @@ export class EcolService {
     localStorage.removeItem('accountInfo');
     localStorage.removeItem('userpermission');
     localStorage.removeItem('profile');
+  }
+
+  getloggedinusers() {
+    return this.httpClient.get<any>(environment.api + '/api/tblusers?filter[where][loggedin]=Y');
   }
 
   totalmcoopcashviewall() {

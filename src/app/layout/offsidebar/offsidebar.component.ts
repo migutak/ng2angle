@@ -18,6 +18,8 @@ export class OffsidebarComponent implements OnInit, OnDestroy {
 
     currentTheme: any;
     selectedLanguage: string;
+    online: any = [];
+    username: string;
 
     constructor(
         public settings: SettingsService,
@@ -32,6 +34,11 @@ export class OffsidebarComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.anyClickClose();
+
+        // check if logged in
+        this.ecolService.ifLogged();
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.username = currentUser.username;
     }
 
     setTheme() {
@@ -57,6 +64,12 @@ export class OffsidebarComponent implements OnInit, OnDestroy {
         }
     }
 
+    getloggedinusers() {
+        this.ecolService.getloggedinusers().subscribe(data => {
+            this.online = data;
+        });
+    }
+
     ngOnDestroy() {
         document.removeEventListener('click', this.checkCloseOffsidebar);
     }
@@ -71,11 +84,11 @@ export class OffsidebarComponent implements OnInit, OnDestroy {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Logout!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
                 this.ecolService.logout();
                 this.router.navigate(['/login']);
             }
-          });
+        });
     }
 }

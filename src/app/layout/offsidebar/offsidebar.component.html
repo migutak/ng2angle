@@ -217,89 +217,44 @@
                 <option [value]="lang.code" *ngFor="let lang of getLangs()">{{lang.text}}</option>
             </select>
         </div>
-        <button class="btn btn-block btn-outline-warning btn-sm" (click)="logout()">
-                <span class="fa fa-sign-out-alt"></span><strong>Logout</strong>
-             </button>
     </tab>
     <tab>
         <ng-template tabHeading>
             <em class="icon-user fa-lg"></em>
         </ng-template>
-        <h3 class="text-center text-thin mt-4">Connections</h3>
+        <h3 class="text-center text-thin mt-4">Chat</h3>
         <div class="list-group">
-            <!-- START list title
+            <!-- START list title-->
             <div class="list-group-item border-0">
                 <small class="text-muted">ONLINE</small>
-            </div>-->
+            </div>
             <!-- END list title-->
-            <!--<div class="list-group-item list-group-item-action border-0">
-                <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/05.jpg" alt="Image">
-                    <div class="media-body text-truncate">
-                        <a href="#">
-                                    <strong>Juan Sims</strong>
-                                 </a>
-                        <br>
-                        <small class="text-muted">Designeer</small>
-                    </div>
-                    <div class="ml-auto">
-                        <span class="circle bg-success circle-lg"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="list-group-item list-group-item-action border-0">
-                <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/06.jpg" alt="Image">
-                    <div class="media-body text-truncate">
-                        <a href="#">
-                                    <strong>Maureen Jenkins</strong>
-                                 </a>
-                        <br>
-                        <small class="text-muted">Designeer</small>
-                    </div>
-                    <div class="ml-auto">
-                        <span class="circle bg-success circle-lg"></span>
+            <div class="col-xs-12 col-xs-offset-1" style="min-height: 500px; max-height: 500px; overflow-y: auto; width: 100%">
+                <div class="list-group-item list-group-item-action border-0">
+                    <div class="media">
+                        <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user.png" alt="Image">
+                        <div class="media-body text-truncate">
+                            <a href="#">
+                                        <strong>Juan Sims</strong>
+                                     </a>
+                            <br>
+                            <small class="text-muted">Designeer</small>
+                        </div>
+                        <div class="ml-auto">
+                            <span class="circle bg-success circle-lg"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="list-group-item list-group-item-action border-0">
-                <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/07.jpg" alt="Image">
-                    <div class="media-body text-truncate">
-                        <a href="#">
-                                    <strong>Billie Dunn</strong>
-                                 </a>
-                        <br>
-                        <small class="text-muted">Designeer</small>
-                    </div>
-                    <div class="ml-auto">
-                        <span class="circle bg-danger circle-lg"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="list-group-item list-group-item-action border-0">
-                <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/08.jpg" alt="Image">
-                    <div class="media-body text-truncate">
-                        <a href="#">
-                                    <strong>Tomothy Roberts</strong>
-                                 </a>
-                        <br>
-                        <small class="text-muted">Designeer</small>
-                    </div>
-                    <div class="ml-auto">
-                        <span class="circle bg-warning circle-lg"></span>
-                    </div>
-                </div>
-            </div>-->
+            
             <!-- START list title
             <div class="list-group-item border-0">
                 <small class="text-muted">OFFLINE</small>
-            </div>-->
-            <!-- END list title-->
-            <!---<div class="list-group-item list-group-item-action border-0">
+            </div>
+            END list title
+            <div class="list-group-item list-group-item-action border-0">
                 <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/09.jpg" alt="Image">
+                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user.png" alt="Image">
                     <div class="media-body text-truncate">
                         <a href="#">
                                     <strong>Lawrence Robinson</strong>
@@ -308,31 +263,16 @@
                         <small class="text-muted">Designeer</small>
                     </div>
                     <div class="ml-auto">
-                        <span class="circle bg-warning circle-lg"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="list-group-item list-group-item-action border-0">
-                <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user/10.jpg" alt="Image">
-                    <div class="media-body text-truncate">
-                        <a href="#">
-                                    <strong>Tyrone Owens</strong>
-                                 </a>
-                        <br>
-                        <small class="text-muted">Designeer</small>
-                    </div>
-                    <div class="ml-auto">
-                        <span class="circle bg-warning circle-lg"></span>
+                        <span class="circle bg-danger circle-lg"></span>
                     </div>
                 </div>
             </div>-->
         </div>
         <div class="px-3 py-4 text-center">
-            <!-- Optional link to list more users
+            <!-- Optional link to list more users-->
             <a class="btn btn-purple btn-sm" href="#" title="See more contacts">
                            <strong>Load more..</strong>
-                        </a>-->
+                        </a>
                         
         </div>
         

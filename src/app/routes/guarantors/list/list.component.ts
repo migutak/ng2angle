@@ -3,10 +3,6 @@ import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
 
-const cust = localStorage.getItem('custnumber');
-const acc = localStorage.getItem('accnumber');
-const username = localStorage.getItem('username');
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
