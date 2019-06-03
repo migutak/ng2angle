@@ -73,7 +73,7 @@ export const routes = [
         path: 'activitylog',
         component: ActivityLogComponent,
         children: [
-            { path: '', redirectTo: 'activityhome', pathMatch: 'full' },
+            { path: '', redirectTo: 'notes', pathMatch: 'full' },
             { path: 'activityhome', component: ActivityHomeComponent },
             { path: 'activityaction', component: ActivityActionComponent},
             { path: 'notes', component: NotesComponent },
@@ -85,7 +85,7 @@ export const routes = [
             { path: 'remedialcollaterals', component: CollateralsComponent},
             { path: 'bulknotes', component: BulknotesComponent },
             { path: 'guarantors', component: GuarantorsComponent },
-            { path: '**', redirectTo: 'activityhome' }
+            { path: '**', redirectTo: 'notes' }
           ],
           canActivate: [AuthGuard]
 

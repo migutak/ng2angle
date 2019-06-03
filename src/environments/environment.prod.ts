@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  adlogin: false,
+  adlogin: true,
   api: 'https://ecollectweb.co-opbank.co.ke',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'https://ecollectweb.co-opbank.co.ke/docx/',
