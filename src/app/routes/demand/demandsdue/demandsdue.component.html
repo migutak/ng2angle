@@ -1,6 +1,6 @@
 <div class="content-heading">
     <div>Demand Letters Due
-      <small>demand letters not send either manual or auto</small></div>
+      <small>Demand letters not send either manual or auto</small></div>
   </div>
   <!-- START card-->
   <div class="card card-default">
@@ -8,7 +8,7 @@
     <!-- START box placeholder
   <div class="box-placeholder"></div>-->
   <div class="row">
-      <div class="col-xl-6">
+      <!--<div class="col-xl-6">
           <div class="btn-group" (click)="refreshgrid()">
             <label class="btn btn-outline-success" [(ngModel)]="radioModel" btnRadio="Demand1" uncheckable>Demand-1 <span
                 class="badge badge-danger">{{total?.DEMAND1}}</span></label>
@@ -20,9 +20,9 @@
             <label class="btn btn-outline-danger" [(ngModel)]="radioModel" btnRadio="Postlisting" uncheckable>Post-listing
               <span class="badge badge-danger">{{total?.POSTLISTING}}</span></label>
           </div>
-        </div>
+        </div>-->
         <div class="col-xl-6">
-            <form #searchForm="ngForm" class="form-horizontal">
+            <form #searchForm="ngForm" class="form-horizontal" novalidate autocomplete="off">
                 <div class="row">
                   <div class="col-xl-8 col-lg-8 form-inline">
                     <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText" name="searchText" #searchText="ngModel" minlength="4" required/>
@@ -33,7 +33,7 @@
                   </div>
                   <div class="col-xl-4 col-lg-4 form-inline">
                     <button class="mr-1 mb-1 btn btn-outline-green" type="button" (click)="reset()"><span
-                        class="fa fa-search"></span> Reset</button>
+                        class="fas fa-sync"></span> Reset</button>
                   </div>
                 </div>
                 <p *ngIf="searchText.errors?.minlength">minimum of four(4) search characters is required</p>
@@ -47,7 +47,7 @@
         [gridOptions]="gridOptions"
         (gridReady)="gridReady($event)"
         [columnDefs]="columnDefs"
-        (rowDoubleClicked)='onRowDoubleClicked($event)'>
+        (rowClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
   
   </div>

@@ -42,8 +42,20 @@ export class ActivityActionComponent implements OnInit {
   cmdstatus: any = [];
   party: any = [];
   cure: any = [];
-  collectoraction: any = [];
   excuse: any = [];
+  collectoraction: any = [
+    {collectoractionid: 'OC', collectoraction: 'OUTGOING CALL'},
+    {collectoractionid: 'IC', collectoraction: 'INCOMING CALL'},
+    {collectoractionid: 'MET', collectoraction: 'DEBTOR VISITED'},
+    {collectoractionid: 'REVW', collectoraction: 'ACCOUNT REVIEW'},
+    {collectoractionid: 'SC', collectoraction: 'SENT CORRESPONDENCE'},
+    {collectoractionid: 'RC', collectoraction: 'RECEIVED CORRESPONDENCE'},
+    {collectoractionid: 'RR', collectoraction: 'ROUTE FOR REVIEW'},
+    {collectoractionid: 'OA', collectoraction: 'ASSIGN OUTSIDE AGENCY'},
+    {collectoractionid: 'RF', collectoraction: 'RECEIVED FILE'},
+    {collectoractionid: 'FT', collectoraction: 'FUND TRANSFER'},
+    {collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION'}
+  ];
 
   message: string;
 
@@ -52,8 +64,8 @@ export class ActivityActionComponent implements OnInit {
   sys = 'collections';
 
   ptp: NgOption[] = [
-    { id: 1, name: 'NO' },
-    { id: 2, name: 'YES' },
+    { id: 'No', name: 'NO' },
+    { id: 'Yes', name: 'YES' },
   ];
 
   currentDate() {
@@ -111,7 +123,7 @@ export class ActivityActionComponent implements OnInit {
     this.getcmdstatus();
     this.getreviewers();
     this.getparty();
-    this.getcollectoraction();
+    // this.getcollectoraction();
     this.getexcuse();
     //
     if (this.sys === 'cc') {
@@ -149,6 +161,9 @@ export class ActivityActionComponent implements OnInit {
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
+      // build form
+      this.buildForm();
+      if (swal.isVisible) { swal.close(); }
       this.spinner.hide();
     });
   }
@@ -203,9 +218,9 @@ export class ActivityActionComponent implements OnInit {
     // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: [{value: 'Select party', disabled: true}],
+      party: [{value: '', disabled: true}],
       ptpamount: [{value: 0, disabled: true}],
-      ptp: [{value: 'NO', disabled: true}],
+      ptp: [{value: 'No', disabled: true}],
       ptpdate: [{value: this.currentDate, disabled: true}],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
@@ -279,7 +294,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeAction(value) {
-    if (value === '1' || value === '2' || value === '3') {
+    if (value === 'OC' || value === 'IC' || value === 'MET') {
       this.actionForm.controls.party.enable();
     } else {
       this.actionForm.controls.party.disable();

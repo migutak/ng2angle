@@ -72,7 +72,7 @@ export class SmsComponent implements OnInit {
   }
 
   getteles(cust) {
-    this.ecolService.getteles(cust).subscribe(data_teles => {
+    this.ecolService.getallteles(cust).subscribe(data_teles => {
       this.teles = data_teles;
     });
   }
@@ -96,8 +96,8 @@ export class SmsComponent implements OnInit {
         + Math.round(this.account.oustbalance) + '. Please regularize within seven days.';
       this.dataSms.smsCallback = ' Enquire details on 0711049000';
     } else if (template === 'CC') {
-      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarr +
-        ' days. Amount in arrears is Kes. ' + Math.round(this.account.outsbalance) + '. Please pay within seven days. ';
+      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarrears +
+        ' days. Amount in arrears is Kes. ' + Math.round(this.account.outbalance) + '. Please pay within seven days. ';
       this.dataSms.smsCallback = ' Enquire details on 0711049000.';
     }
   }
@@ -109,21 +109,18 @@ export class SmsComponent implements OnInit {
   getaccount(account) {
     this.ecolService.getaccount(account).subscribe(data => {
       this.account = data;
-      this.dataSms.smsNumber = data.celnumber;
     });
   }
 
   getmcoopcashaccount(loanaccaccount) {
     this.ecolService.getmcoopcashAccount(loanaccaccount).subscribe(data => {
       this.account = data;
-      this.dataSms.smsNumber = data.celnumber;
     });
   }
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
-      this.account = data;
-      this.dataSms.smsNumber = data.telnumber;
+      this.account = data[0];
     });
   }
 
@@ -136,6 +133,7 @@ export class SmsComponent implements OnInit {
     this.ecolService.loader();
     const body = {
       custnumber: this.custnumber,
+      accnumber: this.custnumber,
       owner: this.username,
       message: form.value.smsMessage + form.value.smsCallback,
       arrears: this.account.totalarrears,
@@ -143,9 +141,8 @@ export class SmsComponent implements OnInit {
       telnumber: form.value.smsNumber
     };
     this.ecolService.postsms(body).subscribe(data => {
-      // console.log(data);
       swal('Success!', 'sms sent', 'success');
-      this.dataSms = {};
+      form.value.message = '';
       this.getsms();
     }, error => {
       console.log(error);

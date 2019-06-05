@@ -80,8 +80,13 @@ export class ViewallComponent implements OnInit {
       resizable: true,
     },
     {
-      headerName: 'OUTBALANCE',
+      headerName: 'OUTSTANDING BALANCE',
       field: 'outbalance',
+      resizable: true,
+    },
+    {
+      headerName: 'LIMIT',
+      field: 'limit',
       resizable: true,
     },
     {
@@ -124,7 +129,7 @@ export class ViewallComponent implements OnInit {
       return;
     }
     this.clear();
-    this.http.get<any>(environment.api + '/api/cards_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
+    this.http.get<any>(environment.api + '/api/tcards/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
     });
@@ -162,7 +167,8 @@ export class ViewallComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/cards_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tcards?filter[limit]=' + perPage + '&filter[skip]=' + currentPos + '&filter[order]=outbalance desc');
   }
 
 }

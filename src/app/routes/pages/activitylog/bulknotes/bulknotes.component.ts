@@ -117,7 +117,7 @@ export class BulknotesComponent implements OnInit {
       saveAs(data, 'ECollect_bulk_notes_upload_template.xlsx');
     }, error => {
       console.log(error);
-      swal('Error!', ' Cannot upload template  file!', 'error');
+      swal('Error!', ' Cannot download template  file!', 'error');
     });
   }
 

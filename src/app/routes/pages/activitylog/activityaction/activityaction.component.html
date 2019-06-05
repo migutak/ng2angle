@@ -47,7 +47,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <ng-select id="reason" name="reason" formControlName="reason"
+              <ng-select id="reason" name="reason" formControlName="reason"  placeholder="Select reason"
                 [ngClass]="{ 'is-invalid': f.reason.errors }" (ngModelChange)="changeReason(actionForm.value.reason)">
                 <ng-option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</ng-option>
               </ng-select>
@@ -63,7 +63,7 @@
             <div class="col-md-12">
               <ng-select id="ptp" name="ptp" formControlName="ptp" placeholder="Select PTP"
                 (ngModelChange)="changePtp(actionForm.value.ptp)">
-                <ng-option *ngFor="let p of ptp" [value]="p.name">{{p.name}}</ng-option>
+                <ng-option *ngFor="let p of ptp" [value]="p.id">{{p.name}}</ng-option>
               </ng-select>
             </div>
           </div>
@@ -180,7 +180,7 @@
                     #dp="bsDatepicker"
                     bsDatepicker
                     [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
-                    [minDate]="minDate"
+                    
                     >
                   <div class="input-group-append">
                     <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
@@ -189,7 +189,7 @@
                   </div>
                 </div>
                 </div>
-                <!--<pre *ngIf="actionForm.value.reviewdate">{{actionForm.value.reviewdate | date}}</pre>-->
+                <!--<pre *ngIf="actionForm.value.reviewdate">{{actionForm.value.reviewdate | date}}</pre> [minDate]="minDate" -->
             </div>
         </div>
 
@@ -217,6 +217,7 @@
         <button type="reset" class="btn btn-sm btn-danger" (click)="reset()"><i class="fa fa-ban"></i> Reset</button>
       </div>
     </form>
-    <!--<pre>{{actionForm.value | json}}</pre>-->
+    <!--<pre>{{actionForm.valid | json}}</pre>
+    <pre>{{actionForm.value | json}}</pre>-->
   </div>
 </div>

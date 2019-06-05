@@ -92,7 +92,7 @@ export class EcolService {
   }
 
   postactivitylogs(body) {
-    const url = environment.api + '/api/activitylog/action';
+    const url = environment.api + '/api/activitylogs';
     return this.httpClient.post(url, body);
   }
 
@@ -182,7 +182,7 @@ export class EcolService {
   }
 
   getsms(cust) {
-    return this.httpClient.get<any>(environment.api + '/api/sms?filter[where][custnumber]=' + cust + '&filter[order]=datesent desc');
+    return this.httpClient.get<any>(environment.api + '/api/sms?filter[where][custnumber]=' + cust + '&filter[order]=stagedate desc');
   }
 
   getLetter(letter) {
@@ -191,6 +191,10 @@ export class EcolService {
 
   getautoLetter() {
     return this.httpClient.get<any>(environment.api + '/api/autoletters');
+  }
+
+  getmemo() {
+    return this.httpClient.get<any>(environment.api + '/api/vmemos');
   }
 
   putautoLetter(letter) {
@@ -249,7 +253,7 @@ export class EcolService {
 
   getcardAccount(cardacct) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/qcards?filter[where][cardacct]=' + cardacct);
+    return this.httpClient.get<any>(environment.api + '/api/tcards?filter[where][cardacct]=' + cardacct);
   }
 
   getcardwithid(nationid) {
@@ -314,6 +318,10 @@ export class EcolService {
 
   getteles(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/teles?filter[where][custnumber]=' + custnumber);
+  }
+
+  getallteles(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/teles/alltele?custnumber=' + custnumber);
   }
 
   existsteles(custnumber, tel, email) {

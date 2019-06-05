@@ -8,11 +8,11 @@
                 <form #sendsmsForm="ngForm" (ngSubmit)="sendsmsfunc(sendsmsForm)" novalidate autocomplete="off">
                     <div class="form-group">
                         <label>Mobile Number:</label> <input class="form-control" #smsNumber="ngModel"
-                            [(ngModel)]="dataSms.smsNumber" name="smsNumber"
+                            [(ngModel)]="dataSms.smsNumber" name="smsNumber" placeholder="Select here"
                             [ngClass]="{ 'is-invalid': smsNumber.errors }" list="cellnumber" required />
 
                             <datalist id="cellnumber">
-                                <option *ngFor="let t of teles">{{t.telephone}}</option>
+                                <option *ngFor="let t of teles">{{t.MOBILE}}</option>
                             </datalist>
 
                     </div>
@@ -64,7 +64,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>CustNumber</th>
+                            <th>accnumber</th>
                             <th>Message</th>
                             <th>Date</th>
                             <th>By</th>
@@ -73,7 +73,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let d of sms">
-                            <td><strong>{{d.custnumber}}</strong></td>
+                            <td><strong>{{d.accnumber}}</strong></td>
                             <td>{{d.message}}</td>
                             <td>{{d.datesent}}</td>
                             <td>{{d.owner}}</td>

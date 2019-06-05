@@ -14,14 +14,14 @@ export const environment = {
   // letters_path: '/home/ecollectadmin/demand_letters/',
   uploadurl: 'http://ecollect.inteligen.co.ke:4000',
   valor: 'http://ecollect.inteligen.co.ke:3000/api/',
-  xlsuploadapi: 'http://ecollect.inteligen.co.ke:3001/api/',
+  xlsuploadapi: 'http://ecollect.inteligen.co.ke:3001/xlsupload/',
   metrics: 'http://localhost:8000/appmetrics-dash',
-  xlstemplate: '/Users/Kevinabongo/Documents/upload_notes.xlsx',
+  xlstemplate: 'C:\\Users\\Kevin\\Documents\\upload_notes.xlsx',
   applink: 'http://localhost:4500',
   emailapi: 'http://localhost:8000/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   // filesapi: 'http://localhost:3100/api',
-  filesapi: 'https://ecollecttst.co-opbank.co.ke/filesapi', // activityupload
+  filesapi: 'http://ecollect.inteligen.co.ke:3100/filesapi', // activityupload
   accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   birt: 'http://ecollect.inteligen.co.ke:8090/birt',

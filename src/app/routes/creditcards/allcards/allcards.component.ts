@@ -124,7 +124,7 @@ export class AllcardsComponent implements OnInit {
       return;
     }
     this.clear();
-    this.http.get<any>(environment.api + '/api/cards_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
+    this.http.get<any>(environment.api + '/api/cards_watch_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
     });
@@ -162,7 +162,7 @@ export class AllcardsComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/cards_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/cards_watch_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
   }
 
 }

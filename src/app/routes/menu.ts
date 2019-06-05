@@ -46,11 +46,11 @@ const DashboardAdmin = {
 };
 
 const Letters = {
-    text: 'Demands Loans',
+    text: 'Demands Letters',
     link: '/letters',
     icon: 'icon-note',
     submenu: [
-        {
+        /*{
             text: 'Letters Due',
             link: '/demand/demands',
             alert: '0',
@@ -61,8 +61,8 @@ const Letters = {
             link: '/demand/demandhistory',
             alert: '0',
             label: 'badge badge-danger'
-        }
-        /*{
+        }*/
+        {
             text: 'Guarantors',
             link: '/guarantors',
             submenu: [
@@ -77,7 +77,7 @@ const Letters = {
             ]
         },
         {
-            text: 'Letters',
+            text: 'Loans',
             link: '/demand',
             submenu: [
                 {
@@ -89,7 +89,21 @@ const Letters = {
                     link: '/demand/demandhistory'
                 }
             ]
-        }*/
+        },
+        {
+            text: 'Credit Cards',
+            link: '/letters',
+            submenu: [
+                {
+                    text: 'Demands due',
+                    link: '/creditcards/creditcarddemands/demandsdue'
+                },
+                {
+                    text: 'Demands history',
+                    link: '/creditcards/creditcarddemands/demandshistory'
+                }
+            ]
+        }
     ]
    /* ,
     'alert': 'new',
@@ -323,7 +337,7 @@ const Work = {
     icon: 'icon-briefcase',
     submenu: [
         {
-            text: 'View all',
+            text: 'Loan arrears(ALL)',
             link: '/work/viewall'
             /*'alert': '23',
             'label': 'badge badge-warning'*/
@@ -353,7 +367,7 @@ const Work_cc = {
     icon: 'icon-credit-card',
     submenu: [
         {
-            text: 'View all',
+            text: 'Card arrears(ALL)',
             link: '/creditcards/viewall'
             /*'alert': '23',
             'label': 'badge badge-warning'*/
@@ -383,7 +397,7 @@ const Remedial = {
     icon: 'icon-equalizer',
     submenu: [
         {
-            text: 'View all',
+            text: 'Loan arrears(ALL)',
             link: '/work/viewall'
             /*'alert': '23',
             'label': 'badge badge-warning'*/
@@ -448,7 +462,7 @@ const serviceproviders = {
 };
 
 const mcoopcash = {
-    text: 'M-Coop Cash',
+    text: 'E-Credit',
     link: '/mcoopcash',
     icon: 'icon-wallet',
     submenu: [
@@ -578,9 +592,9 @@ const collection_menu = [
     headingMain,
     Home,
     Dashboard,
-    Guarantors,
+    // Guarantors,
     Letters,
-    Letterscc,
+    // Letterscc,
     headingComponents,
     Work,
     Work_cc,
@@ -595,7 +609,7 @@ const creditcards_menu = [
     headingMain,
     Home,
     Dashboard,
-    Letterscc,
+    // Letterscc,
     headingComponents,
     Work_cc,
     Work,
@@ -609,9 +623,9 @@ const remedial_menu = [
     headingMain,
     Home,
     Dashboard,
-    Guarantors,
+    // Guarantors,
     Letters,
-    Letterscc,
+    // Letterscc,
     headingComponents,
     // Work,
     Remedial,
@@ -627,9 +641,9 @@ const teamleader_menu = [
     headingMain,
     Home,
     Dashboard,
-    Guarantors,
+    // Guarantors,
     Letters,
-    Letterscc,
+    // Letterscc,
     headingComponents,
     Work,
     Work_cc,
