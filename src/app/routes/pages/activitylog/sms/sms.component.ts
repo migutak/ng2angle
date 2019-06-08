@@ -133,7 +133,7 @@ export class SmsComponent implements OnInit {
     this.ecolService.loader();
     const body = {
       custnumber: this.custnumber,
-      accnumber: this.custnumber,
+      accnumber: this.accnumber,
       owner: this.username,
       message: form.value.smsMessage + form.value.smsCallback,
       arrears: this.account.totalarrears,

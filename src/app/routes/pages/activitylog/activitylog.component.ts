@@ -133,6 +133,11 @@ export class ActivityLogComponent implements OnInit {
       this.getcard(this.accnumber);
       this.collateralmenu = false;
       this.guarantorsmenu = false;
+    } else if (this.sys === 'watchcc') {
+      this.getwatchcard(this.accnumber);
+      this.collateralmenu = false;
+      this.guarantorsmenu = false;
+      this.demandlettersmenu = false;
     } else if (this.sys === 'mcoopcash') {
       this.getmcoopcashaccount(this.accnumber);
       this.collateralmenu = false;
@@ -164,6 +169,18 @@ export class ActivityLogComponent implements OnInit {
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.accountdetails = data[0];
+      this.model.accnumber = data[0].cardacct;
+      this.model.custnumber = data[0].cardacct;
+      this.model.addressline1 = data[0].address;
+      this.model.postcode = data[0].rpcode;
+      this.model.emailaddress = data[0].emailaddress;
+      this.model.celnumber = data[0].celnumber;
+    });
+  }
+
+  getwatchcard(cardacct) {
+    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.accountdetails = data[0];
       this.model.accnumber = data[0].cardacct;
       this.model.custnumber = data[0].cardacct;

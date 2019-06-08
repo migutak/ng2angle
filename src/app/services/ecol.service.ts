@@ -256,6 +256,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tcards?filter[where][cardacct]=' + cardacct);
   }
 
+  getWatchcardAccount(cardacct) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage?filter[where][cardacct]=' + cardacct);
+  }
+
   getcardwithid(nationid) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/cards_stage?filter[where][nationid]=' + nationid);
@@ -361,7 +366,11 @@ export class EcolService {
   }
 
   getbranches() {
-    return this.httpClient.get<any>(environment.api + '/api/branches');
+    return this.httpClient.get<any>(environment.api + '/api/branches?filter[order]=branchname asc');
+  }
+
+  searchbranch(searchtext) {
+    return this.httpClient.get<any>(environment.api + '/api/branches/search?searchtext=' + searchtext);
   }
 
   putbranch(branch: object) {
@@ -416,6 +425,22 @@ export class EcolService {
 
   totalmcoopcashviewall() {
     return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalviewall');
+  }
+
+  totalcardswatch() {
+    return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage/totalcardswatch');
+  }
+
+  totalcreditcardsviewall() {
+    return this.httpClient.get<any>(environment.api + '/api/tcards/totalviewall');
+  }
+
+  totalcreditcardsmyallocation(username) {
+    return this.httpClient.get<any>(environment.api + '/api/tcards/totalmyallocation?colofficer=' + username);
+  }
+
+  totalcreditcardstotalmyworklist() {
+    return this.httpClient.get<any>(environment.api + '/api/tcards/totalmyworklist');
   }
 
   totalcardsdue() {

@@ -28,16 +28,16 @@ export class SearchComponent implements OnInit {
     this.valForm = fb.group({
       'username': [null, Validators.required],
       'firstname': [null, Validators.required],
-      'lastname': ['', Validators.required],
+      'lastname': [''],
       'surname': [''],
       'division': [''],
+      'team': [''],
       'branch': [''],
       'manager': [''],
       'email': [''],
       'role': [''],
-      'createdate': [{value: new Date(), disabled: true  }, Validators.required],
       'expirydate': [''],
-      'active': [false]
+      'active': ['']
     });
     // Datepicker
     this.maxDate.setDate(this.maxDate.getDate() + 7);
@@ -79,7 +79,6 @@ export class SearchComponent implements OnInit {
     this.ecolService.loader();
     if (username) {
       this.ecolService.getuser(username).subscribe(data => {
-        // console.log(data);
         if (data.length > 0) {
           this.valForm.patchValue({
             username: data[0].username,
@@ -87,11 +86,11 @@ export class SearchComponent implements OnInit {
             lastname: data[0].lastname,
             surname: data[0].surname,
             division: data[0].division,
+            team: data[0].team,
             branch: data[0].branch,
-            email: data[0].username,
+            email: data[0].email,
             active: data[0].active,
             expirydate: data[0].expirydate,
-            createdate: data[0].createdate,
             role: data[0].role
           });
           // success
@@ -106,6 +105,7 @@ export class SearchComponent implements OnInit {
             lastname: '',
             surname: '',
             division: '',
+            team: '',
             branch: '',
             email: '',
             active: '',

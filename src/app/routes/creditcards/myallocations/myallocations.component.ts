@@ -50,7 +50,7 @@ export class MyallocationsComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'CARDACCT',
-      field: 'cardacct',
+      field: 'CARDACCT',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
@@ -58,35 +58,40 @@ export class MyallocationsComponent implements OnInit {
     },
     {
       headerName: 'CARDNUMBER',
-      field: 'cardnumber',
+      field: 'CARDNUMBER',
       resizable: true,
       filter: true
     },
     {
       headerName: 'CARDNAME',
-      field: 'cardname',
+      field: 'CARDNAME',
       resizable: true,
       filter: true
     },
     {
       headerName: 'DAYSINARREARS',
-      field: 'daysinarrears',
+      field: 'DAYSINARREARS',
       resizable: true,
       filter: true
     },
     {
       headerName: 'EXPPMNT',
-      field: 'exppmnt',
+      field: 'EXPPMNT',
       resizable: true,
     },
     {
       headerName: 'OUTBALANCE',
-      field: 'outbalance',
+      field: 'OUTBALANCE',
       resizable: true,
     },
     {
       headerName: 'CYCLE',
-      field: 'cycle',
+      field: 'CYCLE',
+      resizable: true,
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'COLOFFICER',
       resizable: true,
     }
   ];
@@ -111,7 +116,7 @@ export class MyallocationsComponent implements OnInit {
     this.model = event.node.data;
     // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=cc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -124,7 +129,7 @@ export class MyallocationsComponent implements OnInit {
       return;
     }
     this.clear();
-    this.http.get<any>(environment.api + '/api/cards_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
+    this.http.get<any>(environment.api + '/api/tcards/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
     });
@@ -150,8 +155,8 @@ export class MyallocationsComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
-      this.noTotal = viewall[0].TOTALVIEWALL;
+    this.ecolService.totalcreditcardsmyallocation(this.username).subscribe(viewall => {
+      this.noTotal = viewall[0].TOTALMYALLOCATION;
     });
   }
 
@@ -162,7 +167,8 @@ export class MyallocationsComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/cards_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tcards/myallocations?colofficer=' + this.username + '&filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
   }
 
 }

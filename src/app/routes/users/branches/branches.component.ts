@@ -13,14 +13,25 @@ export class BranchesComponent implements OnInit {
   branchForm: FormGroup;
   branches: [];
   submitted = false;
+  model: any = {};
 
   constructor(fb: FormBuilder, private ecolService: EcolService) {
     this.branchForm = fb.group({
       'branchcode': [null, Validators.required],
       'branchname': [null, Validators.required],
-      'branchmanager': [null, Validators.required],
-      'branchemail': [null, Validators.required],
-      'region': [null]
+      'manager': [null, Validators.required],
+      'branchemail': [null],
+      'region': [null],
+      'regsme': [null],
+      'regsacco': [null],
+      'regportfolio': [null],
+      'regpbb': [null],
+      'regmortage': [null],
+      'regmicrocredit': [null],
+      'regagribusiness': [null],
+      'regassetfinance': [null],
+      'regcorporate': [null],
+      'regipf': [null]
     });
   }
 
@@ -39,7 +50,6 @@ export class BranchesComponent implements OnInit {
       return;
     }
     this.ecolService.loader();
-    // console.log(value);
     this.ecolService.putbranch(value).subscribe(res => {
       swal('Successful!', 'Branch set!', 'success');
       this.getbranches();
@@ -69,9 +79,19 @@ export class BranchesComponent implements OnInit {
     this.branchForm.setValue({
       branchcode: b.branchcode,
       branchname: b.branchname,
-      branchmanager: b.manager,
+      manager: b.manager,
       branchemail: b.branchemail,
-      region: b.region
+      region: b.region,
+      regsme: b.regsme,
+      regsacco: b.regsacco,
+      regportfolio: b.regportfolio,
+      regpbb: b.regpbb,
+      regmortage: b.regmortage,
+      regmicrocredit: b.regmicrocredit,
+      regagribusiness: b.regagribusiness,
+      regassetfinance: b.regassetfinance,
+      regcorporate: b.regcorporate,
+      regipf: b.regipf
     });
   }
 
@@ -81,5 +101,23 @@ export class BranchesComponent implements OnInit {
     formControlName1: myValue1,
     // formControlName2: myValue2 (can be omitted)
   });*/
+
+  onSearch() {
+    this.ecolService.searchbranch(this.model.searchText).subscribe(res => {
+      this.branches = res;
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Exception occured!', 'error');
+    });
+  }
+
+  reset() {
+    this.ecolService.getbranches().subscribe(res => {
+      this.branches = res;
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Exception occured!', 'error');
+    });
+  }
 
 }

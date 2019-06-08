@@ -48,7 +48,6 @@ export class NotesComponent implements OnInit {
     // console.log('this.query ', this.query);
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
-      console.log(this.notes);
       // append posts
       if (!isNullOrUndefined(data) && this.notes.length) {
         this.noteData = this.noteData.concat(data);

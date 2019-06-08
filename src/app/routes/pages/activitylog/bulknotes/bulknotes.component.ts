@@ -76,7 +76,7 @@ export class BulknotesComponent implements OnInit {
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     const data = JSON.parse(response); // success server response
-    // console.log(data)
+    const bulknotes = data.notes;
     if (data.success === false) {
       swal({
         type: 'error',
@@ -84,7 +84,13 @@ export class BulknotesComponent implements OnInit {
         text: 'Something went wrong!',
       });
     } else {
-      this.ecolService.postnotes(data.notes).subscribe(resp => {
+      for (let x = 0; x < bulknotes.length; x++) {
+        bulknotes[x].custnumber = (bulknotes[x].accnumber).substring(5, 12);
+        bulknotes[x].owner = this.username;
+        bulknotes[x].notesrc = 'uploaded a note';
+      }
+      console.log(bulknotes);
+      this.ecolService.postnotes(bulknotes).subscribe(resp => {
         swal({
           type: 'success',
           title: 'All Good!',

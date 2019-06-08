@@ -128,6 +128,8 @@ export class ActivityActionComponent implements OnInit {
     //
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
+    } else if (this.sys === 'watchcc') {
+      this.getwatchcard(this.accnumber);
     } else if (this.sys === 'mcoopcash') {
       this.getmcoop(this.accnumber);
     } else if (this.sys === 'watch') {
@@ -150,6 +152,16 @@ export class ActivityActionComponent implements OnInit {
 
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
+      this.account = data[0];
+      // build form
+      this.buildForm();
+      if (swal.isVisible) { swal.close(); }
+      this.spinner.hide();
+    });
+  }
+
+  getwatchcard(cardacct) {
+    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
       // build form
       this.buildForm();

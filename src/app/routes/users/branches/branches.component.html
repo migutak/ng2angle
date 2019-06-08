@@ -5,10 +5,27 @@
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-8">
       <div class="card card-default">
         <div class="card-header">Branch List</div>
         <div class="card-body">
+          <form #searchForm="ngForm" class="form-horizontal" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-xl-4 col-lg-6 form-inline">
+                <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText"
+                  name="searchText" #searchText="ngModel" minlength="4" required />
+                <button type="button" class="btn btn-outline-inverse" (click)="onSearch()"
+                  [disabled]="!searchForm.valid || !searchForm.dirty"><span class="fa fa-search"></span>
+                  Search</button>
+
+              </div>
+              <div class="col-xl-4 col-lg-6 form-inline">
+                <button class="mr-1 mb-1 btn btn-outline-green" type="button" (click)="reset()"><span
+                    class="fa fa-search"></span> Reset</button>
+              </div>
+            </div>
+            <p *ngIf="searchText.errors?.minlength">minimum of four(4) search characters is required</p>
+          </form>
           <scrollable class="list-group" height="600">
             <div class="table-responsive">
               <table class="table table-striped">
@@ -34,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
       <div class="card card-default">
         <div class="card-body">
           <form [formGroup]="branchForm" class="form-validate form-horizontal"
@@ -53,15 +70,14 @@
             </div>
             <div class="form-group">
               <p>Branch Manager</p>
-              <input class="form-control" type="text" formControlName="branchmanager"
-                [formControl]="branchForm.controls['branchmanager']"
-                [ngClass]="{ 'is-invalid': f.branchmanager.errors }" required />
+              <input class="form-control" type="text" formControlName="manager"
+                [formControl]="branchForm.controls['manager']" [ngClass]="{ 'is-invalid': f.manager.errors }"
+                required />
             </div>
             <div class="form-group">
               <p>Branch Email</p>
               <input class="form-control" type="text" formControlName="branchemail"
-                [formControl]="branchForm.controls['branchemail']" [ngClass]="{ 'is-invalid': f.branchemail.errors }"
-                required />
+                [formControl]="branchForm.controls['branchemail']" />
             </div>
             <div class="form-group">
               <p>Region</p>
@@ -69,7 +85,8 @@
                 [formControl]="branchForm.controls['region']" />
             </div>
             <div class="form-group">
-                <button [disabled]="branchForm.invalid" class="btn btn-outline-primary">Update or create new Branch</button>
+              <button [disabled]="branchForm.invalid" class="btn btn-outline-primary">Update or create new
+                Branch</button>
             </div>
           </form>
         </div>

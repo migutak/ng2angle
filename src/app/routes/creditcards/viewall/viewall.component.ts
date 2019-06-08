@@ -93,6 +93,11 @@ export class ViewallComponent implements OnInit {
       headerName: 'CYCLE',
       field: 'cycle',
       resizable: true,
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'colofficer',
+      resizable: true,
     }
   ];
   rowData1: any;
@@ -155,7 +160,7 @@ export class ViewallComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
+    this.ecolService.totalcreditcardsviewall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
     });
   }

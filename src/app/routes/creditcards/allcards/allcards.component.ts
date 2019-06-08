@@ -69,8 +69,14 @@ export class AllcardsComponent implements OnInit {
       filter: true
     },
     {
-      headerName: 'DAYSINARREARS',
-      field: 'daysinarrears',
+      headerName: 'DATEDISBURSED',
+      field: 'datedisbursed',
+      resizable: true,
+      filter: true
+    },
+    {
+      headerName: 'LIMIT',
+      field: 'limit',
       resizable: true,
       filter: true
     },
@@ -109,9 +115,8 @@ export class AllcardsComponent implements OnInit {
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=cc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=watchcc', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -150,7 +155,7 @@ export class AllcardsComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalmcoopcashviewall().subscribe(viewall => {
+    this.ecolService.totalcardswatch().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
     });
   }
