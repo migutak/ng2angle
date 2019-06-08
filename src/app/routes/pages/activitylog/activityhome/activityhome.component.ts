@@ -65,6 +65,8 @@ export class ActivityHomeComponent implements OnInit {
     // get account details
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
+    } else if (this.sys === 'watchcc') {
+      this.getwatchcard(this.accnumber);
     } else if (this.sys === 'mcoopcash') {
       this.getmcoop(this.accnumber);
     } else {
@@ -82,6 +84,13 @@ export class ActivityHomeComponent implements OnInit {
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.account = data[0];
+      this.loader = false;
+    });
+  }
+
+  getwatchcard(cardacct) {
+    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
       this.loader = false;
     });
@@ -183,6 +192,7 @@ export class ActivityHomeComponent implements OnInit {
   loadptps(accnumber) {
     this.loader = true;
     this.ecolService.ptps(accnumber).subscribe(data => {
+      console.log('ptp', data);
       this.ptps = data;
       this.loader = false;
     }, error => {

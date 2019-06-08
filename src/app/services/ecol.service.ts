@@ -256,6 +256,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tcards?filter[where][cardacct]=' + cardacct);
   }
 
+  getWatchcardStatic(cardacct) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/cards_watch_static/' + cardacct);
+  }
+
   getWatchcardAccount(cardacct) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage?filter[where][cardacct]=' + cardacct);
@@ -268,6 +273,7 @@ export class EcolService {
 
   ptps(accnumber) {
     // tslint:disable-next-line:max-line-length
+    console.log(accnumber);
     return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
   }
 
@@ -311,6 +317,10 @@ export class EcolService {
 
   putteles(data) {
     return this.httpClient.put<any>(environment.api + '/api/teles/' + data.id, data);
+  }
+
+  putcardwatch(data) {
+    return this.httpClient.put<any>(environment.api + '/api/cards_watch_static/' + data.cardacct, data);
   }
 
   putcustomersuspensions(data) {
@@ -453,6 +463,10 @@ export class EcolService {
 
   totalmcoopcashmyallocations(username) {
     return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage/totalmyallocations?colofficer=' + username);
+  }
+
+  totalcardsclosed() {
+    return this.httpClient.get<any>(environment.api + '/api/tcards/totalclosed');
   }
 
   totaldemandsdue() {

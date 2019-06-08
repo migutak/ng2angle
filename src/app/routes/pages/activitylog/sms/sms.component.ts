@@ -24,6 +24,7 @@ export class SmsComponent implements OnInit {
   dataSms: any = {};
   account: any = [];
   charactersRemaining = 0;
+  iscard: Boolean =  false;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -61,6 +62,10 @@ export class SmsComponent implements OnInit {
     this.getsms();
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
+      this.iscard = true;
+    } else if (this.sys === 'watchcc') {
+      this.getwatchcard(this.accnumber);
+      this.iscard = true;
     } else if (this.sys === 'mcoopcash') {
       this.getmcoopcashaccount(this.accnumber);
     } else {
@@ -96,8 +101,8 @@ export class SmsComponent implements OnInit {
         + Math.round(this.account.oustbalance) + '. Please regularize within seven days.';
       this.dataSms.smsCallback = ' Enquire details on 0711049000';
     } else if (template === 'CC') {
-      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is late by ' + this.account.daysinarrears +
-        ' days. Amount in arrears is Kes. ' + Math.round(this.account.outbalance) + '. Please pay within seven days. ';
+      this.dataSms.smsMessage = 'Dear Customer, Your Credit Card payment is late by ' + this.account.daysinarrears +
+        ' days. Amount Outstanding is Kes. ' + Math.round(this.account.outbalance) + '. Please pay within seven days. ';
       this.dataSms.smsCallback = ' Enquire details on 0711049000.';
     }
   }
@@ -120,6 +125,12 @@ export class SmsComponent implements OnInit {
 
   getcard(cardacct) {
     this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.account = data[0];
+    });
+  }
+
+  getwatchcard(cardacct) {
+    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
     });
   }

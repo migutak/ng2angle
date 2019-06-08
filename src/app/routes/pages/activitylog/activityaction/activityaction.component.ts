@@ -64,8 +64,8 @@ export class ActivityActionComponent implements OnInit {
   sys = 'collections';
 
   ptp: NgOption[] = [
-    { id: 'No', name: 'NO' },
-    { id: 'Yes', name: 'YES' },
+    { id: 'No', name: 'No' },
+    { id: 'Yes', name: 'Yes' },
   ];
 
   currentDate() {
@@ -163,6 +163,17 @@ export class ActivityActionComponent implements OnInit {
   getwatchcard(cardacct) {
     this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
+      this.getwatchcardstatic(cardacct);
+    });
+  }
+
+  getwatchcardstatic(cardacct) {
+    this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
+      this.account.reviewdate = data.reviewdate;
+      this.account.excuse = data.excuse;
+      this.account.cmdstatus = data.cmdstatus;
+      this.account.routetostate = data.routetostate;
+      this.account.excuse_other = data.rfdother;
       // build form
       this.buildForm();
       if (swal.isVisible) { swal.close(); }
@@ -288,6 +299,21 @@ export class ActivityActionComponent implements OnInit {
       swal('Success!', 'activity saved', 'success');
       // build form
       // this.buildForm();
+      // watch stream put watch_static
+      const watchbody = {
+        rfdother: this.f.rfdother.value,
+        cardacct: this.accnumber,
+        cmdstatus: this.f.cmdstatus.value,
+        excuse: this.f.reason.value,
+        lastactiondate: new Date(),
+        reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
+        routetostate: this.f.route.value
+      };
+      if (this.sys === 'watchcc') {
+        this.ecolService.putcardwatch(watchbody).subscribe(resp => {
+          //
+        }, error => {console.log(error); });
+      }
     }, error => {
       console.log(error);
       swal('Error!', 'activitylog ::: service is currently not available', 'error');
@@ -308,6 +334,7 @@ export class ActivityActionComponent implements OnInit {
   changeAction(value) {
     if (value === 'OC' || value === 'IC' || value === 'MET') {
       this.actionForm.controls.party.enable();
+      this.actionForm.controls.party.setValue('No Answer');
     } else {
       this.actionForm.controls.party.disable();
       this.actionForm.controls.party.setValue(null);
@@ -332,7 +359,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changePtp(value) {
-    if (value === 'YES') {
+    if (value === 'Yes') {
       this.actionForm.controls.ptpamount.enable();
       this.actionForm.controls.ptpdate.enable();
     } else {
