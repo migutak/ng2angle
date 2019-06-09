@@ -248,14 +248,14 @@ export class ActivityLogComponent implements OnInit {
 
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
-      this.accountdetails = data[0];
-      this.guarantors = data[0].guarantors;
-      this.model.accnumber = data[0].accnumber;
-      this.model.custnumber = data[0].custnumber;
-      this.model.addressline1 = data[0].addressline1;
-      this.model.postcode = data[0].postcode;
-      this.model.emailaddress = data[0].emailaddress;
-      this.model.celnumber = data[0].celnumber;
+      this.accountdetails = data;
+      this.guarantors = data.guarantors;
+      this.model.accnumber = data.accnumber;
+      this.model.custnumber = data.custnumber;
+      this.model.addressline1 = data.addressline1;
+      this.model.postcode = data.postcode;
+      this.model.emailaddress = data.emailaddress;
+      this.model.celnumber = data.celnumber;
     });
   }
 

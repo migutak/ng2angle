@@ -152,7 +152,12 @@ export class ActivityActionComponent implements OnInit {
 
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
-      this.account = data[0];
+      this.account = data;
+      this.account.reviewdate = data.watch.reviewdate,
+      this.account.excuse = data.watch.excuse,
+      this.account.cmdstatus = data.watch.cmdstatus || 'Hardcore',
+      this.account.routetostate = data.watch.routetostate || 'ACTIVE COLLECTIONS',
+      this.account.excuse_other = data.watch.rfdother;
       // build form
       this.buildForm();
       if (swal.isVisible) { swal.close(); }
@@ -300,17 +305,34 @@ export class ActivityActionComponent implements OnInit {
       // build form
       // this.buildForm();
       // watch stream put watch_static
-      const watchbody = {
-        rfdother: this.f.rfdother.value,
-        cardacct: this.accnumber,
-        cmdstatus: this.f.cmdstatus.value,
-        excuse: this.f.reason.value,
-        lastactiondate: new Date(),
-        reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
-        routetostate: this.f.route.value
-      };
       if (this.sys === 'watchcc') {
-        this.ecolService.putcardwatch(watchbody).subscribe(resp => {
+        const watchccbody = {
+          rfdother: this.f.rfdother.value,
+          cardacct: this.accnumber,
+          cmdstatus: this.f.cmdstatus.value,
+          excuse: this.f.reason.value,
+          lastactiondate: new Date(),
+          reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
+          routetostate: this.f.route.value
+        };
+
+        this.ecolService.putcardwatch(watchccbody).subscribe(resp => {
+          //
+        }, error => {console.log(error); });
+      }
+      //
+      if (this.sys === 'watch') {
+        const watchbody = {
+          rfdother: this.f.rfdother.value,
+          accnumber: this.accnumber,
+          cmdstatus: this.f.cmdstatus.value,
+          excuse: this.f.reason.value,
+          lastactiondate: new Date(),
+          reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
+          routetostate: this.f.route.value
+        };
+
+        this.ecolService.putwatch(watchbody).subscribe(resp => {
           //
         }, error => {console.log(error); });
       }

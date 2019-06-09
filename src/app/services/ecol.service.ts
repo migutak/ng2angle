@@ -273,7 +273,6 @@ export class EcolService {
 
   ptps(accnumber) {
     // tslint:disable-next-line:max-line-length
-    console.log(accnumber);
     return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
   }
 
@@ -321,6 +320,10 @@ export class EcolService {
 
   putcardwatch(data) {
     return this.httpClient.put<any>(environment.api + '/api/cards_watch_static/' + data.cardacct, data);
+  }
+
+  putwatch(data) {
+    return this.httpClient.put<any>(environment.api + '/api/watch_static', data);
   }
 
   putcustomersuspensions(data) {

@@ -67,6 +67,8 @@ export class ActivityHomeComponent implements OnInit {
       this.getcard(this.accnumber);
     } else if (this.sys === 'watchcc') {
       this.getwatchcard(this.accnumber);
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
     } else if (this.sys === 'mcoopcash') {
       this.getmcoop(this.accnumber);
     } else {
@@ -78,6 +80,13 @@ export class ActivityHomeComponent implements OnInit {
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
       this.account = data[0];
+      this.loader = false;
+    });
+  }
+
+  getwatch(accnumber) {
+    this.ecolService.getwatch(accnumber).subscribe(data => {
+      this.account = data;
       this.loader = false;
     });
   }

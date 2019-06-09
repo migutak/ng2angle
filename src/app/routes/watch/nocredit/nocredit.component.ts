@@ -9,13 +9,13 @@ declare var $: any;
 
 
 @Component({
-    selector: 'app-nocredit',
-    templateUrl: './nocredit.component.html',
-    styleUrls: ['./nocredit.component.scss']
+  selector: 'app-nocredit',
+  templateUrl: './nocredit.component.html',
+  styleUrls: ['./nocredit.component.scss']
 })
 export class NocreditComponent implements OnInit {
 
-    public overlayLoadingTemplate;
+  public overlayLoadingTemplate;
   public overlayNoRowsTemplate;
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
@@ -125,12 +125,12 @@ export class NocreditComponent implements OnInit {
 
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=watch', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -198,26 +198,26 @@ export class NocreditComponent implements OnInit {
     this.gridApi.setDatasource(this.dataSource);
   }
 
-    ngOnInit() {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  ngOnInit() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
-    }
+  }
 
-    gridReady(params) {
-        this.gridApi = params.api;
-        this.gridApi.sizeColumnsToFit();
-        this.gridApi.setDatasource(this.dataSource);
-        this.gridOptions.api.showLoadingOverlay();
-      }
+  gridReady(params) {
+    this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+    this.gridOptions.api.showLoadingOverlay();
+  }
 
-      apiService(perPage, currentPos) {
-        // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-        return this.http.get<any>(environment.api + '/api/watch_stage/paged?limit=' + perPage + '&page=' + currentPos);
-      }
-      apiServiceSearch(perPage, currentPos) {
-        // tslint:disable-next-line:max-line-length
-        return this.http.get<any>(environment.api + '/api/watch_stage/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
-      }
+  apiService(perPage, currentPos) {
+    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/watch_stage/paged?limit=' + perPage + '&page=' + currentPos);
+  }
+  apiServiceSearch(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/watch_stage/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
+  }
 
 
 }
