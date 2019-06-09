@@ -72,5 +72,10 @@ export class NotesComponent implements OnInit {
     }, 1500);
   }
 
+  editnote(note) {
+    console.log(note);
+    
+  }
+
 }
 

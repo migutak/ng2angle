@@ -101,6 +101,16 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+  putnote(body) {
+    const url = environment.api + '/api/notehis';
+    return this.httpClient.put(url, body);
+  }
+
+  getanote(id) {
+    const url = environment.api + '/api/notehis/' + id;
+    return this.httpClient.get(url);
+  }
+
   recordupdate(body) {
     const url = environment.api + '/api/activitylogs/action';
     return this.httpClient.post(url, body);

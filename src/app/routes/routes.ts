@@ -21,6 +21,7 @@ import { SmsComponent } from './pages/activitylog/sms/sms.component';
 import { NotesComponent } from './pages/activitylog/notes/notes.component';
 import { FilesComponent } from './pages/activitylog/files/files.component';
 import { GuarantorsComponent } from './pages/activitylog/guarantors/guarantors.component';
+import { EditnoteComponent } from './pages/activitylog/editnote/editnote.component';
 import { BulknotesComponent } from './pages/activitylog/bulknotes/bulknotes.component';
 import { CollateralsComponent } from './pages/activitylog/collaterals/collaterals.component';
 import { ActivitydashComponent } from './pages/activitydash/activitydash.component';
@@ -85,6 +86,7 @@ export const routes = [
             { path: 'remedialcollaterals', component: CollateralsComponent},
             { path: 'bulknotes', component: BulknotesComponent },
             { path: 'guarantors', component: GuarantorsComponent },
+            { path: 'editnote', component: EditnoteComponent },
             { path: '**', redirectTo: 'notes' }
           ],
           canActivate: [AuthGuard]
