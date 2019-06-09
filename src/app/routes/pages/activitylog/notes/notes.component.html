@@ -36,6 +36,7 @@
                         <div class="timeline-content">
                             <h3 class="timeline-info">{{note.OWNER}} {{note.NOTESRC}} on {{note.ACCNUMBER}}</h3>
                             <p>{{note.NOTEMADE}}</p>
+                            <p *ngIf="note.OWNER == username"><a href="#" (click)="editnote(note)">edit</a></p>
                         </div>
                     </li>
                 </ul>
