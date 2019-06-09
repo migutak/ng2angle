@@ -76,13 +76,13 @@ export class NocreditComponent implements OnInit {
       resizable: true
     },
     {
-      headerName: 'SETTLEACCBAL',
-      field: 'settleaccbal',
+      headerName: 'PRODUCTCODE',
+      field: 'productcode',
       resizable: true
     },
     {
-      headerName: 'SETTLEACCNO',
-      field: 'settleaccno',
+      headerName: 'OUSTBALANCE',
+      field: 'oustbalance',
       resizable: true,
     },
     {
@@ -156,7 +156,6 @@ export class NocreditComponent implements OnInit {
         // params.endRow : End Page
         //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
           params.successCallback(
             response.rows, response.total
           );

@@ -34,8 +34,8 @@
                         </div>
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <h3 class="timeline-info">{{note.OWNER}} {{note.NOTESRC}} on {{note.ACCNUMBER}}</h3>
-                            <p>{{note.NOTEMADE}} <button class="btn btn-link" (click)="editnote(note)"> <i class="far fa-edit"></i> Edit</button></p>
+                            <h3 class="timeline-info">{{note.OWNER}} {{note.NOTESRC}} on {{note.ACCNUMBER}} as </h3>
+                            <p>{{note.NOTEMADE}} <button class="btn btn-link" (click)="editnote(note)" *ngIf="note.showedit"> <i class="far fa-edit"></i> Edit</button></p>
                         </div>
                     </li>
                 </ul>

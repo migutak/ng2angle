@@ -22,19 +22,19 @@
                             <div class="form-check form-check-inline mr-1" id="inline-radios">
                                 <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
                                     value="LOAN" #smsTemplate="ngModel" (change)="changetemplate($event)"
-                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate" [disabled]="true">
+                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate" [disabled]="!iscard">
                                 <label class="form-check-label" for="inlineRadio1">LOAN</label>
                             </div>
                             <div class="form-check form-check-inline mr-1">
                                 <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio2"
                                     value="LOANOD" #smsTemplate="ngModel" (change)="changetemplate($event)"
-                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate" [disabled]="iscard">
+                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate" [disabled]="!iscard">
                                 <label class="form-check-label" for="inlineRadio2">LOANOD/LIABILITY</label>
                             </div>
                             <div class="form-check form-check-inline mr-1">
                                 <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio3"
                                     value="CC" #smsTemplate="ngModel" (change)="changetemplate($event)"
-                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate" [disabled]="!iscard">
+                                    [(ngModel)]="dataSms.smsTemplate" id="smsTemplate" name="smsTemplate" [disabled]="iscard">
                                 <label class="form-check-label" for="inlineRadio3">CC</label>
                             </div>
                         </div>

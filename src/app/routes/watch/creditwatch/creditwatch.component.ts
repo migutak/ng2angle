@@ -75,13 +75,13 @@ export class CreditwatchComponent implements OnInit {
       resizable: true
     },
     {
-      headerName: 'SETTLEACCBAL',
-      field: 'settleaccbal',
+      headerName: 'OUSTBALANCE',
+      field: 'oustbalance',
       resizable: true
     },
     {
-      headerName: 'SETTLEACCNO',
-      field: 'settleaccno',
+      headerName: 'PRODUCTCODE',
+      field: 'productcode',
       resizable: true,
     },
     {

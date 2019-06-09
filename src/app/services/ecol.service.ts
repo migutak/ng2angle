@@ -61,7 +61,7 @@ export class EcolService {
     if (filter !== '') {
       url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
     }
-    return this.httpClient.get(url);
+    return this.httpClient.get<any>(url);
   }
 
   getcmdstatus() {

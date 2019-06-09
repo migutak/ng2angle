@@ -3,17 +3,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { isNullOrUndefined } from 'util';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { nodeChildrenAsMap } from '@angular/router/src/utils/tree';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.scss']
+  styleUrls: ['./notes.component.scss'],
+  providers: [DatePipe]
 })
 export class NotesComponent implements OnInit {
 
   noteData: any = [];
   notes: any = [];
+  username: string;
   pager = {
     limit: 5, // default number of notes
     current: 0, // current page
@@ -25,16 +28,23 @@ export class NotesComponent implements OnInit {
     skip: this.pager.limit * this.pager.current
   };
 
-  message: string;
+  currentDate: any = new Date();
   constructor(
     private ecolservice: EcolService,
     private route: ActivatedRoute,
     private rout: Router,
-    private spinner: NgxSpinnerService
+    private datePipe: DatePipe,
+    private spinner: NgxSpinnerService,
+    private ecolService: EcolService,
   ) {
   }
 
   ngOnInit() {
+    // check if logged in
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
     this.route.queryParams.subscribe(params => {
       this.cust = params['custnumber'];
     });
@@ -50,6 +60,14 @@ export class NotesComponent implements OnInit {
     // console.log('this.query ', this.query);
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
+      for (let i = 0; i < data.length; i ++) {
+        // tslint:disable-next-line:max-line-length
+        if (this.notes[i].OWNER === this.username && (this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() === ((this.notes[i].NOTEDATE).substring(0, 9) ).toUpperCase()) {
+          this.notes[i].showedit = true;
+        } else {
+          this.notes[i].showedit = false;
+        }
+      }
       // append posts
       if (!isNullOrUndefined(data) && this.notes.length) {
         this.noteData = this.noteData.concat(data);

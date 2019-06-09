@@ -66,6 +66,8 @@ export class SmsComponent implements OnInit {
     } else if (this.sys === 'watchcc') {
       this.getwatchcard(this.accnumber);
       this.iscard = true;
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
     } else if (this.sys === 'mcoopcash') {
       this.getmcoopcashaccount(this.accnumber);
     } else {
@@ -132,6 +134,12 @@ export class SmsComponent implements OnInit {
   getwatchcard(cardacct) {
     this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.account = data[0];
+    });
+  }
+
+  getwatch(accnumber) {
+    this.ecolService.getwatch(accnumber).subscribe(data => {
+      this.account = data;
     });
   }
 
