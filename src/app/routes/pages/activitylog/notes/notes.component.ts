@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { isNullOrUndefined } from 'util';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { nodeChildrenAsMap } from '@angular/router/src/utils/tree';
 
 @Component({
   selector: 'app-notes',
@@ -28,6 +29,7 @@ export class NotesComponent implements OnInit {
   constructor(
     private ecolservice: EcolService,
     private route: ActivatedRoute,
+    private rout: Router,
     private spinner: NgxSpinnerService
   ) {
   }
@@ -73,8 +75,14 @@ export class NotesComponent implements OnInit {
   }
 
   editnote(note) {
-    console.log(note);
-    
+    // tslint:disable-next-line:max-line-length
+    this.rout.navigateByUrl('/activitylog/editnote?id=' + note.ID + '&accnumber=' + note.ACCNUMBER + '&custnumber=' + note.CUSTNUMBER + '&username=' + note.OWNER + '&sys=watch').then(e => {
+      if (e) {
+        console.log('Navigation is successful!');
+      } else {
+        console.log('Navigation has failed!');
+      }
+    });
   }
 
 }

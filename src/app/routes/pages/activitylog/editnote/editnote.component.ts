@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../../environments/environment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 const URL = environment.valor;
 
@@ -20,9 +21,13 @@ export class EditnoteComponent implements OnInit {
   model: any = {};
   note: any = [];
   noteid: string;
+  editnoteForm: FormGroup;
+  submitted = false;
+
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
-    private ecolService: EcolService) {
+    private ecolService: EcolService,
+    private formBuilder: FormBuilder) {
     //
   }
 
@@ -49,29 +54,30 @@ export class EditnoteComponent implements OnInit {
       this.model.custnumber = queryParams.get('custnumber');
     });
 
-    this.noteid = this.route.snapshot.queryParamMap.get("noteid");
+    this.noteid = this.route.snapshot.queryParamMap.get('id');
     this.route.queryParamMap.subscribe(queryParams => {
-      this.noteid = queryParams.get('noteid');
-      this.model.id = queryParams.get('noteid');
+      this.noteid = queryParams.get('id');
+      this.model.id = queryParams.get('id');
     });
 
-    // get guarantors history
-    this.getNote(this.accnumber);
+    // get this note
+    this.getNote(this.noteid);
+    this.buildForm();
   }
 
-  onSubmit(form) {
-   // check if logged in
-   this.ecolService.ifLogged();
-   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-   this.username = currentUser.username;
+  onSubmit() {
+    // check if logged in
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
 
     // Loading indictor
     this.ecolService.loader();
     //
-   const body = {
-      id: this.model.id,
+    const body = {
+      id: this.f.id.value,
       owner: this.username,
-      notemade: this.model.notemade,
+      notemade: this.f.notemade.value,
       custnumber: this.model.custnumber,
       accnumber: this.model.accnumber,
       notesrc: this.note.notesrc,
@@ -80,7 +86,7 @@ export class EditnoteComponent implements OnInit {
     };
     this.ecolService.putnote(body).subscribe(data => {
       swal('Successful!', 'Note updated!', 'success');
-      // back
+      //
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
@@ -90,9 +96,29 @@ export class EditnoteComponent implements OnInit {
   getNote(id) {
     this.ecolService.getanote(id).subscribe(data => {
       this.note = data;
+      this.buildForm();
     }, error => {
       console.log(error);
     });
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.editnoteForm.controls; }
+
+  buildForm() {
+    // get static data
+    this.editnoteForm = this.formBuilder.group({
+      id: [{ value: this.note.id, disabled: true }],
+      accnumber: [{ value: this.note.accnumber, disabled: true }],
+      custnumber: [{ value: this.note.custnumber, disabled: true }],
+      notemade: [{ value: this.note.notemade, disabled: false }],
+      notedate: [{ value: this.note.notedate, disabled: true }],
+      owner: [{ value: this.note.owner, disabled: true }]
+    });
+  }
+
+  cancel () {
+    window.history.back();
   }
 
 }

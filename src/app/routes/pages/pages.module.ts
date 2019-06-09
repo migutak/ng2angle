@@ -34,6 +34,7 @@ import { GuarantorsComponent } from '../pages/activitylog/guarantors/guarantors.
 import { BulknotesComponent } from '../pages/activitylog/bulknotes/bulknotes.component';
 import { CollateralsComponent } from '../pages/activitylog/collaterals/collaterals.component';
 import { ActivitydashComponent } from '../pages/activitydash/activitydash.component';
+import { EditnoteComponent } from '../pages/activitylog/editnote/editnote.component';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
@@ -81,7 +82,8 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
         GuarantorsComponent,
         BulknotesComponent,
         CollateralsComponent,
-        ActivitydashComponent
+        ActivitydashComponent,
+        EditnoteComponent
     ],
     providers: [
         ToasterService,
@@ -106,7 +108,8 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
         GuarantorsComponent,
         BulknotesComponent,
         CollateralsComponent,
-        ActivitydashComponent
+        ActivitydashComponent,
+        EditnoteComponent
     ]
 })
 export class PagesModule { }
