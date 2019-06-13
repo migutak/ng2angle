@@ -6,11 +6,11 @@ import { EcolService } from '../../../services/ecol.service';
 import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
 
 @Component({
-  selector: 'app-myallocations',
-  templateUrl: './myallocations.component.html',
-  styleUrls: ['./myallocations.component.scss']
+  selector: 'app-allecredit',
+  templateUrl: './allecredit.component.html',
+  styleUrls: ['./allecredit.component.scss']
 })
-export class MyallocationsComponent implements OnInit {
+export class AllecreditComponent implements OnInit {
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{

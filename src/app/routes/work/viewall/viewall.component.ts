@@ -41,6 +41,7 @@ export class ViewallComponent implements OnInit {
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+
   resizeEvent = 'resize.ag-grid';
   $win = $(window);
   new = true;
@@ -225,7 +226,7 @@ export class ViewallComponent implements OnInit {
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
-
+    console.log(currentUser);
     /*this.ecolService.totaltqall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
     });*/

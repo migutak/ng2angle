@@ -332,7 +332,7 @@ const Remedialrpt = {
 };
 
 const Work = {
-    text: 'Work Queue',
+    text: 'Loans Queue',
     link: '/work',
     icon: 'icon-briefcase',
     submenu: [
@@ -355,8 +355,12 @@ const Work = {
             link: '/work/ptps'
         },
         {
-            text: 'With funds',
+            text: 'Trsaction acc with Funds',
             link: '/work/withfunds'
+        },
+        {
+            text: 'View all Loans',
+            link: '/work/allloans'
         }
     ]
 };
@@ -419,8 +423,12 @@ const Remedial = {
             link: '/work/ptps'
         },
         {
-            text: 'With funds',
+            text: 'Tr accounts with Funds',
             link: '/work/withfunds'
+        },
+        {
+            text: 'View all Loans',
+            link: '/work/allloans'
         }
     ]
 };
@@ -467,16 +475,12 @@ const mcoopcash = {
     icon: 'icon-wallet',
     submenu: [
         {
-            text: 'View all',
+            text: 'E-Credit arrears',
             link: '/mcoopcash/viewall'
         },
         {
-            text: 'My allocations',
-            link: '/mcoopcash/myallocations'
-        },
-        {
-            text: 'My worklist',
-            link: '/mcoopcash/myworklist'
+            text: 'E-Credit All',
+            link: '/mcoopcash/allecredit'
         }
     ]
 };
@@ -609,7 +613,7 @@ const creditcards_menu = [
     headingMain,
     Home,
     Dashboard,
-    // Letterscc,
+    Letters,
     headingComponents,
     Work_cc,
     Work,

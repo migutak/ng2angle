@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   adlogin: false,
   api: 'http://localhost:8000',
+  nodeapi: 'http://localhost:6001',
   // api: 'https://192.168.0.12',
   // letters_api: 'http://ecollect.inteligen.co.ke:8004/',
   letters_api: 'https://ecollecttst.co-opbank.co.ke/docx/',

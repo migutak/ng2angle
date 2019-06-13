@@ -1,8 +1,8 @@
 <div class="wrapper container">
   <toaster-container [toasterconfig]="config"></toaster-container>
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
-      <p style="font-size: 20px; color: white">Processing ...</p>
-    </ngx-spinner>
+    <p style="font-size: 20px; color: white">Processing ...</p>
+  </ngx-spinner>
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
@@ -35,8 +35,8 @@
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">Demand</label>
                     <div class="col-xl-8">
-                      <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand" #demand="ngModel"
-                        [ngClass]="{ 'is-invalid': demand.invalid }" required>
+                      <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand"
+                        #demand="ngModel" [ngClass]="{ 'is-invalid': demand.invalid }" required>
                         <option *ngFor="let demand of itemsDemands">{{demand}}</option>
                       </select>
                     </div>
@@ -44,26 +44,29 @@
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">accnumber</label>
                     <div class="col-xl-8">
-                      <input class="form-control" type="text" name="accnumber" id="accnumber" [(ngModel)]="model.accnumber"
-                        #accnumber="ngModel" [ngClass]="{ 'is-invalid': accnumber.invalid }" required />
+                      <input class="form-control" type="text" name="accnumber" id="accnumber"
+                        [(ngModel)]="model.accnumber" #accnumber="ngModel"
+                        [ngClass]="{ 'is-invalid': accnumber.invalid }" required />
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">custnumber</label>
                     <div class="col-xl-8">
-                      <input class="form-control" type="text" name="custnumber" id="custnumber" [(ngModel)]="model.custnumber"
-                        #custnumber="ngModel" [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
+                      <input class="form-control" type="text" name="custnumber" id="custnumber"
+                        [(ngModel)]="model.custnumber" #custnumber="ngModel"
+                        [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">address</label>
                     <div class="col-xl-8">
-                      <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
-                        #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
+                      <input class="form-control" type="text" name="addressline1" id="addressline1"
+                        [(ngModel)]="model.addressline1" #addressline1="ngModel"
+                        [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
 
-                        <datalist id="daddress">
-                            <option *ngFor="let a of addresses">{{a.address}}</option>
-                        </datalist>
+                      <datalist id="daddress">
+                        <option *ngFor="let a of addresses">{{a.address}}</option>
+                      </datalist>
 
                     </div>
                   </div>
@@ -73,65 +76,74 @@
                       <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
                         #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" list="dpostcode" required />
 
-                        <datalist id="dpostcode">
-                            <option *ngFor="let p of postcodes">{{p.postcode}}</option>
-                        </datalist>
+                      <datalist id="dpostcode">
+                        <option *ngFor="let p of postcodes">{{p.postcode}}</option>
+                      </datalist>
 
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">email address</label>
                     <div class="col-xl-8">
-                      <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
-                        #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
+                      <input class="form-control" type="email" name="emailaddress" id="emailaddress"
+                        [(ngModel)]="model.emailaddress" #emailaddress="ngModel"
+                        [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
 
-                        <datalist id="browsers">
-                            <option *ngFor="let e of emails">{{e.email}}</option>
-                        </datalist>
+                      <datalist id="browsers">
+                        <option *ngFor="let e of emails">{{e.email}}</option>
+                      </datalist>
 
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">cellnumber</label>
                     <div class="col-xl-8">
-                      <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
-                        #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
+                      <input class="form-control" type="text" name="celnumber" id="celnumber"
+                        [(ngModel)]="model.celnumber" #celnumber="ngModel"
+                        [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
 
-                        <datalist id="cellnumber">
-                            <option *ngFor="let t of teles">{{t.telephone}}</option>
-                        </datalist>
+                      <datalist id="cellnumber">
+                        <option *ngFor="let t of teles">{{t.telephone}}</option>
+                      </datalist>
                     </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">Save to contacts</label>
-                      <div class="col-xl-8">
-                          <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts(model)">
-                              <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
-                              </span>Save this contact</button>
-                      </div>
+                    <label class="col-xl-4 col-form-label">Save to contacts</label>
+                    <div class="col-xl-8">
+                      <button [disabled]="emailaddress.invalid || celnumber.invalid"
+                        class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button"
+                        (click)="savecontacts(model)">
+                        <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
+                        </span>Save this contact</button>
+                    </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label">Preview</label>
                     <div class="col-xl-8">
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="inlineCheckbox1" type="checkbox" [(ngModel)]="model.showlogo"
-                          name="showlogo" value="Y" />
+                        <input class="form-check-input" id="inlineCheckbox1" type="checkbox"
+                          [(ngModel)]="model.showlogo" name="showlogo" value="Y" />
                         <label class="form-check-label" for="inlineCheckbox1">show logo</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="inlineRadio1" type="radio" [(ngModel)]="model.format" name="format"
-                          value="msword" />
+                        <input class="form-check-input" id="inlineRadio1" type="radio" [(ngModel)]="model.format"
+                          name="format" value="msword" />
                         <label class="form-check-label" for="inlineRadio1">Word (Recomended)</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="inlineRadio2" type="radio" [(ngModel)]="model.format" name="format"
-                          value="pdf" />
+                        <input class="form-check-input" id="inlineRadio2" type="radio" [(ngModel)]="model.format"
+                          name="format" value="pdf" />
                         <label class="form-check-label" for="inlineRadio2">pdf</label>
                       </div>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-xl-4 col-form-label"></label>
+                    <div class="col-xl-4">
+                      <input id="previewtosend" type="checkbox" name="previewtosend" id="previewtosend"
+                        [(ngModel)]="model.previewtosend" #previewtosend="ngModel" />
+                      <label for="previewtosend"> Preview and send physically</label>
+                    </div>
                     <div class="col-xl-4">
                       <button [disabled]="demand.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
                         type="button" (click)="openletter(model)">click to preview letter</button>
@@ -211,17 +223,17 @@
                     </div>
                   </td>
                   <td class="wd-sm  d-none d-lg-table-cell">
-                      <div class="px-2">
-                        <p class="m-0">Status</p>
-                        <small class="text-muted">{{d.status}}</small>
-                      </div>
-                    </td>
-                    <td class="wd-sm  d-none d-lg-table-cell">
-                        <div class="px-2">
-                          <p class="m-0">Re-Issued</p>
-                          <small class="text-muted">{{d.reissued}}</small>
-                        </div>
-                      </td>
+                    <div class="px-2">
+                      <p class="m-0">Status</p>
+                      <small class="text-muted">{{d.status}}</small>
+                    </div>
+                  </td>
+                  <td class="wd-sm  d-none d-lg-table-cell">
+                    <div class="px-2">
+                      <p class="m-0">Re-Issued</p>
+                      <small class="text-muted">{{d.reissued}}</small>
+                    </div>
+                  </td>
                   <td class="wd-xs d-none d-lg-table-cell">
                     <div class="px-2">
                       <p class="m-0 text-muted">
@@ -231,7 +243,8 @@
                   <td class="wd-xs d-none d-lg-table-cell">
                     <div class="px-2" *ngIf="d.sendemail || d.customeremail">
                       <p class="m-0 text-muted">
-                        <em class="icon-envelop mr-2 fa-lg"></em><button class="btn btn-link" (click)="resend(d)">resend letter</button></p>
+                        <em class="icon-envelop mr-2 fa-lg"></em><button class="btn btn-link" (click)="resend(d)">resend
+                          letter</button></p>
                     </div>
                   </td>
                 </tr>
@@ -296,7 +309,8 @@
                           <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
                           <td>
                             <div class="progress" style="margin-bottom: 0;">
-                              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
+                              </div>
                             </div>
                           </td>
                           <td class="text-center">
@@ -305,10 +319,12 @@
                             <span *ngIf="item.isError"><i class="fas fa-times"></i></span>
                           </td>
                           <td nowrap>
-                            <button type="button" class="btn btn-info btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <button type="button" class="btn btn-info btn-xs" (click)="item.upload()"
+                              [disabled]="item.isReady || item.isUploading || item.isSuccess">
                               <span class="fa icon-cloud-upload mr"></span> Upload
                             </button>
-                            <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                            <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"
+                              [disabled]="!item.isUploading">
                               <span class="icon-close mr"></span> Cancel
                             </button>
                             <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
@@ -325,17 +341,21 @@
                     <div>
                       <div>
                         Queue progress:
-                        <div class="progress" >
-                          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                        <div class="progress">
+                          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
+                          </div>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                      <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
+                        [disabled]="!uploader.getNotUploadedItems().length">
                         <span class="fa icon-cloud-upload mr"></span> Upload all
                       </button>
-                      <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                      <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                        [disabled]="!uploader.isUploading">
                         <span class="icon-close mr"></span> Cancel all
                       </button>
-                      <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                      <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+                        [disabled]="!uploader.queue.length">
                         <span class="icon-trash mr"></span> Remove all
                       </button>
                     </div>
@@ -361,8 +381,8 @@
               [(ngModel)]="model.sendemail" #sendemail="ngModel" />
             <span class="fa fa-check"></span>Send to email</label>
           <label class="checkbox c-checkbox c-checkbox-rounded">
-            <input id="sendpostalinput" type="checkbox" [disabled]="!addressline1.valid" name="sendpostal" id="sendpostal"
-              [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
+            <input id="sendpostalinput" type="checkbox" [disabled]="!addressline1.valid" name="sendpostal"
+              id="sendpostal" [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
             <span class="fa fa-check"></span>Send to post address</label>
           <label class="checkbox c-checkbox c-checkbox-rounded">
             <input id="sendsmsinput" type="checkbox" [disabled]="!celnumber.valid" name="sendphysical" id="sendphysical"
@@ -374,7 +394,8 @@
     <div class="form-group row">
       <label class="col-xl-4 col-form-label"></label>
       <div class="col-xl-8">
-        <button [disabled]="!sendemail || !sendpostal" class="btn btn-sm btn-secondary" type="button" (click)="generate()">Generate
+        <button [disabled]="!sendemail || !sendpostal" class="btn btn-sm btn-secondary" type="button"
+          (click)="generate()">Generate
           & Send</button>
       </div>
     </div>

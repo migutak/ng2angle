@@ -5,7 +5,7 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
-import { FileUploader, FileItem , ParsedResponseHeaders} from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 const URL = environment.xlsuploadapi;
 
@@ -19,6 +19,7 @@ export class BulknotesComponent implements OnInit {
   custnumber;
   accnumber;
   username: string;
+  sys: string;
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
@@ -71,7 +72,10 @@ export class BulknotesComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
-    // get account details
+    this.sys = this.route.snapshot.queryParamMap.get('sys');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.sys = queryParams.get('sys');
+    });
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -85,11 +89,16 @@ export class BulknotesComponent implements OnInit {
       });
     } else {
       for (let x = 0; x < bulknotes.length; x++) {
-        bulknotes[x].custnumber = (bulknotes[x].accnumber).substring(5, 12);
-        bulknotes[x].owner = this.username;
-        bulknotes[x].notesrc = 'uploaded a note';
+        if (this.sys === 'cc' || this.sys === 'watchcc') {
+          bulknotes[x].custnumber = bulknotes[x].accnumber;
+          bulknotes[x].owner = this.username;
+          bulknotes[x].notesrc = 'uploaded a note';
+        } else {
+          bulknotes[x].custnumber = (bulknotes[x].accnumber).substring(5, 12);
+          bulknotes[x].owner = this.username;
+          bulknotes[x].notesrc = 'uploaded a note';
+        }
       }
-      console.log(bulknotes);
       this.ecolService.postnotes(bulknotes).subscribe(resp => {
         swal({
           type: 'success',

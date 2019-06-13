@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyallocationsComponent } from './myallocations.component';
+import { MyallocationsComponent } from './allecredit.component';
 
 describe('Day40Component', () => {
   let component: MyallocationsComponent;

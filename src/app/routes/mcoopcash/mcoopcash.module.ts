@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
 
 import { ViewallComponent } from './viewall/viewall.component';
-import { MyallocationsComponent } from './myallocations/myallocations.component';
+import { AllecreditComponent } from './allecredit/allecredit.component';
 import { MyworklistComponent } from './myworklist/myworklist.component';
 import { TodaysComponent } from './todays/todays.component';
 import { PredelqComponent } from './predelq/predelq.component';
@@ -18,7 +18,7 @@ import { CustomFormsModule } from 'ng2-validation';
 const routes: Routes = [
   { path: '', redirectTo: 'viewall' },
   { path: 'viewall', component: ViewallComponent },
-  { path: 'myallocations', component: MyallocationsComponent },
+  { path: 'allecredit', component: AllecreditComponent },
   { path: 'myworklist', component: MyworklistComponent },
   { path: 'todays', component: TodaysComponent },
   { path: 'predelq', component: PredelqComponent },
@@ -29,7 +29,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ViewallComponent,
-    MyallocationsComponent,
+    AllecreditComponent,
     MyworklistComponent,
     TodaysComponent,
     PredelqComponent,

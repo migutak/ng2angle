@@ -82,9 +82,9 @@ export class EditnoteComponent implements OnInit {
       accnumber: this.model.accnumber,
       notesrc: this.note.notesrc,
       noteimp: this.note.noteimp,
-      notedate: new Date()
+      notedate: this.note.notedate,
     };
-    this.ecolService.putnote(body).subscribe(data => {
+    this.ecolService.updatenote(body).subscribe(data => {
       swal('Successful!', 'Note updated!', 'success');
       //
     }, error => {

@@ -188,6 +188,8 @@ export class ActivityLogComponent implements OnInit {
       this.model.postcode = data[0].rpcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+    }, error => {
+      //
     });
   }
 

@@ -106,6 +106,11 @@ export class EcolService {
     return this.httpClient.put(url, body);
   }
 
+  updatenote(body) {
+    const url = environment.api + '/api/notehis/updatenote';
+    return this.httpClient.post(url, body);
+  }
+
   getanote(id) {
     const url = environment.api + '/api/notehis/' + id;
     return this.httpClient.get(url);
@@ -204,7 +209,7 @@ export class EcolService {
   }
 
   getmemo() {
-    return this.httpClient.get<any>(environment.api + '/api/vmemos');
+    return this.httpClient.get<any>(environment.nodeapi + '/loans/memos');
   }
 
   putautoLetter(letter) {
@@ -268,7 +273,7 @@ export class EcolService {
 
   getWatchcardStatic(cardacct) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/cards_watch_static/' + cardacct);
+    return this.httpClient.get<any>(environment.api + '/api/cards_watch_static?filter[where][cardacct]=' + cardacct);
   }
 
   getWatchcardAccount(cardacct) {
