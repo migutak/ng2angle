@@ -150,7 +150,7 @@ export class ViewallComponent implements OnInit {
 
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);
@@ -226,7 +226,6 @@ export class ViewallComponent implements OnInit {
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
-    console.log(currentUser);
     /*this.ecolService.totaltqall().subscribe(viewall => {
       this.noTotal = viewall[0].TOTALVIEWALL;
     });*/

@@ -42,6 +42,7 @@ export class AllcardsComponent implements OnInit {
   searchText: string;
   model: any = {};
   noTotal: number;
+  searchTotal: number;
 
   gridOptions: GridOptions;
   gridApi: GridApi;
@@ -50,7 +51,7 @@ export class AllcardsComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'CARDACCT',
-      field: 'cardacct',
+      field: 'CARDACCT',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
@@ -58,41 +59,41 @@ export class AllcardsComponent implements OnInit {
     },
     {
       headerName: 'CARDNUMBER',
-      field: 'cardnumber',
+      field: 'CARDNUMBER',
       resizable: true,
       filter: true
     },
     {
       headerName: 'CARDNAME',
-      field: 'cardname',
+      field: 'CARDNAME',
       resizable: true,
       filter: true
     },
     {
       headerName: 'DATEDISBURSED',
-      field: 'datedisbursed',
+      field: 'DATEDISBURSED',
       resizable: true,
       filter: true
     },
     {
       headerName: 'LIMIT',
-      field: 'limit',
+      field: 'LIMIT',
       resizable: true,
       filter: true
     },
     {
       headerName: 'EXPPMNT',
-      field: 'exppmnt',
+      field: 'EXPPMNT',
       resizable: true,
     },
     {
       headerName: 'OUTBALANCE',
-      field: 'outbalance',
+      field: 'OUTBALANCE',
       resizable: true,
     },
     {
       headerName: 'CYCLE',
-      field: 'cycle',
+      field: 'CYCLE',
       resizable: true,
     }
   ];
@@ -100,12 +101,8 @@ export class AllcardsComponent implements OnInit {
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
       this.apiService(20, params.startRow).subscribe(response => {
+        console.log(response);
         params.successCallback(
           response, this.noTotal
         );
@@ -116,7 +113,7 @@ export class AllcardsComponent implements OnInit {
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=watchcc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -128,11 +125,34 @@ export class AllcardsComponent implements OnInit {
     if (this.model.searchText === undefined) {
       return;
     }
-    this.clear();
-    this.http.get<any>(environment.api + '/api/cards_watch_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
+    this.ecolService.searchtotalcardswatch(this.model.searchText).subscribe(viewall => {
+      this.searchTotal = viewall[0].TOTALVIEWALL;
+      console.log(this.searchTotal);
+      this.clear();
+
+      this.dataSource = {
+        getRows: (params: IGetRowsParams) => {
+          this.searchService(this.model.searchText, 20, params.startRow).subscribe(searchdata => {
+            console.log(searchdata);
+            params.successCallback(
+              searchdata, this.searchTotal
+            );
+          });
+        }
+      };
+
+      this.gridApi.setDatasource(this.dataSource);
+      });
+
+  }
+
+  searchService(searchstring, pagesize, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/cards_watch_stage/searchcardswatch?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
+    /*this.http.get<any>(environment.api + '/api/cards_watch_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-    });
+    });*/
   }
 
   clear() {
@@ -145,9 +165,18 @@ export class AllcardsComponent implements OnInit {
   }
 
   reset() {
-    // location.reload();
     this.clear();
     this.gridApi.sizeColumnsToFit();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        this.apiService(20, params.startRow).subscribe(response => {
+          console.log(response);
+          params.successCallback(
+            response, this.noTotal
+          );
+        });
+      }
+    };
     this.gridApi.setDatasource(this.dataSource);
   }
 
@@ -167,7 +196,7 @@ export class AllcardsComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/cards_watch_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/cards_watch_stage/allcards?pagesize=' + perPage + '&currentposition=' + currentPos);
   }
 
 }

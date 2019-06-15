@@ -7,7 +7,7 @@
   <div class="card card-default">
     <div class="col-xl-12">
       <div class="page-header">
-        <form #searchForm="ngForm" class="form-horizontal">
+        <form #searchForm="ngForm" class="form-horizontal" autocomplete="off">
           <div class="row">
             <div class="col-xl-4 col-lg-6 form-inline">
               <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText" name="searchText" #searchText="ngModel" minlength="4" required/>

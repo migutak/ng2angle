@@ -17,7 +17,8 @@ export class ViewallComponent implements OnInit {
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
-      headerHeight: 40,
+      // floatingFilter: true,
+      headerHeight: 0,
       pagination: true,
       rowSelection: 'single',
       rowModelType: 'infinite',
@@ -42,6 +43,7 @@ export class ViewallComponent implements OnInit {
   searchText: string;
   model: any = {};
   noTotal: number;
+  searchTotal: number;
 
   gridOptions: GridOptions;
   gridApi: GridApi;
@@ -130,14 +132,87 @@ export class ViewallComponent implements OnInit {
   }
 
   onSearch() {
-    if (this.model.searchText === undefined) {
+    /*if (this.model.searchText === undefined) {
       return;
-    }
+    }*/
     this.clear();
-    this.http.get<any>(environment.api + '/api/tcards/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+
+    this.ecolService.totalcreditcardsearch(this.model.searchText).subscribe(viewall => {
+      this.searchTotal = viewall[0].TOTALVIEWALL;
     });
+
+    this.columnDefs = [
+      {
+        headerName: 'CARDACCT',
+        field: 'CARDACCT',
+        cellRenderer: function (params) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        },
+        resizable: true,
+      },
+      {
+        headerName: 'CARDNUMBER',
+        field: 'CARDNUMBER',
+        resizable: true,
+        filter: true
+      },
+      {
+        headerName: 'CARDNAME',
+        field: 'CARDNAME',
+        resizable: true,
+        filter: true
+      },
+      {
+        headerName: 'DAYSINARREARS',
+        field: 'DAYSINARREARS',
+        resizable: true,
+        filter: true
+      },
+      {
+        headerName: 'EXPPMNT',
+        field: 'EXPPMNT',
+        resizable: true,
+      },
+      {
+        headerName: 'OUTSTANDING BALANCE',
+        field: 'OUTBALANCE',
+        resizable: true,
+      },
+      {
+        headerName: 'LIMIT',
+        field: 'LIMIT',
+        resizable: true,
+      },
+      {
+        headerName: 'CYCLE',
+        field: 'CYCLE',
+        resizable: true,
+      },
+      {
+        headerName: 'COLOFFICER',
+        field: 'COLOFFICER',
+        resizable: true,
+      }
+    ];
+
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+
+        this.apiServiceSearch(this.model.searchText, 20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response, this.searchTotal
+          );
+          this.gridOptions.api.hideOverlay();
+        });
+      }
+    };
+
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  apiServiceSearch(searchstring, pagesize, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tcards/searchall?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
   }
 
   clear() {
@@ -152,7 +227,70 @@ export class ViewallComponent implements OnInit {
   reset() {
     // location.reload();
     this.clear();
+    this.columnDefs = [
+      {
+        headerName: 'CARDACCT',
+        field: 'cardacct',
+        cellRenderer: function (params) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        },
+        resizable: true,
+      },
+      {
+        headerName: 'CARDNUMBER',
+        field: 'cardnumber',
+        resizable: true,
+        filter: true
+      },
+      {
+        headerName: 'CARDNAME',
+        field: 'cardname',
+        resizable: true,
+        filter: true
+      },
+      {
+        headerName: 'DAYSINARREARS',
+        field: 'daysinarrears',
+        resizable: true,
+        filter: true
+      },
+      {
+        headerName: 'EXPPMNT',
+        field: 'exppmnt',
+        resizable: true,
+      },
+      {
+        headerName: 'OUTSTANDING BALANCE',
+        field: 'outbalance',
+        resizable: true,
+      },
+      {
+        headerName: 'LIMIT',
+        field: 'limit',
+        resizable: true,
+      },
+      {
+        headerName: 'CYCLE',
+        field: 'cycle',
+        resizable: true,
+      },
+      {
+        headerName: 'COLOFFICER',
+        field: 'colofficer',
+        resizable: true,
+      }
+    ];
     this.gridApi.sizeColumnsToFit();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+
+        this.apiService(20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response, this.noTotal
+          );
+        });
+      }
+    };
     this.gridApi.setDatasource(this.dataSource);
   }
 

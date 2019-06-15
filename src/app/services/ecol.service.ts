@@ -459,8 +459,16 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage/totalcardswatch');
   }
 
+  searchtotalcardswatch(searchstring) {
+    return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage/searchtotalcardswatch?searchstring=' + searchstring);
+  }
+
   totalcreditcardsviewall() {
     return this.httpClient.get<any>(environment.api + '/api/tcards/totalviewall');
+  }
+
+  totalcreditcardsearch(searchstring) {
+    return this.httpClient.get<any>(environment.api + '/api/tcards/totalcreditcardsearch?searchstring=' + searchstring);
   }
 
   totalcreditcardsmyallocation(username) {
