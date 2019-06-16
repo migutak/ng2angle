@@ -256,6 +256,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/qall?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
   }
 
+  getddAccount(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/demandsdues&filter[where][accnumber]=' + accnumber);
+  }
+
   getmcoopcashAccount(accnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/mcoopcash_stage?filter[include]=mcoopcash_static&filter[where][loanaccnumber]=' + accnumber);
@@ -461,6 +466,10 @@ export class EcolService {
 
   searchtotalcardswatch(searchstring) {
     return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage/searchtotalcardswatch?searchstring=' + searchstring);
+  }
+
+  totaldemandsduewithsearch(searchstring) {
+    return this.httpClient.get<any>(environment.api + '/api/demandsdue/totaldemandsduewithsearch?searchtext=' + searchstring);
   }
 
   totalcreditcardsviewall() {

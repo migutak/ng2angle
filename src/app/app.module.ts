@@ -6,7 +6,7 @@ import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-
+import { BnNgIdleService } from 'bn-ng-idle';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
@@ -27,7 +27,7 @@ export function createTranslateLoader(http: HttpClient) {
         BrowserModule,
         HttpClientModule,
         FormsModule,
-        BrowserAnimationsModule, // required for ng2-tag-input ...
+        BrowserAnimationsModule, // required for ng2-tag-input ..
         CoreModule,
         LayoutModule,
         SharedModule.forRoot(),
@@ -41,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    providers: [],
+    providers: [BnNgIdleService],
     bootstrap: [AppComponent]
 })
 

@@ -90,8 +90,9 @@ export class SendLetterComponent implements OnInit {
   emaildata: any = {};
   section: string;
   uploadedfilepath: string;
+  demandtosend: string;
   // tslint:disable-next-line:max-line-length
-  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
+  itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
@@ -129,7 +130,10 @@ export class SendLetterComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
+    this.demandtosend = this.route.snapshot.queryParamMap.get('demand');
+
     // get account details
+    this.spinner.show();
     this.getaccount(this.accnumber);
     this.getdemandshistory(this.accnumber);
     this.getteles(this.custnumber);
@@ -154,7 +158,7 @@ export class SendLetterComponent implements OnInit {
       this.model.postcode = data[0].postcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
-
+      this.model.demand = this.demandtosend;
       this.section = data[0].section;
 
       if (this.guarantors || this.guarantors.length > 0) {
@@ -163,6 +167,9 @@ export class SendLetterComponent implements OnInit {
           this.guarantoremails += this.guarantors[i].email + ',';
         }
       }
+
+      // hide spinner
+      this.spinner.hide();
     });
   }
 

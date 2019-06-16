@@ -203,11 +203,6 @@ export class DemandsdueComponent implements OnInit {
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
           response, this.noTotal
@@ -229,7 +224,7 @@ formatNumber(number) {
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendlettercc?cardacct=' + this.model.cardacct + '&username=' + this.username, '_blank');
+    window.open(environment.applink + '/sendlettercc?cardacct=' + this.model.cardacct + '&username=' + this.username + '&demand=' + this.model.demandletter, '_blank');
   }
 
   onQuickFilterChanged($event) {

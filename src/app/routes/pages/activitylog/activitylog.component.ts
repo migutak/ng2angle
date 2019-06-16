@@ -435,19 +435,6 @@ export class ActivityLogComponent implements OnInit {
     });
   }  // end generateletter
 
-  /*sendemail(emaildata) {
-    this.ecolService.sendDemandEmail(emaildata).subscribe(data => {
-      if (data.result === 'success') {
-        swal('Successful!', 'Letter sent on email!', 'success');
-      } else {
-        swal('Error!', 'Error occurred during sending email!', 'error');
-      }
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred during sending email!', 'error');
-    });
-  }*/
-
   sendsms(smsdata) {
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter SMS sent!', 'success');

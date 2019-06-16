@@ -14,7 +14,8 @@ export class DemandsdueComponent implements OnInit {
 
   model: any = {};
   public radioModel: string;
-  total:  any = {};
+  total: any = {};
+  searchTotal: number;
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
       headerHeight: 40,
@@ -56,30 +57,21 @@ export class DemandsdueComponent implements OnInit {
       valueFormatter: this.currencyFormatter
     },
     {
-      headerName: 'DAYSINARR',
-      field: 'daysinarr',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'blue'};
-        } else if (params.value > '60') {
-          return { color: 'red'};
-        } else {
-          return null;
-        }
-      }
-    },
-    {
       headerName: 'TOTALARREARS',
       field: 'totalarrears',
       valueFormatter: this.currencyFormatter
     },
     {
-      headerName: 'ADDRESS',
-      field: 'address'
+      headerName: 'DAYSINARR',
+      field: 'daysinarr'
     },
     {
-      headerName: 'PRODUCT',
-      field: 'section'
+      headerName: 'EMAILADDRESS',
+      field: 'emailaddress'
+    },
+    {
+      headerName: 'DEMANDLETTER',
+      field: 'demandletter'
     },
     {
       headerName: 'COLOFFICER',
@@ -105,11 +97,8 @@ export class DemandsdueComponent implements OnInit {
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    // window.open(environment.applink + '/activitylog?accnumber=' + this.model.loanaccnumber + '&custnumber=' + this.model.loanaccnumber + '&username=' + this.username + '&sys=mcoopcash', '_blank');
-    // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendletter?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.username, '_blank');
+    window.open(environment.applink + '/sendletter?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.username + '&demand=' + this.model.demandletter, '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -117,19 +106,22 @@ export class DemandsdueComponent implements OnInit {
     this.searchText = $event.target.value;
   }
 
-currencyFormatter(params) {
+  currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
 
   onSearch() {
     if (this.model.searchText === undefined) {
       return;
     }
     this.clear();
-    this.http.get<any>(environment.api + '/api/demandsdue/search?searchtext=' + this.model.searchText).subscribe(resp => {
+    this.ecolService.totaldemandsduewithsearch(this.model.searchText).subscribe(demands => {
+      this.searchTotal = demands[0].TOTALVIEWALL;
+    });
+    /*this.http.get<any>(environment.api + '/api/demandsdue/search?searchtext=' + this.model.searchText).subscribe(resp => {
       //
       this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-    });
+    });*/
   }
 
   clear() {
@@ -165,11 +157,6 @@ currencyFormatter(params) {
 
   apiService(perPage, currentPos) {
     return this.http.get<any>(environment.api + '/api/demandsdue?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-  }
-
-
-  refreshgrid() {
-    //
   }
 
 }
