@@ -18,5 +18,5 @@ export const environment = {
   accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   manuals_path: '/app/manuals/',
-  birt: 'http://172.16.204.37:8080/birt',
+  birt: 'http://ecollectweb.co-opbank.co.ke:8787/birt',
 };
