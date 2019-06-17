@@ -8,7 +8,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ViewallComponent } from './viewall/viewall.component';
 import { MyallocationsComponent } from './myallocations/myallocations.component';
 import { MyworklistComponent } from './myworklist/myworklist.component';
-import { TodaysComponent } from './todays/todays.component';
+import { AllloansComponent } from './allloans/allloans.component';
 import { PredelqComponent } from './predelq/predelq.component';
 import { PtpsComponent } from './ptps/ptps.component';
 import { WithfundsComponent } from './withfunds/withfunds.component';
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'viewall', component: ViewallComponent },
   { path: 'myallocations', component: MyallocationsComponent },
   { path: 'myworklist', component: MyworklistComponent },
-  { path: 'todays', component: TodaysComponent },
+  { path: 'allloans', component: AllloansComponent },
   { path: 'predelq', component: PredelqComponent },
   { path: 'ptps', component: PtpsComponent },
   { path: 'withfunds', component: WithfundsComponent }
@@ -32,7 +32,7 @@ const routes: Routes = [
     ViewallComponent,
     MyallocationsComponent,
     MyworklistComponent,
-    TodaysComponent,
+    AllloansComponent,
     PredelqComponent,
     PtpsComponent,
     WithfundsComponent

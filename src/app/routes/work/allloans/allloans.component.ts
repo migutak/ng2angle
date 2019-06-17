@@ -6,11 +6,11 @@ import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-commu
 import * as $ from 'jquery';
 
 @Component({
-  selector: 'app-todays',
-  templateUrl: './todays.component.html',
-  styleUrls: ['./todays.component.scss']
+  selector: 'app-allloans',
+  templateUrl: './allloans.component.html',
+  styleUrls: ['./allloans.component.scss']
 })
-export class TodaysComponent implements OnInit {
+export class AllloansComponent implements OnInit {
 
   public overlayLoadingTemplate;
   public overlayNoRowsTemplate;
@@ -43,6 +43,7 @@ export class TodaysComponent implements OnInit {
   searchText: string;
   model: any = {};
   noTotal: number;
+  watchTotal: number;
 
   gridOptions: GridOptions;
   gridApi: GridApi;
@@ -51,59 +52,48 @@ export class TodaysComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
-      field: 'accnumber',
+      field: 'ACCNUMBER',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250
-    },
-    {
-      headerName: 'CUSTNUMBER',
-      field: 'custnumber'
-    },
-    {
-      headerName: 'CUST_NAME',
-      field: 'client_name',
       width: 350
     },
     {
-      headerName: 'DAYSINARREARS',
-      field: 'daysinarr',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red' };
-        } else if (params.value > '90') {
-          return { color: 'red' };
-        } else {
-          return null;
-        }
-      }
+      headerName: 'CUSTNUMBER',
+      field: 'CUSTNUMBER'
     },
     {
-      headerName: 'TOTALARREARS',
-      field: 'instamount',
-      valueFormatter: this.currencyFormatter
+      headerName: 'CUSTNAME',
+      field: 'CUSTNAME',
+      width: 350
+    },
+    {
+      headerName: 'SETTLEACCNO',
+      field: 'SETTLEACCNO'
+    },
+    {
+      headerName: 'BRANCHCODE',
+      field: 'BRANCHCODE'
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
-      valueFormatter: this.currencyFormatter
+      field: 'OUSTBALANCE'
     },
     {
-      headerName: 'BUCKET',
-      field: 'bucket'
+      headerName: 'PRODUCTCODE',
+      field: 'PRODUCTCODE'
     },
     {
       headerName: 'AROCODE',
-      field: 'arocode'
+      field: 'AROCODE'
     },
     {
-      headerName: 'SECTION',
-      field: 'section'
+      headerName: 'NATIONID',
+      field: 'NATIONID'
     },
     {
-      headerName: 'COLOFFICER',
-      field: 'colofficer'
+      headerName: 'EMPLOYER',
+      field: 'EMPLOYER'
     }
   ];
 
@@ -112,16 +102,11 @@ export class TodaysComponent implements OnInit {
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response.rows, response.total
+          response.data, response.totalRecords
         );
-        if (response.rows.length > 0) {
+        if (response.data.length > 0) {
           this.gridOptions.api.hideOverlay();
         } else {
           this.gridOptions.api.showNoRowsOverlay();
@@ -140,34 +125,19 @@ export class TodaysComponent implements OnInit {
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
   }
 
-  onQuickFilterChanged($event) {
-    // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
-  }
-
   onSearch() {
     if (this.model.searchText === undefined) {
       return;
     }
     this.clear();
     this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          if (response.rows.length > 0) {
+          if (response.data.length > 0) {
             this.gridOptions.api.hideOverlay();
           } else {
             this.gridOptions.api.showNoRowsOverlay();
@@ -199,9 +169,9 @@ export class TodaysComponent implements OnInit {
         //
         this.apiService(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          if (response.rows.length > 0) {
+          if (response.data.length > 0) {
             this.gridOptions.api.hideOverlay();
           } else {
             this.gridOptions.api.showNoRowsOverlay();
@@ -228,12 +198,12 @@ export class TodaysComponent implements OnInit {
   apiService(perPage, currentPos) {
     // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/watch/allloans?offset=' + currentPos + '&rows=' + perPage );
   }
 
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/watch/allloans_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
 
 }

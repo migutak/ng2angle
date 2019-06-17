@@ -18,17 +18,26 @@ const Manuals = {
 };
 
 const Dashboard = {
-    text: 'Dashboard & Reports',
+    text: 'Dashboard',
+    link: '/dashboard',
+    icon: 'icon-speedometer',
+    submenu: [
+        {
+            text: 'Dashboards',
+            link: '/reports/dashboards'
+        }
+    ]
+};
+
+
+const Reports = {
+    text: 'Reports',
     link: '/dashboard',
     icon: 'icon-speedometer',
     submenu: [
         {
             text: 'Reports',
             link: '/reports/allreports'
-        },
-        {
-            text: 'Dashboards',
-            link: '/reports/dashboards'
         }
     ]
 };
@@ -153,73 +162,6 @@ const Administration = {
     ]
 };
 
-const Elements = {
-    text: 'Elements',
-    link: '/elements',
-    icon: 'icon-chemistry',
-    submenu: [
-        {
-            text: 'Buttons',
-            link: '/elements/buttons'
-        },
-        {
-            text: 'Interaction',
-            link: '/elements/interaction'
-        },
-        {
-            text: 'Notification',
-            link: '/elements/notification'
-        },
-        {
-            text: 'SweetAlert',
-            link: '/elements/sweetalert'
-        },
-        {
-            text: 'Spinners',
-            link: '/elements/spinners'
-        },
-        {
-            text: 'Dropdown',
-            link: '/elements/dropdown'
-        },
-        {
-            text: 'Nav Tree',
-            link: '/elements/navtree'
-        },
-        {
-            text: 'Sortable',
-            link: '/elements/sortable'
-        },
-        {
-            text: 'Grid',
-            link: '/elements/grid'
-        },
-        {
-            text: 'Grid Masonry',
-            link: '/elements/gridmasonry'
-        },
-        {
-            text: 'Typography',
-            link: '/elements/typography'
-        },
-        {
-            text: 'Font Icons',
-            link: '/elements/iconsfont'
-        },
-        {
-            text: 'Weahter Icons',
-            link: '/elements/iconsweather'
-        },
-        {
-            text: 'Colors',
-            link: '/elements/colors'
-        },
-        {
-            text: 'Infinite Scroll',
-            link: '/elements/infinitescroll'
-        }
-    ]
-};
 
 const Forms = {
     text: 'Forms',
@@ -249,87 +191,6 @@ const Forms = {
     ]
 };
 
-const Remedialrpts = {
-    text: 'Remedial Reports',
-    link: '/collectionrpts',
-    icon: 'icon-grid',
-    submenu: [
-        {
-            text: 'Unactioned report',
-            link: '/tables/standard'
-        },
-        {
-            text: 'New File Analysis',
-            link: '/tables/extended'
-        },
-        {
-            text: 'Portfolio Movement',
-            link: '/tables/datatable'
-        },
-        {
-            text: 'Relegation Analysis',
-            link: '/tables/aggrid'
-        },
-        {
-            text: 'Relegation analysis cc',
-            link: '/tables/ngxdatatable'
-        },
-        {
-            text: 'Portfolio movement cc',
-            link: '/tables/aggrid'
-        },
-        {
-            text: 'Invoices',
-            link: '/tables/ngxdatatable'
-        },
-        {
-            text: 'More',
-            link: '/tables/ngxdatatable',
-            submenu: [
-                {
-                    text: 'Unactioned report',
-                    link: '/tables/standard'
-                }
-            ]
-        }
-    ]
-};
-
-const Remedialrpt = {
-    text: 'Remedial Reports',
-    link: '/remedialrpts',
-    icon: 'icon-graph',
-    submenu: [
-        {
-            text: 'Unactioned report',
-            link: '/remedialrpts/unactionedrpt'
-        },
-        {
-            text: 'New File Analysis',
-            link: '/remedialrpts/newfileanalysis'
-        },
-        {
-            text: 'Portfolio Movement',
-            link: '/remedialrpts/portfoliomvt'
-        },
-        {
-            text: 'Relegation Analysis',
-            link: '/remedialrpts/relegationanalysis'
-        },
-        {
-            text: 'Invoices',
-            link: '/remedialrpts/invoices'
-        },
-        {
-            text: 'Portfolio movement cc',
-            link: '/remedialrpts/portfoliomvt'
-        },
-        {
-            text: 'Relegation analysis cc',
-            link: '/remedialrpts/relegationanalysis'
-        }
-    ]
-};
 
 const Work = {
     text: 'Loans Queue',
@@ -523,10 +384,6 @@ const Allocations = {
             link: '/allocations/creditcards'
         },
         {
-            text: 'MCoop-Cash',
-            link: '/allocations/mcoopcash'
-        },
-        {
             text: 'Pre Delq',
             link: '/allocations/predelq'
         }
@@ -575,13 +432,19 @@ const headingConfigurations = {
     text: 'Configurations',
     heading: true
 };
+const headingReports = {
+    text: 'Reports',
+    heading: true
+};
+
+const headingLetters = {
+    text: 'Demand Letters',
+    heading: true
+};
 
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-// console.log('menu', userperm);
-// console.log('currentUser', currentUser);
 
 let menuitems = [];
 
@@ -595,16 +458,17 @@ const user_mgmt_menu = [
 const collection_menu = [
     headingMain,
     Home,
-    Dashboard,
-    // Guarantors,
-    Letters,
-    // Letterscc,
     headingComponents,
     Work,
     Work_cc,
     Predelq,
     mcoopcash,
     serviceproviders,
+    headingLetters,
+    Letters,
+    headingReports,
+    Dashboard,
+    Reports,
     headingDocumentations,
     Manuals
 ];
@@ -612,13 +476,17 @@ const collection_menu = [
 const creditcards_menu = [
     headingMain,
     Home,
-    Dashboard,
-    Letters,
     headingComponents,
     Work_cc,
     Work,
     Predelq,
     mcoopcash,
+    serviceproviders,
+    headingLetters,
+    Letters,
+    headingReports,
+    Dashboard,
+    Reports,
     headingDocumentations,
     Manuals
 ];
@@ -626,34 +494,35 @@ const creditcards_menu = [
 const remedial_menu = [
     headingMain,
     Home,
-    Dashboard,
-    // Guarantors,
-    Letters,
-    // Letterscc,
     headingComponents,
-    // Work,
     Remedial,
     Work_cc,
     Predelq,
     mcoopcash,
     serviceproviders,
-    // headingComponents,
-    // Demandletters
+    headingLetters,
+    Letters,
+    headingReports,
+    Dashboard,
+    Reports,
+    headingDocumentations,
+    Manuals
 ];
 
 const teamleader_menu = [
     headingMain,
     Home,
-    Dashboard,
-    // Guarantors,
-    Letters,
-    // Letterscc,
     headingComponents,
     Work,
     Work_cc,
     Predelq,
     mcoopcash,
     serviceproviders,
+    headingLetters,
+    Letters,
+    headingReports,
+    Dashboard,
+    Reports,
     headingConfigurations,
     Demandletters,
     Allocations,
