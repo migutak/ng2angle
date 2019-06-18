@@ -4,6 +4,20 @@
 // Base styles
 //
 
+*.c-radio span[disabled] {
+    cursor: not-allowed;
+  }
+
+
+*.form-control[disabled] {
+    cursor: not-allowed;
+  }
+
+
+*.btn[disabled] {
+    cursor: not-allowed;
+  }
+
 .btn {
   display: inline-block;
   font-weight: $btn-font-weight;

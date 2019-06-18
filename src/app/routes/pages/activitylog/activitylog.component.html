@@ -8,6 +8,7 @@
             <div>
               <h4 class="m-0">Name: {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname || accountdetails?.custname}}</h4>
               <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel: {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}</p>
+              <p>{{accountdetails?.cellnumber}}</p><br> <p>{{accountdetails?.mobile}}</p> <br><p>{{accountdetails?.phonenumber}}</p><br><p>{{accountdetails?.telnumber}}</p><br><p>{{accountdetails?.celnumber}}</p>
             </div>
           </div>
         </div>
@@ -20,6 +21,12 @@
         <h5>Menus</h5>
         <hr class="no-margin">
         <ul class="list-unstyled">
+             <li><button [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
+             [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+             queryParamsHandling="merge" class="  btn-outline-primary  btn btn-block" >Client Home</button></li>
+             <li><button [routerLink]="['./notes']" [routerLinkActive]="['active']"
+             [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+             queryParamsHandling="merge" class=" btn-outline-primary  btn btn-block" >Notes History</button></li>
           <li>
             <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"

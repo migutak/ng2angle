@@ -44,17 +44,17 @@ export class ActivityActionComponent implements OnInit {
   cure: any = [];
   excuse: any = [];
   collectoraction: any = [
-    {collectoractionid: 'OC', collectoraction: 'OUTGOING CALL'},
-    {collectoractionid: 'IC', collectoraction: 'INCOMING CALL'},
-    {collectoractionid: 'MET', collectoraction: 'DEBTOR VISITED'},
-    {collectoractionid: 'REVW', collectoraction: 'ACCOUNT REVIEW'},
-    {collectoractionid: 'SC', collectoraction: 'SENT CORRESPONDENCE'},
-    {collectoractionid: 'RC', collectoraction: 'RECEIVED CORRESPONDENCE'},
-    {collectoractionid: 'RR', collectoraction: 'ROUTE FOR REVIEW'},
-    {collectoractionid: 'OA', collectoraction: 'ASSIGN OUTSIDE AGENCY'},
-    {collectoractionid: 'RF', collectoraction: 'RECEIVED FILE'},
-    {collectoractionid: 'FT', collectoraction: 'FUND TRANSFER'},
-    {collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION'}
+    { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
+    { collectoractionid: 'IC', collectoraction: 'INCOMING CALL' },
+    { collectoractionid: 'MET', collectoraction: 'DEBTOR VISITED' },
+    { collectoractionid: 'REVW', collectoraction: 'ACCOUNT REVIEW' },
+    { collectoractionid: 'SC', collectoraction: 'SENT CORRESPONDENCE' },
+    { collectoractionid: 'RC', collectoraction: 'RECEIVED CORRESPONDENCE' },
+    { collectoractionid: 'RR', collectoraction: 'ROUTE FOR REVIEW' },
+    { collectoractionid: 'OA', collectoraction: 'ASSIGN OUTSIDE AGENCY' },
+    { collectoractionid: 'RF', collectoraction: 'RECEIVED FILE' },
+    { collectoractionid: 'FT', collectoraction: 'FUND TRANSFER' },
+    { collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION' }
   ];
 
   message: string;
@@ -153,11 +153,14 @@ export class ActivityActionComponent implements OnInit {
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
       this.account = data;
-      this.account.reviewdate = data.watch.reviewdate,
-      this.account.excuse = data.watch.excuse,
-      this.account.cmdstatus = data.watch.cmdstatus || 'Hardcore',
-      this.account.routetostate = data.watch.routetostate || 'ACTIVE COLLECTIONS',
-      this.account.excuse_other = data.watch.rfdother;
+      if (data.watch) {
+          this.account.reviewdate = data.watch.reviewdate || '',
+          this.account.excuse = data.watch.excuse || '',
+          this.account.cmdstatus = data.watch.cmdstatus || 'Hardcore',
+          this.account.routetostate = data.watch.routetostate || 'ACTIVE COLLECTIONS',
+          this.account.excuse_other = data.watch.rfdother;
+      }
+
       // build form
       this.buildForm();
       if (swal.isVisible) { swal.close(); }
@@ -174,11 +177,14 @@ export class ActivityActionComponent implements OnInit {
 
   getwatchcardstatic(cardacct) {
     this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
-      this.account.reviewdate = data.reviewdate;
-      this.account.excuse = data.excuse;
-      this.account.cmdstatus = data.cmdstatus;
-      this.account.routetostate = data.routetostate;
-      this.account.excuse_other = data.rfdother;
+      if (data) {
+        this.account.reviewdate = data[0].reviewdate;
+        this.account.excuse = data[0].excuse;
+        this.account.cmdstatus = data[0].cmdstatus;
+        this.account.routetostate = data[0].routetostate;
+        this.account.excuse_other = data[0].rfdother;
+      }
+
       // build form
       this.buildForm();
       if (swal.isVisible) { swal.close(); }
@@ -246,10 +252,10 @@ export class ActivityActionComponent implements OnInit {
     // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: [{value: '', disabled: true}],
-      ptpamount: [{value: 0, disabled: true}],
-      ptp: [{value: 'No', disabled: true}],
-      ptpdate: [{value: this.currentDate, disabled: true}],
+      party: [{ value: '', disabled: true }],
+      ptpamount: [{ value: 0, disabled: true }],
+      ptp: [{ value: 'No', disabled: true }],
+      ptpdate: [{ value: this.currentDate, disabled: true }],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
       reason: [this.account.excuse, Validators.required],
@@ -257,7 +263,7 @@ export class ActivityActionComponent implements OnInit {
       // branchstatus: [this.account.branchstatus],
       route: [this.account.routetostate],
       paymode: [''],
-      rfdother: [{value: this.account.excuse_other, disabled: true}]
+      rfdother: [{ value: this.account.excuse_other, disabled: true }]
     });
   }
 
@@ -318,7 +324,7 @@ export class ActivityActionComponent implements OnInit {
 
         this.ecolService.putcardwatch(watchccbody).subscribe(resp => {
           //
-        }, error => {console.log(error); });
+        }, error => { console.log(error); });
       }
       //
       if (this.sys === 'watch') {
@@ -334,7 +340,7 @@ export class ActivityActionComponent implements OnInit {
 
         this.ecolService.putwatch(watchbody).subscribe(resp => {
           //
-        }, error => {console.log(error); });
+        }, error => { console.log(error); });
       }
     }, error => {
       console.log(error);

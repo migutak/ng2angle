@@ -2,7 +2,7 @@
 const Home = {
     text: 'Home',
     link: '/home',
-    icon: 'icon-home'
+    icon: 'fas fa-home'
 };
 
 const Guarantors = {
@@ -14,23 +14,19 @@ const Guarantors = {
 const Manuals = {
     text: 'Manuals and scripts',
     link: '/manuals/all',
-    icon: 'icon-people'
+    icon: 'far fa-smile'
 };
 
 const Dashboard = {
-    text: 'Dashboard & Reports',
-    link: '/dashboard',
-    icon: 'icon-speedometer',
-    submenu: [
-        {
-            text: 'Reports',
-            link: '/reports/allreports'
-        },
-        {
-            text: 'Dashboards',
-            link: '/reports/dashboards'
-        }
-    ]
+    text: 'Dashboards',
+    link: '/reports/dashboards',
+    icon: 'fas fa-tachometer-alt'
+};
+
+const Reports = {
+    text: 'Reports',
+    link: '/reports/allreports',
+    icon: 'fas fa-tachometer-alt'
 };
 
 const DashboardAdmin = {
@@ -48,7 +44,7 @@ const DashboardAdmin = {
 const Letters = {
     text: 'Demands Letters',
     link: '/letters',
-    icon: 'icon-note',
+    icon: 'far fa-clipboard',
     submenu: [
         /*{
             text: 'Letters Due',
@@ -332,7 +328,7 @@ const Remedialrpt = {
 };
 
 const Work = {
-    text: 'Work Queue',
+    text: 'Loans',
     link: '/work',
     icon: 'icon-briefcase',
     submenu: [
@@ -355,14 +351,14 @@ const Work = {
             link: '/work/ptps'
         },
         {
-            text: 'With funds',
+            text: 'Transactional Accounts With Funds',
             link: '/work/withfunds'
         }
     ]
 };
 
 const Work_cc = {
-    text: 'CreditCards Queue',
+    text: 'Credit Cards',
     link: '/creditcards',
     icon: 'icon-credit-card',
     submenu: [
@@ -467,17 +463,21 @@ const mcoopcash = {
     icon: 'icon-wallet',
     submenu: [
         {
-            text: 'View all',
+            text: 'E-Credit (ALL)',
             link: '/mcoopcash/viewall'
         },
         {
-            text: 'My allocations',
-            link: '/mcoopcash/myallocations'
-        },
-        {
-            text: 'My worklist',
-            link: '/mcoopcash/myworklist'
+            text: 'E-Credit Arrears',
+            link: '/***/****'
         }
+        // {
+        //     text: 'My allocations',
+        //     link: '/mcoopcash/myallocations'
+        // },
+        // {
+        //     text: 'My worklist',
+        //     link: '/mcoopcash/myworklist'
+        // }
     ]
 };
 
@@ -532,7 +532,7 @@ const Allocations = {
 const Predelq = {
     text: 'Paying Watch',
     link: '/payingwatch',
-    icon: 'icon-wallet',
+    icon: 'fas fa-eye',
     submenu: [
         {
             text: 'No Credit buildup',
@@ -585,22 +585,26 @@ const user_mgmt_menu = [
     headingMain,
     Home,
     DashboardAdmin,
-    Administration
+    Administration,
+    headingDocumentations,
+    Manuals
 ];
 
 const collection_menu = [
     headingMain,
     Home,
-    Dashboard,
-    // Guarantors,
-    Letters,
-    // Letterscc,
     headingComponents,
     Work,
     Work_cc,
-    Predelq,
     mcoopcash,
+    Letters,
     serviceproviders,
+    Predelq,
+    Dashboard,
+    Reports,
+    // Guarantors,
+    
+    // Letterscc,
     headingDocumentations,
     Manuals
 ];
@@ -608,13 +612,14 @@ const collection_menu = [
 const creditcards_menu = [
     headingMain,
     Home,
-    Dashboard,
-    // Letterscc,
     headingComponents,
-    Work_cc,
     Work,
-    Predelq,
+    Work_cc,
     mcoopcash,
+    Predelq,
+    Dashboard,
+    Reports,
+    // Letterscc,
     headingDocumentations,
     Manuals
 ];
@@ -622,17 +627,21 @@ const creditcards_menu = [
 const remedial_menu = [
     headingMain,
     Home,
-    Dashboard,
-    // Guarantors,
-    Letters,
-    // Letterscc,
     headingComponents,
-    // Work,
-    Remedial,
     Work_cc,
-    Predelq,
     mcoopcash,
+    Letters,
     serviceproviders,
+    Predelq,
+    Dashboard,
+    Reports,
+    Remedial,
+    headingDocumentations,
+    Manuals
+    // Guarantors,
+    // Letterscc,
+    
+    // Work,
     // headingComponents,
     // Demandletters
 ];
@@ -640,16 +649,18 @@ const remedial_menu = [
 const teamleader_menu = [
     headingMain,
     Home,
-    Dashboard,
     // Guarantors,
-    Letters,
+
     // Letterscc,
     headingComponents,
     Work,
     Work_cc,
-    Predelq,
     mcoopcash,
+    Letters, 
     serviceproviders,
+    Predelq,
+    Dashboard,
+    Reports,
     headingConfigurations,
     Demandletters,
     Allocations,

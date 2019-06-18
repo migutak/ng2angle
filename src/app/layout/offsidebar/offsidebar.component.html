@@ -1,11 +1,10 @@
 <tabset [justified]="true">
     <tab>
         <ng-template tabHeading>
-            <em class="icon-equalizer fa-lg"></em>
+            <em class="fa-2x mr-2 fas fa-cog fa-lg"></em>
         </ng-template>
-        <h3 class="text-center text-thin mt-4" [innerHTML]="'offsidebar.setting.SETTINGS' | translate"></h3>
         <div class="p-2">
-            <h4 class="text-muted text-thin">Themes</h4>
+            <h4 class="text-muted text-thin">Theme Colours</h4>
             <div class="row row-flush mb-2">
                 <div class="col mb-2">
                     <div class="setting-color">
@@ -211,70 +210,5 @@
                 </div>
             </div>
         </div>
-        <div class="p-2">
-            <h4 class="text-muted text-thin">Language</h4>
-            <select class="form-control" [ngModel]="selectedLanguage" (ngModelChange)="setLang($event)">
-                <option [value]="lang.code" *ngFor="let lang of getLangs()">{{lang.text}}</option>
-            </select>
-        </div>
-    </tab>
-    <tab>
-        <ng-template tabHeading>
-            <em class="icon-user fa-lg"></em>
-        </ng-template>
-        <h3 class="text-center text-thin mt-4">Chat</h3>
-        <div class="list-group">
-            <!-- START list title-->
-            <div class="list-group-item border-0">
-                <small class="text-muted">ONLINE</small>
-            </div>
-            <!-- END list title-->
-            <div class="col-xs-12 col-xs-offset-1" style="min-height: 500px; max-height: 500px; overflow-y: auto; width: 100%">
-                <div class="list-group-item list-group-item-action border-0">
-                    <div class="media">
-                        <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user.png" alt="Image">
-                        <div class="media-body text-truncate">
-                            <a href="#">
-                                        <strong>Juan Sims</strong>
-                                     </a>
-                            <br>
-                            <small class="text-muted">Designeer</small>
-                        </div>
-                        <div class="ml-auto">
-                            <span class="circle bg-success circle-lg"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- START list title
-            <div class="list-group-item border-0">
-                <small class="text-muted">OFFLINE</small>
-            </div>
-            END list title
-            <div class="list-group-item list-group-item-action border-0">
-                <div class="media">
-                    <img class="align-self-center mr-3 rounded-circle thumb48" src="assets/img/user.png" alt="Image">
-                    <div class="media-body text-truncate">
-                        <a href="#">
-                                    <strong>Lawrence Robinson</strong>
-                                 </a>
-                        <br>
-                        <small class="text-muted">Designeer</small>
-                    </div>
-                    <div class="ml-auto">
-                        <span class="circle bg-danger circle-lg"></span>
-                    </div>
-                </div>
-            </div>-->
-        </div>
-        <div class="px-3 py-4 text-center">
-            <!-- Optional link to list more users-->
-            <a class="btn btn-purple btn-sm" href="#" title="See more contacts">
-                           <strong>Load more..</strong>
-                        </a>
-                        
-        </div>
-        
     </tab>
 </tabset>

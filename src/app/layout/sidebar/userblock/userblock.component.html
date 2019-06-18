@@ -1,14 +1,29 @@
+
+<style type="text/css" media="screen">
+
+.Blink {
+                animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+              }
+              @keyframes blinker {  
+                from { opacity: 1; }
+                to { opacity: 0; }}
+              
+    
+    </style>
+
+
 <div class="item user-block" *ngIf="userBlockIsVisible()">
     <!-- User picture-->
     <div class="user-block-picture">
         <div class="user-block-status">
             <img class="img-thumbnail rounded-circle" [src]="user.picture" alt="Avatar" />
-            <div class="circle bg-success circle-lg"></div>
+        <div class="circle bg-success circle-lg Blink"></div>
         </div>
     </div>
     <!-- Name and Job-->
     <div class="user-block-info">
-        <span class="user-block-name">{{ 'sidebar.WELCOME' | translate }}  {{user.username}}</span>
-        <span class="user-block-role">{{user.role}}</span>
+        <!-- <span class="user-block-name">{{ 'sidebar.WELCOME' | translate }}</span > -->
+        <span style="color:white; font-weight: 900; text-transform:uppercase" >{{user.username}}</span><br><span style="color:white;">({{user.role}})</span>
+        <!-- <span class="user-block-role">{{user.role}}</span> -->
     </div>
 </div>

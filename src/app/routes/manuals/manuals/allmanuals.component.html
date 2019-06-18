@@ -3,13 +3,22 @@
         <small></small></div>
 </div>
 <div class="container-fluid">
-    <div class="col-4 col-xl-12">
+    <div class="col-4 col-xl-5">
         <!-- Categories-->
         <div class="card card-default">
             <div class="card-header">Documents & Manuals</div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    <li>
+                    <li> <button (click)="open('admin_manual.pdf','E-Collect Admin Manual')" class="mr-2 mb-2  btn-outline-primary  btn btn-block" ><em class="fas fa-download fa-fw float-left"></em>Admin Manual</button></li>
+                    <li> <button (click)="open('datadictionary', 'Data dictionary')" class="mr-2 mb-2  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>Data dictionary</button></li>
+                    <li> <button (click)="open('userguide', 'User guide')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>E-Collect user guide</button></li>
+                    <li> <button (click)="open('Collection_scripts.pdf','Collection call plan scripts')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>Collection call plan scripts</button></li>
+                    <li> <button (click)="open('customer_visits.pdf','Collection customer visit')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>Collection customer visit</button></li>
+                    <li> <button (click)="open('decision_tree.pdf','Decision tree')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>Decision tree</button></li>
+                    <li> <button (click)="open('account_plans.pdf','Account plans')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>Account plans</button></li>
+                    <li> <button (click)="open('loan_process_flow.pdf','Loan process flow Collections Process Flow-MSME')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>Loan process flow Collections Process Flow-MSME</button></li>
+                    <li> <button (click)="open('pbo_handover_guideline.pdf','PBO handover guideline')" class="mr-1 mb-1  btn-outline-primary  btn btn-block"><em class="fas fa-download fa-fw float-left"></em>PBO handover guideline</button></li>
+                    <!-- <li>
                         <a href="" (click)="open('admin_manual.pdf','E-Collect Admin Manual')">
                             <em class="fa fa-file fa-fw"></em>Admin manual</a>
                     </li>
@@ -44,7 +53,7 @@
                     <li>
                         <a href="" (click)="open('pbo_handover_guideline.pdf','PBO handover guideline')">
                             <em class="fa fa-file fa-fw"></em> PBO handover guideline</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

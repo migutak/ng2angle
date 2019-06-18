@@ -12,7 +12,7 @@ const ADLOGIN = environment.adlogin;
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss', './style.css', './font-awesome-4.7.0/css/font-awesome.css'] //
+    styleUrls: ['./login.component.scss', './style.css'] //
 })
 export class LoginComponent implements OnInit {
 

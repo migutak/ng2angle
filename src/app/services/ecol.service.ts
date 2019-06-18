@@ -268,7 +268,7 @@ export class EcolService {
 
   getWatchcardStatic(cardacct) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/cards_watch_static/' + cardacct);
+    return this.httpClient.get<any>(environment.api + '/api/cards_watch_static?filter[where][cardacct]=' + cardacct);
   }
 
   getWatchcardAccount(cardacct) {

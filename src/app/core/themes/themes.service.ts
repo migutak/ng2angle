@@ -12,14 +12,15 @@ const themeH = require('../../shared/styles/themes/theme-h.scss');
 @Injectable()
 export class ThemesService {
 
-    styleTag: any
-    defaultTheme = 'C';
+    styleTag: any;
+    defaultTheme = 'A';
     myShows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     show: string;
     constructor() {
-        this.show = this.myShows[Math.floor(Math.random() * this.myShows.length)];
+        // this.show = this.myShows[Math.floor(Math.random() * this.myShows.length)];
+        this.show = this.defaultTheme;
         this.createStyle();
-        //this.setTheme(this.defaultTheme);
+        // this.setTheme(this.defaultTheme);
         this.setTheme(this.show);
     }
 

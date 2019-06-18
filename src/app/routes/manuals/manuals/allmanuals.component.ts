@@ -29,7 +29,17 @@ export class AllManualsComponent implements OnInit {
           saveAs(data, filename);
         }, error => {
           console.log(error);
-          swal('Error!', ' Cannot download  file!', 'error');
+          
+
+          swal({
+            title: 'Error!',
+            imageUrl: "assets/img/user/coop.jpg",
+            text: 'Cannot download  file!',
+            confirmButtonColor: '#7ac142'     
+            
+        });
+
+
         });
       }
 

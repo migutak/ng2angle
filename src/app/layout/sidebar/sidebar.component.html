@@ -55,7 +55,7 @@
                             (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                                 <span class="float-right" *ngIf="subitem.alert" [ngClass]="subitem.label || 'badge badge-success'">{{subitem.alert}}</span>
                                 <em class="{{subitem.icon}}" *ngIf="subitem.icon"></em>
-                                <span>{{(subitem.translate | translate) || subitem.text}}</span>
+                                <span>{{(subitem.translate | translate) || subitem.text}}</span> <em class="fa fa-angle-right float-right" ></em>
                         </a>
                         <!-- SUBLEVEL 2 -->
                         <ul *ngIf="subitem.submenu" class="sidebar-nav sidebar-subnav level2" [routerLinkActive]="['opening']">

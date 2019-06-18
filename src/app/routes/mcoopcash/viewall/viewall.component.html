@@ -2,6 +2,7 @@
   <div>Viewall:
     <small>mcoopcash accounts in arrears</small></div>
 </div>
+
 <!-- START card (keyup)="onQuickFilterChanged($event)"-->
 <div class="card card-default">
   <div class="col-xl-12">
@@ -24,10 +25,14 @@
       </form>
     </div>
     <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 600px;"
+      #agGrid class="ag-angle"
+      style="width: 100%; height: 600px;"
       [gridOptions]="gridOptions"
-      (gridReady)="gridReady($event)"
-      [columnDefs]="columnDefs"
-      (rowDoubleClicked)='onRowDoubleClicked($event)'>
+      enableSorting="true"
+      enableFilter="true"
+      enableColResize="true"
+      (gridReady)="gridReady($event)" [columnDefs]="columnDefs" [overlayLoadingTemplate]="overlayLoadingTemplate"
+      [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
     </ag-grid-angular>
   </div>
 </div>

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   adlogin: false,
-  api: 'http://localhost:8000',
+  api: 'http://localhost:3000',
   // api: 'https://192.168.0.12',
   // letters_api: 'http://ecollect.inteligen.co.ke:8004/',
   letters_api: 'https://ecollecttst.co-opbank.co.ke/docx/',
@@ -17,7 +17,7 @@ export const environment = {
   xlsuploadapi: 'http://ecollect.inteligen.co.ke:3001/xlsupload/',
   metrics: 'http://localhost:8000/appmetrics-dash',
   xlstemplate: 'C:\\Users\\Kevin\\Documents\\upload_notes.xlsx',
-  applink: 'http://localhost:4500',
+  applink: 'http://localhost:4200',
   emailapi: 'http://localhost:8000/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   // filesapi: 'http://localhost:3100/api',

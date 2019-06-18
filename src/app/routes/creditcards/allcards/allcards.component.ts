@@ -50,7 +50,7 @@ export class AllcardsComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'CARDACCT',
-      field: 'cardacct',
+      field: 'CARDACCT',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
@@ -58,41 +58,41 @@ export class AllcardsComponent implements OnInit {
     },
     {
       headerName: 'CARDNUMBER',
-      field: 'cardnumber',
+      field: 'CARDNUMBER',
       resizable: true,
       filter: true
     },
     {
       headerName: 'CARDNAME',
-      field: 'cardname',
+      field: 'CARDNAME',
       resizable: true,
       filter: true
     },
     {
       headerName: 'DATEDISBURSED',
-      field: 'datedisbursed',
+      field: 'DATEDISBURSED',
       resizable: true,
       filter: true
     },
     {
       headerName: 'LIMIT',
-      field: 'limit',
+      field: 'LIMIT',
       resizable: true,
       filter: true
     },
     {
       headerName: 'EXPPMNT',
-      field: 'exppmnt',
+      field: 'EXPPMNT',
       resizable: true,
     },
     {
       headerName: 'OUTBALANCE',
-      field: 'outbalance',
+      field: 'OUTBALANCE',
       resizable: true,
     },
     {
       headerName: 'CYCLE',
-      field: 'cycle',
+      field: 'CYCLE',
       resizable: true,
     }
   ];
@@ -116,7 +116,7 @@ export class AllcardsComponent implements OnInit {
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=watchcc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -167,7 +167,7 @@ export class AllcardsComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/cards_watch_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/cards_watch_stage/allcards?pagesize=' + perPage + '&currentposition=' + currentPos);
   }
 
 }

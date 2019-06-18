@@ -19,9 +19,8 @@ export class ViewallComponent implements OnInit {
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
-      defaultColDef: {
-        resizable: true,
-      },
+      enableSorting: true,
+          enableFilter: true,
       headerHeight: 40,
       pagination: true,
       rowSelection: 'single',
@@ -32,7 +31,7 @@ export class ViewallComponent implements OnInit {
 
     this.overlayLoadingTemplate =
       // tslint:disable-next-line:max-line-length
-      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Please wait while your rows are loading</span>';
+      '<img src="assets/img/user/loader.gif" />';
     this.overlayNoRowsTemplate =
       '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>';
 
@@ -57,23 +56,23 @@ export class ViewallComponent implements OnInit {
     {
       headerName: 'ACCNUMBER',
       field: 'accnumber',
+      filter: "agTextColumnFilter",
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250,
-      resizable: true,
+      // resizable: true,
       // checkboxSelection: true
     },
     {
       headerName: 'CUSTNUMBER',
       field: 'custnumber',
-      resizable: true, sortable: true, filter: true
+      // resizable: true, sortable: true, filter: true
     },
     {
       headerName: 'CUSTNAME',
-      field: 'client_name',
-      width: 450,
-      resizable: true
+      field: 'client_name'
+      // width: 450,
+      // resizable: true
     },
     {
       headerName: 'DAYSINARREARS',
@@ -87,36 +86,35 @@ export class ViewallComponent implements OnInit {
           return null;
         }
       },
-      resizable: true
+      // resizable: true
     },
     {
       headerName: 'TOTALARREARS',
       field: 'instamount',
-      resizable: true,
+      // resizable: true,
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUSTBALANCE',
       field: 'oustbalance',
-      valueFormatter: this.currencyFormatter,
-      resizable: true
+      valueFormatter: this.currencyFormatter
+      // resizable: true
     },
     {
       headerName: 'BUCKET',
-      field: 'bucket',
-      resizable: true
+      field: 'bucket'
+      // resizable: true
     },
     {
       headerName: 'AROCODE',
-      field: 'arocode',
-      resizable: true
+      field: 'arocode'
+      // resizable: true
     },
     {
       headerName: 'RROCODE',
       field: 'rrocode',
-      resizable: true,
-      filter: true,
-      sortable: true,
+      // resizable: true,
+      // filter: true
     },
     {
       headerName: 'SECTION',
@@ -157,10 +155,12 @@ export class ViewallComponent implements OnInit {
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
   }
 
-  onQuickFilterChanged($event) {
-    // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
-  }
+  
+
+  // onQuickFilterChanged($event) {
+  //   // this.gridOptions.api.setQuickFilter($event.target.value);
+  //   this.searchText = $event.target.value;
+  // }
 
   onSearch() {
     if (this.model.searchText === undefined) {
@@ -242,6 +242,7 @@ export class ViewallComponent implements OnInit {
     // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
     return this.http.get<any>(environment.api + '/api/tqall/paged?limit=' + perPage + '&page=' + currentPos);
   }
+  
 
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
