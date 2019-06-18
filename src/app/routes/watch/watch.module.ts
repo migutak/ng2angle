@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 import { SharedModule } from '../../shared/shared.module';
-import { CreditwatchComponent } from './creditwatch/creditwatch.component';
+import { CreditbuildupComponent } from './creditbuildup/creditbuildup.component';
 import { NocreditComponent } from './nocredit/nocredit.component';
 
 import { AgGridModule } from 'ag-grid-angular';
@@ -11,7 +11,7 @@ import { AgGridModule } from 'ag-grid-angular';
 const routes: Routes = [
     { path: '', redirectTo: 'nocredit' },
     { path: 'nocredit', component: NocreditComponent },
-    { path: 'creditwatch', component: CreditwatchComponent }
+    { path: 'creditbuildup', component: CreditbuildupComponent }
 ];
 
 @NgModule({
@@ -22,7 +22,7 @@ const routes: Routes = [
     ],
     declarations: [
         NocreditComponent,
-        CreditwatchComponent
+        CreditbuildupComponent
     ],
     exports: [
         RouterModule

@@ -56,48 +56,53 @@ export class NocreditComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
-      field: 'accnumber',
+      field: 'ACCNUMBER',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250,
+      width: 350,
       resizable: true,
       // checkboxSelection: true
     },
     {
       headerName: 'CUSTNUMBER',
-      field: 'custnumber',
+      field: 'CUSTNUMBER',
       resizable: true, sortable: true, filter: true
     },
     {
       headerName: 'CUSTNAME',
-      field: 'custname',
+      field: 'CUSTNAME',
       width: 450,
       resizable: true
     },
     {
-      headerName: 'PRODUCTCODE',
-      field: 'productcode',
+      headerName: 'OUSTBALANCE',
+      field: 'OUSTBALANCE',
       resizable: true
     },
     {
-      headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
+      headerName: 'PRODUCTCODE',
+      field: 'PRODUCTCODE',
       resizable: true,
     },
     {
       headerName: 'BRANCHCODE',
-      field: 'branchcode',
+      field: 'BRANCHCODE',
       resizable: true
     },
     {
       headerName: 'AROCODE',
-      field: 'arocode',
+      field: 'AROCODE',
       resizable: true
     },
     {
-      headerName: 'RROCODE',
-      field: 'rrocode',
+      headerName: 'REPAYMENTAMOUNT',
+      field: 'REPAYMENTAMOUNT',
+      resizable: true
+    },
+    {
+      headerName: 'SETTLEACCBAL',
+      field: 'SETTLEACCBAL',
       resizable: true,
       filter: true,
       sortable: true,
@@ -109,16 +114,15 @@ export class NocreditComponent implements OnInit {
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response.rows, response.total
+          response.data, response.totalRecords
         );
-        this.gridOptions.api.hideOverlay();
+        if (response.data.length > 0) {
+          this.gridOptions.api.hideOverlay();
+        } else {
+          this.gridOptions.api.showNoRowsOverlay();
+        }
       });
     }
   };
@@ -130,7 +134,7 @@ export class NocreditComponent implements OnInit {
     this.model = event.node.data;
     // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=watch', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.username + '&sys=watch', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -144,11 +148,6 @@ export class NocreditComponent implements OnInit {
     }
     this.clear();
     this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
         // Use startRow and endRow for sending pagination to Backend
@@ -157,9 +156,13 @@ export class NocreditComponent implements OnInit {
         //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          this.gridOptions.api.hideOverlay();
+          if (response.data.length > 0) {
+            this.gridOptions.api.hideOverlay();
+          } else {
+            this.gridOptions.api.showNoRowsOverlay();
+          }
         });
       }
     };
@@ -187,9 +190,13 @@ export class NocreditComponent implements OnInit {
         //
         this.apiService(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          this.gridOptions.api.hideOverlay();
+          if (response.data.length > 0) {
+            this.gridOptions.api.hideOverlay();
+          } else {
+            this.gridOptions.api.showNoRowsOverlay();
+          }
         });
       }
     };
@@ -211,11 +218,11 @@ export class NocreditComponent implements OnInit {
 
   apiService(perPage, currentPos) {
     // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-    return this.http.get<any>(environment.api + '/api/watch_stage/paged?limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/nocreditbuildup/all?offset=' + currentPos + '&rows=' + perPage );
   }
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/watch_stage/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/nocreditbuildup/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
 
 

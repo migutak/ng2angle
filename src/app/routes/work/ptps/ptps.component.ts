@@ -33,7 +33,6 @@ export class PtpsComponent implements OnInit {
 
   }
 
-
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   resizeEvent = 'resize.ag-grid';
@@ -51,15 +50,15 @@ export class PtpsComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
-      field: 'accnumber',
+      field: 'ACCNUMBER',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250
+      width: 350
     },
     {
-      headerName: 'CUSTNUMBER',
-      field: 'custnumber'
+      headerName: 'STATUS',
+      field: 'MET'
     },
     {
       headerName: 'CUST_NAME',
@@ -67,43 +66,24 @@ export class PtpsComponent implements OnInit {
       width: 350
     },
     {
-      headerName: 'DAYSINARREARS',
-      field: 'daysinarr',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red' };
-        } else if (params.value > '90') {
-          return { color: 'red' };
-        } else {
-          return null;
-        }
-      }
+      headerName: 'PTPAMOUNT',
+      field: 'PTPAMOUNT',
     },
     {
-      headerName: 'TOTALARREARS',
-      field: 'instamount',
-      valueFormatter: this.currencyFormatter
+      headerName: 'PTPDATE',
+      field: 'PTPDATE'
     },
     {
-      headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
-      valueFormatter: this.currencyFormatter
+      headerName: 'ACTIONDATE',
+      field: 'ACTIONDATE'
     },
     {
-      headerName: 'BUCKET',
-      field: 'bucket'
+      headerName: 'PAYMETHOD',
+      field: 'PAYMETHOD'
     },
     {
-      headerName: 'AROCODE',
-      field: 'arocode'
-    },
-    {
-      headerName: 'SECTION',
-      field: 'section'
-    },
-    {
-      headerName: 'COLOFFICER',
-      field: 'colofficer'
+      headerName: 'OWNER',
+      field: 'OWNER'
     }
   ];
 
@@ -119,9 +99,9 @@ export class PtpsComponent implements OnInit {
       //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response.rows, response.total
+          response.data, response.totalRecords
         );
-        if (response.rows.length > 0) {
+        if (response.data.length > 0) {
           this.gridOptions.api.hideOverlay();
         } else {
           this.gridOptions.api.showNoRowsOverlay();
@@ -151,23 +131,14 @@ export class PtpsComponent implements OnInit {
     }
     this.clear();
     this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
           console.log(response);
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          if (response.rows.length > 0) {
+          if (response.data.length > 0) {
             this.gridOptions.api.hideOverlay();
           } else {
             this.gridOptions.api.showNoRowsOverlay();
@@ -193,15 +164,11 @@ export class PtpsComponent implements OnInit {
     this.clear();
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
         this.apiService(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          if (response.rows.length > 0) {
+          if (response.data.length > 0) {
             this.gridOptions.api.hideOverlay();
           } else {
             this.gridOptions.api.showNoRowsOverlay();
@@ -228,12 +195,12 @@ export class PtpsComponent implements OnInit {
   apiService(perPage, currentPos) {
     // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/brokenptps/all?offset=' + currentPos + '&rows=' + perPage);
   }
 
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/brokenptps/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
 
 }

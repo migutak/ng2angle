@@ -33,7 +33,6 @@ export class WithfundsComponent implements OnInit {
 
   }
 
-
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   resizeEvent = 'resize.ag-grid';
@@ -42,7 +41,6 @@ export class WithfundsComponent implements OnInit {
   username: string;
   searchText: string;
   model: any = {};
-  noTotal: number;
 
   gridOptions: GridOptions;
   gridApi: GridApi;
@@ -51,59 +49,50 @@ export class WithfundsComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
-      field: 'accnumber',
+      field: 'ACCNUMBER',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
-      width: 250
+      width: 350
     },
     {
       headerName: 'CUSTNUMBER',
-      field: 'custnumber'
+      field: 'CUSTNUMBER'
     },
     {
-      headerName: 'CUST_NAME',
-      field: 'client_name',
+      headerName: 'CLIENT NAME',
+      field: 'CLIENT_NAME',
       width: 350
     },
     {
       headerName: 'DAYSINARREARS',
-      field: 'daysinarr',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red' };
-        } else if (params.value > '90') {
-          return { color: 'red' };
-        } else {
-          return null;
-        }
-      }
+      field: 'DAYSINARR'
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'instamount',
+      field: 'INSTAMOUNT',
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
+      field: 'OUSTBALANCE',
       valueFormatter: this.currencyFormatter
     },
     {
-      headerName: 'BUCKET',
-      field: 'bucket'
+      headerName: 'SETTLEACCNO',
+      field: 'SETTLEACCNO'
     },
     {
       headerName: 'AROCODE',
-      field: 'arocode'
+      field: 'AROCODE'
     },
     {
-      headerName: 'SECTION',
-      field: 'section'
+      headerName: 'SETTLEACCBAL',
+      field: 'SETTLEACCBAL'
     },
     {
       headerName: 'COLOFFICER',
-      field: 'colofficer'
+      field: 'COLOFFICER'
     }
   ];
 
@@ -113,15 +102,11 @@ export class WithfundsComponent implements OnInit {
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
 
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response.rows, response.total
+          response.data, response.totalRecords
         );
-        if (response.rows.length > 0) {
+        if (response.data.length > 0) {
           this.gridOptions.api.hideOverlay();
         } else {
           this.gridOptions.api.showNoRowsOverlay();
@@ -132,17 +117,12 @@ export class WithfundsComponent implements OnInit {
 
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // console.log(this.model);
     // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
-  }
-
-  onQuickFilterChanged($event) {
-    // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
   }
 
   onSearch() {
@@ -151,23 +131,13 @@ export class WithfundsComponent implements OnInit {
     }
     this.clear();
     this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          if (response.rows.length > 0) {
+          if (response.data.length > 0) {
             this.gridOptions.api.hideOverlay();
           } else {
             this.gridOptions.api.showNoRowsOverlay();
@@ -193,15 +163,11 @@ export class WithfundsComponent implements OnInit {
     this.clear();
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
         this.apiService(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response.rows, response.total
+            response.data, response.totalRecords
           );
-          if (response.rows.length > 0) {
+          if (response.data.length > 0) {
             this.gridOptions.api.hideOverlay();
           } else {
             this.gridOptions.api.showNoRowsOverlay();
@@ -226,14 +192,11 @@ export class WithfundsComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/withfunds/all?offset=' + currentPos + '&rows=' + perPage);
   }
 
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/withfunds/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
-
 }

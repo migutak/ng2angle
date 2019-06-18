@@ -1,6 +1,6 @@
 <div class="content-heading">
-    <div>Watch accounts
-        <small>No Credit</small></div>
+    <div>No Credit Buildup
+        <small>Include all loans with settlement accounts having credit balances less than the next repayment schedule</small></div>
 </div>
 <div class="container-fluid">
     <div class="col-xl-12">
@@ -31,7 +31,7 @@
           enableFilter="true"
           enableColResize="true"
           (gridReady)="gridReady($event)" [columnDefs]="columnDefs" [overlayLoadingTemplate]="overlayLoadingTemplate"
-          [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowDoubleClicked)='onRowDoubleClicked($event)'>
+          [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
         </ag-grid-angular>
       </div>
 </div>

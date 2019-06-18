@@ -216,7 +216,7 @@ const Work = {
             link: '/work/ptps'
         },
         {
-            text: 'Trsaction acc with Funds',
+            text: 'Trsactn acc with Funds',
             link: '/work/withfunds'
         },
         {
@@ -400,8 +400,8 @@ const Predelq = {
             link: '/watch/nocredit'
         },
         {
-            text: 'Credit build watch',
-            link: '/watch/creditwatch'
+            text: 'Credit buildup',
+            link: '/watch/creditbuildup'
         }
     ]
 };
