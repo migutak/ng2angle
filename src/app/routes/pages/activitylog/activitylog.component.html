@@ -1,3 +1,4 @@
+
 <div>
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
@@ -19,14 +20,48 @@
     <div class="hidden-xs col-sm-2">
       <div class="fading-side-menu" data-spy="affix" data-offset-top="350" style="padding-left: 10px">
         <h5>Menus</h5>
+
+        <button  [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+        queryParamsHandling="merge" class="btn-sample btn-outline btn btn-block" >Client Home</button>
+        <button [routerLink]="['./notes']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+        queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block" >Notes History<span class="badge badge-danger float-right">{{notes}}</span></button>
+
+        <button  [routerLink]="['./activityaction']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+        queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block" >Collector Activity</button>
+
+        <button  [routerLink]="['./demandletters']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+        queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block" >Demand Letters</button>
+
+        <button  [routerLink]="['./sms']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}" class="  btn-sample btn-outline  btn btn-block" >Send SMS</button>
+
+        <button  [routerLink]="['./accplan']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}" class="  btn-sample btn-outline  btn btn-block" >Account Plan</button>
+
+        <button [routerLink]="['./contacts']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}" class=" btn-sample btn-outline btn btn-block" >Customer Contacts<span class="badge badge-danger float-right">{{totalcontacts}}</span></button>
+
+        <button [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}" class=" btn-sample btn-outline btn btn-block" >Remedial Collaterals<span class="badge badge-danger float-right">{{totalcollaterals}}</span></button>
+
+        <button [routerLink]="['./guarantors']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+        queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block" >Guarantors<span class="badge badge-danger float-right">{{totalguarantors}}</span></button>
+
+        <button [routerLink]="['./files']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+        queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block" >Upload Files<span class="badge badge-danger float-right">{{totalfiles}}</span></button>
+
+        <button  [routerLink]="['./bulknotes']" [routerLinkActive]="['active']"
+        [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}" class="  btn-sample btn-outline  btn btn-block" >Bulk Note Upload</button>
+
         <hr class="no-margin">
-        <ul class="list-unstyled">
-             <li><button [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
-             [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-             queryParamsHandling="merge" class="  btn-outline-primary  btn btn-block" >Client Home</button></li>
-             <li><button [routerLink]="['./notes']" [routerLinkActive]="['active']"
-             [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-             queryParamsHandling="merge" class=" btn-outline-primary  btn btn-block" >Notes History</button></li>
+        <!-- <ul class="list-unstyled">
+            
           <li>
             <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
@@ -102,7 +137,7 @@
               <span class="fa fa-angle-double-right text-primary"></span>Bulk note upload
             </a>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
     <div class="hidden-xs col-sm-10">

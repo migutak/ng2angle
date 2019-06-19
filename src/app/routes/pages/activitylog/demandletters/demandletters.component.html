@@ -1,21 +1,21 @@
-<div>
+<div >
   <h2>Send Demand Letter</h2>
   <form #sendLetterForm="ngForm" class="form-horizontal" autocomplete="off">
-    <div id="accordion">
+    <div class="panel panel-default"id="accordion">
       <div class="card">
-        <div class="card-header">
+        <div class="panel-heading">
           <a class="card-link" data-toggle="collapse" href="#collapseOne">
             Customer Details
           </a>
         </div>
         <div id="collapseOne" class="collapse show" data-parent="#accordion">
           <div class="card-body">
-            <div class="card card-default">
-              <div class="card-body">
+            <div class="panel panel-default">
+              <div class="panel-body">
                 <form class="form-horizontal" autocomplete="off">
                   <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">Demand</label>
-                    <div class="col-xl-8">
+                    <label class="col-xl-2 col-form-label">Demand Letter Type</label>
+                    <div class="col-xl-4">
                       <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand" #demand="ngModel"
                         [ngClass]="{ 'is-invalid': demand.invalid }" required>
                         <option *ngFor="let demand of itemsDemands">{{demand}}</option>
@@ -23,22 +23,22 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">accnumber</label>
-                    <div class="col-xl-8">
+                    <label class="col-xl-2 col-form-label">Account Number</label>
+                    <div class="col-xl-4">
                       <input class="form-control" type="text" name="accnumber" id="accnumber" [(ngModel)]="model.accnumber"
                         #accnumber="ngModel" [ngClass]="{ 'is-invalid': accnumber.invalid }" required />
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">custnumber</label>
-                    <div class="col-xl-8">
+                    <label class="col-xl-2 col-form-label">Customer Number</label>
+                    <div class="col-xl-4">
                       <input class="form-control" type="text" name="custnumber" id="custnumber" [(ngModel)]="model.custnumber"
                         #custnumber="ngModel" [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
                     </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">address</label>
-                      <div class="col-xl-8">
+                      <label class="col-xl-2 col-form-label">Address</label>
+                      <div class="col-xl-4">
                         <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
                           #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
   
@@ -49,8 +49,8 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">postcode</label>
-                      <div class="col-xl-8">
+                      <label class="col-xl-2 col-form-label">PostalCode</label>
+                      <div class="col-xl-4">
                         <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
                           #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" list="dpostcode" required />
   
@@ -61,8 +61,8 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">email address</label>
-                      <div class="col-xl-8">
+                      <label class="col-xl-2 col-form-label">Email Address</label>
+                      <div class="col-xl-4">
                         <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
                           #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
   
@@ -73,8 +73,8 @@
                       </div>
                     </div>
                   <div class="form-group row">
-                      <label class="col-xl-4 col-form-label">cellnumber</label>
-                      <div class="col-xl-8">
+                      <label class="col-xl-2 col-form-label">Cellphone Number</label>
+                      <div class="col-xl-4">
                         <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
                           #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
   
@@ -84,16 +84,16 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-xl-4 col-form-label">Save to contacts</label>
-                        <div class="col-xl-8">
+                        <label class="col-xl-2 col-form-label">Save to contacts</label>
+                        <div class="col-xl-4">
                             <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts(model)">
                                 <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
                                 </span>Save this contact</button>
                         </div>
                     </div>
                   <div class="form-group row">
-                    <label class="col-xl-4 col-form-label">Preview</label>
-                    <div class="col-xl-8">
+                    <label class="col-xl-1 col-form-label">Preview</label>
+                    <div class="col-xl-4">
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" id="inlineCheckbox1" type="checkbox" [(ngModel)]="model.showlogo"
                           name="showlogo" value="Y" />
