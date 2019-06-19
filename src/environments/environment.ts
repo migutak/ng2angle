@@ -14,6 +14,7 @@ export const environment = {
   letters_path: 'c:\\logs\\',
   // letters_path: '/home/ecollectadmin/demand_letters/',
   uploadurl: 'http://ecollect.inteligen.co.ke:4000',
+  demanddownload: 'https://ecollectweb.co-opbank.co.ke/demanddownload',
   valor: 'http://ecollect.inteligen.co.ke:3000/api/',
   xlsuploadapi: 'http://ecollect.inteligen.co.ke:3001/xlsupload/',
   metrics: 'http://localhost:8000/appmetrics-dash',

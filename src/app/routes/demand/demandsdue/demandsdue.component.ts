@@ -42,55 +42,55 @@ export class DemandsdueComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
-      field: 'accnumber',
+      field: 'ACCNUMBER',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       }
     },
     {
       headerName: 'CLIENTNAME',
-      field: 'client_name'
+      field: 'CLIENT_NAME'
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
+      field: 'oustbaOUSTBALANCElance',
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'totalarrears',
+      field: 'totalarreaTOTALARREARSrs',
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'DAYSINARR',
-      field: 'daysinarr'
+      field: 'DAYSINARR'
     },
     {
       headerName: 'EMAILADDRESS',
-      field: 'emailaddress'
+      field: 'EMAILADDRESS'
     },
     {
       headerName: 'DEMANDLETTER',
-      field: 'demandletter'
+      field: 'DEMANDLETTER'
     },
     {
       headerName: 'COLOFFICER',
-      field: 'colofficer'
+      field: 'COLOFFICER'
     }
   ];
   rowData1: any;
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response, this.noTotal
+          response.data, response.totalRecords
         );
+        if (response.data.length > 0) {
+          this.gridOptions.api.hideOverlay();
+        } else {
+          this.gridOptions.api.showNoRowsOverlay();
+        }
       });
     }
   };
@@ -98,7 +98,7 @@ export class DemandsdueComponent implements OnInit {
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendletter?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.username + '&demand=' + this.model.demandletter, '_blank');
+    window.open(environment.applink + '/sendletter?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.username + '&demand=' + this.model.DEMANDLETTER, '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -115,13 +115,27 @@ export class DemandsdueComponent implements OnInit {
       return;
     }
     this.clear();
-    this.ecolService.totaldemandsduewithsearch(this.model.searchText).subscribe(demands => {
-      this.searchTotal = demands[0].TOTALVIEWALL;
-    });
-    /*this.http.get<any>(environment.api + '/api/demandsdue/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-    });*/
+    this.gridApi.showLoadingOverlay();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiServiceSearch(20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response.data, response.totalRecords
+          );
+          if (response.data.length > 0) {
+            this.gridOptions.api.hideOverlay();
+          } else {
+            this.gridOptions.api.showNoRowsOverlay();
+          }
+        });
+      }
+    };
+
+    this.gridApi.setDatasource(this.dataSource);
   }
 
   clear() {
@@ -134,8 +148,22 @@ export class DemandsdueComponent implements OnInit {
   }
 
   reset() {
-    // location.reload();
+    this.gridApi.showLoadingOverlay();
     this.clear();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        this.apiService(20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response.data, response.totalRecords
+          );
+          if (response.data.length > 0) {
+            this.gridOptions.api.hideOverlay();
+          } else {
+            this.gridOptions.api.showNoRowsOverlay();
+          }
+        });
+      }
+    };
     this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
   }
@@ -153,10 +181,18 @@ export class DemandsdueComponent implements OnInit {
     this.gridApi = params.api;
     this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
+    this.gridOptions.api.showLoadingOverlay();
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/demandsdue?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.nodeapi + '/demandsdue/all?offset=' + currentPos + '&rows=' + perPage );
+  }
+
+  apiServiceSearch(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.nodeapi + '/demandsdue/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
 
 }
