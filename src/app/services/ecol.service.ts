@@ -212,6 +212,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.nodeapi + '/loans/memos');
   }
 
+  demandstatus(body) {
+    return this.httpClient.post<any>(environment.nodeapi + '/loans/memos', body);
+  }
+
   putautoLetter(letter) {
     return this.httpClient.put<any>(environment.api + '/api/autoletters' , letter);
   }

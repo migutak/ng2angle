@@ -18,6 +18,8 @@ const URL = environment.valor;
 })
 export class SendLetterComponent implements OnInit {
 
+  demandid: string;
+
   constructor(
     public settings: SettingsService,
     public toasterService: ToasterService,
@@ -91,6 +93,7 @@ export class SendLetterComponent implements OnInit {
   section: string;
   uploadedfilepath: string;
   demandtosend: string;
+  demandhisdetails = {};
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
@@ -114,6 +117,14 @@ export class SendLetterComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
+  currentDate() {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return day + '-' + month + '-' + year;
+  }
+
   ngOnInit() {
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -131,7 +142,7 @@ export class SendLetterComponent implements OnInit {
     });
 
     this.demandtosend = this.route.snapshot.queryParamMap.get('demand');
-
+    this.demandid = this.route.snapshot.queryParamMap.get('id');
     // get account details
     this.spinner.show();
     this.getaccount(this.accnumber);
@@ -200,7 +211,7 @@ export class SendLetterComponent implements OnInit {
   openletter(letter) {
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
-       // if account is there
+      // if account is there
       if (data && data.length > 0) {
         this.bodyletter.demand = letter.demand;
         this.bodyletter.showlogo = letter.showlogo;
@@ -330,7 +341,7 @@ export class SendLetterComponent implements OnInit {
         // swal('Success!', 'Letter generated!', 'success');
         this.popsuccessToast('Letter generated and queued to be sent');
         // save to history
-        const bulk = {
+        this.demandhisdetails = {
           'accnumber': this.model.accnumber,
           'custnumber': this.model.custnumber,
           'address': this.model.addressline1,
@@ -352,8 +363,6 @@ export class SendLetterComponent implements OnInit {
           'sendemail': letter.branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>'
         };
         //
-        this.demandshistory(bulk);
-        this.getdemandshistory(this.accnumber);
         this.emaildata.file = uploaddata.message;
         // use uploaded fie on email
         if (this.model.uploadedfile) {
@@ -365,25 +374,38 @@ export class SendLetterComponent implements OnInit {
             swal.close();
             this.poperrorToast('Letter NOT sent on email!');
           } else {
+            // add to history
+            this.demandshistory(this.demandhisdetails);
+            this.getdemandshistory(this.accnumber);
+            // update demandsdue status as sent
+            const status = {
+              id: this.demandid,
+              from : 'loans',
+              datesent : this.currentDate(),
+              sentby: this.username
+            };
+            this.ecolService.demandstatus(status).subscribe(data => {
+              //
+            }, error => {console.log(error); });
+            // send sms
+            this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+              const sms = respo.smstemplate;
+              this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+              const smsdata = {
+                'demand': letter.demand,
+                'custnumber': this.model.custnumber,
+                'telnumber': this.model.celnumber,
+                'owner': this.username,
+                'message': this.smsMessage,
+              };
+              this.sendsms(smsdata);
+            }, error => {
+              console.log(error);
+            });
+
             swal.close();
             this.popsuccessToast('Letter sent on email!');
           }
-        });
-        // send sms
-        this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
-          const sms = respo.smstemplate;
-          this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
-
-          const smsdata = {
-            'demand': letter.demand,
-            'custnumber': this.model.custnumber,
-            'telnumber': this.model.celnumber,
-            'owner': this.username,
-            'message': this.smsMessage,
-          };
-          this.sendsms(smsdata);
-        }, error => {
-          console.log(error);
         });
       } else {
         // error in letter generation
@@ -515,12 +537,12 @@ export class SendLetterComponent implements OnInit {
         }, error => {
           console.log(error);
         });
-          swal(
-            'Sent!',
-            'Email has been sent',
-            'success'
-          );
-        }
+        swal(
+          'Sent!',
+          'Email has been sent',
+          'success'
+        );
+      }
     });
   }
 

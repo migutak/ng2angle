@@ -86,6 +86,9 @@ export class SendLetterccComponent implements OnInit {
   file: string;
   username: string;
   uploadedfilepath: string;
+  demandtosend: string;
+  demandid: string;
+  demandhisdetails = {};
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'PostlistingUnsecuredcc'];
 
   public uploader: FileUploader = new FileUploader({
@@ -110,6 +113,14 @@ export class SendLetterccComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
+  currentDate() {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return day + '-' + month + '-' + year;
+  }
+
   ngOnInit() {
     this.cardacct = this.route.snapshot.queryParamMap.get('cardacct');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -120,6 +131,9 @@ export class SendLetterccComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       this.username = queryParams.get('username');
     });
+
+    this.demandtosend = this.route.snapshot.queryParamMap.get('demand');
+    this.demandid = this.route.snapshot.queryParamMap.get('id');
 
     // get account details
     this.getcardaccount(this.cardacct);
@@ -268,7 +282,7 @@ export class SendLetterccComponent implements OnInit {
         // swal('Good!', dataupload.message, 'success');
         this.popsuccessToast('Letter generated and queued to be sent');
         // save to history
-        const bulk = {
+        this.demandhisdetails = {
           'accnumber': this.model.accnumber,
           'custnumber': this.model.accnumber,
           'address': this.model.addressline1,
@@ -289,8 +303,6 @@ export class SendLetterccComponent implements OnInit {
           'guarantorsemail': 0,
           'sendemail': 'Collection Support <collectionssupport@co-opbank.co.ke>'
         };
-        this.demandshistory(bulk);
-        this.getdemandshistory(this.cardacct);
         // this.downloadDemand(letter.message, dataupload.filename);
       } else {
         swal('Error!', 'Error occured during letter generation!', 'error');
@@ -304,36 +316,42 @@ export class SendLetterccComponent implements OnInit {
         emaildata.file = this.uploadedfilepath;
       }
       this.ecolService.sendDemandEmail(emaildata).subscribe(response => {
-        // console.log(response);
-        /*if (response.result === 'fail') {
-          swal('Error!', 'Letter NOT sent on email!', 'error');
-        } else {
-          swal('Success!', 'Letter sent on email!', 'success');
-        }*/
         if (response.result === 'fail') {
           swal.close();
           this.poperrorToast('Letter NOT sent on email!');
         } else {
+          // add to history
+          this.demandshistory(this.demandhisdetails);
+          this.getdemandshistory(this.cardacct);
+          // update demandscc status
+          const status = {
+            id: this.demandid,
+            from : 'cc',
+            datesent : this.currentDate(),
+            sentby: this.username
+          };
+          this.ecolService.demandstatus(status).subscribe(data => {
+            //
+          }, error => {console.log(error); });
+          // send sms
+          this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+            const sms = respo.smstemplate;
+            this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+
+            const smsdata = {
+              'demand': letter.demand,
+              'custnumber': this.model.accnumber,
+              'telnumber': this.model.celnumber,
+              'owner': this.username,
+              'message': this.smsMessage,
+            };
+            this.sendsms(smsdata);
+          }, error => {
+            console.log(error);
+          });
           swal.close();
           this.popsuccessToast('Letter sent on email!');
         }
-      });
-      // send sms
-      // get message
-      this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
-        const sms = respo.smstemplate;
-        this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
-
-        const smsdata = {
-          'demand': letter.demand,
-          'custnumber': this.model.accnumber,
-          'telnumber': this.model.celnumber,
-          'owner': this.username,
-          'message': this.smsMessage,
-        };
-        this.sendsms(smsdata);
-      }, error => {
-        console.log(error);
       });
     }, error => {
       console.log(error);
