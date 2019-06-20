@@ -52,12 +52,12 @@ img {
 
 @-webkit-keyframes glow 
 {
-  50% { box-shadow: 0 0 20px #00543d; }
+  70% { box-shadow: 0 0 40px #00543d; }
 }
 
 @keyframes glow 
 {
-  50% { box-shadow: 0 0 50px #00543d; }
+  70% { box-shadow: 0 0 70px #00543d; }
 }
 
 

@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
 import * as $ from 'jquery';
 
+
 @Component({
   selector: 'app-viewall',
   templateUrl: './viewall.component.html',
