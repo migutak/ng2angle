@@ -307,7 +307,7 @@ export class ActivityActionComponent implements OnInit {
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
       this.sendNotesData(this.custnumber);
-      swal('Success!', 'activity saved', 'success');
+      // swal('Success!', 'activity saved', 'success');
       // build form
       // this.buildForm();
       // watch stream put watch_static
@@ -342,6 +342,22 @@ export class ActivityActionComponent implements OnInit {
           //
         }, error => { console.log(error); });
       }
+
+      // close windows
+      swal({
+        title: 'Activity successfully saved',
+        imageUrl: 'assets/img/user/coop.jpg',
+        text: 'Close activity windows?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Close!'
+    }).then((result) => {
+        if (result.value) {
+            // close tab
+            window.close();
+        }
+    });
     }, error => {
       console.log(error);
       swal('Error!', 'activitylog ::: service is currently not available', 'error');

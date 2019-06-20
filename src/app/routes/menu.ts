@@ -443,8 +443,8 @@ const headingLetters = {
 };
 
 // user permissions
-const userperm = JSON.parse(localStorage.getItem('userpermission'));
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+const userperm = JSON.parse(sessionStorage.getItem('userpermission'));
+const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
 let menuitems = [];
 

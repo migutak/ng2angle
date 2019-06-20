@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
                 password: value.password
             };
             this.ecolService.auth(body).subscribe(response => {
-                console.log(response);
+
                 if (response.auth) {
                     // get user
                     this.getuser(value.username, value.password);

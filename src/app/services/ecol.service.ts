@@ -184,7 +184,7 @@ export class EcolService {
 
   getaccount (accnumber) {
     // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
-    return this.httpClient.get<any>(environment.api + '/api/qall/' + accnumber);
+    return this.httpClient.get<any>(environment.api + '/api/tqall/' + accnumber);
   }
 
   getwatch (accnumber) {

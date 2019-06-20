@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
+import { DataService } from '../../../../services/data.service';
 import swal from 'sweetalert2';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sms',
@@ -28,8 +29,17 @@ export class SmsComponent implements OnInit {
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
-    private ecolService: EcolService) {
+    private ecolService: EcolService,
+    private dataService: DataService) {
     //
+  }
+
+  currentDate() {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return day + '-' + month + '-' + year;
   }
 
   ngOnInit() {
@@ -163,9 +173,48 @@ export class SmsComponent implements OnInit {
       swal('Success!', 'sms sent', 'success');
       form.value.message = '';
       this.getsms();
+      this.addActivity(body.message);
     }, error => {
       console.log(error);
       swal('Error!', 'sms service currently not available', 'error');
+    });
+  }
+
+  addActivity(sms) {
+    const body = {
+      collectoraction: 'SMS',
+      party: '',
+      ptpamount: '',
+      ptp: '',
+      ptpdate: this.currentDate,
+      collectornote: sms,
+      reviewdate: moment(this.account.reviewdate).format('DD-MMM-YYYY'),
+      reason: this.account.excuse,
+      cmdstatus: this.account.cmdstatus,
+      route: this.account.routetostate,
+      paymode: '',
+      accountnumber: this.accnumber,
+      custnumber: this.custnumber,
+      arramount: this.account.totalarrears || 0,
+      oustamount: this.account.oustbalance || 0,
+      notesrc: 'sent sms',
+      noteimp: 'N',
+      rfdother: '',
+      owner: this.username,
+      product: this.account.section
+    };
+    // add action
+    this.ecolService.postactivitylogs(body).subscribe(data => {
+      this.sendNotesData(this.custnumber);
+    }, error => {
+      console.log(error);
+      swal('Error!', 'activitylog ::: service is currently not available', 'error');
+    });
+  }
+
+  sendNotesData(custnumber) {
+    this.ecolService.totalnotes(custnumber).subscribe(data => {
+      this.dataService.pustNotesData(data[0].TOTAL);
     });
   }
 
