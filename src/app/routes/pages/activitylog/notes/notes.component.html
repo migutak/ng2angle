@@ -1,37 +1,16 @@
-<div class="card">
+
+
+
+   
+   
     <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
         <p style="font-size: 20px; color: white">Loading more notes ...</p>
     </ngx-spinner>
-    <!--
-    <div class="mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-12 offset-md-0" style="min-height: 500; max-height: 700px; overflow-y: scroll;">
-                <h4>{{this.cust}} <small>Notes</small></h4>
-                <ul class="timeline">
-                    <li *ngFor="let note of noteData">
-                        <a class="notet" href="#">{{note.owner}} {{note.notesrc}} on {{note.accnumber}}</a>
-                        <a href="#" class="float-right">{{note.notedate}}</a>
-                        <p>{{note.notemade}}</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div *ngIf="!pager.reachedend" class="text-muted mt-5 mb-5 text-center small"><a class="text-muted" href="#"
-            (click)="loadmore($event)">load more ...</a></div>
-    <div *ngIf="pager.reachedend" class="text-muted mt-5 mb-5 text-center small">end of list</div>
-    <button (click)="newMessage()">CLick to test</button>
-    -->
-
-
-
-
-
-
 
 
 <!-- START timeline-->
+<div class="container-fluid">
+        <div class="row example-basic">
 <ul *ngFor="let note of noteData" [ngClass]="timelineAlt ? 'timeline-alt' : 'timeline'">
         <li style="color: #00543d !important;"class="timeline-separator" data-datetime="NOTES"></li>
         <!-- START timeline item-->
@@ -55,56 +34,20 @@
         </li>
         <!-- END timeline item-->
         
-        
-        
-        
-       
-    
+
     </ul>
     <!-- END timeline-->
-    <div *ngIf="!pager.reachedend" class="text-muted mt-5 mb-5 text-center small"><button class=" mr-1 mb-1 btn-xs btn btn-primary" href="#"
-        (click)="loadmore($event)">load more ...</button></div>
-<div *ngIf="pager.reachedend" class="text-muted mt-5 mb-5 text-center small"><button disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-
-
-    <!-- <div class="container-fluid">
-        <div class="row example-basic">
-            <div class="col-xs-12 col-xs-offset-12" >
-                <ul class="timeline" *ngFor="let note of noteData">
-                    <li class="timeline-item">
-                        <div class="timeline-info">
-                            <span>{{note.NOTEDATE}}</span>
-                        </div>
-                        <div class="timeline-marker"></div>
-                        <div  class="timeline-content">
-                            <h3 class="timeline-info">{{note.OWNER}} {{note.NOTESRC}}  on {{note.ACCNUMBER}} </h3>
-                            <p>{{note.NOTEMADE}} <button class="btn btn-link" (click)="editnote(note)" *ngIf="note.showedit"> <i class="far fa-edit"></i> Edit</button></p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
-    <div *ngIf="!pager.reachedend" class="text-muted mt-5 mb-5 text-center small"><a class="text-muted" href="#"
-            (click)="loadmore($event)">load more ...</a></div>
-    <div *ngIf="pager.reachedend" class="text-muted mt-5 mb-5 text-center small">end of list</div>
+    <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs"
+    (click)="loadmore($event)">load more ...</button>
+<button *ngIf="pager.reachedend" disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button>
 
-</div> -->
+    </div>
+    
+
+   
+    
+   
+    
+
+        
