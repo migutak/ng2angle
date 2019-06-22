@@ -1,4 +1,7 @@
 <div>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-circus">
+        <p style="font-size: 20px; color: white">Contacts loading...</p>
+      </ngx-spinner>
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
@@ -6,8 +9,22 @@
         <div class="media-body">
           <div class="d-flex">
             <div>
-              <h4 class="m-0">Name: {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname || accountdetails?.custname}}</h4>
-              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel: {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}</p>
+              <h4 class="m-0">Name:
+                {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname || accountdetails?.custname}}
+              </h4>
+              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel:
+                {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}
+              </p>
+              <div class="dropdown show">
+                  {{autodial_telnumber}}
+                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+                  ... More contacts  <span class="badge badge-info">{{totalTeles}}</span>
+                </a>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a *ngFor="let t of teles" class="dropdown-item" href="#" (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -19,7 +36,55 @@
       <div class="fading-side-menu" data-spy="affix" data-offset-top="350" style="padding-left: 10px">
         <h5>Menus</h5>
         <hr class="no-margin">
-        <ul class="list-unstyled">
+        <button [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          queryParamsHandling="merge" class="btn-sample btn-outline btn btn-block">Client Home</button>
+        <button [routerLink]="['./notes']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Notes History<span
+            class="badge badge-danger float-right">{{notes}}</span></button>
+
+        <button [routerLink]="['./activityaction']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block">Collector Activity</button>
+
+        <button [routerLink]="['./demandletters']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block">Demand Letters</button>
+
+        <button [routerLink]="['./sms']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          class="  btn-sample btn-outline  btn btn-block">Send SMS</button>
+
+        <button [routerLink]="['./accplan']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          class="  btn-sample btn-outline  btn btn-block">Account Plan</button>
+
+        <button [routerLink]="['./contacts']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          class=" btn-sample btn-outline btn btn-block">Customer Contacts<span
+            class="badge badge-danger float-right">{{totalcontacts}}</span></button>
+
+        <button [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          class=" btn-sample btn-outline btn btn-block">Remedial Collaterals<span
+            class="badge badge-danger float-right">{{totalcollaterals}}</span></button>
+
+        <button [routerLink]="['./guarantors']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Guarantors<span
+            class="badge badge-danger float-right">{{totalguarantors}}</span></button>
+
+        <button [routerLink]="['./files']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Upload Files<span
+            class="badge badge-danger float-right">{{totalfiles}}</span></button>
+
+        <button [routerLink]="['./bulknotes']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          class="  btn-sample btn-outline  btn btn-block">Bulk Note Upload</button>
+
+        <!--<ul class="list-unstyled">
           <li>
             <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
@@ -95,7 +160,7 @@
               <span class="fa fa-angle-double-right text-primary"></span>Bulk note upload
             </a>
           </li>
-        </ul>
+        </ul>-->
       </div>
     </div>
     <div class="hidden-xs col-sm-10">

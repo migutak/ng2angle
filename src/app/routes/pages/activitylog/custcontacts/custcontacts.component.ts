@@ -5,6 +5,7 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../../environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DataService } from '../../../../services/data.service';
 
 const URL = environment.valor;
 
@@ -26,7 +27,8 @@ export class CustContactsComponent implements OnInit {
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    public dataService: DataService) {
     //
   }
 
@@ -79,6 +81,7 @@ export class CustContactsComponent implements OnInit {
         'success'
       );
       this.getcontacts(this.custnumber);
+      this.dataService.pushTeles(0);
     }, error => {
       console.log(error);
       swal({
@@ -144,6 +147,8 @@ export class CustContactsComponent implements OnInit {
     this.spinner.show();
     this.ecolService.getteles(custnumber).subscribe(data => {
       this.contacts = data;
+      this.dataService.pushContacts(data.length);
+      this.dataService.pushTeles(0);
       this.spinner.hide();
     }, error => {
       console.log(error);

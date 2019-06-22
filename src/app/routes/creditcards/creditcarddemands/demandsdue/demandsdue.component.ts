@@ -169,16 +169,7 @@ export class DemandsdueComponent implements OnInit {
     },
     {
       headerName: 'DAYSINARREARS',
-      field: 'daysinarrears',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red'};
-        } else if (params.value > '90') {
-          return { color: 'red'};
-        } else {
-          return null;
-        }
-      }
+      field: 'daysinarrears'
     },
     {
       headerName: 'EXPPMNT',
@@ -195,8 +186,16 @@ export class DemandsdueComponent implements OnInit {
       field: 'demandletter'
     },
     {
-      headerName: 'SQNUMBER',
-      field: 'sqnumber'
+      headerName: 'CYCLE',
+      field: 'cycle'
+    },
+    {
+      headerName: 'STATUS',
+      field: 'status'
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'colofficer'
     }
   ];
   rowData1: any;
@@ -224,7 +223,7 @@ formatNumber(number) {
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendlettercc?cardacct=' + this.model.cardacct + '&username=' + this.username + '&demand=' + this.model.demandletter, '_blank');
+    window.open(environment.applink + '/sendlettercc?cardacct=' + this.model.cardacct + '&username=' + this.username + '&demand=' + this.model.demandletter + '&id=' + this.model.id, '_blank');
   }
 
   onQuickFilterChanged($event) {

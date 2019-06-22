@@ -12,6 +12,7 @@ export class DataService {
   public contactsSubject = new BehaviorSubject<number>(0);
   public collateralSubject = new BehaviorSubject<number>(0);
   public filesSubject = new BehaviorSubject<number>(0);
+  public telesSubject = new BehaviorSubject<number>(0);
 
   getTestData(): Observable<any> {
     return this.dataSubject.asObservable();
@@ -37,6 +38,10 @@ export class DataService {
     return this.filesSubject.asObservable();
   }
 
+  getTeles(): Observable<any> {
+    return this.telesSubject.asObservable();
+  }
+
   pustPtpData(dataToPush: number): void {
     this.dataSubject.next(dataToPush);
   }
@@ -59,5 +64,9 @@ export class DataService {
 
   pushFile(totalFiles: number): void {
     this.filesSubject.next(totalFiles);
+  }
+
+  pushTeles(totalTeles: number): void {
+    this.telesSubject.next(totalTeles);
   }
 }

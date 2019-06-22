@@ -78,7 +78,7 @@
     "ngx-spinner": "^7.0.0",
     "ngx-toggle": "^2.0.1",
     "ngx-ui-switch": "^8.0.0",
-    "popper.js": "1.14.3",
+    "popper.js": "^1.14.3",
     "rxjs": "6.3.3",
     "rxjs-compat": "^6.1.0",
     "screenfull": "3.3.3",

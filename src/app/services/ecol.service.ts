@@ -212,6 +212,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.nodeapi + '/loans/memos');
   }
 
+  allteles(custnumber) {
+    return this.httpClient.get<any>(environment.nodeapi + '/teles/all?custnumber=' + custnumber);
+  }
+
   demandstatus(body) {
     return this.httpClient.post<any>(environment.nodeapi + '/loans/memos', body);
   }
@@ -339,7 +343,7 @@ export class EcolService {
   }
 
   putteles(data) {
-    return this.httpClient.put<any>(environment.api + '/api/teles/' + data.id, data);
+    return this.httpClient.post<any>(environment.nodeapi + '/teles/update' , data);
   }
 
   putcardwatch(data) {
