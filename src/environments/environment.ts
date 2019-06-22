@@ -12,7 +12,7 @@ export const environment = {
   // letters_path: '/users/kevinabongo/Demands/',
   letters_path: 'c:\\logs\\',
   // letters_path: '/home/ecollectadmin/demand_letters/',
-  uploadurl: 'http://ecollect.inteligen.co.ke:4000',
+  uploadurl: 'http://localhost:4000',
   valor: 'http://ecollect.inteligen.co.ke:3000/api/',
   xlsuploadapi: 'http://ecollect.inteligen.co.ke:3001/xlsupload/',
   metrics: 'http://localhost:8000/appmetrics-dash',
@@ -20,8 +20,8 @@ export const environment = {
   applink: 'http://localhost:4200',
   emailapi: 'http://localhost:8000/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
-  filesapi: 'http://localhost:4200/api',
-  // filesapi: 'http://ecollect.inteligen.co.ke:3100/filesapi', // activityupload
+  // filesapi: 'http://localhost:4200/api',
+  filesapi: 'http://localhost:3100/filesapi', // activityupload
   accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   birt: 'http://ecollect.inteligen.co.ke:8090/birt',

@@ -57,6 +57,15 @@ fieldset[disabled] .btn-sample.active {
 //start of bootstrap
 
 
+*.ng-select[disabled] {
+  cursor: not-allowed;
+}
+
+*.formControlName[disabled] {
+  cursor: not-allowed;
+}
+
+
 *.form-control[disabled] {
     cursor: not-allowed;
   }

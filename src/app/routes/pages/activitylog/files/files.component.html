@@ -1,3 +1,229 @@
+<div class="content-heading">Upload Files</div>
+<div class="card">
+<ngb-tabset>
+    <ngb-tab title="Upload Files">
+  <ng-template ngbTabContent>
+
+    <div class="card">
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-xl-2 col-form-label">Document Type</label>
+            <div class="col-xl-4">
+                <ng-select id="userdesctype" name="userdesctype" #userdesctype="ngModel" [ngModel]="model.userdesctype">
+                    <ng-option *ngFor="let f of filetype" [value]="f.filetype" >{{f.filetype}}</ng-option>
+                </ng-select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-xl-2 col-form-label">File Description</label>
+            <div class="col-xl-4">
+              <textarea class="form-control" name="filedesc" id="filedesc" [(ngModel)]="model.filedesc"
+                #filedesc="ngModel" rows="2"></textarea>
+            </div>
+          </div>
+          
+          <div class="row">
+            <style type="text/css">
+              .my-drop-zone {
+  width: 385px;
+  height: 214px;
+  }
+  .h3 {
+  text-align: center;
+  }
+              </style>
+            <div class="col-lg-5">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="page-header mt0">Select files</h4>
+                  <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                    [uploader]="uploader" class="box-placeholder my-drop-zone">
+                    <h3 style="color: slategrey">Drop Files Here To Upload</h3><em class="fa-8x icon-cloud-upload mr-2"></em>
+                  </div>
+                  <p class="text-bold">Upload options</p>
+                  <label for="file1" class="file-upload">
+                    <button class="btn btn-secondary btn-block">Select Multiple</button>
+                    <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
+                  </label>
+                  <label for="file2" class="file-upload">
+                    <button class="btn btn-secondary btn-block">Select Single</button>
+                    <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7" style="margin-bottom: 40px">
+              <div class="card">
+                <div class="card-body">
+                  <p class="float-right badge badge-info" *ngIf="uploader?.queue?.length">Queue length: {{
+                      uploader?.queue?.length }}</p>
+                  <h4 class="page-header mt0">Upload queue</h4>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th width="50%">Name</th>
+                        <th>Size</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of uploader.queue">
+                        <td><strong>{{ item?.file?.name }}</strong></td>
+                        <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                        <td>
+                          <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
+                            </div>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <span *ngIf="item.isSuccess"><i class="fa fa-ok"></i></span>
+                          <span *ngIf="item.isCancel"><i class="icon-close mr"></i></span>
+                          <span *ngIf="item.isError"><i class="fas fa-times"></i></span>
+                        </td>
+                        <td nowrap>
+                          <button type="button" class="btn btn-info btn-xs" (click)="item.upload()"
+                            [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="fa icon-cloud-upload mr"></span> Upload
+                          </button>
+                          <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"
+                            [disabled]="!item.isUploading">
+                            <span class="icon-close mr"></span> Cancel
+                          </button>
+                          <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                            <span class="icon-trash mr"></span> Remove
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div>
+                    <div>
+                      Queue progress:
+                      <div class="progress">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
+                      [disabled]="!uploader.getNotUploadedItems().length">
+                      <span class="fa icon-cloud-upload mr"></span> Upload all
+                    </button>
+                    <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                      [disabled]="!uploader.isUploading">
+                      <span class="icon-close mr"></span> Cancel all
+                    </button>
+                    <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+                      [disabled]="!uploader.queue.length">
+                      <span class="icon-trash mr"></span> Remove all
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+
+
+  </ng-template>   
+  
+    </ngb-tab>
+
+
+
+    <ngb-tab>
+        <ng-template ngbTabTitle><b>Uploaded File</b>s <span class="badge badge-primary">{{files?.length}}</span></ng-template>
+        <ng-template ngbTabContent>
+            <div>
+              <div >
+                <div class="card">
+                  
+                 
+                    <div class="card-body" style="min-height: 400px; max-height: 500px; overflow-y: scroll;">
+                      <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>custnumber#</th>
+                            <th>FileName</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Owner</th>
+                            <th>Date</th>
+                            <th class="text-center">Download</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let d of files">
+                            <td>{{d.custnumber}}</td>
+                            <td>{{d.filename}}</td>
+                            <td>{{d.userdesctype}}</td>
+                            <td>{{d.docdesc}}</td>
+                            <td>{{d.colofficer}}</td>
+                            <td>{{d.stagedate}}</td>
+                            <td class="text-center">
+                              <button class="btn btn-outline-success btn-sm" (click)="downloadFile(d.destpath, d.filename)">
+                                <i class="fa fa-download"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    
+                  </div>
+                </div>
+            </div>
+            </div>
+        </ng-template>
+    </ngb-tab>
+    
+    
+    
+   
+    
+    <!--<ngb-tab title="CRB Balances" [disabled]="true">
+        <ng-template ngbTabContent>
+        </ng-template>
+    </ngb-tab>-->
+</ngb-tabset>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <div>
   <h2>Files</h2>
   <div id="accordion">
@@ -165,4 +391,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
