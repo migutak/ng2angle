@@ -158,6 +158,7 @@ export class CustContactsComponent implements OnInit {
 
   cancel() {
     this.edit = false;
+    this.model = {};
   }
 
 }

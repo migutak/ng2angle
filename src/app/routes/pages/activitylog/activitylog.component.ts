@@ -53,10 +53,6 @@ export class ActivityLogComponent implements OnInit {
       dataService.getFiles().subscribe(data => {
         this.totalfiles = data;
       });
-
-      dataService.getTeles().subscribe(data => {
-        this.getTeles(this.custnumber);
-      });
   }
 
   accnumber: string;
@@ -262,6 +258,15 @@ export class ActivityLogComponent implements OnInit {
 
   changeAutodialNumber(telnumber) {
     this.autodial_telnumber = telnumber;
+  }
+
+  refreshTeles() {
+    this.getTeles(this.custnumber);
+    alert('contacts refreshed!!');
+  }
+
+  dialAvaya() {
+    alert('avaya integration in progress!!!');
   }
 
 }
