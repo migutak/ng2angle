@@ -22,6 +22,9 @@ export class HeaderComponent implements OnInit {
     nu_of_demandsdue = 0;
     nu_of_overdue = 0;
     nu_of_cc_demands = 0;
+    user: any;
+    userdata: any = {};
+    userperm: any;
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
@@ -38,6 +41,16 @@ export class HeaderComponent implements OnInit {
         // get notifications
        // ptps, overdue and demand letters
       // this.getnotification();
+      this.userdata = JSON.parse(localStorage.getItem('currentUser'));
+      this.userperm = JSON.parse(localStorage.getItem('userpermission'));
+
+      this.user = {
+          picture: 'assets/img/user/coop.jpg',
+          username: this.userdata.username,
+          division: this.userdata.team,
+          role: this.userdata.role
+      };
+
 
     }
 

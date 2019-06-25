@@ -5,6 +5,7 @@ import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.valor;
 
@@ -27,7 +28,8 @@ export class EditnoteComponent implements OnInit {
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService) {
     //
   }
 
@@ -72,8 +74,9 @@ export class EditnoteComponent implements OnInit {
     this.username = currentUser.username;
 
     // Loading indictor
-    this.ecolService.loader();
+    // this.ecolService.loader();
     //
+    this.spinner.show();
     const body = {
       id: this.f.id.value,
       owner: this.username,
@@ -82,10 +85,22 @@ export class EditnoteComponent implements OnInit {
       accnumber: this.model.accnumber,
       notesrc: this.note.notesrc,
       noteimp: this.note.noteimp,
-      notedate: new Date()
+      notedate: new Date(),
     };
+    this.spinner.hide();
     this.ecolService.putnote(body).subscribe(data => {
-      swal('Successful!', 'Note updated!', 'success');
+
+      swal({
+        title: 'Success!',
+        imageUrl: "assets/img/user/coop.jpg",
+        text: 'Note updated!',
+        showCancelButton: false,
+        confirmButtonColor: '#7ac142',
+        confirmButtonText: 'Okay'
+    });
+
+
+      // swal('Successful!', 'Note updated!', 'success');
       //
     }, error => {
       console.log(error);

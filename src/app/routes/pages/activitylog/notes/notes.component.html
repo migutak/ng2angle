@@ -1,5 +1,20 @@
 
+<style type="text/css">
+a.btn:hover {
+     -webkit-transform: scale(1.1);
+     -moz-transform: scale(1.1);
+     -o-transform: scale(1.1);
+ }
+ a.btn {
+     -webkit-transform: scale(0.8);
+     -moz-transform: scale(0.8);
+     -o-transform: scale(0.8);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
+ }
 
+</style>
 
    
    
@@ -21,14 +36,18 @@
             </div>
             <div class="timeline-card">
                 <div class="popover left">
-                    <h4 class="popover-header">Note made by {{note.OWNER}} on {{note.NOTEDATE}} </h4>
+                    <h4 class="popover-header">{{note.OWNER}} {{note.NOTESRC}}  on Account {{note.ACCNUMBER}}</h4>
                     <div class="arrow"></div>
                     <div class="popover-body">
-                        <p> Accountnumber <b>{{note.ACCNUMBER}} </b>
+                        <p> Date:   <b> {{note.NOTEDATE}} </b>
                             <br/>
-                            <small>{{note.NOTEMADE}}  <button class="btn btn-link" (click)="editnote(note)" *ngIf="note.showedit"> <i class="far fa-edit"></i> Edit</button> </small>
+                            <small>{{note.NOTEMADE}}     <a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-warning">
+                                <span class="far fa-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>            
+                            </a> </small>
                         </p>
                     </div>
+                    <div class="arrow"></div>
                 </div>
             </div>
         </li>

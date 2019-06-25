@@ -60,6 +60,12 @@
     <!-- START Right Navbar-->
     <ul class="navbar-nav flex-row">
         
+        <!-- Fullscreen (only desktops)-->
+        <li class="nav-item d-none d-md-block">
+            <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)" title="Go Fullscreen">
+                <em class="fa fa-expand"></em>
+            </a>
+        </li>
         
         <!-- START Alert menu-->
         <li class="nav-item dropdown dropdown-list" dropdown>
@@ -143,13 +149,26 @@
         </li>
         <!-- END Theme button-->
 
-        <!-- User logout-->
+            <li class="nav-item">
+                    
+              <img title="Cooperative Bank of Kenya" style="max-width:40% !important; margin-top:6px !important;"  [src]="user.picture" alt="Avatar" />
+              
+            </li>
+
+        <li  class="nav-item d-none d-md-block">
+               
+            <a  title="Logout" class="nav-link" (click)="logout()"> <span style="color: white; margin-right: 10px; font-weight: 900; text-transform:uppercase;"><strong>{{user.username}}    </strong></span>
+                <em (click)="logout()" class="icon-user"></em>
+            </a>
+        </li>
+
+        <!-- User logout
         <li class="nav-item">
             <a class="nav-link" title="Logout" (click)="logout()">
                 <em class="fas fa-sign-out-alt"></em>
 
             </a>
-        </li>
+        </li> -->
 
         
     </ul>

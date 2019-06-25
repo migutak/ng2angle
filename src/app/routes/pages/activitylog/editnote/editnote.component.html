@@ -1,12 +1,18 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Contacts loading...</p>
+  </ngx-spinner>
+
+
+
 <div class="content-heading">
     <div>Note:
         <small>Edit note</small></div>
 </div>
-<div class="card">
+<div class="panel panel-default">
     <div class="row">
         <div class="col-md-12">
             <!-- START card-->
-            <div class="card card-default">
+            <div class="panel panel-default">
                 <form [formGroup]="editnoteForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
                     <div class="card-body">
 
@@ -24,7 +30,7 @@
 
                         <div class="row" style="padding-top: 20px">
                             <div class="col-xl-2 col-md-3">
-                                accnumber
+                                Account Number
                             </div>
                             <div class="col-md-3">
                                 <div class="col-md-12">
@@ -33,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                custnumber
+                                Customer Number
                             </div>
                             <div class="col-md-3">
                                 <div class="col-md-12">
@@ -54,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                Note Date
+                                Note Creation Date
                             </div>
                             <div class="col-md-3">
                                 <div class="col-md-12">
@@ -83,11 +89,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="panel-footer">
                         <button type="submit" [disabled]="editnoteForm.invalid" class="btn btn-sm btn-primary"><i
                                 class="fa fa-dot-circle-o"></i> Submit</button>
                         <button type="reset" class="btn btn-sm btn-danger" (click)="cancel()"><i class="fa fa-ban"></i>
-                            Cancel</button>
+                            Back to Notes</button>
                     </div>
                 </form>
             </div>
