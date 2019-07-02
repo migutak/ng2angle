@@ -508,6 +508,7 @@ export class DemandLettersComponent implements OnInit {
         const smsdata = {
           'demand': letter.demand,
           'custnumber': this.model.accnumber,
+          'accnumber': this.model.accnumber,
           'telnumber': this.model.telnumber,
           'owner': this.username,
           'message': this.smsMessage,

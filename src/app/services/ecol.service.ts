@@ -217,7 +217,7 @@ export class EcolService {
   }
 
   demandstatus(body) {
-    return this.httpClient.post<any>(environment.nodeapi + '/loans/memos', body);
+    return this.httpClient.post<any>(environment.nodeapi + '/demandstatus/demandstatus', body);
   }
 
   putautoLetter(letter) {
@@ -377,6 +377,11 @@ export class EcolService {
 
   getsmsmessage(demand) {
     return this.httpClient.get<any>(environment.api + '/api/demandsettings/' + demand.toLowerCase());
+  }
+
+  getptps(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
   }
 
   sendDemandEmail(data) {
@@ -547,7 +552,12 @@ export class EcolService {
 
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
-      alert('Please login!');
+      swal({title: 'You\'re Not Logged In',
+      imageUrl: 'assets/img/user/notlogg.png',
+      text: 'Kindly, log in to continue!',
+
+      confirmButtonColor: '#7ac142',
+      confirmButtonText: 'Okay'});
       this.router.navigate( ['/login'] );
       return false;
     }

@@ -13,7 +13,7 @@ export const environment = {
   applink: 'https://ecollectweb.co-opbank.co.ke',
   xlsuploadapi: 'https://ecollectweb.co-opbank.co.ke/xlsupload/',
   xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
-  emailapi: 'https://ecollectweb.co-opbank.co.ke/demandemail/email/send',
+  emailapi: 'https://ecollectweb.co-opbank.co.ke/demandemail/email',
   auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
   filesapi: 'https://ecollectweb.co-opbank.co.ke/filesapi',
   accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',

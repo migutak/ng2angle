@@ -1,0 +1,28 @@
+<div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>PTP Amount</th>
+                    <th>Promise Date</th>
+                    <th>Owner</th>
+                    <th class="text-center">Met?</th>
+                    <th>Amount received</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of ptps; index as i">
+                    <td>{{p.accnumber}}</td>
+                    <td>{{p.ptpamount}}</td>
+                    <td>{{p.ptpdate}}</td>
+                    <td>{{p.owner}}</td>
+                    <td class="text-center">
+                        <span class="badge badge-danger">{{p.met}}</span>
+                    </td>
+                    <td>{{p.amountreceived}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

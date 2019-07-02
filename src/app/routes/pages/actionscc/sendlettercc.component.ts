@@ -341,6 +341,7 @@ export class SendLetterccComponent implements OnInit {
             const smsdata = {
               'demand': letter.demand,
               'custnumber': this.model.accnumber,
+              'accnumber': this.model.accnumber,
               'telnumber': this.model.celnumber,
               'owner': this.username,
               'message': this.smsMessage,

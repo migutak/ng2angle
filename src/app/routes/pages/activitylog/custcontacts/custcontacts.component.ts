@@ -7,8 +7,6 @@ import { environment } from '../../../../../environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataService } from '../../../../services/data.service';
 
-const URL = environment.valor;
-
 @Component({
   selector: 'app-custcontacts',
   templateUrl: './custcontacts.component.html',

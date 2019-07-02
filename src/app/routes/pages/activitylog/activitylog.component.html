@@ -1,7 +1,7 @@
 <div>
-    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-circus">
-        <p style="font-size: 20px; color: white">Contacts loading...</p>
-      </ngx-spinner>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-circus">
+    <p style="font-size: 20px; color: white">Contacts loading...</p>
+  </ngx-spinner>
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
@@ -16,15 +16,19 @@
                 {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}
               </p>
               <div class="dropdown show">
-                  {{autodial_telnumber}}
-                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
-                  ... More contacts  <span class="badge badge-info">{{totalTeles}}</span>
+                {{autodial_telnumber}}
+                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+                  ... More contacts <span class="badge badge-info">{{totalTeles}}</span>
                 </a>
-                <a class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em class="fas fa-sync fa-fw"></em>refresh</a> | 
-                <a class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw" style="color: black"></em> Dial</a>
-              
+                <a class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em
+                    class="fas fa-sync fa-fw"></em>refresh</a> |
+                <a class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw"
+                    style="color: black"></em> Dial</a>
+
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a *ngFor="let t of teles" class="dropdown-item" href="#" (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
+                  <a *ngFor="let t of teles" class="dropdown-item" href="#"
+                    (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
                 </div>
               </div>
             </div>
@@ -85,6 +89,11 @@
         <button [routerLink]="['./bulknotes']" [routerLinkActive]="['active']"
           [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
           class="  btn-sample btn-outline  btn btn-block">Bulk Note Upload</button>
+
+        <button [routerLink]="['./ptps']" [routerLinkActive]="['active']"
+          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+          class="  btn-sample btn-outline  btn btn-block">Promises to Pay<span
+          class="badge badge-danger float-right">{{totalptps}}</span></button>
 
         <!--<ul class="list-unstyled">
           <li>

@@ -25,6 +25,7 @@ import { EditnoteComponent } from './pages/activitylog/editnote/editnote.compone
 import { BulknotesComponent } from './pages/activitylog/bulknotes/bulknotes.component';
 import { CollateralsComponent } from './pages/activitylog/collaterals/collaterals.component';
 import { ActivitydashComponent } from './pages/activitydash/activitydash.component';
+import { PtpsComponent } from './pages/activitylog/ptps/ptps.component';
 
 export const routes = [
 
@@ -87,6 +88,7 @@ export const routes = [
             { path: 'bulknotes', component: BulknotesComponent },
             { path: 'guarantors', component: GuarantorsComponent },
             { path: 'editnote', component: EditnoteComponent },
+            { path: 'ptps', component: PtpsComponent },
             { path: '**', redirectTo: 'notes' }
           ],
           canActivate: [AuthGuard]
