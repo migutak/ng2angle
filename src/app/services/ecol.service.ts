@@ -508,7 +508,12 @@ export class EcolService {
 
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
-      alert('Please login!');
+      swal({title: 'You\'re Not Logged In',
+      imageUrl: "assets/img/user/notlogg.png",
+      text: 'Kindly, log in to continue!',
+      
+      confirmButtonColor: '#7ac142',
+      confirmButtonText: 'Okay'});
       this.router.navigate( ['/login'] );
       return false;
     }
