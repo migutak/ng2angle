@@ -9,6 +9,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster
 import { DataService } from '../../services/data.service';
 import { CustomFormsModule } from 'ng2-validation';
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -59,7 +60,8 @@ import { PtpsComponent } from './activitylog/ptps/ptps.component';
         NgSelectModule,
         ToasterModule.forRoot(),
         CustomFormsModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        NgxPaginationModule
         // RouterModule.forChild(routes)
     ],
     declarations: [

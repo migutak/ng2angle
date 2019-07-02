@@ -13,15 +13,11 @@ export class PtpsComponent implements OnInit {
 
   accnumber: string;
   custnumber: string;
-  accountdetails: any;
-  smsMessage: [];
-  model: any = {};
   username: string;
   sys: string;
   ptps: any = [];
-  account: any = [];
-  charactersRemaining = 0;
   iscard: Boolean =  false;
+  p = 1;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -57,19 +53,6 @@ export class PtpsComponent implements OnInit {
     });
 
     this.getptps();
-    if (this.sys === 'cc') {
-      this.getcard(this.accnumber);
-      this.iscard = true;
-    } else if (this.sys === 'watchcc') {
-      this.getwatchcard(this.accnumber);
-      this.iscard = true;
-    } else if (this.sys === 'watch') {
-      this.getwatch(this.accnumber);
-    } else if (this.sys === 'mcoopcash') {
-      this.getmcoopcashaccount(this.accnumber);
-    } else {
-      this.getaccount(this.accnumber);
-    }
 
   }
 
@@ -79,36 +62,6 @@ export class PtpsComponent implements OnInit {
       this.ptps = data;
     }, error => {
       console.log(error);
-    });
-  }
-
-  getaccount(account) {
-    this.ecolService.getaccount(account).subscribe(data => {
-      this.account = data;
-    });
-  }
-
-  getmcoopcashaccount(loanaccaccount) {
-    this.ecolService.getmcoopcashAccount(loanaccaccount).subscribe(data => {
-      this.account = data;
-    });
-  }
-
-  getcard(cardacct) {
-    this.ecolService.getcardAccount(cardacct).subscribe(data => {
-      this.account = data[0];
-    });
-  }
-
-  getwatchcard(cardacct) {
-    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
-      this.account = data[0];
-    });
-  }
-
-  getwatch(accnumber) {
-    this.ecolService.getwatch(accnumber).subscribe(data => {
-      this.account = data;
     });
   }
 

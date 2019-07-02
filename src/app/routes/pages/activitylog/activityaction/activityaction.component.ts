@@ -307,6 +307,7 @@ export class ActivityActionComponent implements OnInit {
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
       this.sendNotesData(this.custnumber);
+      this.sendPtpsData(this.accnumber);
       // swal('Success!', 'activity saved', 'success');
       // build form
       // this.buildForm();
@@ -367,6 +368,12 @@ export class ActivityActionComponent implements OnInit {
   sendNotesData(custnumber) {
     this.ecolService.totalnotes(custnumber).subscribe(data => {
       this.dataService.pustNotesData(data[0].TOTAL);
+    });
+  }
+
+  sendPtpsData(accnumber) {
+    this.ecolService.getptps(accnumber).subscribe(data => {
+      this.dataService.pushPtps(data.length);
     });
   }
 

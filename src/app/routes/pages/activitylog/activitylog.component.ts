@@ -53,6 +53,10 @@ export class ActivityLogComponent implements OnInit {
       dataService.getFiles().subscribe(data => {
         this.totalfiles = data;
       });
+
+      dataService.getPtps().subscribe(data => {
+        this.totalPtps = data;
+      });
   }
 
   accnumber: string;
@@ -74,6 +78,7 @@ export class ActivityLogComponent implements OnInit {
   autodial_telnumber: string;
   files: any = [];
   totalTeles: number;
+  totalPtps: number;
   teles: any = [];
 
   ngOnInit() {
@@ -139,7 +144,16 @@ export class ActivityLogComponent implements OnInit {
     // guarantors
     this.getGuarantors(this.custnumber);
     this.getTeles(this.custnumber);
+    this.getptps(this.accnumber);
 
+  }
+
+  getptps(accnumber) {
+    this.ecolService.getptps(accnumber).subscribe(data => {
+      this.totalPtps = data.length;
+    }, error => {
+      console.log(error);
+    });
   }
 
 
