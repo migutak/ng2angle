@@ -200,7 +200,7 @@ export class ActivityHomeComponent implements OnInit {
 
   loadptps(accnumber) {
     this.loader = true;
-    this.ecolService.ptps(accnumber).subscribe(data => {
+    this.ecolService.getptps(accnumber).subscribe(data => {
       console.log('ptp', data);
       this.ptps = data;
       this.loader = false;

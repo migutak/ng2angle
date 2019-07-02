@@ -17,7 +17,7 @@ const URL = environment.valor;
 })
 export class ActivityLogComponent implements OnInit {
 
-  ptp = 0;
+  ptp: number;
   notes: number;
   totalcontacts: number;
   totalcollaterals: number;
@@ -31,7 +31,7 @@ export class ActivityLogComponent implements OnInit {
     public dataService: DataService
     ) {
       // test service
-      dataService.getTestData().subscribe(data => {
+      dataService.getPtpsData().subscribe(data => {
         this.ptp = data;
       });
 
@@ -86,6 +86,7 @@ export class ActivityLogComponent implements OnInit {
   guarantorsmenu = true;
   demandlettersmenu = true;
   files: any = [];
+  ptps: any =[];
   // itemsDemands: Array<string> = ['Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'Day90', 'Day40'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
@@ -155,7 +156,8 @@ export class ActivityLogComponent implements OnInit {
 
     // get files
     this.getfileshistory(this.custnumber);
-
+      //pts
+      this.getPtps(this.custnumber);
     // notes
     this.getNotes(this.custnumber);
     // notes
@@ -165,6 +167,22 @@ export class ActivityLogComponent implements OnInit {
     // notes
     this.getGuarantors(this.custnumber);
   }
+  // getPtps(custnumber) {
+  //   this.ecolService.ptps(custnumber).subscribe(data =>
+  //   throw new Error("Method not implemented."});
+  // }
+
+
+  getPtps(custnumber) {
+    this.ecolService.getptps(custnumber).subscribe(data => {
+      this.ptp = data;
+      this.ptp = data.length;
+    });
+  }
+
+
+
+
 
 
   getcard(cardacct) {
@@ -202,7 +220,7 @@ export class ActivityLogComponent implements OnInit {
   getfileshistory(custnumber) {
     this.ecolService.getfileshistory(custnumber).subscribe(data => {
       this.files = data;
-      this.totalfiles = data.length;
+      this.ptps = data.length;
     });
   }
 

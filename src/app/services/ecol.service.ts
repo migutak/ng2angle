@@ -18,11 +18,11 @@ export class EcolService {
 
     swal({
       title: 'Processing ...',
-      text: 'Please wait',
+      // text: 'Please wait',
       showConfirmButton: false,
-      /*onOpen: function () {
+      onOpen: function () {
         swal.showLoading();
-      }*/
+      }
     });
   }
 
@@ -281,7 +281,7 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/cards_stage?filter[where][nationid]=' + nationid);
   }
 
-  ptps(accnumber) {
+  getptps(accnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
   }

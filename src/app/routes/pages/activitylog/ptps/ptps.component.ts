@@ -76,7 +76,7 @@ export class PtpsComponent implements OnInit {
 
 
   getptps() {
-    this.ecolService.ptps(this.custnumber).subscribe(data => {
+    this.ecolService. getptps(this.custnumber).subscribe(data => {
       this.ptps = data;
     }, error => {
       console.log(error);

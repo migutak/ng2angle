@@ -6,16 +6,14 @@ export class DataService {
 
   constructor() { }
 
-  public dataSubject = new BehaviorSubject<number>(0);
+  public ptpsSubject = new BehaviorSubject<number>(0);
   public notesSubject = new BehaviorSubject<number>(0);
   public guarantorsSubject = new BehaviorSubject<number>(0);
   public contactsSubject = new BehaviorSubject<number>(0);
   public collateralSubject = new BehaviorSubject<number>(0);
   public filesSubject = new BehaviorSubject<number>(0);
 
-  getTestData(): Observable<any> {
-    return this.dataSubject.asObservable();
-  }
+  
 
   getNotesData(): Observable<any> {
     return this.notesSubject.asObservable();
@@ -36,9 +34,12 @@ export class DataService {
   getFiles(): Observable<any> {
     return this.filesSubject.asObservable();
   }
+  getPtpsData(): Observable<any> {
+    return this.ptpsSubject.asObservable();
+  }
 
-  pustPtpData(dataToPush: number): void {
-    this.dataSubject.next(dataToPush);
+  pustPtpsData(dataToPush: number): void {
+    this.ptpsSubject.next(dataToPush);
   }
 
   pustNotesData(dataToPush: number): void {
@@ -60,4 +61,13 @@ export class DataService {
   pushFile(totalFiles: number): void {
     this.filesSubject.next(totalFiles);
   }
+
+
+  pushPtpsData(ptps: number): void {
+    this.ptpsSubject.next(ptps);
+  }
+
+  // getPtpsData(): Observable<any> {
+  //   return this.ptpsSubject.asObservable();
+  // }
 }

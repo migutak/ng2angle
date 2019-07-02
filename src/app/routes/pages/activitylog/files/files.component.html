@@ -3,13 +3,14 @@
 <ngb-tabset>
     <ngb-tab title="Upload Files">
   <ng-template ngbTabContent>
-
+    
     <div class="card">
+      
         <div class="card-body">
           <div class="form-group row">
             <label class="col-xl-2 col-form-label">Document Type</label>
             <div class="col-xl-4">
-                <ng-select id="userdesctype" name="userdesctype" #userdesctype="ngModel" [ngModel]="model.userdesctype">
+                <ng-select   id="userdesctype" name="userdesctype" #userdesctype="ngModel" [ngModel]="model.userdesctype">
                     <ng-option *ngFor="let f of filetype" [value]="f.filetype" >{{f.filetype}}</ng-option>
                 </ng-select>
             </div>
@@ -42,11 +43,11 @@
                   </div>
                   <p class="text-bold">Upload options</p>
                   <label for="file1" class="file-upload">
-                    <button class="btn btn-secondary btn-block">Select Multiple</button>
+                    <button  class="mr-1 mb-1 btn btn-outline-info btn-block">Select Multiple</button>
                     <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
                   </label>
                   <label for="file2" class="file-upload">
-                    <button class="btn btn-secondary btn-block">Select Single</button>
+                    <button class="btn btn-outline-success btn-block">Select Single</button>
                     <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
                   </label>
                 </div>
@@ -84,7 +85,7 @@
                           <span *ngIf="item.isError"><i class="fas fa-times"></i></span>
                         </td>
                         <td nowrap>
-                          <button type="button" class="btn btn-info btn-xs" (click)="item.upload()"
+                          <button type="submit" class="btn btn-info btn-xs" (click)="item.upload()"
                             [disabled]="item.isReady || item.isUploading || item.isSuccess">
                             <span class="fa icon-cloud-upload mr"></span> Upload
                           </button>
@@ -111,7 +112,7 @@
                         </div>
                       </div>
                     </div>
-                    <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
+                    <button type="submit" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
                       [disabled]="!uploader.getNotUploadedItems().length">
                       <span class="fa icon-cloud-upload mr"></span> Upload all
                     </button>
@@ -130,7 +131,7 @@
               </div>
               </div>
               </div>
-
+            
 
   </ng-template>   
   
