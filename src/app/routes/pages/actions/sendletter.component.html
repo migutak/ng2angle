@@ -4,14 +4,34 @@
     <p style="font-size: 20px; color: white">Processing ...</p>
   </ngx-spinner>
   <div class="card b text-white">
-    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
+    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg10.jpg);">
       <div class="media mt-0 align-items-center">
         <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image" />
         <div class="media-body">
           <div class="d-flex">
             <div>
-              <h4 class="m-0" style="color:black">Name: {{accountdetails?.client_name}}</h4>
-              <p>Address: {{accountdetails?.addressline1}}</p>
+              <h4 class="m-0">Name:
+                {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname || accountdetails?.custname}}
+              </h4>
+              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel:
+                {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}
+              </p>
+              <div class="dropdown show">
+                {{autodial_telnumber}}
+                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+                  ... More contacts <span class="badge badge-info">{{totalTeles}}</span>
+                </a>
+                <a class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em
+                    class="fas fa-sync fa-fw"></em>refresh</a> |
+                <a class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw"
+                    style="color: black"></em> Dial</a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a *ngFor="let t of teles" class="dropdown-item" href="#"
+                    (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

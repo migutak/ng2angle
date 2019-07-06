@@ -44,7 +44,7 @@ $timeline-separator-width : 120px;
     // --------------------------------
     >li {
         @include clearfix();
-        margin-bottom: 20px;
+        margin-bottom: 0px;
 
         &.timeline-separator {
             position: relative;
@@ -189,9 +189,8 @@ $timeline-separator-width : 120px;
             margin-left: ($timeline-badge-size/2);
         }
         >li {
-            float: left;
             clear: left;
-            width: 45%;
+            width: 100%;
 
             &.timeline-inverted {
                 float: right;

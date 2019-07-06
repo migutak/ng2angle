@@ -66,6 +66,7 @@ export class CustContactsComponent implements OnInit {
 
     this.addcontact.custnumber = this.custnumber;
     this.addcontact.telephone = form.contactnumber;
+    this.addcontact.contact = form.contactnumber;
     this.addcontact.email = form.email;
     this.addcontact.active = form.active;
     this.addcontact.owner = this.username;

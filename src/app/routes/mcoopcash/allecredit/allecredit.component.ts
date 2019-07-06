@@ -40,7 +40,7 @@ export class AllecreditComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'LOANACCNUMBER',
-      field: 'LOANACCNUMBER',
+      field: 'loanaccnumber',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       }
@@ -54,17 +54,8 @@ export class AllecreditComponent implements OnInit {
       field: 'amountdisbursed'
     },
     {
-      headerName: 'ARREARS CATEGIRY',
-      field: 'arrears_category',
-      cellStyle: function (params) {
-        if (params.value === '90+') {
-          return { color: 'red'};
-        } else if (params.value === '180+') {
-          return { color: 'red'};
-        } else {
-          return null;
-        }
-      }
+      headerName: 'ARREARS CATEGORY',
+      field: 'arrears_category'
     },
     {
       headerName: 'LOAN TYPE',
@@ -94,7 +85,6 @@ export class AllecreditComponent implements OnInit {
       // params.endRow : End Page
       //
       this.apiService(20, params.startRow).subscribe(response => {
-        console.log(response);
         params.successCallback(
           response, this.noTotal
         );
@@ -157,8 +147,7 @@ export class AllecreditComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/mcoopcash_stage/myallocations?filter[colofficer]=' + this.username + 'filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/mcoopcash_stage?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
   }
 
 }

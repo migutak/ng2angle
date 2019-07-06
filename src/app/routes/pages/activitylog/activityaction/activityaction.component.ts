@@ -177,7 +177,8 @@ export class ActivityActionComponent implements OnInit {
 
   getwatchcardstatic(cardacct) {
     this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
-      if (data) {
+      console.log(data);
+      if (data && data.length > 0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
         this.account.cmdstatus = data[0].cmdstatus;
@@ -397,7 +398,7 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptp.enable();
     } else {
       this.actionForm.controls.ptp.disable();
-      this.actionForm.controls.ptp.setValue('NO');
+      this.actionForm.controls.ptp.setValue('No');
     }
   }
 

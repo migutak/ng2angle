@@ -119,10 +119,6 @@ export class ActivityHomeComponent implements OnInit {
         // console.log("accountinfo");
         break;
       }
-      case 'ngb-tab-1': {
-        this.loadptps(this.accnumber);
-        break;
-      }
       case 'ngb-tab-2': {
         this.loadother(this.custnumber);
         break;

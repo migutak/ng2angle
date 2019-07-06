@@ -222,6 +222,14 @@ const Work = {
         {
             text: 'View all Loans',
             link: '/work/allloans'
+        },
+        {
+            text: 'No Credit buildup',
+            link: '/watch/nocredit'
+        },
+        {
+            text: 'Credit buildup',
+            link: '/watch/creditbuildup'
         }
     ]
 };
@@ -443,8 +451,8 @@ const headingLetters = {
 };
 
 // user permissions
-const userperm = JSON.parse(sessionStorage.getItem('userpermission'));
-const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+const userperm = JSON.parse(localStorage.getItem('userpermission'));
+const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 let menuitems = [];
 
@@ -461,7 +469,7 @@ const collection_menu = [
     headingComponents,
     Work,
     Work_cc,
-    Predelq,
+    // Predelq,
     mcoopcash,
     serviceproviders,
     headingLetters,
@@ -479,7 +487,7 @@ const creditcards_menu = [
     headingComponents,
     Work_cc,
     Work,
-    Predelq,
+    // Predelq,
     mcoopcash,
     serviceproviders,
     headingLetters,
@@ -497,7 +505,7 @@ const remedial_menu = [
     headingComponents,
     Remedial,
     Work_cc,
-    Predelq,
+    // Predelq,
     mcoopcash,
     serviceproviders,
     headingLetters,
@@ -515,7 +523,7 @@ const teamleader_menu = [
     headingComponents,
     Work,
     Work_cc,
-    Predelq,
+    // Predelq,
     mcoopcash,
     serviceproviders,
     headingLetters,

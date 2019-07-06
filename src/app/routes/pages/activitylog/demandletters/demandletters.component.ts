@@ -128,6 +128,8 @@ export class DemandLettersComponent implements OnInit {
     // get account details
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
     }
@@ -154,6 +156,19 @@ export class DemandLettersComponent implements OnInit {
       this.model.postcode = data[0].postcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+    });
+  }
+
+  getwatch(accnumber) {
+    this.ecolService.getwatch(accnumber).subscribe(data => {
+      this.accountdetails = data;
+      this.guarantors = data.guarantors;
+      this.model.accnumber = data.accnumber;
+      this.model.custnumber = data.custnumber;
+      this.model.addressline1 = data.addressline1;
+      this.model.postcode = data.postcode;
+      this.model.emailaddress = data.emailaddress;
+      this.model.celnumber = data.celnumber;
     });
   }
 
@@ -278,6 +293,7 @@ export class DemandLettersComponent implements OnInit {
 
     this.ecolService.loader();
     this.ecolService.getcardAccount(this.accnumber).subscribe(carddata => {
+      // console.log(carddata[0]);
       // if cardacct
       if (carddata && carddata.length > 0) {
         this.letterbody.demand = letter.demand,
@@ -293,7 +309,7 @@ export class DemandLettersComponent implements OnInit {
           this.letterbody.OUT_BALANCE = carddata[0].outbalance,
           this.letterbody.demand1date = new Date();
 
-        // console.log(body);
+        console.log('letterbody', this.letterbody);
         // call generate letter api
         this.ecolService.generateLetter(this.letterbody).subscribe(data => {
           // sucess

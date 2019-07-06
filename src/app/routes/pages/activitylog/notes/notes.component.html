@@ -1,49 +1,24 @@
-<div class="card">
-    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
-        <p style="font-size: 20px; color: white">Loading more notes ...</p>
-    </ngx-spinner>
-    <!--
-    <div class="mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-12 offset-md-0" style="min-height: 500; max-height: 700px; overflow-y: scroll;">
-                <h4>{{this.cust}} <small>Notes</small></h4>
-                <ul class="timeline">
-                    <li *ngFor="let note of noteData">
-                        <a class="notet" href="#">{{note.owner}} {{note.notesrc}} on {{note.accnumber}}</a>
-                        <a href="#" class="float-right">{{note.notedate}}</a>
-                        <p>{{note.notemade}}</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+    <p style="font-size: 20px; color: white">Loading more notes ...</p>
+</ngx-spinner>
 
-    <div *ngIf="!pager.reachedend" class="text-muted mt-5 mb-5 text-center small"><a class="text-muted" href="#"
-            (click)="loadmore($event)">load more ...</a></div>
-    <div *ngIf="pager.reachedend" class="text-muted mt-5 mb-5 text-center small">end of list</div>
-    <button (click)="newMessage()">CLick to test</button>
-    -->
-
-    <div class="container-fluid">
-        <div class="row example-basic">
-            <div class="col-xs-12 col-xs-offset-1" style="min-height: 500px; max-height: 500px; overflow-y: auto; width: 100%">
-                <ul class="timeline" *ngFor="let note of noteData">
-                    <li class="timeline-item">
-                        <div class="timeline-info">
-                            <span>{{note.NOTEDATE}}</span>
-                        </div>
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-info">{{note.OWNER}} {{note.NOTESRC}} on {{note.ACCNUMBER}} </h3>
-                            <p>{{note.NOTEMADE}} <button class="btn btn-link" (click)="editnote(note)" *ngIf="note.showedit"> <i class="far fa-edit"></i> Edit</button></p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="!pager.reachedend" class="text-muted mt-5 mb-5 text-center small"><a class="text-muted" href="#"
-            (click)="loadmore($event)">load more ...</a></div>
-    <div *ngIf="pager.reachedend" class="text-muted mt-5 mb-5 text-center small">end of list</div>
-
-</div>
+<ul class="timeline">
+    <li class="timeline-event" *ngFor="let note of noteData">
+      <label class="timeline-event-icon"></label>
+      <div class="timeline-event-copy">
+        <p class="timeline-event-thumbnail">{{note.NOTEDATE}}</p>
+        <p style="color: blue"><strong>{{note.OWNER}} {{note.NOTESRC}} on Account {{note.ACCNUMBER}}</strong></p>
+        <p>
+                {{note.NOTEMADE}}
+                <small><a (click)="editnote(note)"
+                    *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-success">
+                    <span class="far fa-edit" aria-hidden="true"></span>
+                    <span style="color: red;"><strong>Edit</strong></span>
+                </a></small>
+        </p>
+      </div>
+    </li>
+  </ul>
+  <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs" (click)="loadmore($event)">load more
+        notes...</button>
+    <button *ngIf="pager.reachedend" disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button>

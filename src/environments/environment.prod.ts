@@ -20,4 +20,5 @@ export const environment = {
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   manuals_path: '/app/manuals/',
   birt: 'http://ecollectweb.co-opbank.co.ke:8787/birt',
+  kibana: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/dashboard?_g=0',
 };

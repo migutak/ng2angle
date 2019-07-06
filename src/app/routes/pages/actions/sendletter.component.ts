@@ -94,6 +94,8 @@ export class SendLetterComponent implements OnInit {
   uploadedfilepath: string;
   demandtosend: string;
   demandhisdetails = {};
+  autodial_telnumber: string;
+  totalTeles: number;
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'demand1', 'demand2', 'prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
@@ -119,10 +121,14 @@ export class SendLetterComponent implements OnInit {
 
   currentDate() {
     const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
+    let day = '' + currentDate.getDate();
+    let month = '' + (currentDate.getMonth() + 1);
     const year = currentDate.getFullYear();
-    return day + '-' + month + '-' + year;
+
+    if (month.length < 2) { month = '0' + month; }
+    if (day.length < 2) { day = '0' + day; }
+
+    return year + '-' + month + '-' + day;
   }
 
   ngOnInit() {
@@ -148,14 +154,21 @@ export class SendLetterComponent implements OnInit {
     this.getaccount(this.accnumber);
     this.getdemandshistory(this.accnumber);
     this.getteles(this.custnumber);
+    this.getTeles(this.custnumber);
   }
 
   getteles(cust) {
     this.ecolService.getteles(cust).subscribe(data_teles => {
-      this.teles = data_teles;
       this.emails = data_teles;
       this.postcodes = data_teles;
       this.addresses = data_teles;
+    });
+  }
+
+  getTeles(custnumber) {
+    this.ecolService.allteles(custnumber).subscribe(response => {
+      this.teles = response.data;
+      this.totalTeles = response.data.length;
     });
   }
 
@@ -171,6 +184,9 @@ export class SendLetterComponent implements OnInit {
       this.model.celnumber = data[0].celnumber;
       this.model.demand = this.demandtosend;
       this.section = data[0].section;
+      // tslint:disable-next-line:max-line-length
+      this.autodial_telnumber = this.accountdetails.cellnumber || this.accountdetails.mobile || this.accountdetails.phonenumber || this.accountdetails.telnumber || this.accountdetails.celnumber;
+
 
       if (this.guarantors || this.guarantors.length > 0) {
         // loop
@@ -592,5 +608,18 @@ export class SendLetterComponent implements OnInit {
         'error'
       );
     });
+  }
+
+  refreshTeles() {
+    this.getTeles(this.custnumber);
+    alert('contacts refreshed!!');
+  }
+
+  dialAvaya() {
+    alert('avaya integration in progress!!!');
+  }
+
+  changeAutodialNumber(telnumber) {
+    this.autodial_telnumber = telnumber;
   }
 }

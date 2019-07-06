@@ -90,7 +90,7 @@ export class SmsComponent implements OnInit {
 
   getteles(cust) {
     this.ecolService.getallteles(cust).subscribe(data_teles => {
-      this.teles = data_teles;
+      this.teles = data_teles.data;
     });
   }
 

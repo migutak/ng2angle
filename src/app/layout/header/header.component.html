@@ -1,8 +1,10 @@
+<!-- Shows hand on header icons -->
 <style>
     li:hover {
         cursor: pointer;
     }
-</style>
+    </style>
+
 
 <!-- START Top Navbar-->
 <nav class="navbar topnavbar" role="navigation">
@@ -11,10 +13,11 @@
         <a class="navbar-brand" href="#/">
             <div class="brand-logo">
                 <!---<img class="img-fluid" src="assets/img/logo.png" alt="App Logo" />-->
+                <img title="Cooperative Bank of Kenya" style="max-width:40% !important; height:40px !important; margin-top:6px !important;"  [src]="user.picture" alt="Avatar" />
                 <span style="color: white"><strong>E-Collect&reg;</strong></span>
             </div>
             <div class="brand-logo-collapsed">
-                <img class="img-fluid" src="assets/img/logo-single.png" alt="App Logo" />
+                <img class="img-fluid" [src]="user.picture" alt="App Logo" />
             </div>
         </a>
     </div>
@@ -57,21 +60,17 @@
     <!-- END Left navbar-->
     <!-- START Right Navbar-->
     <ul class="navbar-nav flex-row">
-        <!-- Search icon-->
-        <li class="nav-item">
-            <a class="nav-link" (click)="openNavSearch($event)">
-                <em class="icon-magnifier"></em>
-            </a>
-        </li>
+        
         <!-- Fullscreen (only desktops)-->
         <li class="nav-item d-none d-md-block">
             <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)" title="Go Fullscreen">
                 <em class="fa fa-expand"></em>
             </a>
         </li>
+        
         <!-- START Alert menu-->
         <li class="nav-item dropdown dropdown-list" dropdown>
-            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" title="Overdue" dropdownToggle>
+            <a  title="Overdue" class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
                 <em class="icon-bell"></em>
                 <span class="badge badge-danger">{{nu_of_alerts}}</span>
             </a>
@@ -141,74 +140,27 @@
             <!-- END Dropdown menu-->
         </li>
         <!-- END Alert menu-->
-        <!-- START Offsidebar button-->
+
+
+        <!-- START Theme button-->
         <li class="nav-item">
-                <a class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()" title="Theme settings">
-                    <em class="fas fa-paint-brush"></em>
-                </a>
-            </li>
-            <!-- END Offsidebar menu-->
-            <li class="nav-item">
-                    <a class="nav-link" title="Logout" (click)="logout()">
-                        <em class="fas fa-sign-out-alt"></em>
-                    </a>
-                </li>
-        <!-- User menu-->
-        <!--
-        <li class="nav-item dropdown dropdown-list" dropdown>
-            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
-                <em class="icon-user"></em>
-
+            <a title="Theme settings" class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()">
+                <em class="fas fa-cog"></em>
             </a>
-           
-            <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
-                <div class="dropdown-item">
-                   
-                    <div class="list-group">
-                        
-                        <div class="list-group-item list-group-item-action">
-                            <div class="media">
-                                <div class="align-self-start mr-2">
-                                    <em class="fas fa-user-tie fa-2x text-info"></em>
-                                </div>
-                                <div class="media-body">
-                                    <p class="m-0">My Details</p>
-                                    <p class="m-0 text-muted text-sm">View my user details</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
+        </li>
+        <!-- END Theme button-->
 
-                        
-                        <div class="list-group-item list-group-item-action" (click)="logout()">
-                            <div class="media">
-                                <div class="align-self-start mr-2">
-                                    <em class="fa fa-sign-out-alt fa-2x text-warning"></em>
-                                </div>
-                                <div class="media-body">
-                                        <a class="nav-link m-0" title="Logout" (click)="logout()">
-                                             Logout
-                                        </a>
-                                    
-                                    <p class="m-0 text-muted text-sm">logout from the system</p>
-                                </div>
-                            </div>
-                        </div>
-                       
-                           <div class="list-group-item list-group-item-action">
-                              <span class="d-flex align-items-center">
-                                 <span class="text-sm">More notifications</span>
-                                 <span class="badge badge-danger ml-auto">14</span>
-                              </span>
-                           </div>
-                    </div>
-                   
-                </div>
-            </div>
-            
-        </li>-->
-        <!-- END Alert menu-->
+
+        <li class="nav-item dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><em  class="icon-user"></em> {{user.username}} | {{user.role}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#" class="dropdown-item"><i class="fa fas-user-o"></i> Profile</a></li>
+                <li><a href="#" class="dropdown-item"><i class="fa fas-calendar-o"></i> Calendar</a></li>
+                <li><a href="#" class="dropdown-item"><i class="fa fas-sliders"></i> Settings</a></li>
+                <li class="divider dropdown-divider"></li>
+                <li><a href="#" (click)="logout()" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </li>       
     </ul>
     <!-- END Right Navbar-->
 

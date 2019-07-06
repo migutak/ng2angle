@@ -56,7 +56,7 @@ export class EcolService {
 
   getallnotes(filter, cust) {
     //
-    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust;
+    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust + '&filter?[order]=notedate DESC';
 
     if (filter !== '') {
       url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
@@ -367,7 +367,8 @@ export class EcolService {
   }
 
   getallteles(custnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/teles/alltele?custnumber=' + custnumber);
+    // return this.httpClient.get<any>(environment.api + '/api/teles/alltele?custnumber=' + custnumber);
+    return this.httpClient.get<any>(environment.nodeapi + '/teles/all?custnumber=' + custnumber);
   }
 
   existsteles(custnumber, tel, email) {

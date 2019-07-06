@@ -8,14 +8,15 @@
 // LAYOUT
 
 $content-bg:                    #f5f7fa;
-$aside-bg:                      #fff;
+$aside-bg:                      #00543d;
 
 // NAVBAR TOP
 
-$nav-top-bg:                    $info;
-$nav-top-bg-start:              $nav-top-bg;
-$nav-top-bg-end:                $info-light;
+$nav-top-bg:                    #fffafa;
+$nav-top-bg-start:              #7ac142;
+$nav-top-bg-end:                #00543d;
 $nav-header-bg:                 transparent;
+
 
 $nav-top-item:                  #fff;
 $nav-top-item-active:           darken($nav-top-bg, 20%);
@@ -24,7 +25,7 @@ $nav-top-item-active:           darken($nav-top-bg, 20%);
 
 $sidebar-bg:                      $aside-bg;
 
-$sidebar-item-color:              #515253;
+$sidebar-item-color:              #fffafa;
 $sidebar-item-color-active:       $nav-top-bg;
 $sidebar-item-bg-active:          darken($sidebar-bg, 1%);
 
@@ -39,9 +40,9 @@ $sidebar-label-color:             $sidebar-item-color;
 
 // OFFSIDEBAR
 
-$offsidebar-bg:           #fff;
+$offsidebar-bg:           #00543d;
 $offsidebar-border-color: greyscale(darken($offsidebar-bg, 20%));
-$offsidebar-color:        $body-color;
+$offsidebar-color:        #fffafa;
 
 
 /* ========================================================================
