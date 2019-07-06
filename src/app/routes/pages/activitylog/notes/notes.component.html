@@ -13,7 +13,6 @@ a.btn:hover {
      -moz-transition-duration: 0.5s;
      -o-transition-duration: 0.5s;
  }
-
 </style>
 
    
@@ -23,45 +22,42 @@ a.btn:hover {
     </ngx-spinner>
 
 
-<!-- START timeline-->
-<div class="container-fluid">
-        <div class="row example-basic">
-<ul *ngFor="let note of noteData" [ngClass]="timelineAlt ? 'timeline-alt' : 'timeline'">
-        <li style="color: #00543d !important;"class="timeline-separator" data-datetime="NOTES"></li>
-        <!-- START timeline item-->
-        <li>
-            <div  class="timeline-badge primary">
-                <em class="fas fa-users"></em>
-               
-            </div>
-            <div class="timeline-card">
-                <div class="popover left">
-                    <h4 class="popover-header">{{note.OWNER}} {{note.NOTESRC}}  on Account {{note.ACCNUMBER}}</h4>
-                    <div class="arrow"></div>
-                    <div class="popover-body">
-                        <p> Date:   <b> {{note.NOTEDATE}} </b>
-                            <br/>
-                            <small>{{note.NOTEMADE}}     <a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-warning">
-                                <span class="far fa-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>            
-                            </a> </small>
-                        </p>
-                    </div>
-                    <div class="arrow"></div>
-                </div>
-            </div>
-        </li>
-        <!-- END timeline item-->
-        
-
-    </ul>
-    <!-- END timeline-->
-    </div>
+<!-- First category table-->
+<div class="panel panel-default">
+    <table  class="table table-striped">
+            <ng-container>
+        <thead>
+            <tr>
+                <th style="width:75%"  class="h4">Notes</th>
+                <th class="h4 d-none d-lg-table-cell">Updated</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr *ngFor="let note of noteData">
+                <td>
+                        <div  class="text-muted">
+                       {{note.OWNER}} {{note.NOTESRC}}  on Account {{note.ACCNUMBER}}
+                        
+                        </div>
+                    <div  class="text-muted">{{note.NOTEMADE}} <small><a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-secondary">
+                        <span class="far fa-edit" aria-hidden="true"></span>
+                        <span style="color: red;"><strong>Edit</strong></span>            
+                    </a></small></div>
+                </td>
+                <td class="d-none d-lg-table-cell">
+                    <a>{{note.OWNER}}</a>
+                    <br/>
+                    <small>{{note.NOTEDATE}}</small>
+                </td>
+            </tr>
+            
+        </tbody>
+        </ng-container>
+    </table>
     <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs"
-    (click)="loadmore($event)">load more ...</button>
+    (click)="loadmore($event)">load more notes...</button>
 <button *ngIf="pager.reachedend" disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button>
-
-    </div>
+</div>
     
 
    

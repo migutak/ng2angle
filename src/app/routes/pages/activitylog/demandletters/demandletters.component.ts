@@ -17,6 +17,15 @@ const URL = environment.valor;
 })
 export class DemandLettersComponent implements OnInit {
 
+  name = 'Angular';
+  clipText = '';
+
+  handleClick() {
+    navigator['clipboard'].readText().then(clipText => {
+      this.clipText = clipText;
+    });
+  }
+
   accnumber: string;
   custnumber: string;
   accountdetails: any;
@@ -143,6 +152,8 @@ export class DemandLettersComponent implements OnInit {
       this.addresses = data_teles;
     });
   }
+
+  
 
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {

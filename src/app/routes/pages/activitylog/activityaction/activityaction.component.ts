@@ -21,6 +21,8 @@ const URL = environment.valor;
 })
 export class ActivityActionComponent implements OnInit {
 
+  
+
   bsValue = new Date();
   // bsValue = this.currentDate();
   minDate: Date;

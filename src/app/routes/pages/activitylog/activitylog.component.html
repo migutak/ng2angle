@@ -1,5 +1,48 @@
 
-<div>
+<style type="text/css">
+  input[type="text"] {
+  
+  background-color : #03533a; 
+  
+  }
+  input,h4,p,label, select{
+      color: #ffffff;
+  }
+  
+  .card b{
+    color: #ffffff;
+
+  }
+  
+  </style> 
+
+<div class="card b ">
+    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg1.png);">
+        <div class="media mt-0 align-items-center">
+            <img class="mr-3 img-thumbnail rounded-circle thumb96" src="assets/img/user/coop.jpg" alt="Image" />
+            <div class="media-body">
+                <div class="d-flex">
+                    <div>
+                        <h4 class="m-0">Name: {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname || accountdetails?.custname}}</h4>
+                        <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} </p>
+                        <div class="col-xs-2">
+                        <label style="padding-right: 10px"for="telnumber">Tel:    </label>
+                        <input style="color: #ffffff; border:1px solid #03533a; background-color : #03533a; " size="10"  id="telnumber" type="text" #sharableLink value ="{{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}">
+                        <button title="Copy Phone Number" (click)="copyToClipboard(sharableLink)" class="btn btn-info btn-xs" type="button"><i class="far fa-copy"></i></button>
+
+                        
+
+              
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div>
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg8.jpg);">
       <div class="media mt-0 align-items-center">
@@ -15,7 +58,8 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
   <div class="row">
     <div class="hidden-xs col-sm-2">
       <div class="fading-side-menu" data-spy="affix" data-offset-top="350" style="padding-left: 10px">

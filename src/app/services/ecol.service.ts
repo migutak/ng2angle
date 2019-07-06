@@ -248,7 +248,7 @@ export class EcolService {
     // tslint:disable-next-line:max-line-length
     // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/qall?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
+    return this.httpClient.get<any>(environment.api + '/api/tqall?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
   }
 
   getmcoopcashAccount(accnumber) {

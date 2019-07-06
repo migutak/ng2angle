@@ -197,6 +197,12 @@ export class ActivityLogComponent implements OnInit {
     });
   }
 
+  copyToClipboard(element) {
+    element.select();
+    document.execCommand('copy');
+    
+  }
+
   getwatchcard(cardacct) {
     this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
       this.accountdetails = data[0];

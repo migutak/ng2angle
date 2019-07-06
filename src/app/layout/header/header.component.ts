@@ -125,7 +125,7 @@ export class HeaderComponent implements OnInit {
 
     logout() {
         swal({
-            title: 'Are you sure?',
+            title: (this.user.username).toUpperCase() + ',' + '  are you sure?',
             imageUrl: "assets/img/user/coop.jpg",
             text: 'You want to logout!',
             showCancelButton: true,

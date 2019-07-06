@@ -157,8 +157,8 @@
 
         <li  class="nav-item d-none d-md-block">
                
-            <a  title="Logout" class="nav-link" (click)="logout()"> <span style="color: white; margin-right: 10px; font-weight: 900; text-transform:uppercase;"><strong>{{user.username}}    </strong></span>
-                <em (click)="logout()" class="icon-user"></em>
+            <a  title="Logout" class="nav-link" (click)="logout()"> <span style="color: white; margin-right: 10px; font-weight: 900; text-transform:uppercase;"><strong>{{user.username}} | {{user.role}}   </strong></span>
+                <em  (click)="logout()" class="icon-user"></em>
             </a>
         </li>
 

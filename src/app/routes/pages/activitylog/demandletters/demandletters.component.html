@@ -14,6 +14,7 @@
               <div class="panel-body">
                 <form class="form-horizontal" autocomplete="off">
                   <div class="form-group row">
+                      
                     <label class="col-xl-2 col-form-label">Demand Letter Type</label>
                     <div class="col-xl-4">
                       <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand" #demand="ngModel"
@@ -74,8 +75,11 @@
                     </div>
                   <div class="form-group row">
                       <label class="col-xl-2 col-form-label">Cellphone Number</label>
+                      
+                        
                       <div class="col-xl-4">
-                        <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
+                          <button class="btn btn-success btn-sm" (click)="handleClick()">Paste</button>
+                        <input value="{{clipText}}" class="form-control" type="number" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
                           #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
   
                           <datalist id="cellnumber">

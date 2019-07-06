@@ -24,18 +24,21 @@
           <p *ngIf="searchText.errors?.minlength">minimum of four(4) search characters is required</p>
         </form>
       </div>
-      <ag-grid-angular 
-        #agGrid class="ag-angle"
-        style="width: 100%; height: 600px;"
+      <ag-grid-angular
+      #agGrid  class="ag-theme-balham"
+        style="width: 100%; height: 660px;"
         [gridOptions]="gridOptions"
-        (gridReady)="gridReady($event)"
+  
         [columnDefs]="columnDefs"
-        enableSorting="true"
-        enableFilter="true"
+                    
+                     [enableFilter]="true"
+                     [frameworkComponents]="frameworkComponents"
+    
+  
+        [enableSorting]="true"
         enableColResize="true"
-        [overlayLoadingTemplate]="overlayLoadingTemplate"
-        [overlayNoRowsTemplate]="overlayNoRowsTemplate"
-        (rowDoubleClicked)='onRowDoubleClicked($event)'>
+        (gridReady)="gridReady($event)"  [overlayLoadingTemplate]="overlayLoadingTemplate"
+        [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
     </div>
   </div>
