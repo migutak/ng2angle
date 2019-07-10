@@ -116,7 +116,7 @@ export class ZerobalanceComponent implements OnInit {
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=watchcc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
   }
 
   onQuickFilterChanged($event) {

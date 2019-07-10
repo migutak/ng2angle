@@ -72,7 +72,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let d of sms">
+                        <tr *ngFor="let d of sms | paginate: { itemsPerPage: 5, currentPage: p }">
                             <td><strong>{{d.accnumber}}</strong></td>
                             <td>{{d.message}}</td>
                             <td>{{d.datesent}}</td>
@@ -81,6 +81,7 @@
                                 <span class="badge badge-success">{{d.sent}}</span>
                             </td>
                         </tr>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </tbody>
                 </table>
             </div>

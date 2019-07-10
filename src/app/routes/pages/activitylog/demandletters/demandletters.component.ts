@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders  } from 'ng2-file-upload';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
 const URL = environment.valor;
 
@@ -20,7 +21,7 @@ export class DemandLettersComponent implements OnInit {
   accnumber: string;
   custnumber: string;
   accountdetails: any;
-  guarantors: [];
+  guarantors: any = [];
   teles: any = [];
   emails: any = [];
   addresses: any = [];
@@ -28,18 +29,33 @@ export class DemandLettersComponent implements OnInit {
   model: any = {};
   bodyletter: any = {};
   letterbody: any = {};
+  emaildata: any = {};
+  demandhisdetails = {};
   filepath: string;
   demands: any;
   file: string;
   smsMessage: string;
   username: string;
   sys: string;
+  section: string;
+  autodial_telnumber: string;
+  uploadedfilepath: string;
+  demandtosend: string;
+  guarantoremails = '';
   // tslint:disable-next-line:max-line-length
   itemsDemands: Array<string> = ['overduecc', 'prelistingcc', 'suspension', 'Demand1', 'Demand2', 'Prelisting', 'PostlistingSecured', 'PostlistingUnsecured', 'PostlistingUnsecuredcc', 'Day90', 'Day40', 'Day30', 'prelistingremedial'];
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
+
+  public config: ToasterConfig =
+    new ToasterConfig({
+      showCloseButton: true,
+      tapToDismiss: false,
+      positionClass: 'toast-top-right',
+      animation: 'fade'
+    });
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
@@ -49,10 +65,23 @@ export class DemandLettersComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
+  currentDate() {
+    const currentDate = new Date();
+    let day = '' + currentDate.getDate();
+    let month = '' + (currentDate.getMonth() + 1);
+    const year = currentDate.getFullYear();
+
+    if (month.length < 2) { month = '0' + month; }
+    if (day.length < 2) { day = '0' + day; }
+
+    return year + '-' + month + '-' + day;
+  }
+
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService,
     private spinner: NgxSpinnerService,
+    public toasterService: ToasterService,
     ) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -156,6 +185,20 @@ export class DemandLettersComponent implements OnInit {
       this.model.postcode = data[0].postcode;
       this.model.emailaddress = data[0].emailaddress;
       this.model.celnumber = data[0].celnumber;
+      this.section = data[0].section;
+      // tslint:disable-next-line:max-line-length
+      this.autodial_telnumber = this.accountdetails.cellnumber || this.accountdetails.mobile || this.accountdetails.phonenumber || this.accountdetails.telnumber || this.accountdetails.celnumber;
+
+
+      if (this.guarantors || this.guarantors.length > 0) {
+        // loop
+        for (let i = 0; i < this.guarantors.length; i++) {
+          this.guarantoremails += this.guarantors[i].email + ',';
+        }
+      }
+
+      // hide spinner
+      this.spinner.hide();
     });
   }
 
@@ -217,6 +260,18 @@ export class DemandLettersComponent implements OnInit {
     } else {
       this.openletter(inletter);
     }
+  }
+
+  popsuccessToast(msg) {
+    this.toasterService.pop('success', 'Success', msg);
+  }
+
+  poperrorToast(error) {
+    this.toasterService.pop('error', 'Error', error);
+  }
+
+  popinfoToast(info) {
+    this.toasterService.pop('info', 'Info', info);
   }
 
   openletter(letter) {
@@ -335,17 +390,11 @@ export class DemandLettersComponent implements OnInit {
   }
 
   processletter(letter: any, accnumber, emailaddress) {
-    // check if logged in
-    this.ecolService.ifLogged();
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
-
     this.ecolService.getAccount(accnumber).subscribe(data => {
       if (data && data.length > 0) {
-        // console.log('getAccount=>', data);
         this.bodyletter.demand = letter.demand;
-        this.bodyletter.showlogo = letter.showlogo;
-        this.bodyletter.format = letter.format;
+        this.bodyletter.showlogo = true;
+        this.bodyletter.format = 'pdf';
         this.bodyletter.cust = data[0].custnumber;
         this.bodyletter.acc = data[0].accnumber;
         this.bodyletter.custname = data[0].client_name;
@@ -355,23 +404,31 @@ export class DemandLettersComponent implements OnInit {
         this.bodyletter.branchname = data[0].branchname;
         this.bodyletter.branchcode = data[0].branchcode;
         this.bodyletter.manager = data[0].manager;
+        this.bodyletter.branchemail = data[0].branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>';
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = new Date();
         this.bodyletter.guarantors = data[0].guarantors;
+        this.bodyletter.settleaccno = data[0].settleaccno || '00000000000000';
+        this.bodyletter.section = this.section;
+        this.bodyletter.kbbr = data[0].kbbr;
+        this.bodyletter.instamount = data[0].instamount;
+        this.bodyletter.oustbalance = data[0].oustbalance;
+        this.bodyletter.currency = data[0].currency;
         // Get all cust accounts
         this.ecolService.getcustwithAccount(data[0].custnumber).subscribe(accounts => {
-          // add accounts to the array
           this.bodyletter.accounts = accounts;
-          // console.log(this.bodyletter);
-          const emaildata = {
+          this.emaildata = {
             name: data[0].client_name,
             email: emailaddress,
-            title: letter.demand
+            branchemail: this.bodyletter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>',
+            title: letter.demand,
+            guarantor: this.bodyletter.guarantors || 0
           };
+          // console.log('emaildata...', this.emaildata);
           // generate letter
-          this.generateletter(this.bodyletter, emaildata);
+          this.generateletter(this.bodyletter);
         }, error => {
-          console.log('error==>', error);
+          console.log('getcustwithAccount error==>', error);
           swal('Error!', 'unable to retrieve customer accounts!', 'error');
         });
       } else {
@@ -383,17 +440,20 @@ export class DemandLettersComponent implements OnInit {
     });
   }
 
-  generateletter(letter, emaildata: any) {
+  generateletter(letter) {
+    swal.close();
+    this.popinfoToast('Letter Queued to be sent');
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
         //
-        swal('Success!', 'Letter generated!', 'success');
+        // swal('Success!', 'Letter generated!', 'success');
+        this.popsuccessToast('Letter generated and queued to be sent');
         // save to history
-        const bulk = {
+        this.demandhisdetails = {
           'accnumber': this.model.accnumber,
           'custnumber': this.model.custnumber,
           'address': this.model.addressline1,
-          'email': this.model.email,
+          'email': this.model.emailaddress,
           'telnumber': this.model.telnumber,
           'filepath': uploaddata.message,
           'filename': uploaddata.filename,
@@ -402,32 +462,49 @@ export class DemandLettersComponent implements OnInit {
           'byemail': this.model.sendemail,
           'byphysical': this.model.sendphysical,
           'bypost': this.model.sendpostal,
-          'demand': letter.demand
+          'demand': letter.demand,
+          'customeremail': this.model.emailaddress,
+          'status': 'queued',
+          'reissued': 'N',
+          'guarantorsno': this.guarantors.length || [],
+          'guarantorsemail': this.guarantoremails,
+          'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
         };
         //
-        this.demandshistory(bulk);
-        // send email
-        // add file full path
-        emaildata.file = uploaddata.filepath;
-        // send sms
-        this.ecolService.getsmsmessage(letter.demand).subscribe(result => {
-          if (result && result.length > 0) {
-            this.smsMessage = result[0].message;
-          } else {
-            // tslint:disable-next-line:max-line-length
-            this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
-          }
+        this.emaildata.file = uploaddata.message;
+        // use uploaded fie on email
+        if (this.model.uploadedfile) {
+          this.emaildata.file = this.uploadedfilepath;
+        }
 
-          const smsdata = {
-            'demand': letter.demand,
-            'custnumber': this.model.custnumber,
-            'telnumber': this.model.telnumber,
-            'owner': this.username,
-            'message': this.smsMessage,
-          };
-          this.sendsms(smsdata);
-        }, error => {
-          console.log(error);
+        this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
+          if (response.result === 'fail') {
+            swal.close();
+            this.poperrorToast('Letter NOT sent on email!');
+          } else {
+            // add to history
+            this.demandshistory(this.demandhisdetails);
+            this.getdemandshistory(this.accnumber);
+            // send sms
+            this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+              const sms = respo.smstemplate;
+              this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+              const smsdata = {
+                'demand': letter.demand,
+                'custnumber': this.model.custnumber,
+                'accnumber': this.model.accnumber,
+                'telnumber': this.model.celnumber,
+                'owner': this.username,
+                'message': this.smsMessage,
+              };
+              this.sendsms(smsdata);
+            }, error => {
+              console.log(error);
+            });
+
+            swal.close();
+            this.popsuccessToast('Letter sent on email!');
+          }
         });
       } else {
         // error in letter generation
@@ -540,7 +617,6 @@ export class DemandLettersComponent implements OnInit {
   }
 
   sendsms(smsdata) {
-    console.log('sendsms==data==', smsdata);
     this.ecolService.sendsms(smsdata).subscribe(result => {
       swal('Successful!', 'Demand letter SMS sent!', 'success');
     }, error => {
@@ -552,7 +628,6 @@ export class DemandLettersComponent implements OnInit {
   demandshistory(body) {
     console.log('demandshistory', body);
     this.ecolService.demandshistory(body).subscribe(data => {
-      console.log('saved demandshistory==', data);
       this.getdemandshistory(this.accnumber);
     });
   }

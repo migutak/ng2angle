@@ -102,7 +102,6 @@ export class AllcardsComponent implements OnInit {
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
       this.apiService(20, params.startRow).subscribe(response => {
-        console.log(response);
         params.successCallback(
           response, this.noTotal
         );

@@ -26,6 +26,7 @@ export class SmsComponent implements OnInit {
   account: any = [];
   charactersRemaining = 0;
   iscard: Boolean =  false;
+  p = 1;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,

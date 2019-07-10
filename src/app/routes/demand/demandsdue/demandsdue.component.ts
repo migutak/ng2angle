@@ -53,12 +53,12 @@ export class DemandsdueComponent implements OnInit {
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbaOUSTBALANCElance',
+      field: 'OUSTBALANCE',
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'totalarreaTOTALARREARSrs',
+      field: 'TOTALARREARS',
       valueFormatter: this.currencyFormatter
     },
     {
@@ -68,6 +68,10 @@ export class DemandsdueComponent implements OnInit {
     {
       headerName: 'EMAILADDRESS',
       field: 'EMAILADDRESS'
+    },
+    {
+      headerName: 'DATEDUE',
+      field: 'DATEDUE'
     },
     {
       headerName: 'DEMANDLETTER',

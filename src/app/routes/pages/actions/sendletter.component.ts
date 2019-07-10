@@ -312,7 +312,7 @@ export class SendLetterComponent implements OnInit {
         this.bodyletter.branchname = data[0].branchname;
         this.bodyletter.branchcode = data[0].branchcode;
         this.bodyletter.manager = data[0].manager;
-        this.bodyletter.branchemail = data[0].branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>';
+        this.bodyletter.branchemail = data[0].branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>';
         this.bodyletter.ccy = data[0].currency;
         this.bodyletter.demand1date = new Date();
         this.bodyletter.guarantors = data[0].guarantors;
@@ -328,7 +328,7 @@ export class SendLetterComponent implements OnInit {
           this.emaildata = {
             name: data[0].client_name,
             email: emailaddress,
-            branchemail: this.bodyletter.branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>',
+            branchemail: this.bodyletter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>',
             title: letter.demand,
             guarantor: this.bodyletter.guarantors || 0
           };
@@ -376,7 +376,7 @@ export class SendLetterComponent implements OnInit {
           'reissued': 'N',
           'guarantorsno': this.guarantors.length || [],
           'guarantorsemail': this.guarantoremails,
-          'sendemail': letter.branchemail || 'Collection Support <collectionssupport@co-opbank.co.ke>'
+          'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
         };
         //
         this.emaildata.file = uploaddata.message;
