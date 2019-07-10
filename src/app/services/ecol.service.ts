@@ -101,6 +101,11 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+  insertbulknotes(body) {
+    const url = environment.nodeapi + '/notes/bulknotes';
+    return this.httpClient.post(url, body);
+  }
+
   putnote(body) {
     const url = environment.api + '/api/notehis';
     return this.httpClient.put(url, body);
