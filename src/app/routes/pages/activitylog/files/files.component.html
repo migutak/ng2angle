@@ -44,11 +44,11 @@
                   <p class="text-bold">Upload options</p>
                   <label for="file1" class="file-upload">
                     <button  class="mr-1 mb-1 btn btn-outline-info btn-block">Select Multiple</button>
-                    <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
+                    <input accept=".xls, .xlsx, .docx, .doc, .pdf, .eml, txt" id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
                   </label>
                   <label for="file2" class="file-upload">
                     <button class="btn btn-outline-success btn-block">Select Single</button>
-                    <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
+                    <input accept=".xls, .xlsx, .docx, .doc, .pdf, .eml, txt" id="file2" type="file" ng2FileSelect [uploader]="uploader" />
                   </label>
                 </div>
               </div>
