@@ -32,7 +32,7 @@ export class ViewallComponent implements OnInit {
 
     this.overlayLoadingTemplate =
       // tslint:disable-next-line:max-line-length
-      '<img src="assets/img/user/loader.gif" />';
+      '<img src="assets/img/user/cooop1.gif" />';
     this.overlayNoRowsTemplate =
       '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>';
 

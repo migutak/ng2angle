@@ -179,7 +179,7 @@ export class ActivityActionComponent implements OnInit {
 
   getwatchcardstatic(cardacct) {
     this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
-      if (data) {
+      if (data  && data.length>0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
         this.account.cmdstatus = data[0].cmdstatus;

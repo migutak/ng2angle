@@ -22,7 +22,7 @@ export const environment = {
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   // filesapi: 'http://localhost:4200/api',
   filesapi: 'http://localhost:3100/filesapi', // activityupload
-  accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',
+  accplanlink: 'http://localhost:3001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   birt: 'http://ecollect.inteligen.co.ke:8090/birt',
   manuals_path: '/C:/Users/MAROX/Documents/',

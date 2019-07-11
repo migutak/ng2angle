@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 import { EcolService } from '../../../services/ecol.service';
-import { getDefaultService } from 'selenium-webdriver/chrome';
 import { environment } from '../../../../environments/environment';
 
 const ADLOGIN = environment.adlogin;

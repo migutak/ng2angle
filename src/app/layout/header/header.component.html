@@ -3,6 +3,9 @@
     li:hover {
         cursor: pointer;
     }
+    a:hover {
+        cursor: pointer;
+    }
     </style>
 
 
@@ -23,6 +26,8 @@
     <!-- END navbar header-->
     <!-- START Left navbar-->
     <ul class="navbar-nav mr-auto flex-row">
+
+            
         <li class="nav-item">
             <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
             <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize=""
@@ -35,6 +40,13 @@
                 <em class="fas fa-bars"></em>
             </a>
         </li>
+
+        <li class="nav-item">
+                    
+                <img title="Cooperative Bank of Kenya" style="max-width:40% !important; margin-top:6px !important;"  [src]="user.picture" alt="Avatar" />
+                
+              </li>
+
         <!-- START User avatar toggle-->
         <!--<li class="nav-item d-none d-md-block">
             Button used to collapse the left sidebar. Only visible on tablet and desktops
@@ -149,18 +161,9 @@
         </li>
         <!-- END Theme button-->
 
-            <li class="nav-item">
-                    
-              <img title="Cooperative Bank of Kenya" style="max-width:40% !important; margin-top:6px !important;"  [src]="user.picture" alt="Avatar" />
-              
-            </li>
+        
 
-        <li  class="nav-item d-none d-md-block">
-               
-            <a  title="Logout" class="nav-link" (click)="logout()"> <span style="color: white; margin-right: 10px; font-weight: 900; text-transform:uppercase;"><strong>{{user.username}} | {{user.role}}   </strong></span>
-                <em  (click)="logout()" class="icon-user"></em>
-            </a>
-        </li>
+        
 
         <!-- User logout
         <li class="nav-item">
@@ -172,6 +175,30 @@
 
         
     </ul>
+    
+            <div class="btn-group" dropdown>
+                    <a  class="nav-link" dropdownToggle><span style="color: white; margin-right: 10px; font-weight: 900; text-transform:uppercase;"><strong>{{user.username}} | {{user.role}}   </strong></span> <em  class="icon-user"></em>
+                    </a>
+                    <div *dropdownMenu class="dropdown-menu animated bounceInUp" role="menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div>
+   
+
+
+    
+                
+                        
+                   
+               
+            
+            
+
+    
+
     <!-- END Right Navbar-->
 
     <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch>
