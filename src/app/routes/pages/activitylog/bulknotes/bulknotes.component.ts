@@ -41,6 +41,7 @@ export class BulknotesComponent implements OnInit {
     this.uploader.onBuildItemForm = (item, form) => {
       form.append('owner', this.username);
       form.append('custnumber', this.custnumber);
+      form.append('sys', this.sys);
     };
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
@@ -82,25 +83,13 @@ export class BulknotesComponent implements OnInit {
     const data = JSON.parse(response); // success server response
     // console.log(data);
     const bulknotes = data.notes;
+    const filename = data.files[0].originalname;
     if (data.success === true) {
-
-      /*for (let x = 0; x < bulknotes.length; x++) {
-        if (this.sys === 'cc' || this.sys === 'watchcc') {
-          bulknotes[x].custnumber = bulknotes[x].accnumber;
-          bulknotes[x].owner = this.username;
-          bulknotes[x].notesrc = 'uploaded a note';
-        } else {
-          bulknotes[x].custnumber = (bulknotes[x].accnumber).substring(5, 12);
-          bulknotes[x].owner = this.username;
-          bulknotes[x].notesrc = 'uploaded a note';
-        }
-      }*/
-
       if (bulknotes.length < 2000) {
         swal({
-          type: 'warning',
-          title: 'File received!',
-          text: bulknotes.length + ' rows being processed',
+          type: 'success',
+          title: 'ALL Good',
+          text: 'File: ' + filename + ' with ' + bulknotes.length + ' rows has been processed!',
         });
       } else {
         swal({

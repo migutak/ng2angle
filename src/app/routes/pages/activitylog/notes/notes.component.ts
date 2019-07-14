@@ -22,6 +22,7 @@ export class NotesComponent implements OnInit {
   bulknotelength: number;
   noteslength: number;
   model: any = {};
+  p = 1;
   private selectedLink: any = 'collector';
   pager = {
     limit: 5, // default number of notes
