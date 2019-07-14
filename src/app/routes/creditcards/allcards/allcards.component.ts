@@ -126,7 +126,6 @@ export class AllcardsComponent implements OnInit {
     }
     this.ecolService.searchtotalcardswatch(this.model.searchText).subscribe(viewall => {
       this.searchTotal = viewall[0].TOTALVIEWALL;
-      console.log(this.searchTotal);
       this.clear();
 
       this.dataSource = {
@@ -141,17 +140,16 @@ export class AllcardsComponent implements OnInit {
       };
 
       this.gridApi.setDatasource(this.dataSource);
-      });
+    });
 
   }
 
   searchService(searchstring, pagesize, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/cards_watch_stage/searchcardswatch?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
-    /*this.http.get<any>(environment.api + '/api/cards_watch_stage/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-    });*/
+    // return this.http.get<any>(environment.api + '/api/cards_watch_stage/searchcardswatch?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tcards/searchall?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
+
   }
 
   clear() {

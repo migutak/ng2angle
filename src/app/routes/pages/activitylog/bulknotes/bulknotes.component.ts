@@ -80,7 +80,7 @@ export class BulknotesComponent implements OnInit {
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     const data = JSON.parse(response); // success server response
-    console.log(data);
+    // console.log(data);
     const bulknotes = data.notes;
     if (data.success === false) {
       swal({
@@ -100,32 +100,18 @@ export class BulknotesComponent implements OnInit {
           bulknotes[x].notesrc = 'uploaded a note';
         }
       }
-      console.log(bulknotes);
-      if (bulknotes.length < 10000) {
+
+      if (bulknotes.length < 2000) {
         swal({
           type: 'warning',
           title: 'File received!',
           text: bulknotes.length + ' rows being processed',
         });
-        this.ecolService.insertbulknotes(bulknotes).subscribe(resp => {
-          console.log(resp);
-          swal({
-            type: 'success',
-            title: 'All Good!',
-            text: 'Excel bulk notes upload is a success',
-          });
-        }, error => {
-          swal({
-            type: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong with the entries!',
-          });
-        });
       } else {
         swal({
           type: 'error',
           title: 'Oops...',
-          text: 'File has too many rows. Max is 10,000 rows!',
+          text: 'File has too many rows. Max is 2,000 rows!',
         });
       }
     }

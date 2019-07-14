@@ -358,6 +358,9 @@ export class ActivityActionComponent implements OnInit {
         if (result.value) {
             // close tab
             window.close();
+        } else {
+          // reset
+          this.reset();
         }
     });
     }, error => {
@@ -380,7 +383,17 @@ export class ActivityActionComponent implements OnInit {
 
   reset() {
     this.spinner.show();
-    this.getaccount(this.accnumber);
+    if (this.sys === 'cc') {
+      this.getcard(this.accnumber);
+    } else if (this.sys === 'watchcc') {
+      this.getwatchcard(this.accnumber);
+    } else if (this.sys === 'mcoopcash') {
+      this.getmcoop(this.accnumber);
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
+    } else {
+      this.getaccount(this.accnumber);
+    }
   }
 
   changeAction(value) {
