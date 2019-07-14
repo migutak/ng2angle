@@ -82,14 +82,9 @@ export class BulknotesComponent implements OnInit {
     const data = JSON.parse(response); // success server response
     // console.log(data);
     const bulknotes = data.notes;
-    if (data.success === false) {
-      swal({
-        type: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong with the file!',
-      });
-    } else {
-      for (let x = 0; x < bulknotes.length; x++) {
+    if (data.success === true) {
+
+      /*for (let x = 0; x < bulknotes.length; x++) {
         if (this.sys === 'cc' || this.sys === 'watchcc') {
           bulknotes[x].custnumber = bulknotes[x].accnumber;
           bulknotes[x].owner = this.username;
@@ -99,7 +94,7 @@ export class BulknotesComponent implements OnInit {
           bulknotes[x].owner = this.username;
           bulknotes[x].notesrc = 'uploaded a note';
         }
-      }
+      }*/
 
       if (bulknotes.length < 2000) {
         swal({
@@ -114,6 +109,13 @@ export class BulknotesComponent implements OnInit {
           text: 'File has too many rows. Max is 2,000 rows!',
         });
       }
+
+    } else {
+      swal({
+        type: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong with the file!',
+      });
     }
   }
 

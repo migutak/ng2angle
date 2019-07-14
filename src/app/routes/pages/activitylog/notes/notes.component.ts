@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -17,6 +18,11 @@ export class NotesComponent implements OnInit {
   noteData: any = [];
   notes: any = [];
   username: string;
+  bulknote: any = [];
+  bulknotelength: number;
+  noteslength: number;
+  model: any = {};
+  private selectedLink: any = 'collector';
   pager = {
     limit: 5, // default number of notes
     current: 0, // current page
@@ -50,6 +56,16 @@ export class NotesComponent implements OnInit {
     });
     // this.data.currentMessage.subscribe(message => this.message = message)
     this.getAll(this.cust);
+    this.getbulknotes(this.cust);
+
+    this.model.noteselector = 'collector';
+  }
+
+  getbulknotes(cust) {
+    this.ecolservice.getbulknotes(cust).subscribe(data => {
+      this.bulknote = data[0];
+      this.bulknotelength = data[0].length;
+    });
   }
 
   getAll(cust) {
@@ -60,9 +76,10 @@ export class NotesComponent implements OnInit {
     // console.log('this.query ', this.query);
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
-      for (let i = 0; i < data.length; i ++) {
+      this.noteslength = data.length;
+      for (let i = 0; i < data.length; i++) {
         // tslint:disable-next-line:max-line-length
-        if (this.notes[i].OWNER === this.username && (this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() === ((this.notes[i].NOTEDATE).substring(0, 9) ).toUpperCase()) {
+        if (this.notes[i].OWNER === this.username && (this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() === ((this.notes[i].NOTEDATE).substring(0, 9)).toUpperCase()) {
           this.notes[i].showedit = true;
         } else {
           this.notes[i].showedit = false;
@@ -103,5 +120,15 @@ export class NotesComponent implements OnInit {
     });
   }
 
+  handleChange(e) {
+    this.selectedLink = e;
+  }
+
+  isSelected(name: string) {
+    if (!this.selectedLink) { // if no radio button is selected, always return false so every nothing is shown
+      return false;
+    }
+    return (this.selectedLink === name); // if current radio button is selected, return true, else return false
+  }
 }
 

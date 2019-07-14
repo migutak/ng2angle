@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,14 @@ export class EcolService {
       url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
     }
     return this.httpClient.get<any>(url);
+  }
+
+  getbulknotes(cust) {
+    // tslint:disable-next-line:max-line-length
+    const response2 = this.httpClient.get<any>(environment.mongo + '/api/notes?filter[where][custnumber]=' + cust + '&filter?[order]=notedate DESC');
+    // tslint:disable-next-line:max-line-length
+    // const response2 = this.httpClient.get<any>('http://192.168.0.28:3000/api/notes?filter[where][custnumber]=00');
+    return forkJoin([response2]);
   }
 
   getcmdstatus() {
