@@ -6,13 +6,14 @@ import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-
+import {AgGridModule} from 'ag-grid-angular/main';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
+import { ViewallComponent } from './routes/work/viewall/viewall.component';
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
@@ -25,6 +26,7 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     imports: [
         BrowserModule,
+        AgGridModule.withComponents([]),
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule, // required for ng2-tag-input ...

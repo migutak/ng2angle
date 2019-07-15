@@ -29,6 +29,8 @@
             "styles": [
               "src/app/core/preloader/preloader.scss",
               "src/styles.scss",
+              "./node_modules/ag-grid-community/dist/styles/ag-grid.css",
+              "./node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
               "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.base.css",
               "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.bootstrap.css",
               "node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css"

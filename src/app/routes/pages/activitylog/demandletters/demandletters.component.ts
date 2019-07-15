@@ -17,14 +17,14 @@ const URL = environment.valor;
 })
 export class DemandLettersComponent implements OnInit {
 
-  name = 'Angular';
+  
   clipText = '';
 
-  handleClick() {
-    navigator['clipboard'].readText().then(clipText => {
-      this.clipText = clipText;
-    });
-  }
+  // handleClick() {
+  //   navigator['clipboard'].readText().then(clipText => {
+  //     this.clipText = clipText;
+  //   });
+  // }
 
   accnumber: string;
   custnumber: string;

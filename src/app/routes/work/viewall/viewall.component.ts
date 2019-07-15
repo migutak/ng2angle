@@ -1,12 +1,7 @@
-
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
-import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
-import { environment } from '../../../../environments/environment';
+// src/app/my-grid-application/my-grid-application.component.ts
+import {Component, OnInit} from "@angular/core";
+import {GridOptions} from "ag-grid-community";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
-import * as $ from 'jquery';
-
 
 @Component({
   selector: 'app-viewall',
@@ -15,239 +10,138 @@ import * as $ from 'jquery';
 })
 export class ViewallComponent implements OnInit {
 
-  public overlayLoadingTemplate;
-  public overlayNoRowsTemplate;
-
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      enableSorting: true,
+    private gridOptions: GridOptions ;
+    constructor() {
+        this.gridOptions = <GridOptions>{
+          enableSorting: true,
           enableFilter: true,
-      headerHeight: 40,
-      pagination: true,
+          unSortIcon: true,
+      suppressCellSelection: true,
+      enableColResize: true,
+      domLayout: 'autoHeight',
       rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
-
-    this.overlayLoadingTemplate =
-      // tslint:disable-next-line:max-line-length
-      '<img src="assets/img/user/cooop1.gif" />';
-    this.overlayNoRowsTemplate =
-      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>';
-
-  }
-
-
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-  resizeEvent = 'resize.ag-grid';
-  $win = $(window);
-  new = true;
-  username: string;
-  searchText: string;
-  model: any = {};
-  noTotal: number;
-
-  gridOptions: GridOptions;
-  gridApi: GridApi;
-  // private rowClassRules;
-
-  columnDefs = [
-    {
-      headerName: 'ACCNUMBER',
-      field: 'accnumber',
-      filter: "agTextColumnFilter",
-      cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+      context: {},
+      pagination: true,
+      paginationPageSize: 10,
+      onGridReady: (params) => {
+        params.api.sizeColumnsToFit();
       },
-      // resizable: true,
-      // checkboxSelection: true
-    },
-    {
-      headerName: 'CUSTNUMBER',
-      field: 'custnumber',
-      // resizable: true, sortable: true, filter: true
-    },
-    {
-      headerName: 'CUSTNAME',
-      field: 'client_name'
-      // width: 450,
-      // resizable: true
-    },
-    {
-      headerName: 'DAYSINARREARS',
-      field: 'daysinarr',
-      cellStyle: function (params) {
-        if (params.value < '30') {
-          return { color: 'red' };
-        } else if (params.value > '90') {
-          return { color: 'red' };
-        } else {
-          return null;
-        }
-      },
-      // resizable: true
-    },
-    {
-      headerName: 'TOTALARREARS',
-      field: 'instamount',
-      // resizable: true,
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
-      valueFormatter: this.currencyFormatter
-      // resizable: true
-    },
-    {
-      headerName: 'BUCKET',
-      field: 'bucket'
-      // resizable: true
-    },
-    {
-      headerName: 'AROCODE',
-      field: 'arocode'
-      // resizable: true
-    },
-    {
-      headerName: 'RROCODE',
-      field: 'rrocode',
-      // resizable: true,
-      // filter: true
-    },
-    {
-      headerName: 'SECTION',
-      field: 'section'
-    },
-    {
-      headerName: 'COLOFFICER',
-      field: 'colofficer'
+      onGridSizeChanged: (params) => {
+        params.api.sizeColumnsToFit();
+      }
+        };
+        this.gridOptions.columnDefs = [
+          {
+            headerName: 'ACCNUMBER',
+            field: 'accnumber',
+            // filter: "agTextColumnFilter",
+            width: 90,
+            // cellRenderer: function (params) {
+            //   return '<a  href="#" target="_blank">' + params.value + '</a>';
+            // },
+            // resizable: true,
+            // checkboxSelection: true
+          },
+          {
+            headerName: 'CUSTNUMBER',
+            field: 'custnumber',
+            width: 90,
+            // resizable: true, sortable: true, filter: true
+          },
+          {
+            headerName: 'CUSTNAME',
+            field: 'client_name',
+            width: 90,
+            // width: 450,
+            // resizable: true
+          },
+          {
+            headerName: 'DAYSINARREARS',
+            field: 'daysinarr',
+            width: 90,
+            cellStyle: function (params) {
+              if (params.value < '30') {
+                return { color: 'red' };
+              } else if (params.value > '90') {
+                return { color: 'red' };
+              } else {
+                return null;
+              }
+            },
+            // resizable: true
+          },
+          {
+            headerName: 'TOTALARREARS',
+            field: 'instamount',
+            width: 90,
+            // resizable: true,
+            // valueFormatter: this.currencyFormatter
+          },
+          {
+            headerName: 'OUSTBALANCE',
+            field: 'oustbalance',
+            width: 90,
+            // valueFormatter: this.currencyFormatter
+            // resizable: true
+          },
+          {
+            headerName: 'BUCKET',
+            field: 'bucket',
+            width: 90,
+            // resizable: true
+          },
+          {
+            headerName: 'AROCODE',
+            field: 'arocode',
+            width: 90,
+            // resizable: true
+          },
+          {
+            headerName: 'RROCODE',
+            field: 'rrocode',
+            width: 90,
+            // resizable: true,
+            // filter: true
+          },
+          {
+            headerName: 'SECTION',
+            field: 'section',
+            width: 90,
+          },
+          {
+            headerName: 'COLOFFICER',
+            field: 'colofficer',
+            width: 90,
+          },
+        ];
+        this.gridOptions.rowData = [
+            {accnumber: '123456', custnumber: '123490' , client_name:'random', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'pending',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123457', custnumber: '123491' , client_name:'laptop', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'complete',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123458', custnumber: '123492' , client_name:'machine', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'processing',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'vomwega',},
+            {accnumber: '123459', custnumber: '123493' , client_name:'coopbank', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'stall',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123450', custnumber: '123494' , client_name:'loan', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'pending',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123451', custnumber: '123495' , client_name:'calendaer', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'complete',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'vomwega',},
+            {accnumber: '123452', custnumber: '123496' , client_name:'vehicle', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'pending',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123453', custnumber: '123497' , client_name:'jkia', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'pending',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'vomwega',},
+            {accnumber: '123454', custnumber: '123498' , client_name:'raila', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'pending',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123455', custnumber: '123499' , client_name:'uhuru', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'complete',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'vomwega',},
+            {accnumber: '123440', custnumber: '123400' , client_name:'kalonzo', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'complete',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123441', custnumber: '123401' , client_name:'wetangular', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'test',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123442', custnumber: '123402' , client_name:'ruto', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'writeoff',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'vomwega',},
+            {accnumber: '123443', custnumber: '123403' , client_name:'kimani', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'complete',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'tmasha',},
+            {accnumber: '123444', custnumber: '123404' , client_name:'murkomen', daysinarr:'20', instamount:'30000', oustbalance:'12000', bucket:'writeoff',  arocode:'coop', rrocode:'test',  section:'test',  colofficer:'vomwega',},
+        ]
     }
-  ];
-
-  rowData1: any;
-
-
-  dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
-      this.apiService(20, params.startRow).subscribe(response => {
-        params.successCallback(
-          response.rows, response.total
-        );
-        this.gridOptions.api.hideOverlay();
-      });
-    }
-  };
-
-  currencyFormatter(params) {
-    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
-  onRowDoubleClicked(event: any) {
-    this.model = event.node.data;
-    // console.log(this.model);
-    // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
-  }
-
+    public ngOnInit(): void {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
   
-
-  // onQuickFilterChanged($event) {
-  //   // this.gridOptions.api.setQuickFilter($event.target.value);
-  //   this.searchText = $event.target.value;
-  // }
-
-  onSearch() {
-    if (this.model.searchText === undefined) {
-      return;
+      /*this.ecolService.totaltqall().subscribe(viewall => {
+        this.noTotal = viewall[0].TOTALVIEWALL;
+      });*/
     }
-    this.clear();
-    this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
-          params.successCallback(
-            response.rows, response.total
-          );
-          this.gridOptions.api.hideOverlay();
-        });
-      }
-    };
 
-    this.gridApi.setDatasource(this.dataSource);
-  }
-
-  clear() {
-    const ds = {
-      getRows(params: any) {
-        params.successCallback([], 0);
-      }
-    };
-    this.gridOptions.api.setDatasource(ds);
-  }
-
-  reset() {
-    this.gridApi.showLoadingOverlay();
-    this.clear();
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiService(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.rows, response.total
-          );
-          this.gridOptions.api.hideOverlay();
-        });
-      }
-    };
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-  }
-
-  public ngOnInit(): void {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
-
-    /*this.ecolService.totaltqall().subscribe(viewall => {
-      this.noTotal = viewall[0].TOTALVIEWALL;
-    });*/
-  }
-
-  gridReady(params) {
-    this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-    this.gridOptions.api.showLoadingOverlay();
-  }
-
-  apiService(perPage, currentPos) {
-    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-    return this.http.get<any>(environment.api + '/api/tqall/paged?limit=' + perPage + '&page=' + currentPos);
-  }
-  
-
-  apiServiceSearch(perPage, currentPos) {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
-  }
-
+    getSelectedRows(e){
+      console.log('e')
+    }
 }
