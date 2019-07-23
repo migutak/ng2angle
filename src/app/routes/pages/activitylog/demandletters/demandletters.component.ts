@@ -19,6 +19,7 @@ const URL = environment.valor;
 export class DemandLettersComponent implements OnInit {
 
   accnumber: string;
+  demandid: string;
   custnumber: string;
   accountdetails: any;
   guarantors: any = [];
@@ -314,6 +315,64 @@ export class DemandLettersComponent implements OnInit {
               // sucess
               if (generateletterdata.result === 'success') {
                 swal('Good!', generateletterdata.message, 'success');
+
+                 // check if preview to send
+                 if (this.model.previewtosend) {
+                  // add to his
+                  this.demandhisdetails = {
+                    'accnumber': this.model.accnumber,
+                    'custnumber': this.model.custnumber,
+                    'address': this.model.addressline1,
+                    'email': this.model.emailaddress,
+                    'telnumber': this.model.telnumber,
+                    'filepath': generateletterdata.message,
+                    'filename': generateletterdata.filename,
+                    'datesent': new Date(),
+                    'owner': this.username,
+                    'byemail': 'N',
+                    'byphysical': 'Y',
+                    'bypost': 'N',
+                    'demand': letter.demand,
+                    'customeremail': this.model.emailaddress,
+                    'status': 'sent',
+                    'reissued': 'N',
+                    'guarantorsno': this.guarantors.length || [],
+                    'guarantorsemail': this.guarantoremails,
+                    'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
+                  };
+
+                  // console.log('to history ', this.demandhisdetails);
+                  this.demandshistory(this.demandhisdetails);
+                  // send sms
+                  this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+                    const sms = respo.smstemplate;
+                    this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+                    const smsdata = {
+                      'demand': letter.demand,
+                      'custnumber': this.model.custnumber,
+                      'accnumber': this.model.accnumber,
+                      'telnumber': this.model.celnumber,
+                      'owner': this.username,
+                      'message': this.smsMessage,
+                    };
+                    // console.log(smsdata);
+                    // this.sendsms(smsdata);
+                  }, error => {
+                    console.log(error);
+                  });
+
+                  // update status
+                  const status = {
+                    id: this.demandid,
+                    from : 'loans',
+                    datesent : this.currentDate(),
+                    sentby: this.username
+                  };
+                  this.ecolService.demandstatus(status).subscribe(ddstatusdata => {
+                    console.log(this.demandid + ' status updated ');
+                  }, error => {console.log(error); });
+                }
+                this.popsuccessToast('Letter ready for preview');
                 this.downloadDemand(generateletterdata.message, generateletterdata.filename);
               } else {
                 swal('Error!', 'Error occured during letter generation!', 'error');
@@ -364,7 +423,7 @@ export class DemandLettersComponent implements OnInit {
           this.letterbody.OUT_BALANCE = carddata[0].outbalance,
           this.letterbody.demand1date = new Date();
 
-        console.log('letterbody', this.letterbody);
+        // console.log('letterbody', this.letterbody);
         // call generate letter api
         this.ecolService.generateLetter(this.letterbody).subscribe(data => {
           // sucess

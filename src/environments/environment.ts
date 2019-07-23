@@ -17,7 +17,7 @@ export const environment = {
   uploadurl: 'http://ecollect.inteligen.co.ke:4000',
   demanddownload: 'https://ecollectweb.co-opbank.co.ke/demanddownload',
   valor: 'http://ecollect.inteligen.co.ke:3000/api/',
-  xlsuploadapi: 'http://localhost:3001/xlsupload/',
+  xlsuploadapi: 'http://localhost:5001/xlsupload/',
   metrics: 'http://localhost:8000/appmetrics-dash',
   xlstemplate: 'C:\\Users\\Kevin\\Documents\\upload_notes.xlsx',
   applink: 'http://localhost:4500',

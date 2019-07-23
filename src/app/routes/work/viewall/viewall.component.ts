@@ -181,7 +181,6 @@ export class ViewallComponent implements OnInit {
         // params.endRow : End Page
         //
         this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
           params.successCallback(
             response.rows, response.total
           );

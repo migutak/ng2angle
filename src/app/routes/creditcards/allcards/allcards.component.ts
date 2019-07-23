@@ -102,8 +102,9 @@ export class AllcardsComponent implements OnInit {
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
       this.apiService(20, params.startRow).subscribe(response => {
+        console.log(response);
         params.successCallback(
-          response, this.noTotal
+          response.data, response.totalRecords
         );
       });
     }
@@ -124,23 +125,20 @@ export class AllcardsComponent implements OnInit {
     if (this.model.searchText === undefined) {
       return;
     }
-    this.ecolService.searchtotalcardswatch(this.model.searchText).subscribe(viewall => {
-      this.searchTotal = viewall[0].TOTALVIEWALL;
-      this.clear();
 
-      this.dataSource = {
-        getRows: (params: IGetRowsParams) => {
-          this.searchService(this.model.searchText, 20, params.startRow).subscribe(searchdata => {
-            console.log(searchdata);
-            params.successCallback(
-              searchdata, this.searchTotal
-            );
-          });
-        }
-      };
+    this.clear();
 
-      this.gridApi.setDatasource(this.dataSource);
-    });
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        this.searchService(this.model.searchText, 20, params.startRow).subscribe(searchdata => {
+          params.successCallback(
+            searchdata.data, searchdata.totalRecords
+          );
+        });
+      }
+    };
+
+    this.gridApi.setDatasource(this.dataSource);
 
   }
 
@@ -148,7 +146,7 @@ export class AllcardsComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     // return this.http.get<any>(environment.api + '/api/cards_watch_stage/searchcardswatch?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tcards/searchall?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/cards_watch_stage/searchall?searchstring=' + searchstring + '&rows=' + pagesize + '&offset=' + currentPos);
 
   }
 
@@ -162,28 +160,25 @@ export class AllcardsComponent implements OnInit {
   }
 
   reset() {
+    this.gridApi.showLoadingOverlay();
     this.clear();
-    this.gridApi.sizeColumnsToFit();
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
         this.apiService(20, params.startRow).subscribe(response => {
-          console.log(response);
           params.successCallback(
-            response, this.noTotal
+            response.data, response.totalRecords
           );
+          this.gridOptions.api.hideOverlay();
         });
       }
     };
+    this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
   }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
-
-    this.ecolService.totalcardswatch().subscribe(viewall => {
-      this.noTotal = viewall[0].TOTALVIEWALL;
-    });
   }
 
   gridReady(params) {
@@ -193,7 +188,8 @@ export class AllcardsComponent implements OnInit {
   }
 
   apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/cards_watch_stage/allcards?pagesize=' + perPage + '&currentposition=' + currentPos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.nodeapi + '/cards_watch_stage/all?rows=' + perPage + '&offset=' + currentPos);
   }
 
 }

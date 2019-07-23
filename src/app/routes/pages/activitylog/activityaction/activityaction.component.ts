@@ -48,6 +48,7 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'IC', collectoraction: 'INCOMING CALL' },
     { collectoractionid: 'MET', collectoraction: 'DEBTOR VISITED' },
     { collectoractionid: 'REVW', collectoraction: 'ACCOUNT REVIEW' },
+    { collectoractionid: 'EMPVISIT', collectoraction: 'EMPLOYER VISIT' },
     { collectoractionid: 'SC', collectoraction: 'SENT CORRESPONDENCE' },
     { collectoractionid: 'RC', collectoraction: 'RECEIVED CORRESPONDENCE' },
     { collectoractionid: 'RR', collectoraction: 'ROUTE FOR REVIEW' },
@@ -154,7 +155,7 @@ export class ActivityActionComponent implements OnInit {
     this.ecolService.getwatch(accnumber).subscribe(data => {
       this.account = data;
       if (data.watch) {
-          this.account.reviewdate = data.watch.reviewdate || '',
+        this.account.reviewdate = data.watch.reviewdate || '',
           this.account.excuse = data.watch.excuse || '',
           this.account.cmdstatus = data.watch.cmdstatus || 'Hardcore',
           this.account.routetostate = data.watch.routetostate || 'ACTIVE COLLECTIONS',
@@ -354,15 +355,15 @@ export class ActivityActionComponent implements OnInit {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Close!'
-    }).then((result) => {
+      }).then((result) => {
         if (result.value) {
-            // close tab
-            window.close();
+          // close tab
+          window.close();
         } else {
           // reset
           this.reset();
         }
-    });
+      });
     }, error => {
       console.log(error);
       swal('Error!', 'activitylog ::: service is currently not available', 'error');

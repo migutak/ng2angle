@@ -17,8 +17,7 @@ export class ViewallComponent implements OnInit {
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
-      // floatingFilter: true,
-      headerHeight: 0,
+      headerHeight: 40,
       pagination: true,
       rowSelection: 'single',
       rowModelType: 'infinite',
@@ -43,7 +42,6 @@ export class ViewallComponent implements OnInit {
   searchText: string;
   model: any = {};
   noTotal: number;
-  searchTotal: number;
 
   gridOptions: GridOptions;
   gridApi: GridApi;
@@ -52,7 +50,7 @@ export class ViewallComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'CARDACCT',
-      field: 'cardacct',
+      field: 'CARDACCT',
       cellRenderer: function (params) {
         return '<a  href="#" target="_blank">' + params.value + '</a>';
       },
@@ -60,45 +58,40 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'CARDNUMBER',
-      field: 'cardnumber',
+      field: 'CARDNUMBER',
       resizable: true,
       filter: true
     },
     {
       headerName: 'CARDNAME',
-      field: 'cardname',
+      field: 'CARDNAME',
       resizable: true,
       filter: true
     },
     {
       headerName: 'DAYSINARREARS',
-      field: 'daysinarrears',
+      field: 'DAYSINARREARS',
       resizable: true,
       filter: true
     },
     {
       headerName: 'EXPPMNT',
-      field: 'exppmnt',
+      field: 'EXPPMNT',
       resizable: true,
     },
     {
-      headerName: 'OUTSTANDING BALANCE',
-      field: 'outbalance',
-      resizable: true,
-    },
-    {
-      headerName: 'LIMIT',
-      field: 'limit',
+      headerName: 'OUTBALANCE',
+      field: 'OUTBALANCE',
       resizable: true,
     },
     {
       headerName: 'CYCLE',
-      field: 'cycle',
+      field: 'CYCLE',
       resizable: true,
     },
     {
       headerName: 'COLOFFICER',
-      field: 'colofficer',
+      field: 'COLOFFICER',
       resizable: true,
     }
   ];
@@ -113,7 +106,7 @@ export class ViewallComponent implements OnInit {
       //
       this.apiService(20, params.startRow).subscribe(response => {
         params.successCallback(
-          response, this.noTotal
+          response.data, response.totalRecords
         );
       });
     }
@@ -123,7 +116,7 @@ export class ViewallComponent implements OnInit {
     this.model = event.node.data;
     // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.cardacct + '&custnumber=' + this.model.cardacct + '&username=' + this.username + '&sys=cc', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
   }
 
   onQuickFilterChanged($event) {
@@ -132,75 +125,16 @@ export class ViewallComponent implements OnInit {
   }
 
   onSearch() {
-    /*if (this.model.searchText === undefined) {
+    if (this.model.searchText === undefined) {
       return;
-    }*/
+    }
     this.clear();
-
-    this.ecolService.totalcreditcardsearch(this.model.searchText).subscribe(viewall => {
-      this.searchTotal = viewall[0].TOTALVIEWALL;
-    });
-
-    this.columnDefs = [
-      {
-        headerName: 'CARDACCT',
-        field: 'CARDACCT',
-        cellRenderer: function (params) {
-          return '<a  href="#" target="_blank">' + params.value + '</a>';
-        },
-        resizable: true,
-      },
-      {
-        headerName: 'CARDNUMBER',
-        field: 'CARDNUMBER',
-        resizable: true,
-        filter: true
-      },
-      {
-        headerName: 'CARDNAME',
-        field: 'CARDNAME',
-        resizable: true,
-        filter: true
-      },
-      {
-        headerName: 'DAYSINARREARS',
-        field: 'DAYSINARREARS',
-        resizable: true,
-        filter: true
-      },
-      {
-        headerName: 'EXPPMNT',
-        field: 'EXPPMNT',
-        resizable: true,
-      },
-      {
-        headerName: 'OUTSTANDING BALANCE',
-        field: 'OUTBALANCE',
-        resizable: true,
-      },
-      {
-        headerName: 'LIMIT',
-        field: 'LIMIT',
-        resizable: true,
-      },
-      {
-        headerName: 'CYCLE',
-        field: 'CYCLE',
-        resizable: true,
-      },
-      {
-        headerName: 'COLOFFICER',
-        field: 'COLOFFICER',
-        resizable: true,
-      }
-    ];
-
+    this.gridApi.showLoadingOverlay();
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-
-        this.apiServiceSearch(this.model.searchText, 20, params.startRow).subscribe(response => {
+        this.apiServiceSearch(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response, this.searchTotal
+            response.data, response.totalRecords
           );
           this.gridOptions.api.hideOverlay();
         });
@@ -208,11 +142,6 @@ export class ViewallComponent implements OnInit {
     };
 
     this.gridApi.setDatasource(this.dataSource);
-  }
-
-  apiServiceSearch(searchstring, pagesize, currentPos) {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tcards/searchall?searchstring=' + searchstring + '&pagesize=' + pagesize + '&currentposition=' + currentPos);
   }
 
   clear() {
@@ -225,72 +154,23 @@ export class ViewallComponent implements OnInit {
   }
 
   reset() {
-    // location.reload();
+    this.gridApi.showLoadingOverlay();
     this.clear();
-    this.columnDefs = [
-      {
-        headerName: 'CARDACCT',
-        field: 'cardacct',
-        cellRenderer: function (params) {
-          return '<a  href="#" target="_blank">' + params.value + '</a>';
-        },
-        resizable: true,
-      },
-      {
-        headerName: 'CARDNUMBER',
-        field: 'cardnumber',
-        resizable: true,
-        filter: true
-      },
-      {
-        headerName: 'CARDNAME',
-        field: 'cardname',
-        resizable: true,
-        filter: true
-      },
-      {
-        headerName: 'DAYSINARREARS',
-        field: 'daysinarrears',
-        resizable: true,
-        filter: true
-      },
-      {
-        headerName: 'EXPPMNT',
-        field: 'exppmnt',
-        resizable: true,
-      },
-      {
-        headerName: 'OUTSTANDING BALANCE',
-        field: 'outbalance',
-        resizable: true,
-      },
-      {
-        headerName: 'LIMIT',
-        field: 'limit',
-        resizable: true,
-      },
-      {
-        headerName: 'CYCLE',
-        field: 'cycle',
-        resizable: true,
-      },
-      {
-        headerName: 'COLOFFICER',
-        field: 'colofficer',
-        resizable: true,
-      }
-    ];
-    this.gridApi.sizeColumnsToFit();
     this.dataSource = {
       getRows: (params: IGetRowsParams) => {
-
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
         this.apiService(20, params.startRow).subscribe(response => {
           params.successCallback(
-            response, this.noTotal
+            response.data, response.totalRecords
           );
+          this.gridOptions.api.hideOverlay();
         });
       }
     };
+    this.gridApi.sizeColumnsToFit();
     this.gridApi.setDatasource(this.dataSource);
   }
 
@@ -298,9 +178,6 @@ export class ViewallComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.ecolService.totalcreditcardsviewall().subscribe(viewall => {
-      this.noTotal = viewall[0].TOTALVIEWALL;
-    });
   }
 
   gridReady(params) {
@@ -311,8 +188,12 @@ export class ViewallComponent implements OnInit {
 
   apiService(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tcards?filter[limit]=' + perPage + '&filter[skip]=' + currentPos + '&filter[order]=outbalance desc');
+    return this.http.get<any>(environment.nodeapi + '/tcards/all?rows=' + perPage + '&offset=' + currentPos);
+  }
+
+  apiServiceSearch(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.nodeapi + '/tcards/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
 
 }
-

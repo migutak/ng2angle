@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  adlogin: true,
+  adlogin: false,
   api: 'https://ecollectweb.co-opbank.co.ke',
-  mongo: 'http://192.168.0.28:3000',
+  mongo: 'https://ecollectweb.co-opbank.co.ke',
   nodeapi: 'https://ecollectweb.co-opbank.co.ke/nodeapi',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'https://ecollectweb.co-opbank.co.ke/docx/',

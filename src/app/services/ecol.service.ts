@@ -67,10 +67,8 @@ export class EcolService {
 
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response2 = this.httpClient.get<any>(environment.mongo + '/api/notes?filter[where][custnumber]=' + cust + '&filter?[order]=notedate DESC');
-    // tslint:disable-next-line:max-line-length
-    // const response2 = this.httpClient.get<any>('http://192.168.0.28:3000/api/notes?filter[where][custnumber]=00');
-    return forkJoin([response2]);
+    const response = this.httpClient.get<any>(environment.mongo + '/mongo/notes?filter[where][custnumber]=' + cust + '&filter?[order]=notedate DESC');
+    return forkJoin([response]);
   }
 
   getcmdstatus() {

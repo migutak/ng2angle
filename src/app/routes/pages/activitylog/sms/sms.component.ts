@@ -115,7 +115,7 @@ export class SmsComponent implements OnInit {
       this.dataSms.smsCallback = ' Enquire details on 0711049000';
     } else if (template === 'CC') {
       this.dataSms.smsMessage = 'Dear Customer, Your Credit Card payment is late by ' + this.account.daysinarrears +
-        ' days. Outstanding arrears is Kes. ' + Math.round(this.account.outbalance) + '. Please pay within seven days. ';
+        ' days. Outstanding arrears is Kes. ' + Math.round(this.account.exppmnt) + '. Please pay within seven days. ';
       this.dataSms.smsCallback = ' Enquire details on 0711049000.';
     } else if (template === 'WATCH') {
       this.dataSms.smsMessage = 'Dear Customer, Your loan payment is ' + this.account.daysinarrears +

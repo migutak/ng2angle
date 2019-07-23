@@ -80,6 +80,10 @@ export class DemandsdueComponent implements OnInit {
     {
       headerName: 'COLOFFICER',
       field: 'COLOFFICER'
+    },
+    {
+      headerName: 'STATUS',
+      field: 'STATUS'
     }
   ];
   rowData1: any;
