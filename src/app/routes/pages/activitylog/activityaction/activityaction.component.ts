@@ -261,7 +261,7 @@ export class ActivityActionComponent implements OnInit {
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
       reason: [this.account.excuse, Validators.required],
-      cmdstatus: [this.account.cmdstatus, Validators.required],
+      cmdstatus: [this.account.cmdstatus],
       // branchstatus: [this.account.branchstatus],
       route: [this.account.routetostate],
       paymode: [''],
