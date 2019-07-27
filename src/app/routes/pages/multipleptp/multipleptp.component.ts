@@ -69,25 +69,13 @@ export class MultipleptpComponent implements OnInit {
     });
   }
 
-  popsuccessToast(msg) {
-    this.toasterService.pop('success', 'Success', msg);
-  }
-
-  poperrorToast(error) {
-    this.toasterService.pop('error', 'Error', error);
-  }
-
-  popinfoToast(info) {
-    this.toasterService.pop('info', 'Info', info);
-  }
-
   ptpfunc(form) {
-    this.en_ptp.ptpamount = form.value.ptpamount;
-    this.en_ptp.ptpdate = (moment(form.value.ptpdate).format('DD-MM-YYYY')).toUpperCase();
-    this.en_ptp.owner = this.username;
-    this.en_ptp.accnumber = this.accnumber;
+    const ptpamount = form.value.ptpamount;
+    const ptpdate = (moment(form.value.ptpdate).format('DD-MM-YYYY')).toUpperCase();
+    const owner = this.username;
+    const accnumber = this.accnumber;
 
-    this.ptps.push(this.en_ptp);
+    this.ptps.push({ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber});
     this.ptp = {};
   }
 
@@ -107,6 +95,13 @@ export class MultipleptpComponent implements OnInit {
   cancel() {
     this.edit = false;
     this.ptp = {};
+  }
+
+  deleteptp(form) {
+    const index: number = this.ptps.indexOf(form);
+    if (index !== -1) {
+        this.ptps.splice(index, 1);
+    }
   }
 
 }
