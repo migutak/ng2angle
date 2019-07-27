@@ -3,41 +3,6 @@
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
     <p style="font-size: 20px; color: white">Processing ...</p>
   </ngx-spinner>
-  <!--<div class="card b text-white">
-    <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg10.jpg);">
-      <div class="media mt-0 align-items-center">
-        <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image" />
-        <div class="media-body">
-          <div class="d-flex">
-            <div>
-              <h4 class="m-0">Name:
-                {{accountdetails?.client_name || accountdetails?.cardname || accountdetails?.clientname || accountdetails?.custname}}
-              </h4>
-              <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel:
-                {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}
-              </p>
-              <div class="dropdown show">
-                {{autodial_telnumber}}
-                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
-                  ... More contacts <span class="badge badge-info">{{totalTeles}}</span>
-                </a>
-                <a class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em
-                    class="fas fa-sync fa-fw"></em>refresh</a> |
-                <a class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw"
-                    style="color: black"></em> Dial</a>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a *ngFor="let t of teles" class="dropdown-item" href="#"
-                    (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>-->
   <div class="card">
       <div class="card-header">
           <strong>Multiple Promises to Pay : {{custnumber}} </strong>
@@ -47,35 +12,34 @@
               <div class="col-md-4">
                   <form #ptpForm="ngForm" (ngSubmit)="ptpfunc(ptpForm)" novalidate autocomplete="off">
                       <div class="form-group">
-                          <label>Promise Amount:</label> <input class="form-control" #ptpamount="ngModel"
+                          <label>Promise Amount:</label> 
+                          <input class="form-control" #ptpamount="ngModel"
                               [(ngModel)]="ptp.ptpamount" name="ptpamount" placeholder="ptp amount"
                               [ngClass]="{ 'is-invalid': ptpamount.errors }" required />
   
                       </div>
                       <div class="form-group">
-                          <label>Promise Date:</label> <input class="form-control" #ptpdate="ngModel"
-                              [(ngModel)]="ptp.ptpdate" name="ptpdate" placeholder="ptp date"
-                              [ngClass]="{ 'is-invalid': ptpdate.errors }" required />
-  
-                      </div>
-                      <div class="col-xl-2 col-md-3">
-                          Promise date
-                        </div>
-                        <div class="col-md-3">
-                          <div class="col-md-12">
-                            <div class="input-group">
-                              <input class="form-control" placeholder="yyyy-mm-dd" id="ptpdate" name="ptpdate" name="ptpdate"
-                                ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate" />
-                              <div class="input-group-append">
-                                <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i
+                          <label>Promise Date:</label> 
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd"
+                                 name="ptpdate" [(ngModel)]="ptp.ptpdate" ngbDatepicker #d="ngbDatepicker">
+                          <div class="input-group-append">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i
                                       class="fa fa-calendar"></i>
                                   </span></button>
                               </div>
-                            </div>
                           </div>
                         </div>
-                      <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!ptpForm.valid">Save</button>
-                  </form>
+                      </div>
+                      <button *ngIf="!edit" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" 
+                       type="submit" class="btn btn-sm btn-outline-primary" [disabled]="!ptpForm.valid">Add</button>
+                      <button *ngIf="edit" [disabled]="ptpForm.invalid"
+                      class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
+                      (click)="updateptp(ptp)">Update</button>
+                      <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label" type="button"
+                      (click)="cancel()">Cancel</button>
+                    </form>
               </div>
               <div class="col-md-8">
                   <table class="table">
@@ -95,12 +59,18 @@
                               <td>{{p.ptpdate}}</td>
                               <td>{{p.owner}}</td>
                               <td>
-                                  
+                                  <button class="btn btn-outline-success btn-sm" (click)="editptp(p)">
+                                      <i class="fas fa-edit"></i> edit
+                                    </button>
+                                    <button class="btn btn-outline-success btn-sm" (click)="deleteptp(p)">
+                                        <i class="fas fa-delete"></i> delete
+                                      </button>
                               </td>
                           </tr>
-                          <pagination-controls (pageChange)="p = $event"></pagination-controls>
                       </tbody>
                   </table>
+                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                  <button class="btn btn-block btn-outline-success">Save all Promises</button>
               </div>
           </div>
       </div>

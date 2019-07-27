@@ -6,11 +6,14 @@ import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-multipleptp',
   templateUrl: './multipleptp.component.html',
-  styleUrls: ['./multipleptp.component.scss']
+  styleUrls: ['./multipleptp.component.scss'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class MultipleptpComponent implements OnInit {
 
@@ -30,7 +33,8 @@ export class MultipleptpComponent implements OnInit {
   ptp: any = {};
   model: any = {};
   username: string;
-  autodial_telnumber: string;
+  en_ptp: any = {};
+  edit = false;
 
   public config: ToasterConfig =
     new ToasterConfig({
@@ -78,7 +82,31 @@ export class MultipleptpComponent implements OnInit {
   }
 
   ptpfunc(form) {
-    console.log(form.value);
+    this.en_ptp.ptpamount = form.value.ptpamount;
+    this.en_ptp.ptpdate = (moment(form.value.ptpdate).format('DD-MM-YYYY')).toUpperCase();
+    this.en_ptp.owner = this.username;
+    this.en_ptp.accnumber = this.accnumber;
+
+    this.ptps.push(this.en_ptp);
+    this.ptp = {};
+  }
+
+  editptp(form) {
+    console.log(form);
+    // check if logged in
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
+    this.ptp.ptpamount = form.ptpamount;
+    this.ptp.ptpdate = form.ptpdate;
+    //
+    this.edit = true;
+  }
+
+  cancel() {
+    this.edit = false;
+    this.ptp = {};
   }
 
 }
