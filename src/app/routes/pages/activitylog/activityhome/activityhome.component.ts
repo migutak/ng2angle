@@ -113,29 +113,31 @@ export class ActivityHomeComponent implements OnInit {
   }
 
   beforeChange(active) {
+    console.log(active.nextId);
     const tab: string = active.nextId;
     switch (tab) {
       case 'ngb-tab-0': {
         // console.log("accountinfo");
         break;
       }
-      case 'ngb-tab-2': {
+      case 'ngb-tab-1': {
+        console.log('other a/cs tab ...');
         this.loadother(this.custnumber);
         break;
       }
-      case 'ngb-tab-3': {
+      case 'ngb-tab-2': {
         this.loadcollateral(this.accnumber);
         break;
       }
-      case 'ngb-tab-4': {
+      case 'ngb-tab-3': {
         this.loaddirectors(this.accnumber);
         break;
       }
-      case 'ngb-tab-5': {
+      case 'ngb-tab-4': {
         this.loadcards(this.nationid);
         break;
       }
-      case 'ngb-tab-6': {
+      case 'ngb-tab-5': {
         this.loadaccwithid(this.nationid);
         break;
       }
@@ -149,7 +151,8 @@ export class ActivityHomeComponent implements OnInit {
   loadother(custnumber) {
     this.loader = true;
     this.ecolService.otheraccs(custnumber).subscribe(data => {
-      this.otheraccs = data;
+      // console.log(data.data);
+      this.otheraccs = data.data;
       this.loader = false;
     }, error => {
       console.log('loadother error ==>', error);

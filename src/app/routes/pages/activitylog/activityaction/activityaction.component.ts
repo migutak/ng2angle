@@ -43,6 +43,7 @@ export class ActivityActionComponent implements OnInit {
   party: any = [];
   cure: any = [];
   excuse: any = [];
+  capture = true;
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
     { collectoractionid: 'IC', collectoraction: 'INCOMING CALL' },
@@ -257,6 +258,7 @@ export class ActivityActionComponent implements OnInit {
       party: [{ value: '', disabled: true }],
       ptpamount: [{ value: 0, disabled: true }],
       ptp: [{ value: 'No', disabled: true }],
+      ptptype: [{ value: '', disabled: true }],
       ptpdate: [{ value: this.currentDate, disabled: true }],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
@@ -290,7 +292,8 @@ export class ActivityActionComponent implements OnInit {
       ptpamount: this.f.ptpamount.value,
       ptp: this.f.ptp.value,
       ptpdate: this.f.ptpdate.value,
-      collectornote: this.f.collectornote.value,
+      // tslint:disable-next-line:max-line-length
+      collectornote: this.f.collectornote.value + '   Reason for default: ' + this.f.reason.value + '   Reason details: ' + this.f.rfdother.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
@@ -426,13 +429,33 @@ export class ActivityActionComponent implements OnInit {
 
   changePtp(value) {
     if (value === 'Yes') {
+      this.actionForm.controls.ptptype.enable();
+    } else {
+      this.actionForm.controls.ptpamount.disable();
+      this.actionForm.controls.ptpdate.disable();
+      this.actionForm.controls.ptptype.disable();
+      this.actionForm.controls.ptpamount.setValue(0);
+      this.actionForm.controls.ptpdate.setValue(Date());
+      this.actionForm.controls.ptptype.setValue('');
+    }
+  }
+
+  handleChange(ptptype) {
+    if (ptptype === 'single') {
+      this.capture = true;
       this.actionForm.controls.ptpamount.enable();
       this.actionForm.controls.ptpdate.enable();
     } else {
+      this.capture = false;
       this.actionForm.controls.ptpamount.disable();
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptpamount.setValue(0);
       this.actionForm.controls.ptpdate.setValue(Date());
     }
+  }
+
+  multiplecapturefnc() {
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.applink + '/multipleptp?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=collections', '_blank');
   }
 }

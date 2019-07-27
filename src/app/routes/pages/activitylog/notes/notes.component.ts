@@ -58,6 +58,7 @@ export class NotesComponent implements OnInit {
     // this.data.currentMessage.subscribe(message => this.message = message)
     this.getAll(this.cust);
     this.getbulknotes(this.cust);
+    this.getNotes(this.cust);
 
     this.model.noteselector = 'collector';
   }
@@ -69,7 +70,14 @@ export class NotesComponent implements OnInit {
     });
   }
 
+  getNotes(custnumber) {
+    this.ecolService.totalnotes(custnumber).subscribe(data => {
+      this.noteslength = data[0].TOTAL;
+    });
+  }
+
   getAll(cust) {
+    this.spinner.show();
     this.query.limit = this.pager.limit;
     this.query.skip = this.pager.limit * this.pager.current;
 
@@ -77,7 +85,7 @@ export class NotesComponent implements OnInit {
     // console.log('this.query ', this.query);
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
-      this.noteslength = data.length;
+      // this.noteslength = data.length;
       for (let i = 0; i < data.length; i++) {
         // tslint:disable-next-line:max-line-length
         if (this.notes[i].OWNER === this.username && (this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() === ((this.notes[i].NOTEDATE).substring(0, 9)).toUpperCase()) {
@@ -92,6 +100,7 @@ export class NotesComponent implements OnInit {
       } else {
         this.pager.reachedend = true;
       }
+      this.spinner.hide();
     }, err => {
       console.log(err);
     });

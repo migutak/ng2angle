@@ -69,29 +69,31 @@
             <!--<form>
                 <div class="form-group form-inline">
                     Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-                </div>
+                </div> ; index as i  <th scope="row">{{ i + 1 }}</th> <th scope="col">#</th>
             </form>-->
             <div class="loader" *ngIf="loader"></div>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        
                         <th scope="col">accnumber</th>
                         <th scope="col">productcode</th>
                         <th scope="col">oustbalance</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let other of otheraccs; index as i">
-                        <th scope="row">{{ i + 1 }}</th>
+                    <tr *ngFor="let other of otheraccs | paginate: { itemsPerPage: 5, currentPage: p }">
+                       
                         <td>
-                            {{ other.accnumber }}
+                            {{ other.ACCNUMBER }}
                         </td>
-                        <td>{{ other.productcode }}</td>
-                        <td>{{ other.oustbalance | number }}</td>
+                        <td>{{ other.PRODUCTCODE }}</td>
+                        <td>{{ other.OUTSBALANCE | number }}</td>
                     </tr>
                 </tbody>
+                
             </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </ng-template>
     </ngb-tab>
     <ngb-tab title="Collateral info">

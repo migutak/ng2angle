@@ -30,7 +30,7 @@
         enableFilter="true"
         enableColResize="true"
         (gridReady)="gridReady($event)" [columnDefs]="columnDefs" [overlayLoadingTemplate]="overlayLoadingTemplate"
-        [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowDoubleClicked)='onRowDoubleClicked($event)'>
+        [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
     </div>
   </div>

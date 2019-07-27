@@ -21,6 +21,7 @@ import { Error404Component } from './error404/error404.component';
 import { SendLetterccComponent } from './actionscc/sendlettercc.component';
 
 import { SendLetterComponent } from './actions/sendletter.component';
+import { MultipleptpComponent } from './multipleptp/multipleptp.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ActivityLogComponent } from './activitylog/activitylog.component';
 import { ActivityActionComponent } from '../pages/activitylog/activityaction/activityaction.component';
@@ -73,6 +74,7 @@ import { PtpsComponent } from './activitylog/ptps/ptps.component';
         Error404Component,
         SendLetterccComponent,
         SendLetterComponent,
+        MultipleptpComponent,
         ActivityLogComponent,
         ActivityActionComponent,
         ActivityHomeComponent,
@@ -103,6 +105,7 @@ import { PtpsComponent } from './activitylog/ptps/ptps.component';
         Error404Component,
         SendLetterccComponent,
         SendLetterComponent,
+        MultipleptpComponent,
         AccPlanComponent,
         CustContactsComponent,
         DemandLettersComponent,

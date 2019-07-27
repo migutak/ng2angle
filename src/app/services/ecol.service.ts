@@ -318,7 +318,7 @@ export class EcolService {
 
   otheraccs(custnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[where][custnumber]=' + custnumber);
+    return this.httpClient.get<any>(environment.nodeapi + '/otheraccs/all?custnumber=' + custnumber);
   }
 
   guarantordetails(accnumber) {

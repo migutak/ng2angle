@@ -10,6 +10,7 @@ import { SendLetterccComponent } from './pages/actionscc/sendlettercc.component'
 
 import { SendLetterComponent } from './pages/actions/sendletter.component';
 import { ActivityLogComponent } from './pages/activitylog/activitylog.component';
+import { MultipleptpComponent } from './pages/multipleptp/multipleptp.component';
 
 import { AuthGuard} from '../auth.guard';
 import { ActivityActionComponent } from './pages/activitylog/activityaction/activityaction.component';
@@ -71,6 +72,7 @@ export const routes = [
     { path: 'activitydash', component: ActivitydashComponent },
     { path: 'sendlettercc', component: SendLetterccComponent },
     { path: 'sendletter', component: SendLetterComponent },
+    { path: 'multipleptp', component: MultipleptpComponent },
     {
         path: 'activitylog',
         component: ActivityLogComponent,

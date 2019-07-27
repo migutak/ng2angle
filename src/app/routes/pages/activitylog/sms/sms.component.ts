@@ -25,7 +25,7 @@ export class SmsComponent implements OnInit {
   dataSms: any = {};
   account: any = [];
   charactersRemaining = 0;
-  iscard: Boolean =  false;
+  iscard: Boolean = false;
   p = 1;
 
   constructor(public settings: SettingsService,
@@ -115,11 +115,12 @@ export class SmsComponent implements OnInit {
       this.dataSms.smsCallback = ' Enquire details on 0711049000';
     } else if (template === 'CC') {
       this.dataSms.smsMessage = 'Dear Customer, Your Credit Card payment is late by ' + this.account.daysinarrears +
-        ' days. Outstanding arrears is Kes. ' + Math.round(this.account.exppmnt) + '. Please pay within seven days. ';
+        ' days. The Expected amount is Kes. ' + Math.round(this.account.exppmnt) + '. Please pay within seven days. ';
       this.dataSms.smsCallback = ' Enquire details on 0711049000.';
-    } else if (template === 'WATCH') {
-      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is ' + this.account.daysinarrears +
-        ' days. Total arrears is Kes. ' + Math.round(this.account.outbalance) + '. Please pay within seven days. ';
+    } else if (template === 'watch') {
+      this.dataSms.smsMessage = 'Dear Customer, Your loan payment is due on ' + this.account.repaymentdate +
+        // tslint:disable-next-line:max-line-length
+        ' .Amount to be paid is ' + this.account.currency + ' ' + Math.round(this.account.repaymentamount) + '. To make deposit, visit our branch, agent or M-Pesa PayBill 400200.';
       this.dataSms.smsCallback = ' Enquire details on 0711049000.';
     }
   }
@@ -154,6 +155,7 @@ export class SmsComponent implements OnInit {
 
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
+      console.log(data);
       this.account = data;
     });
   }
