@@ -117,7 +117,7 @@ export class AllcardsComponent implements OnInit {
         this.sortingOrder = ['desc', 'asc', null ];
     }
 
-    dataSource: IDatasource = {
+    /*dataSource: IDatasource = {
       getRows: (params: IGetRowsParams) => {
         // Use startRow and endRow for sending pagination to Backend
         // params.startRow : Start Page
@@ -129,7 +129,7 @@ export class AllcardsComponent implements OnInit {
           );
         });
       }
-    };
+    };*/
     public ngOnInit(): void {
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       this.username = currentUser.username;
@@ -142,7 +142,7 @@ export class AllcardsComponent implements OnInit {
       window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
     }
 
-    onSearch() {
+    /*onSearch() {
       if (this.model.searchText === undefined) {
         return;
       }
@@ -160,7 +160,7 @@ export class AllcardsComponent implements OnInit {
       };
 
       this.gridApi.setDatasource(this.dataSource);
-    }
+    }*/
 
     clear() {
       const ds = {
@@ -171,7 +171,7 @@ export class AllcardsComponent implements OnInit {
       this.gridOptions.api.setDatasource(ds);
     }
 
-    reset() {
+    /*reset() {
       this.gridApi.showLoadingOverlay();
       this.clear();
       this.dataSource = {
@@ -190,7 +190,7 @@ export class AllcardsComponent implements OnInit {
       };
       this.gridApi.sizeColumnsToFit();
       this.gridApi.setDatasource(this.dataSource);
-    }
+    }*/
 
     apiService(perPage, currentPos) {
       // tslint:disable-next-line:max-line-length

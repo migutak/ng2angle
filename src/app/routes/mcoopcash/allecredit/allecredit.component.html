@@ -1,9 +1,9 @@
 <div class="content-heading">
-    <div>My allocation:
-      <small>mcoopcash my allocation</small></div>
+    <div>E-Credit
+      <small>view all E-Credit</small></div>
   </div>
   <!-- START card (keyup)="onQuickFilterChanged($event)"-->
-  <div class="card card-default">
+  <!--<div class="card card-default">
     <div class="col-xl-12">
       <div class="page-header">
         <form #searchForm="ngForm" class="form-horizontal">
@@ -30,4 +30,26 @@
         (rowClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
     </div>
-  </div>
+  </div>-->
+
+  <style>
+      input[type=text] {
+        width: 130px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+      }
+    
+      /* When the input field gets focus, change its width to 100% */
+      input[type=text]:focus {
+        width: 100%;
+      }
+    </style>
+    
+    
+    <input type="text" name="search" placeholder="search" (keyup)="quickSearch()" [(ngModel)]="searchValue">
+    
+    <ag-grid-angular #agGrid class="ag-theme-balham" style="width: 100%; height: 700px;" [columnDefs]="columnDefs"
+      [gridOptions]="gridOptions" [enableSorting]="true" [enableFilter]="true" [floatingFilter]="true" [pagination]="true"
+      [animateRows]="true" (rowClicked)='onRowDoubleClicked($event)' (rowSelected)="getSelectedRows($event)">
+    
+    </ag-grid-angular>

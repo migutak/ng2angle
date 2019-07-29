@@ -316,6 +316,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
   }
 
+  postptps(ptps) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.post<any>(environment.api + '/api/ptps', ptps);
+  }
+
   otheraccs(custnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.nodeapi + '/otheraccs/all?custnumber=' + custnumber);

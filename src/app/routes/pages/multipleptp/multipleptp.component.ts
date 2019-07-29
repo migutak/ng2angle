@@ -35,6 +35,7 @@ export class MultipleptpComponent implements OnInit {
   username: string;
   en_ptp: any = {};
   edit = false;
+  isptptosave = false;
 
   public config: ToasterConfig =
     new ToasterConfig({
@@ -77,6 +78,7 @@ export class MultipleptpComponent implements OnInit {
 
     this.ptps.push({ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber});
     this.ptp = {};
+    this.isptptosave = true;
   }
 
   editptp(form) {
@@ -101,7 +103,21 @@ export class MultipleptpComponent implements OnInit {
     const index: number = this.ptps.indexOf(form);
     if (index !== -1) {
         this.ptps.splice(index, 1);
+        if (this.ptps.length === 0) {
+          this.isptptosave = false;
+        }
     }
+  }
+
+  saveallptps() {
+    this.ecolService.postptps(this.ptps).subscribe(resp => {
+      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function() {
+        window.close();
+      });
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred during processing!', 'error');
+    });
   }
 
 }

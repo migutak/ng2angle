@@ -142,7 +142,7 @@ export class ViewallComponent implements OnInit {
       window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
     }
 
-    onSearch() {
+    /*onSearch() {
       if (this.model.searchText === undefined) {
         return;
       }
@@ -160,7 +160,7 @@ export class ViewallComponent implements OnInit {
       };
 
       this.gridApi.setDatasource(this.dataSource);
-    }
+    }*/
 
     clear() {
       const ds = {
@@ -195,11 +195,6 @@ export class ViewallComponent implements OnInit {
     apiService(perPage, currentPos) {
       // tslint:disable-next-line:max-line-length
       return this.http.get<any>(environment.nodeapi + '/tcards/all?rows=' + perPage + '&offset=' + currentPos);
-    }
-
-    apiServiceSearch(perPage, currentPos) {
-      // tslint:disable-next-line:max-line-length
-      return this.http.get<any>(environment.nodeapi + '/tcards/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
     }
 
     getSelectedRows(event) {

@@ -59,18 +59,18 @@
                               <td>{{p.ptpdate}}</td>
                               <td>{{p.owner}}</td>
                               <td>
-                                  <button class="btn btn-outline-success btn-sm" (click)="editptp(p)">
+                                  <!--<button class="btn btn-outline-success btn-sm" (click)="editptp(p)">
                                       <i class="fas fa-edit"></i> edit
-                                    </button>
+                                    </button>-->
                                     <button class="btn btn-outline-danger btn-sm" (click)="deleteptp(p)">
-                                        <i class="fas fa-trash-alt"></i> delete
+                                        <i class="fas fa-trash-alt"></i>
                                       </button>
                               </td>
                           </tr>
                       </tbody>
                   </table>
                   <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                  <button class="btn btn-block btn-outline-success">Save all Promises</button>
+                  <button [disabled]="!isptptosave" class="btn btn-block btn-outline-success" (click)="saveallptps()">Save all Promises</button>
               </div>
           </div>
       </div>
