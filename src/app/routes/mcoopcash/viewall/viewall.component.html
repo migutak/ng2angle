@@ -1,44 +1,37 @@
-<div class="content-heading">
-  <div>Viewall:
-    <small>mcoopcash accounts in arrears</small></div>
-</div>
-
-<!-- START card (keyup)="onQuickFilterChanged($event)"-->
-<div class="panel panel-success">
-  <div class="col-xl-12">
-    <div  class="panel-body">
-      <form #searchForm="ngForm" class="form-horizontal">
-        <div class="row">
-          <div class="col-xl-4 col-lg-6 form-inline">
-            <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText" name="searchText" #searchText="ngModel" minlength="4" required/>
-            <button type="button" class="btn btn-outline-inverse" (click)="onSearch()" [disabled]="!searchForm.valid || !searchForm.dirty"><span
-                class="fa fa-search"></span>
-              Search</button>
-            
-          </div>
-          <div class="col-xl-4 col-lg-6 form-inline">
-            <button class="mr-1 mb-1 btn btn-outline-green" type="button" (click)="reset()"><span
-                class="fa fa-search"></span> Reset</button>
-          </div>
-        </div>
-        <p style="color: red"  *ngIf="searchText.errors?.minlength">minimum of four(4) search characters is required</p>
-      </form>
-    </div>
-    <ag-grid-angular
-      #agGrid  class="ag-theme-balham"
-        style="width: 100%; height: 660px;"
-        [gridOptions]="gridOptions"
+<style>
+  input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
   
-        [columnDefs]="columnDefs"
-                    
-                     [enableFilter]="true"
-                     [frameworkComponents]="frameworkComponents"
-    
+  /* When the input field gets focus, change its width to 100% */
+  input[type=text]:focus {
+    width: 100%;
+  }
+  </style>
   
-        [enableSorting]="true"
-        enableColResize="true"
-        (gridReady)="gridReady($event)"  [overlayLoadingTemplate]="overlayLoadingTemplate"
-        [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
-      </ag-grid-angular>
-  </div>
-</div>
+   
+  <input type="text" name="search" placeholder="search" (keyup)="quickSearch()" [(ngModel)]="searchValue">
+  <button (click)="onBtExport()">Export to 
+    CSV</button>
+  
+         <ag-grid-angular   #agGrid  class="ag-theme-balham"
+         style="width: 100%; height: 660px;"
+                            [rowData]="rowData"
+                            [columnDefs]="columnDefs"
+                            [gridOptions]="gridOptions"
+                            [enableSorting]="true"
+                            [enableFilter]="true"
+                            [floatingFilter]="true"
+                            [pagination]="true" 
+                            [rowSelection]="selectionMode"
+                            
+                            [animateRows]="true"
+                           
+                            (rowSelected)="getSelectedRows($event)">
+         
+         </ag-grid-angular>
+         <button (click)="onBtFirst()">To First</button> <button (click)="onBtLast()" id="btLast">To Last</button>
+          <button (click)="onBtPrevious()">To Previous</button> <button (click)="onBtNext()">To Next</button>
+          <button (click)="onBtPageFive()">To Page 5</button> <button (click)="onBtPageFifty()">To Page 50</button>

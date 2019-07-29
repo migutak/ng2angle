@@ -21,7 +21,7 @@ export const environment = {
   emailapi: 'http://localhost:8000/api/email/send',
   auth: 'http://localhost:8080/ecol_apis/api/restlogin',
   // filesapi: 'http://localhost:4200/api',
-  filesapi: 'http://localhost:3100/filesapi', // activityupload
+  filesapi: 'http://localhost:4000/filesapi', // activityupload
   accplanlink: 'http://localhost:3001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   birt: 'http://ecollect.inteligen.co.ke:8090/birt',
