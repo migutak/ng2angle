@@ -1,0 +1,104 @@
+<div class="content-heading">
+    <div>
+      Account Plans
+      <small>Account plan settings</small>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+      <p style="font-size: 20px; color: white">Processing ...</p>
+    </ngx-spinner>
+    <div class="row">
+      <div id="accordion" class="col-xl-4">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+              Account Plan Configurations
+            </a>
+          </div>
+          <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-12">
+                  <div class="card card-primary">
+                    <div class="card-body">
+                      <fieldset>
+                        <div class="form-check mb-2 mr-sm-2">
+                          <div class="form-check">
+                            <input class="form-check-input" id="demand1" type="radio" (click)="setradio('demand1')"
+                              [checked]='true' ngModel name="format" value="demand1" />
+                            <label class="form-check-label" for="demand1">Plan 1</label>
+                          </div>
+                        </div>
+                        <div class="form-check mb-2 mr-sm-2">
+                          <div class="form-check">
+                            <input class="form-check-input" id="demand2" type="radio" (click)="setradio('demand2')"
+                              [checked]='false' ngModel name="format" value="demand2" />
+                            <label class="form-check-label" for="demand2">Plan 2</label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="accordion" class="col-xl-8">
+        <div class="col-xl-12">
+          <div class="card card-default">
+            <div class="card-header">
+              <a class="card-link" data-toggle="collapse" href="#collapseDemand1">
+                {{selected_demand}} actions:
+              </a>
+            </div>
+            <div id="collapseDemand1" class="collapse show" data-parent="#accordion">
+              <div class="card-body">
+                <p>List of Plan actions</p>
+                <fieldset>
+                  add table
+                </fieldset>
+                <form #addactionForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(addactionForm)">
+                  <p class="lead mt-3"></p>
+                    <p>Add action</p>
+                    <hr>
+                  <div class="form-group">
+                    add an action
+                  </div> 
+                  <fieldset>
+                      <div class="form-group row">
+                        <label class="col-md-2 col-form-label">Select or type plan action</label>
+                        <p></p>
+                        <div class="col-md-10">
+                          input box
+                        </div>
+                      </div>
+                    </fieldset>
+                  <fieldset>
+                    <div class="form-group row">
+                      <div class="col-md-10">
+                        <label class="checkbox c-checkbox">
+                          <input type="checkbox" name="suspendaction" id="suspendaction" #suspendaction="ngModel"
+                            [(ngModel)]="model.suspendaction" [checked]="model.suspendaction" />
+                          <span class="fa fa-check"></span> suspend action</label>
+                      </div>
+                      <!--<pre>{{model | json }}</pre>-->
+                    </div>
+                  </fieldset>
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <button [disabled]="!letterForm.valid || !letterForm.dirty" class="btn btn-outline-primary"
+                        type="submit">
+                        <em class="fa fa-check fa-fw"></em>add</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -57,7 +57,7 @@ export const routes = [
             { path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule' },
             { path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule' },
             { path: 'yards', loadChildren: './yards/yards.module#YardsModule' },
-            { path: 'extras', loadChildren: './extras/extras.module#ExtrasModule' }
+            { path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule' }
         ],
         canActivate: [AuthGuard]
     },

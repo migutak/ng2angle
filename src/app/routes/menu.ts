@@ -420,6 +420,11 @@ const SMS = {
     icon: 'icon-note'
 };
 
+const AccountPlans = {
+    text: 'Account Plans',
+    link: '/configurations/accplans',
+    icon: 'icon-note'
+};
 
 const headingMain = {
     text: 'Main Navigation',
@@ -535,6 +540,7 @@ const teamleader_menu = [
     Demandletters,
     Allocations,
     SMS,
+    AccountPlans,
     headingDocumentations,
     Manuals
 ];
