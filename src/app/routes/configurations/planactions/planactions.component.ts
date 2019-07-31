@@ -84,9 +84,8 @@ export class PlanactionsComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
-    this.model.actionid = form.actioncode;
+    this.model.actioncode = form.actionid;
     this.model.actiontitle = form.actiontitle;
-    this.model.updateby = this.username;
     //
     this.edit = true;
   }
@@ -112,7 +111,7 @@ export class PlanactionsComponent implements OnInit {
       console.log(error);
       swal(
         'Ooops!',
-        'PLan action Not updated!',
+        'Plan action Not updated!',
         'error'
       );
     });
@@ -121,6 +120,7 @@ export class PlanactionsComponent implements OnInit {
   cancel() {
     this.edit = false;
     this.model = {};
+    this.getid();
   }
 
   delete() {

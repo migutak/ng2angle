@@ -379,7 +379,7 @@ export class EcolService {
   }
 
   put_s_actions(data) {
-    return this.httpClient.post<any>(environment.api + '/tbl_s_actions/' + data.actionid , data);
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_actions/' + data.actionid , data);
   }
 
   putcardwatch(data) {
