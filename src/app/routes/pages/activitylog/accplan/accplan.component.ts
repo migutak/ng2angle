@@ -16,6 +16,9 @@ export class AccPlanComponent implements OnInit {
   custnumber;
   accnumber;
   username;
+  currentplan: any = [{planaction: 'sample', status: true, date: '2019-07-31'}];
+  allplans: any = [];
+  model = {};
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {
@@ -43,12 +46,22 @@ export class AccPlanComponent implements OnInit {
       this.custnumber = queryParams.get('custnumber');
     });
 
-    // get account details
+    this.getallplans();
   }
 
   openaccplan() {
     // tslint:disable-next-line:max-line-length
     window.open(environment.accplanlink + '/?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&nationid=00', '_blank');
+  }
+
+  getallplans() {
+    this.ecolService.tbl_s_plans().subscribe(data => {
+      this.allplans = data;
+    });
+  }
+
+  changeAction(value) {
+    console.log(value);
   }
 
 }

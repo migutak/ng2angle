@@ -98,7 +98,7 @@ export class ViewallComponent implements OnInit {
     onRowDoubleClicked(event: any) {
       this.model = event.node.data;
       // tslint:disable-next-line:max-line-length
-      window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
+      window.open(environment.applink + '/activitylog?accnumber=' + this.model.LOANACCNUMBER + '&custnumber=' + this.model.LOANACCNUMBER + '&username=' + this.username + '&sys=mcoopcash', '_blank');
     }
     getSelectedRows(event) {
       //

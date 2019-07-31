@@ -69,11 +69,11 @@
                   </div> 
                   <fieldset>
                       <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Select or type plan action</label>
-                        <p></p>
-                        <div class="col-md-10">
-                          input box
-                        </div>
+                          <label class="mt">Select or key in plan action</label>
+                          <ngx-select [multiple]="false" [items]="items" name="plan" id="plan"
+                            #plan="ngModel" [(ngModel)]="model.plan" placeholder="No plan selected"
+                            >
+                          </ngx-select>
                       </div>
                     </fieldset>
                   <fieldset>
@@ -89,9 +89,9 @@
                   </fieldset>
                   <div class="clearfix">
                     <div class="float-left">
-                      <button [disabled]="!letterForm.valid || !letterForm.dirty" class="btn btn-outline-primary"
+                      <button [disabled]="!addactionForm.valid || !addactionForm.dirty" class="btn btn-outline-primary"
                         type="submit">
-                        <em class="fa fa-check fa-fw"></em>add</button>
+                        <em class="fa fa-check fa-fw"></em>Add</button>
                     </div>
                   </div>
                 </form>

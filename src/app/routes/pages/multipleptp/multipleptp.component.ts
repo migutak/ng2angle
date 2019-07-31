@@ -36,6 +36,7 @@ export class MultipleptpComponent implements OnInit {
   en_ptp: any = {};
   edit = false;
   isptptosave = false;
+  p = 1;
 
   public config: ToasterConfig =
     new ToasterConfig({

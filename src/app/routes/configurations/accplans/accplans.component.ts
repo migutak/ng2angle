@@ -24,6 +24,9 @@ export class AccplansComponent implements OnInit {
     username: string;
     selected_demand: string;
 
+    // tslint:disable-next-line:max-line-length
+  public items: Array<string> = ['plan1', 'plan2', 'plan3'];
+
   constructor(
     private ecolService: EcolService,
     private route: ActivatedRoute,
