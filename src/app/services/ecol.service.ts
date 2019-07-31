@@ -321,6 +321,16 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans');
   }
 
+  s_actions() {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_actions');
+  }
+
+  post_s_actions(action) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.post<any>(environment.api + '/api/tbl_s_actions', action);
+  }
+
   postptps(ptps) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.post<any>(environment.api + '/api/ptps', ptps);
@@ -366,6 +376,10 @@ export class EcolService {
 
   putteles(data) {
     return this.httpClient.post<any>(environment.nodeapi + '/teles/update' , data);
+  }
+
+  put_s_actions(data) {
+    return this.httpClient.post<any>(environment.api + '/tbl_s_actions/' + data.actionid , data);
   }
 
   putcardwatch(data) {

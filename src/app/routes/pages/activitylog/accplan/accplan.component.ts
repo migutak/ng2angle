@@ -60,8 +60,9 @@ export class AccPlanComponent implements OnInit {
     });
   }
 
-  changeAction(value) {
-    console.log(value);
+  changeAction(planid) {
+    // retireve actions
+
   }
 
 }

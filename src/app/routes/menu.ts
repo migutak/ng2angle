@@ -422,8 +422,22 @@ const SMS = {
 
 const AccountPlans = {
     text: 'Account Plans',
-    link: '/configurations/accplans',
-    icon: 'icon-note'
+    link: '/configurations',
+    icon: 'icon-note',
+    submenu: [
+        {
+            text: 'Plans',
+            link: '/configurations/accplans'
+        },
+        {
+            text: 'Plan actions',
+            link: '/configurations/planactions'
+        },
+        {
+            text: 'Plan-Memo setup',
+            link: '/configurations/planmemos'
+        }
+    ]
 };
 
 const headingMain = {

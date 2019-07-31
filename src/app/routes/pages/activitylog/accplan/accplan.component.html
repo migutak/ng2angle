@@ -2,7 +2,7 @@ Click <a href="#" target="_blank" (click)="openaccplan()">here</a> to open detai
 <hr>
 Current Plan:
 <select id="plan" #plan="ngModel" [(ngModel)]="model.plan" name="plan" class="form-control"
-    [ngClass]="{ 'is-invalid': plan.errors }" (ngModelChange)="changeAction(plan)">
+    [ngClass]="{ 'is-invalid': plan.errors }" (ngModelChange)="changeAction(plan).value">
     <option value="">Please select</option>
     <option *ngFor="let plan of allplans" [value]="plan.planid">
         {{plan.plantitle}}</option>

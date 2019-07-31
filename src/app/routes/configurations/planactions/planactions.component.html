@@ -1,0 +1,96 @@
+<div class="content-heading">
+  <div>
+    Account Plans
+    <small>Plan actions</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div id="accordion" class="col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapseOne">
+            Plan action Configurations
+          </a>
+        </div>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="card card-primary">
+                  <div class="card-body">
+                    <form #planactionsform="ngForm" class="form-horizontal" (ngSubmit)="saveplanaction(model)"
+                      autocomplete="off" novalidate>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Action code</label>
+                        <div class="col-xl-8">
+                          <input class="form-control" type="text" name="actioncode" id="actioncode"
+                            [(ngModel)]="model.actioncode" #actioncode="ngModel"
+                            [ngClass]="{ 'is-invalid': actioncode.invalid }" [disabled]="true" required />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Action title</label>
+                        <div class="col-xl-8">
+                          <input class="form-control" type="text" name="actiontitle" id="actiontitle" [(ngModel)]="model.actiontitle"
+                            #actiontitle="ngModel" [ngClass]="{ 'is-invalid': actiontitle.invalid }" required />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                          <button *ngIf="!edit" [disabled]="!planactionsform.valid"
+                            class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label" type="submit">Submit</button>
+                          <button *ngIf="edit" [disabled]="planactionsform.invalid"
+                            class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
+                            (click)="updateaction(model)">Update</button>
+                          <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label"
+                            type="button" (click)="cancel()">Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="accordion" class="col-xl-8">
+      <div class="col-xl-12">
+        <div class="card card-default">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseDemand1">
+              Plan actions:
+            </a>
+          </div>
+          <div id="collapseDemand1" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>plan action title</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let p of planactions">
+                        <td>{{p.actionid}}</td>
+                        <td>{{p.actiontitle}}</td>
+                        <td class="text-center">
+                          <button class="btn btn-outline-success btn-sm" (click)="editaction(p)">
+                            <i class="fas fa-edit"></i> edit
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
