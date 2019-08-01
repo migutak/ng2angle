@@ -12,19 +12,19 @@ import { NgOption } from '@ng-select/ng-select';
 })
 export class AccplansComponent implements OnInit {
 
-    model: any = {};
-    planactions: any = [];
-    actions: any = [];
-    selectedLink: string;
-    username: string;
-    selected_plan: any;
+  model: any = {};
+  planactions: any = [];
+  actions: any = [];
+  selectedLink: string;
+  username: string;
+  selected_plan: any;
 
   public items: Array<string> = [];
 
   constructor(
     private ecolService: EcolService,
     private spinner: NgxSpinnerService,
-    ) { }
+  ) { }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -34,9 +34,9 @@ export class AccplansComponent implements OnInit {
   }
 
   setradio(e): void {
-        this.spinner.show();
-        this.selected_plan = e.plantitle;
-        this.getplanactions(e.planid);
+    this.spinner.show();
+    this.selected_plan = e.plantitle;
+    this.getplanactions(e.planid);
   }
 
   getplanactions(planid) {
@@ -52,58 +52,66 @@ export class AccplansComponent implements OnInit {
 
   getallplans() {
     this.ecolService.all_s_plans().subscribe(response => {
-     this.items = response;
+      this.items = response;
     }, error => {
       console.log(error);
     });
+  }
+
+  getid() {
+    const possible = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lengthOfCode = 7;
+    this.model.planid = this.makeRandom(lengthOfCode, possible);
+  }
+
+  makeRandom(lengthOfCode: number, possible: string) {
+    let text = '';
+    for (let i = 0; i < lengthOfCode; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+      return text;
   }
 
   getallactions() {
     this.ecolService.s_actions().subscribe(response => {
-     this.actions = response;
+      this.actions = response;
     }, error => {
       console.log(error);
     });
   }
 
-  onSubmit(form) {
+  newplan(form) {
     // Loading indictor
     this.spinner.show();
+    this.getid();
     //
-   const body = {
-    letterid: this.model.letterid,
-    smstemplate: this.model.smstemplate,
-    suspendletter: this.model.suspendletter,
-    templatepath: this.model.templatepath || '0',
-    autodelivered: this.model.autodelivered,
-    suspendautodelivery: this.model.suspendautodelivery,
-    suspendsms: this.model.suspendsms,
-    datelastupdated: new Date(),
-    updatedby: this.username,
-    byemail: this.model.byemail,
-    bysms: this.model.bysms,
-    byphysical: this.model.byphysical
+    const body = {
+      planid: this.model.planid,
+      plantitle: form.plantitle,
+      owner: this.username
     };
+    console.log(body);
 
     // check letter duplicate
     swal({
       title: 'Are you sure?',
-      text: 'You want to update!',
+      text: 'You want to add!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, update!'
+      confirmButtonText: 'Yes, add!'
     }).then((result) => {
       if (result.value) {
         this.ecolService.loader();
-        this.ecolService.putLetter(body).subscribe(Response => {
-          swal('Successful!', 'letter updated!', 'success');
+        this.ecolService.post_s_plan(body).subscribe(Response => {
+          swal('Successful!', 'plan added!', 'success');
+          this.getallplans();
           this.spinner.hide();
         }, error => {
           console.log(error);
           this.spinner.hide();
-          swal('Error!', 'Error updating letter!', 'error');
+          swal('Error!', 'Error adding plan!', 'error');
         });
       }
     });

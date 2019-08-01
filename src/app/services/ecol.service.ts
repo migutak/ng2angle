@@ -336,6 +336,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans');
   }
 
+  post_s_plan(body) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.post<any>(environment.api + '/api/tbl_s_plans', body);
+  }
+
   s_actions() {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/tbl_s_actions');

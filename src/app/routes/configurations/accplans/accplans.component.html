@@ -31,13 +31,16 @@
                         </div>
                       </div>
                     </fieldset>
-                    <form>
+                    <form #addplanForm="ngForm" (ngSubmit)="newplan(addplanForm.value)" novalidate autocomplete="off">
                       <div class="form-row">
                         <div class="col">
-                          <input type="text" class="form-control" placeholder="plan name">
+                          <input type="text" class="form-control"
+                          name="plantitle" id="plantitle"
+                            #plantitle="ngModel" [(ngModel)]="model.plantitle"
+                            placeholder="plan name"  [ngClass]="{ 'is-invalid': plantitle.invalid }" required>
                         </div>
                         <div class="col">
-                          <button type="submit" class="btn btn-primary">add new plan</button>
+                          <button [disabled]="!addplanForm.valid || !addplanForm.dirty" type="submit" class="btn btn-primary"><em class="fa fa-check fa-fw"></em> add new plan</button>
                         </div>
                       </div>
                     </form>

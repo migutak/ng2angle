@@ -57,7 +57,7 @@
                   <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editForm)" *ngIf="!new">
                     <p class="lead mt-3"></p>
                     <div class="form-group">
-                      <p>plan title</p>
+                      <p>Plan title</p>
                       <input class="form-control" name="letterid" id="letterid" #letterid="ngModel"
                         [(ngModel)]="model.letterid" [disabled]="true" required/>
                     </div>
