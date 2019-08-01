@@ -306,6 +306,16 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/cards_watch_static?filter[where][cardacct]=' + cardacct);
   }
 
+  all_s_plans() {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans');
+  }
+
+  getplanactions(planid) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.nodeapi + '/tbl_s_plan_actions/all?planid=' + planid);
+  }
+
   getWatchcardAccount(cardacct) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage?filter[where][cardacct]=' + cardacct);

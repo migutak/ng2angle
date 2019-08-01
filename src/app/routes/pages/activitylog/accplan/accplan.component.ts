@@ -18,7 +18,7 @@ export class AccPlanComponent implements OnInit {
   username;
   currentplan: any = [{planaction: 'sample', status: true, date: '2019-07-31'}];
   allplans: any = [];
-  model = {};
+  model: any = {};
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService) {

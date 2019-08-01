@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { environment } from '../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgOption } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-accplans',
@@ -13,50 +13,35 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class AccplansComponent implements OnInit {
 
     model: any = {};
-    valueCategory;
-    valueTag;
-    valueReview;
-    contents: string;
-    letter: {};
-    demandSettings: any;
-    disable = true;
+    planactions: any = [];
+    actions: any = [];
     selectedLink: string;
     username: string;
-    selected_demand: string;
+    selected_plan: any;
 
-    // tslint:disable-next-line:max-line-length
-  public items: Array<string> = ['plan1', 'plan2', 'plan3'];
+  public items: Array<string> = [];
 
   constructor(
     private ecolService: EcolService,
-    private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     ) { }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.username;
-    this.getblobal();
+    this.getallplans();
+    this.getallactions();
   }
 
-  setradio(e: string): void {
+  setradio(e): void {
         this.spinner.show();
-        this.getLetter(e.toLowerCase());
-        this.model.letterid = e.toLowerCase();
-        this.selected_demand = e.toUpperCase();
+        this.selected_plan = e.plantitle;
+        this.getplanactions(e.planid);
   }
 
-  getLetter(letter) {
-    this.ecolService.getLetter(letter).subscribe(dletter => {
-      this.model = dletter;
-      this.model.bysms = (dletter.bysms).toLowerCase() === 'true' ? true : false;
-      this.model.byphysical = (dletter.byphysical).toLowerCase() === 'true' ? true : false;
-      this.model.byemail = (dletter.byemail).toLowerCase() === 'true' ? true : false;
-
-      this.model.suspendsms = (dletter.suspendsms).toLowerCase() === 'true' ? true : false;
-      this.model.suspendletter = (dletter.suspendletter).toLowerCase() === 'true' ? true : false;
-      this.model.suspendautodelivery = (dletter.suspendautodelivery).toLowerCase() === 'true' ? true : false;
-
+  getplanactions(planid) {
+    this.ecolService.getplanactions(planid).subscribe(resp => {
+      this.planactions = resp;
       this.spinner.hide();
     }, error => {
       this.spinner.hide();
@@ -65,25 +50,21 @@ export class AccplansComponent implements OnInit {
     });
   }
 
-  globalSubmit(form) {
-    this.ecolService.loader();
-    this.ecolService.global(this.model).subscribe(response => {
-      swal('Success!', 'Settngs saved!', 'success');
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occured!', 'error');
-    });
-  }
-
-  getblobal() {
-    this.ecolService.getglobal().subscribe(response => {
-      console.log(response);
-     // this.model = response[0];
+  getallplans() {
+    this.ecolService.all_s_plans().subscribe(response => {
+     this.items = response;
     }, error => {
       console.log(error);
     });
   }
 
+  getallactions() {
+    this.ecolService.s_actions().subscribe(response => {
+     this.actions = response;
+    }, error => {
+      console.log(error);
+    });
+  }
 
   onSubmit(form) {
     // Loading indictor

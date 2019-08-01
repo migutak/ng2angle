@@ -139,7 +139,7 @@ export class AllcardsComponent implements OnInit {
       this.model = event.node.data;
       // console.log(this.model);
       // tslint:disable-next-line:max-line-length
-      window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
+      window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
     }
 
     /*onSearch() {
