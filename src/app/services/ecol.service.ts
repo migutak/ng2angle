@@ -85,6 +85,11 @@ export class EcolService {
     const url = environment.api + '/api/collectoraction';
     return this.httpClient.get(url);
   }
+
+  getplanmemos() {
+    const url = environment.api + '/api/tbl_s_planmemos';
+    return this.httpClient.get(url);
+  }
   getexcuse() {
     const url = environment.api + '/api/excuse';
     return this.httpClient.get(url);
