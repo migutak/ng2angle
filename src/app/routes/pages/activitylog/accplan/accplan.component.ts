@@ -16,7 +16,7 @@ export class AccPlanComponent implements OnInit {
   custnumber;
   accnumber;
   username;
-  currentplan: any = [{planaction: 'sample', status: true, date: '2019-07-31'}];
+  currentplan: any = [];
   allplans: any = [];
   model: any = {};
   constructor(public settings: SettingsService,
@@ -61,8 +61,28 @@ export class AccPlanComponent implements OnInit {
   }
 
   changeAction(planid) {
-    // retireve actions
+    // build planactions
 
+    if (planid.value) {
+      this.currentplan = [];
+      // retrieve plan actions
+      this.ecolService.s_plan_actions(planid.value).subscribe(resp => {
+        console.log(resp);
+        for (let i = 0; i < resp.length; i++) {
+          const body = {
+            actiontitle: resp[i].actiontitle,
+            completed: true,
+            owner: this.username
+          };
+          this.currentplan.push(body);
+        }
+        console.log(this.currentplan);
+      }, error => {
+        console.log(error);
+      });
+    } else {
+      this.currentplan = [];
+    }
   }
 
 }

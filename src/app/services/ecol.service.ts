@@ -313,12 +313,17 @@ export class EcolService {
 
   getplanactions(planid) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.nodeapi + '/tbl_s_plan_actions/all?planid=' + planid);
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_plan_actions?filter[where][planid]=' + planid);
   }
 
   getWatchcardAccount(cardacct) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/cards_watch_stage?filter[where][cardacct]=' + cardacct);
+  }
+
+  getanaction(actionid) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_actions/' + actionid);
   }
 
   getcardwithid(nationid) {
@@ -339,6 +344,11 @@ export class EcolService {
   post_s_plan(body) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.post<any>(environment.api + '/api/tbl_s_plans', body);
+  }
+
+  post_s_plan_actions(body) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.post<any>(environment.api + '/api/tbl_s_plan_actions', body);
   }
 
   s_actions() {
@@ -394,12 +404,32 @@ export class EcolService {
     return this.httpClient.post<any>(environment.api + '/api/teles', data);
   }
 
+  postplanmemo(data) {
+    return this.httpClient.post<any>(environment.api + '/api/tbl_s_planmemos', data);
+  }
+
   putteles(data) {
     return this.httpClient.post<any>(environment.nodeapi + '/teles/update' , data);
   }
 
   put_s_actions(data) {
     return this.httpClient.put<any>(environment.api + '/api/tbl_s_actions/' + data.actionid , data);
+  }
+
+  put_s_plan_actions(data) {
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_plan_actions' + data.planid , data);
+  }
+
+  s_plan_actions(planid) {
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_plan_actions?filter[where][planid]=' + planid);
+  }
+
+  delete_s_plan_actions(id) {
+    return this.httpClient.delete<any>(environment.api + '/api/tbl_s_plan_actions/' + id );
+  }
+
+  delete_s_planmemos(id) {
+    return this.httpClient.delete<any>(environment.api + '/api/tbl_s_planmemos/' + id );
   }
 
   putcardwatch(data) {
@@ -425,6 +455,11 @@ export class EcolService {
   getallteles(custnumber) {
     // return this.httpClient.get<any>(environment.api + '/api/teles/alltele?custnumber=' + custnumber);
     return this.httpClient.get<any>(environment.nodeapi + '/teles/all?custnumber=' + custnumber);
+  }
+
+  getallplans() {
+    // return this.httpClient.get<any>(environment.api + '/api/teles/alltele?custnumber=' + custnumber);
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans');
   }
 
   existsteles(custnumber, tel, email) {

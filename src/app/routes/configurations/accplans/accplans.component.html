@@ -34,13 +34,13 @@
                     <form #addplanForm="ngForm" (ngSubmit)="newplan(addplanForm.value)" novalidate autocomplete="off">
                       <div class="form-row">
                         <div class="col">
-                          <input type="text" class="form-control"
-                          name="plantitle" id="plantitle"
-                            #plantitle="ngModel" [(ngModel)]="model.plantitle"
-                            placeholder="plan name"  [ngClass]="{ 'is-invalid': plantitle.invalid }" required>
+                          <input type="text" class="form-control" name="plantitle" id="plantitle" #plantitle="ngModel"
+                            [(ngModel)]="model.plantitle" placeholder="plan name"
+                            [ngClass]="{ 'is-invalid': plantitle.invalid }" required>
                         </div>
                         <div class="col">
-                          <button [disabled]="!addplanForm.valid || !addplanForm.dirty" type="submit" class="btn btn-primary"><em class="fa fa-check fa-fw"></em> add new plan</button>
+                          <button [disabled]="!addplanForm.valid || !addplanForm.dirty" type="submit"
+                            class="btn btn-primary"><em class="fa fa-check fa-fw"></em> add new plan</button>
                         </div>
                       </div>
                     </form>
@@ -68,6 +68,7 @@
                     <th>#</th>
                     <th>actionid</th>
                     <th>actiontitle</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,21 +76,33 @@
                     <td>{{p.planid}}</td>
                     <td>{{p.actionid}}</td>
                     <td>{{p.actiontitle}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-danger btn-sm" (click)="editaction(p)">
+                          <i class="fas fa-edit"></i> delete
+                        </button>
+                      </td>
                   </tr>
                 </tbody>
               </table>
               <p class="lead mt-3"></p>
               <p>Add action</p>
               <hr>
-              <form #addactionForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(addactionForm)">
+              <form #addactionForm="ngForm" class="form-horizontal" (ngSubmit)="addactionSubmit(addactionForm.value)">
+
+                <div class="form-group row mb">
+                  <div class="col-md-12">
+                    <label class="mt">Plan</label>
+                    <input #plan="ngModel" id="plan" name="plan" [(ngModel)]="model.plan" readonly required />
+                  </div>
+                </div>
 
                 <fieldset>
                   <div class="form-group row mb">
                     <div class="col-md-12">
                       <label class="mt">Select action to add to plan</label>
-                      <ng-select id="planaction" name="planaction" [(ngModel)]="model.planaction" placeholder="No action selected"
-                      #planaction="ngModel" [(ngModel)]="model.planaction"
-                      [ngClass]="{ 'is-invalid': planaction.invalid }" required>
+                      <ng-select id="planaction" name="planaction" [(ngModel)]="model.planaction"
+                        placeholder="No action selected" #planaction="ngModel" [(ngModel)]="model.planaction"
+                        [ngClass]="{ 'is-invalid': planaction.invalid }" required>
                         <ng-option *ngFor="let a of actions" [value]="a.actionid">{{a.actiontitle}}</ng-option>
                       </ng-select>
                     </div>
@@ -97,9 +110,14 @@
                 </fieldset>
                 <div class="clearfix">
                   <div class="float-left">
-                    <button [disabled]="!addactionForm.valid || !addactionForm.dirty" class="btn btn-outline-primary"
+                    <button *ngIf="!edit" [disabled]="!addactionForm.valid || !addactionForm.dirty" class="btn btn-outline-primary"
                       type="submit">
                       <em class="fa fa-check fa-fw"></em>Add</button>
+                    <button *ngIf="edit" [disabled]="addactionForm.invalid"
+                      class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
+                      (click)="deleteaction(model)">Delete</button>
+                    <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label"
+                      type="button" (click)="cancel()">Cancel</button>
                   </div>
                 </div>
               </form>

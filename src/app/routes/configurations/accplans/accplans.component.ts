@@ -4,6 +4,7 @@ import swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgOption } from '@ng-select/ng-select';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
   selector: 'app-accplans',
@@ -18,6 +19,7 @@ export class AccplansComponent implements OnInit {
   selectedLink: string;
   username: string;
   selected_plan: any;
+  edit = false;
 
   public items: Array<string> = [];
 
@@ -37,6 +39,7 @@ export class AccplansComponent implements OnInit {
     this.spinner.show();
     this.selected_plan = e.plantitle;
     this.getplanactions(e.planid);
+    this.model.plan = e.planid;
   }
 
   getplanactions(planid) {
@@ -69,7 +72,7 @@ export class AccplansComponent implements OnInit {
     for (let i = 0; i < lengthOfCode; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-      return text;
+    return text;
   }
 
   getallactions() {
@@ -90,7 +93,6 @@ export class AccplansComponent implements OnInit {
       plantitle: form.plantitle,
       owner: this.username
     };
-    console.log(body);
 
     // check letter duplicate
     swal({
@@ -117,7 +119,56 @@ export class AccplansComponent implements OnInit {
     });
   }
 
-  delete() {
+  addactionSubmit(form) {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to add!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, add!'
+    }).then((result) => {
+      if (result.value) {
+        // get action
+        this.ecolService.getanaction(form.planaction).subscribe(data => {
+          // console.log(data);
+          const body = {
+            actionid: form.planaction,
+            planid: form.plan,
+            updateby: this.username,
+            actiontitle: data.actiontitle
+          };
+
+          // post to tbl_s_plan_actions
+          this.ecolService.post_s_plan_actions(body).subscribe(resp => {
+            // console.log(resp);
+            // refresh plan action lists
+            this.getplanactions(body.planid);
+            swal(
+              'Good!',
+              'Plan action added!',
+              'success'
+            );
+          }, error => {
+            alert('');
+            swal(
+              'Ooops!',
+              ':1 error saving plan action',
+              'error'
+            );
+          });
+
+        }, error => {
+          console.log(error);
+          alert('error saving plan action');
+        });
+      }
+    });
+
+  }
+
+  deleteaction(form) {
     swal({
       title: 'Are you sure?',
       text: 'You want to DELETE!',
@@ -128,8 +179,50 @@ export class AccplansComponent implements OnInit {
       confirmButtonText: 'Yes, delete!'
     }).then((result) => {
       if (result.value) {
-        //
+        // check if logged in
+        // console.log(form);
+        this.ecolService.ifLogged();
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.username = currentUser.username;
+        // save to db
+        this.ecolService.delete_s_plan_actions(form.id).subscribe(response => {
+          // console.log(response); {count: 1}
+          swal(
+            'Good!',
+            'Plan action deleted!',
+            'success'
+          );
+          this.getplanactions(form.plan);
+        }, error => {
+          console.log(error);
+          swal(
+            'Ooops!',
+            'Plan action Not deleted!',
+            'error'
+          );
+        });
       }
     });
+  }
+
+  editaction(form) {
+    // check if logged in
+    // console.log(form);
+    this.ecolService.ifLogged();
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
+    this.model.plan = form.planid;
+    this.model.actionid = form.actionid;
+    this.model.planaction = form.actiontitle;
+    this.model.id = form.id;
+    //
+    this.edit = true;
+  }
+
+  cancel() {
+    this.edit = false;
+    // this.model = {};
+    // this.getid();
   }
 }

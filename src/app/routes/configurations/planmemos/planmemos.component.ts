@@ -21,6 +21,7 @@ export class PlanmemosComponent implements OnInit {
   $win = $(window);
   new = true;
   memos: any = [];
+  accplans: any = [];
 
   gridOptions: GridOptions;
 
@@ -51,9 +52,6 @@ export class PlanmemosComponent implements OnInit {
   postModel: any = {};
   postBody: any = [];
   public singleData;
-
-  // tslint:disable-next-line:max-line-length
-  public accplans: Array<string> = [];
   // public items: Array<string> = [];
   public items: Array<string> = [];
   model: any = {};
@@ -84,8 +82,7 @@ export class PlanmemosComponent implements OnInit {
     this.new = false;
     this.model = event.node.data;
     this.model.lastupdateby = this.username;
-    this.model.lastupdate = new Date();
-    this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
+    // this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
   }
 
   onQuickFilterChanged($event) {
@@ -98,6 +95,7 @@ export class PlanmemosComponent implements OnInit {
 
     // get memos
     this.getMemos();
+    this.getplans();
   }
 
   gridReady(params) {
@@ -112,15 +110,15 @@ export class PlanmemosComponent implements OnInit {
     this.model = {};
   }
 
-  fneditSubmit(form) {
+  fndeleteSubmit(form) {
     this.spinner.show();
-    this.ecolService.putautoLetter(this.model).subscribe(resp => {
-      swal('Success!', 'Update successful!', 'success');
+    this.ecolService.delete_s_planmemos(form.id).subscribe(resp => {
+      swal('Success!', 'Delete successful!', 'success');
       this.getData();
       this.spinner.hide();
     }, error => {
       console.log(error);
-      swal('Eror!', 'Update was not completed!', 'error');
+      swal('Eror!', 'Delete was not completed!', 'error');
       this.spinner.hide();
     });
   }
@@ -128,6 +126,12 @@ export class PlanmemosComponent implements OnInit {
   getData() {
     this.ecolService.getplanmemos().subscribe(res => {
       this.rowData1 = res;
+    });
+  }
+
+  getplans() {
+    this.ecolService.getallplans().subscribe(res => {
+      this.accplans = res;
     });
   }
 
@@ -142,16 +146,19 @@ export class PlanmemosComponent implements OnInit {
   // postautoLetter
 
   addNew(form) {
-    const body = {
-      'planid': form.value.planid,
-      'memogroup': form.value.memogroup,
-      'updateby': this.username,
-      'active': true
-    };
+    const postArray = [];
+    for (let i = 0; i < form.memogroup.length; i++) {
+      const body = {
+        'planid': form.planid,
+        'memogroup': form.memogroup[i],
+        'updateby': this.username
+      };
+      postArray.push(body);
+    }
     // check duplicate
     this.spinner.show();
-    this.ecolService.postautoLetter(body).subscribe(data => {
-      swal('Success!', 'Successfully added!', 'success');
+    this.ecolService.postplanmemo(postArray).subscribe(data => {
+      swal('Success!', 'Plan-memo Successfully added!', 'success');
       this.spinner.hide();
       this.getData();
     }, error => {
@@ -161,10 +168,10 @@ export class PlanmemosComponent implements OnInit {
   }
 
 
-  editSubmit(form) {
+  deleteSubmit(form) {
     swal({
       title: 'Are you sure?',
-      text: 'You want to Update!',
+      text: 'You want to Delete!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -172,23 +179,7 @@ export class PlanmemosComponent implements OnInit {
       confirmButtonText: 'Yes, Update!'
     }).then((result) => {
       if (result.value) {
-        this.fneditSubmit(form);
-      }
-    });
-  }
-
-  delete() {
-    swal({
-      title: 'Are you sure?',
-      text: 'You want to DELETE!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete!'
-    }).then((result) => {
-      if (result.value) {
-        //
+        this.fndeleteSubmit(form);
       }
     });
   }

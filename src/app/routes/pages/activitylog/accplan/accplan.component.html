@@ -2,11 +2,12 @@ Click <a href="#" target="_blank" (click)="openaccplan()">here</a> to open detai
 <hr>
 Current Plan:
 <select id="plan" #plan="ngModel" [(ngModel)]="model.plan" name="plan" class="form-control"
-    [ngClass]="{ 'is-invalid': plan.errors }" (ngModelChange)="changeAction(plan.value)">
+    [ngClass]="{ 'is-invalid': plan.errors }" (ngModelChange)="changeAction(plan)">
     <option value="">Please select</option>
     <option *ngFor="let plan of allplans" [value]="plan.planid">
         {{plan.plantitle}}</option>
 </select>
+<!--<pre>{{model | json}}</pre>-->
 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
     <table class="table" cellspacing="0">
         <thead>
@@ -18,18 +19,18 @@ Current Plan:
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let p of currentplan">
-                <td>{{p.planaction}}</td>
+            <tr *ngFor="let current of currentplan">
+                <td>{{current.actiontitle}}</td>
                 <td>
                     <div class="checkbox c-checkbox form-check-inline">
                         <label>
-                            <input type="checkbox" />
+                            <input type="checkbox" [checked]="current.completed" />
                             <span class="fa fa-check"></span></label>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" id="activities" name="activities"
+                        <input class="form-control" placeholder="yyyy-mm-dd" id="completedate" name="completedate"
                             ngbDatepicker #p="ngbDatepicker" />
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i
@@ -38,8 +39,9 @@ Current Plan:
                         </div>
                     </div>
                 </td>
-                <td>{{p.owner}}</td>
+                <td>{{current.owner}}</td>
             </tr>
         </tbody>
     </table>
+    <pre>{{currentplan | json}}</pre>
 </div>
