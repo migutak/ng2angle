@@ -22,7 +22,7 @@ Current Plan:
         <tbody>
             <tr *ngFor="let current of currentplan; let in = index">
                 <td>{{current.actionid}}</td>
-                <td><input type="text" name="actiontitle-{{in}}" [(ngModel)]="current.actiontitle"></td>
+                <td><input type="text" name="actiontitle-{{in}}" [(ngModel)]="current.actiontitle" [disabled]="true"></td>
                 <td>
                     <div class="checkbox c-checkbox form-check-inline">
                         <label>
@@ -41,7 +41,7 @@ Current Plan:
                         </div>
                     </div>
                 </td>
-                <td><input type="text" name="updateby-{{in}}" [(ngModel)]="current.updateby"></td>
+                <td><input type="text" name="updateby-{{in}}" [(ngModel)]="current.updateby" [disabled]="true" /></td>
             </tr>
         </tbody>
     </table>
