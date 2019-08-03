@@ -4,14 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../../environments/environment';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-accplan',
   templateUrl: './accplan.component.html',
   styleUrls: ['./accplan.component.scss'],
-  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class AccPlanComponent implements OnInit {
 
@@ -51,6 +51,7 @@ export class AccPlanComponent implements OnInit {
     });
 
     this.getallplans();
+    this.planexists(this.accnumber);
   }
 
   openaccplan() {
@@ -64,27 +65,39 @@ export class AccPlanComponent implements OnInit {
     });
   }
 
+  planexists(accnumber) {
+    this.ecolService.s_check_account_plans(accnumber).subscribe(data => {
+      // check if there if a plan
+      if (data && data.length) {
+        this.changeAction(data[0].planid);
+        this.model.plan = data[0].planid;
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+
   changeAction(planid) {
     // build planactions
 
-    if (planid.value) {
+    if (planid) {
       this.currentplan = [];
       // retrieve plan actions
-      this.ecolService.s_plan_actions(planid.value).subscribe(resp => {
+      this.ecolService.s_plan_actions(planid).subscribe(resp => {
         // console.log(resp);
         // tbl_s_account_plans
-        this.ecolService.s_account_plans(this.accnumber, planid.value).subscribe(data => {
-          console.log('tbl_s_account_plans', data);
+        this.ecolService.s_account_plans(this.accnumber, planid).subscribe(data => {
+          // console.log('tbl_s_account_plans', data);
           if (data && data.length > 0) {
             this.update = true;
             for (let i = 0; i < data.length; i++) {
               const body = {
-                id: resp[i].id,
+                id: data[i].id,
                 accnumber: this.accnumber,
-                planid: planid.value,
+                planid: planid,
                 actionid: data[i].actionid,
                 actiontitle: data[i].actiontitle,
-                completed: data[i].completed,
+                completed: (data[i].completed).toLowerCase() === 'true' ? true : false,
                 updateby: data[i].updateby,
                 datecompleted: new Date(data[i].datecompleted)
               };
@@ -94,7 +107,7 @@ export class AccPlanComponent implements OnInit {
             for (let i = 0; i < resp.length; i++) {
               const body = {
                 accnumber: this.accnumber,
-                planid: planid.value,
+                planid: planid,
                 actionid: resp[i].actionid,
                 actiontitle: resp[i].actiontitle,
                 completed: false,
@@ -134,23 +147,50 @@ export class AccPlanComponent implements OnInit {
         }
         if (!this.update) {
           this.ecolService.saveaccountplan(this.currentplan).subscribe(data => {
-            console.log(data);
+            // console.log(data);
             alert('plan saved');
+            this.changeAction(this.currentplan[0].planid);
+            //
+            const acc = {
+              accnumber: this.currentplan[0].accnumber,
+              planid: this.currentplan[0].planid,
+              dateupdated: moment(new Date()).format('YYYY-MM-DD'),
+              updateby: this.username
+            };
+            this.update_s_accounts(acc);
           }, error => {
             console.log(error);
           });
         } else {
-          console.log(this.currentplan);
-          this.ecolService.putaccountplan(this.currentplan).subscribe(data => {
-            console.log(data);
-            alert('plan saved');
-          }, error => {
-            console.log(error);
-          });
+          // console.log(this.currentplan);
+          const acc = {
+            accnumber: this.currentplan[0].accnumber,
+            planid: this.currentplan[0].planid,
+            dateupdated: moment(new Date()).format('YYYY-MM-DD'),
+            updateby: this.username
+          };
+          // console.log(acc);
+          for (let i = 0; i < this.currentplan.length; i++) {
+            this.ecolService.putaccountplan(this.currentplan[i]).subscribe(data => {
+            }, error => {
+              console.log(error);
+            });
+          }
+          this.update_s_accounts(acc);
+          this.changeAction(this.currentplan[0].planid);
+          alert('plan saved');
         }
       }
     });
+  }
 
+  // update tbl_s_accounts
+  update_s_accounts(body) {
+    this.ecolService.put_s_accounts(body).subscribe(data => {
+      // console.log(data);
+    }, error => {
+      console.log('put_s_accounts error', error);
+    });
   }
 
 }

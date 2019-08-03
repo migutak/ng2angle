@@ -80,6 +80,7 @@ export class ActivityLogComponent implements OnInit {
   totalTeles: number;
   totalPtps: number;
   teles: any = [];
+  plan = 'NONE';
 
   ngOnInit() {
     // check if logged in
@@ -145,12 +146,24 @@ export class ActivityLogComponent implements OnInit {
     this.getGuarantors(this.custnumber);
     this.getTeles(this.custnumber);
     this.getptps(this.accnumber);
+    this.planexists(this.accnumber);
 
   }
 
   getptps(accnumber) {
     this.ecolService.getptps(accnumber).subscribe(data => {
       this.totalPtps = data.length;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  planexists(accnumber) {
+    this.ecolService.s_check_account_plans(accnumber).subscribe(data => {
+      // check if there if a plan
+      if (data && data.length) {
+        this.plan = data[0].planid;
+      }
     }, error => {
       console.log(error);
     });

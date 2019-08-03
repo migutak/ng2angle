@@ -204,6 +204,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_s_account_plans?filter[where][accnumber]=' + accnumber + '&filter[where][planid]=' + planid);
   }
 
+  s_check_account_plans(accnumber) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_account_plans?filter[where][accnumber]=' + accnumber );
+  }
+
   saveaccountplan(body) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.post<any>(environment.api + '/api/tbl_s_account_plans', body);
@@ -211,7 +216,12 @@ export class EcolService {
 
   putaccountplan(body) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.put<any>(environment.api + '/api/tbl_s_account_plans', body);
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_account_plans/'  + body.id, body);
+  }
+
+  put_s_accounts(body) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_accounts', body);
   }
 
   getaccount (accnumber) {
