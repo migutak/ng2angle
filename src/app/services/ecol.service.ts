@@ -199,6 +199,21 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/permissionsettings?filter[where][role_id]=' + role_id);
   }
 
+  s_account_plans(accnumber, planid) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_account_plans?filter[where][accnumber]=' + accnumber + '&filter[where][planid]=' + planid);
+  }
+
+  saveaccountplan(body) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.post<any>(environment.api + '/api/tbl_s_account_plans', body);
+  }
+
+  putaccountplan(body) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_account_plans', body);
+  }
+
   getaccount (accnumber) {
     // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
     return this.httpClient.get<any>(environment.api + '/api/tqall/' + accnumber);

@@ -12,6 +12,7 @@ Current Plan:
     <table class="table" cellspacing="0">
         <thead>
             <tr>
+                <th>Action3</th>
                 <th>Plan action</th>
                 <th>Complete</th>
                 <th>Date action taken</th>
@@ -19,18 +20,19 @@ Current Plan:
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let current of currentplan">
-                <td>{{current.actiontitle}}</td>
+            <tr *ngFor="let current of currentplan; let in = index">
+                <td>{{current.actionid}}</td>
+                <td><input type="text" name="actiontitle-{{in}}" [(ngModel)]="current.actiontitle"></td>
                 <td>
                     <div class="checkbox c-checkbox form-check-inline">
                         <label>
-                            <input type="checkbox" [checked]="current.completed" />
+                            <input type="checkbox" [checked]="current.completed" name="completed-{{in}}" [(ngModel)]="current.completed" />
                             <span class="fa fa-check"></span></label>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd" id="completedate" name="completedate"
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="datecompleted-{{in}}" [(ngModel)]="current.datecompleted"
                             ngbDatepicker #p="ngbDatepicker" />
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i
@@ -39,9 +41,9 @@ Current Plan:
                         </div>
                     </div>
                 </td>
-                <td>{{current.owner}}</td>
+                <td><input type="text" name="updateby-{{in}}" [(ngModel)]="current.updateby"></td>
             </tr>
         </tbody>
     </table>
-    <pre>{{currentplan | json}}</pre>
+    <button class="btn btn-block btn-outline-success" (click)="saveplan()">Save Plan</button>
 </div>
