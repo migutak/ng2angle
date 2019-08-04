@@ -143,27 +143,34 @@ export class PlanmemosComponent implements OnInit {
     });
   }
 
-  // postautoLetter
-
   addNew(form) {
     const postArray = [];
-    for (let i = 0; i < form.memogroup.length; i++) {
-      const body = {
-        'planid': form.planid,
-        'memogroup': form.memogroup[i],
-        'updateby': this.username
-      };
-      postArray.push(body);
-    }
-    // check duplicate
-    this.spinner.show();
-    this.ecolService.postplanmemo(postArray).subscribe(data => {
-      swal('Success!', 'Plan-memo Successfully added!', 'success');
-      this.spinner.hide();
-      this.getData();
+    // get plantitle
+    this.ecolService.planmemo(form.planid).subscribe(resp => {
+      //
+      for (let i = 0; i < form.memogroup.length; i++) {
+        const body = {
+          'planid': form.planid,
+          'plantitle': resp.plantitle,
+          'memogroup': form.memogroup[i],
+          'updateby': this.username
+        };
+        postArray.push(body);
+      }
+      console.log(postArray);
+
+        this.spinner.show();
+        this.ecolService.postplanmemo(postArray).subscribe(data => {
+          swal('Success!', 'Plan-memo Successfully added!', 'success');
+          this.spinner.hide();
+          this.getData();
+        }, error => {
+          console.log(error);
+          swal('Error!', 'Error occurred during processing!', 'error');
+          this.spinner.hide();
+        });
     }, error => {
       console.log(error);
-      swal('Error!', 'Error occurred during processing!', 'error');
     });
   }
 
@@ -176,7 +183,7 @@ export class PlanmemosComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Update!'
+      confirmButtonText: 'Yes, Delete!'
     }).then((result) => {
       if (result.value) {
         this.fndeleteSubmit(form);

@@ -429,6 +429,10 @@ export class EcolService {
     return this.httpClient.post<any>(environment.api + '/api/teles', data);
   }
 
+  planmemo(planid) {
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans/' + planid);
+  }
+
   postplanmemo(data) {
     return this.httpClient.post<any>(environment.api + '/api/tbl_s_planmemos', data);
   }

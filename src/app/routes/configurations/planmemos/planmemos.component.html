@@ -30,7 +30,7 @@
                           <ng-select id="planid" name="planid" [(ngModel)]="model.planid" placeholder="No plan selected"
                             #planid="ngModel" [(ngModel)]="model.planid" [ngClass]="{ 'is-invalid': planid.invalid }"
                             required>
-                            <ng-option *ngFor="let a of accplans" [value]="a.planid">{{a.plantitle}}</ng-option>
+                            <ng-option *ngFor="let a of accplans"  [value]="a.planid">{{a.plantitle}}</ng-option>
                           </ng-select>
 
                           <label class="mt">Select Memo group(s) to add</label>
@@ -59,7 +59,7 @@
                     *ngIf="!new">
                     <p class="lead mt-3"></p>
                     <div class="form-group">
-                      <p>Id</p>
+                      <p>id</p>
                       <input class="form-control" name="id" id="id" #planid="ngModel" [(ngModel)]="model.id"
                         [disabled]="true" required />
                     </div>
