@@ -206,7 +206,7 @@ export class EcolService {
 
   s_check_account_plans(accnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/tbl_s_account_plans?filter[where][accnumber]=' + accnumber );
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_accounts?filter[where][accnumber]=' + accnumber );
   }
 
   saveaccountplan(body) {
