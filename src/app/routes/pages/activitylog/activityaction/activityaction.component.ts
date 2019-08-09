@@ -36,7 +36,7 @@ export class ActivityActionComponent implements OnInit {
   file: string;
   smsMessage: string;
   username: string;
-
+  savebody: any = {};
   actionForm: FormGroup;
   submitted = false;
   cmdstatus: any = [];
@@ -264,7 +264,7 @@ export class ActivityActionComponent implements OnInit {
       reviewdate: [this.account.reviewdate],
       reason: [this.account.excuse, Validators.required],
       cmdstatus: [this.account.cmdstatus],
-      // branchstatus: [this.account.branchstatus],
+      flag: [false],
       route: [this.account.routetostate],
       paymode: [''],
       rfdother: [{ value: this.account.excuse_other, disabled: true }]
@@ -286,7 +286,7 @@ export class ActivityActionComponent implements OnInit {
 
     // post data
     this.ecolService.loader();
-    const body = {
+    this.savebody = {
       collectoraction: this.f.collectoraction.value,
       party: this.f.party.value,
       ptpamount: this.f.ptpamount.value,
@@ -309,8 +309,12 @@ export class ActivityActionComponent implements OnInit {
       owner: this.username,
       product: this.account.section
     };
+    if (this.f.flag.value) {
+      this.savebody.noteimp = 'Y';
+    }
     // add action
-    this.ecolService.postactivitylogs(body).subscribe(data => {
+    console.log(this.savebody);
+    this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
       this.sendPtpsData(this.accnumber);
       // swal('Success!', 'activity saved', 'success');

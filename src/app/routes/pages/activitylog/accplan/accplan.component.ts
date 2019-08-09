@@ -145,31 +145,15 @@ export class AccPlanComponent implements OnInit {
           this.currentplan[i].datecompleted = moment(this.currentplan[i].datecompleted).format('YYYY-MM-DD');
           this.currentplan[i].updateby = this.username;
         }
-        if (!this.update) {
-          this.ecolService.saveaccountplan(this.currentplan).subscribe(data => {
-            // console.log(data);
-            alert('plan saved');
-            this.changeAction(this.currentplan[0].planid);
-            //
-            const acc = {
-              accnumber: this.currentplan[0].accnumber,
-              planid: this.currentplan[0].planid,
-              dateupdated: moment(new Date()).format('YYYY-MM-DD'),
-              updateby: this.username
-            };
-            this.update_s_accounts(acc);
-          }, error => {
-            console.log(error);
-          });
-        } else {
-          // console.log(this.currentplan);
+        if (this.update) {
+          // updating
+          // console.log('this.currentplan', this.currentplan);
           const acc = {
             accnumber: this.currentplan[0].accnumber,
             planid: this.currentplan[0].planid,
             dateupdated: moment(new Date()).format('YYYY-MM-DD'),
             updateby: this.username
           };
-          // console.log(acc);
           for (let i = 0; i < this.currentplan.length; i++) {
             this.ecolService.putaccountplan(this.currentplan[i]).subscribe(data => {
             }, error => {
@@ -178,7 +162,26 @@ export class AccPlanComponent implements OnInit {
           }
           this.update_s_accounts(acc);
           this.changeAction(this.currentplan[0].planid);
-          alert('plan saved');
+          alert('plan updated!');
+        } else {
+          // adding new
+          // console.log('this.currentplan', this.currentplan);
+          // console.log(acc);
+          this.ecolService.saveaccountplan(this.currentplan).subscribe(data => {
+            alert('plan saved');
+            // console.log(data);
+            this.changeAction(this.currentplan[0].planid);
+            //
+            const acc = {
+              accnumber: this.accnumber,
+              planid: data[0].planid,
+              dateupdated: moment(new Date()).format('YYYY-MM-DD'),
+              updateby: this.username
+            };
+            this.update_s_accounts(acc);
+          }, error => {
+            console.log(error);
+          });
         }
       }
     });

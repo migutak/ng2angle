@@ -71,6 +71,12 @@ export class EcolService {
     return forkJoin([response]);
   }
 
+  getflaggednotes(cust) {
+    // tslint:disable-next-line:max-line-length
+    const response = this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' + '&filter[order]=notedate DESC');
+    return forkJoin([response]);
+  }
+
   getcmdstatus() {
     const url = environment.api + '/api/cmdstatus';
     return this.httpClient.get(url);

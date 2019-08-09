@@ -130,8 +130,11 @@
             "production": {
               "browserTarget": "ng2angle:build:production"
             },
-            "macbook": {
-              "browserTarget": "ng2angle:build:macbook"
+            "uat": {
+              "browserTarget": "ng2angle:build:uat"
+            },
+            "qa": {
+              "browserTarget": "ng2angle:build:qa"
             }
           }
         },

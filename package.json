@@ -1,9 +1,9 @@
 {
   "name": "angle",
   "version": "0.0.0",
-  "description": "Angle - Bootstrap Admin Template",
-  "author": "@themicon_co",
-  "license": "https://wrapbootstrap.com/help/licenses",
+  "description": "E-Collect",
+  "author": "@Inteligeninfosys",
+  "license": "",
   "private": true,
   "scripts": {
     "ng": "ng",

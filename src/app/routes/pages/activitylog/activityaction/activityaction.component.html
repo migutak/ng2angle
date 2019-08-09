@@ -213,7 +213,7 @@
         <div class="row" style="padding-top: 20px">
           <div class="col-md-12">
             <label>Collector note</label>
-            <textarea class="form-control" rows="3" id="collectornote" name="collectornote" name="collectornote"
+            <textarea class="form-control" rows="3" id="collectornote" name="collectornote"
               class="form-control" formControlName="collectornote" class="form-control"
               [ngClass]="{ 'is-invalid': f.collectornote.errors }"></textarea>
           </div>
@@ -222,10 +222,11 @@
         </div>
         <div class="form-group row">
           <div class="col-md-9 col-form-label">
-            <!--<label class="switch switch-label switch-outline-warning-alt">
-                <input type="checkbox" class="switch-input">
-                Pin this note <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
-              </label>-->
+            <div class="checkbox c-checkbox form-check-inline">
+              <label>
+                  <input type="checkbox" [checked]="false" name="flag" id="flag" name="flag" formControlName="flag" />
+                  Flag this note <span class="fa fa-check"></span></label>
+            </div>
           </div>
         </div>
       </div>

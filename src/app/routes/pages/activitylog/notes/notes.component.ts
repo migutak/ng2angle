@@ -19,8 +19,10 @@ export class NotesComponent implements OnInit {
   notes: any = [];
   username: string;
   bulknote: any = [];
-  bulknotelength: number;
+  flaggedNotes: any = [];
+  bulknotelength = 0;
   noteslength: number;
+  flaggedlength = 0;
   model: any = {};
   p = 1;
   private selectedLink: any = 'collector';
@@ -59,6 +61,7 @@ export class NotesComponent implements OnInit {
     this.getAll(this.cust);
     this.getbulknotes(this.cust);
     this.getNotes(this.cust);
+    this.getflagged(this.cust);
 
     this.model.noteselector = 'collector';
   }
@@ -66,7 +69,15 @@ export class NotesComponent implements OnInit {
   getbulknotes(cust) {
     this.ecolservice.getbulknotes(cust).subscribe(data => {
       this.bulknote = data[0];
-      this.bulknotelength = data[0].length;
+      this.bulknotelength = data[0].length || 0;
+    });
+  }
+
+  getflagged(cust) {
+    this.ecolservice.getflaggednotes(cust).subscribe(data => {
+      console.log('flagged notes', data);
+      this.flaggedNotes = data[0];
+      this.flaggedlength = data[0].length || 0;
     });
   }
 
