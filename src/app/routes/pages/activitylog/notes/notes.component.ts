@@ -75,7 +75,6 @@ export class NotesComponent implements OnInit {
 
   getflagged(cust) {
     this.ecolservice.getflaggednotes(cust).subscribe(data => {
-      console.log('flagged notes', data);
       this.flaggedNotes = data[0];
       this.flaggedlength = data[0].length || 0;
     });
