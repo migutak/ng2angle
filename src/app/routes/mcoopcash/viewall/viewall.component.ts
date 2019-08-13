@@ -86,7 +86,8 @@ export class ViewallComponent {
       },
       {
         headerName: 'CLIENTNAME',
-        field: 'clientname'
+        field: 'clientname',
+        filter:'agTextColumnFilter'
       },
       {
         headerName: 'AMOUNTDISBURCED',

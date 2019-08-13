@@ -6,8 +6,11 @@ import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-import {AgGridModule} from 'ag-grid-angular/main';
+import { AgGridModule } from 'ag-grid-angular';
+import'ag-grid-enterprise'; 
 import { AppComponent } from './app.component';
+
+
 
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
@@ -48,3 +51,4 @@ export function createTranslateLoader(http: HttpClient) {
 })
 
 export class AppModule { }
+

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
+import "ag-grid-enterprise";
+
 
 import { ViewallComponent } from './viewall/viewall.component';
 import { MyallocationsComponent } from './myallocations/myallocations.component';
@@ -14,6 +16,8 @@ import { WithfundsComponent } from './withfunds/withfunds.component';
 
 import { JqxDomService } from '../../shared/jqwidgets-dom.service';
 import { CustomFormsModule } from 'ng2-validation';
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', redirectTo: 'viewall' },
@@ -31,6 +35,7 @@ const routes: Routes = [
     ViewallComponent,
     MyallocationsComponent,
     MyworklistComponent,
+  
     TodaysComponent,
     PredelqComponent,
     PtpsComponent,
@@ -39,6 +44,8 @@ const routes: Routes = [
   imports: [
     SharedModule,
     CommonModule,
+    HttpClientModule,
+    FormsModule,
     AgGridModule.withComponents([]),
     RouterModule.forChild(routes),
     CustomFormsModule

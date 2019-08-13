@@ -1,10 +1,12 @@
 // src/app/my-grid-application/my-grid-application.component.ts
 import {Component, OnInit} from "@angular/core";
-import {GridOptions, IDatasource, IGetRowsParams, ColDef} from "ag-grid";
+import {GridOptions, IDatasource, IGetRowsParams, ColDef} from "ag-grid-community";
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import 'ag-grid-enterprise/chartsModule';
 import { EcolService } from '../../../services/ecol.service';
-import { AgGridNg2 } from 'ag-grid-angular';
+
+// import "ag-grid-enterprise";
 
 @Component({
   selector: 'app-viewall',
@@ -26,10 +28,10 @@ export class ViewallComponent {
 
   private gridOptions: GridOptions;
 
-    private gridApi;
-    private gridColumnApi;
-    private columnDefs;
-    private sortingOrder;
+    public gridApi;
+    public  gridColumnApi;
+    public  columnDefs;
+    public  sortingOrder;
   
 
   
@@ -37,11 +39,13 @@ export class ViewallComponent {
         this.gridOptions = <GridOptions>{
           
           unSortIcon: true,
-      // suppressCellSelection: true,
+          enableCharts: true,
+          enableRangeSelection: true,
 
       enableColResize: true,
       domLayout: 'autoHeight',
-      // rowSelection: 'single',
+      // rowSelection: 'multiple',
+      
       // rowModelType: 'normal',
       
       
@@ -83,12 +87,15 @@ export class ViewallComponent {
             headerName: 'CUSTNUMBER',
             field: 'custnumber',
             width: 90,
+            filter: 'agTextColumnFilter'
             // resizable: true, sortable: true, filter: true
           },
           {
             headerName: 'CUSTNAME',
             field: 'client_name',
             width: 90,
+            
+            filter: 'agTextColumnFilter',
             sortingOrder: ["asc","desc"]
             // width: 450,
             // resizable: true

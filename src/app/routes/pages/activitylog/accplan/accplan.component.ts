@@ -13,6 +13,12 @@ import { environment } from '../../../../../environments/environment';
 })
 export class AccPlanComponent implements OnInit {
 
+  activities = [{"title":"Send Sms"},
+  {"title":"Make a Phone Call"},
+  {"title":"Invite Customer to Branch"},
+  {"title":"Arrange Branch Visit to Customer"},
+  {"title":"Issue Due Demand Letter"},
+  {"title":"Make Followup on Agreed"}];
   custnumber;
   accnumber;
   username;
