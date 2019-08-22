@@ -1,24 +1,34 @@
-<ag-grid-angular
-      #agGrid
-      style="width: 100%; height: 660px;"
-      id="myGrid"
-      class="ag-theme-balham"
-      [columnDefs]="columnDefs"
-      [components]="components"
-      [defaultColDef]="defaultColDef"
-      [floatingFilter]="true"
-      [debug]="true"
-      [rowSelection]="rowSelection"
-      [rowDeselection]="true"
-      [rowModelType]="rowModelType"
-      [paginationPageSize]="paginationPageSize"
-      [cacheOverflowSize]="cacheOverflowSize"
-      [maxConcurrentDatasourceRequests]="maxConcurrentDatasourceRequests"
-      [infiniteInitialRowCount]="infiniteInitialRowCount"
-      [maxBlocksInCache]="maxBlocksInCache"
-      [pagination]="true"
-      [paginationAutoPageSize]="true"
-      [getRowNodeId]="getRowNodeId"
-      [rowData]="rowData"
-      (gridReady)="onGridReady($event)"
-    ></ag-grid-angular>
+<style>
+input[type=text] {
+  width: 130px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+  width: 100%;
+}
+</style>
+
+ 
+<input type="text" name="search" placeholder="search" (keyup)="quickSearch()" [(ngModel)]="searchValue">
+<button (click)="onDownloadButtonClick">Export to 
+  CSV</button>
+
+       <ag-grid-angular   #agGrid  class="ag-theme-balham"
+       style="width: 100%; height: 660px;"
+                          [rowData]="rowData"
+                          [columnDefs]="columnDefs"
+                          [gridOptions]="gridOptions"
+                          [enableSorting]="true"
+                          [enableFilter]="true"
+                          [floatingFilter]="true"
+                          [pagination]="true" 
+                          [rowSelection]="selectionMode"
+                          
+                          [animateRows]="true"
+                          
+                          (rowSelected)="getSelectedRows($event)">
+       
+       </ag-grid-angular>

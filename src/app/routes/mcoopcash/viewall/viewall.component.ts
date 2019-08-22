@@ -1,4 +1,3 @@
-
 // src/app/my-grid-application/my-grid-application.component.ts
 import { Component, OnInit } from "@angular/core";
 import { GridOptions, ExcelExportParams,IDatasource, IGetRowsParams, ColDef } from "ag-grid-community";
@@ -78,49 +77,40 @@ export class ViewallComponent {
 
     this.gridOptions.columnDefs = [
       {
-        headerName: 'LOANACCNUMBER',
-        field: 'loanaccnumber',
+        headerName: 'ACCNUMBER',
+        field: 'accnumber',
         cellRenderer: function (params) {
           return '<a  href="#" target="_blank">' + params.value + '</a>';
         }
       },
       {
-        headerName: 'CLIENTNAME',
-        field: 'clientname',
-        filter:'agTextColumnFilter'
+        headerName: 'CUSTNAME',
+        field: 'custname'
       },
       {
-        headerName: 'AMOUNTDISBURCED',
-        field: 'amountdisbursed'
+        headerName: 'CUSTNUMBER',
+        field: 'custnumber'
       },
       {
-        headerName: 'ARREARS CATEGIRY',
-        field: 'arrears_category',
-        cellStyle: function (params) {
-          if (params.value === '90+') {
-            return { color: 'red'};
-          } else if (params.value === '180+') {
-            return { color: 'red'};
-          } else {
-            return null;
-          }
-        }
+        headerName: 'REPAYMENTDATE',
+        field: 'repaymentdate',
+       
       },
       {
-        headerName: 'LOAN TYPE',
-        field: 'loan_type'
+        headerName: 'SETTLEACCNO',
+        field: 'settleaccno'
+      },
+      {
+        headerName: 'EMAILADDRESS',
+        field: 'emailaddress'
+      },
+      {
+        headerName: 'NATIONID',
+        field: 'nationid'
       },
       {
         headerName: 'EMPLOYER',
         field: 'employer'
-      },
-      {
-        headerName: 'IDNUMBER',
-        field: 'idnumber'
-      },
-      {
-        headerName: 'AROCODE',
-        field: 'arocode'
       }
     ];
    
