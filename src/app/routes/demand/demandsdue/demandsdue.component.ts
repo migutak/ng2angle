@@ -200,7 +200,7 @@ export class DemandsdueComponent implements OnInit {
 
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.nodeapi + '/demandsdue/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
+    return this.http.get<any>(environment.nodeapi + '/nodeapi/demandsdue/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
   }
 
 }

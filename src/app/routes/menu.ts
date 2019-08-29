@@ -560,15 +560,15 @@ const teamleader_menu = [
 ];
 // console.log('menu role==>', currentUser.role);
 if (currentUser !== null) {
-    if (currentUser.role === 'admin' ) {
+    if (currentUser.ROLE === 'admin' ) {
         menuitems = user_mgmt_menu;
-    } else if (currentUser.role === 'remedial') {
+    } else if (currentUser.ROLE === 'remedial') {
         menuitems = remedial_menu;
-    } else if (currentUser.role === 'creditcards') {
+    } else if (currentUser.ROLE === 'creditcards') {
         menuitems = creditcards_menu;
-    } else if (currentUser.role === 'teamleader') {
+    } else if (currentUser.ROLE === 'teamleader') {
         menuitems = teamleader_menu;
-    } else if (currentUser.role === 'telecollector') {
+    } else if (currentUser.ROLE === 'telecollector') {
         menuitems = collection_menu;
     } else {
         menuitems = collection_menu;

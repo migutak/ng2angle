@@ -183,7 +183,7 @@ export class EcolService {
   }
 
   login(username: string) {
-    return this.httpClient.get<any>(environment.api + '/api/tblusers/' + username);
+    return this.httpClient.get<any>(environment.api + '/api/tblusers/search?username=' + username);
   }
 
   notifications() {
@@ -200,7 +200,7 @@ export class EcolService {
   }
 
   getuser(username: string) {
-    return this.httpClient.get<any>(environment.api + '/api/tblusers?filter[where][username]=' + username);
+    return this.httpClient.get<any>(environment.api + '/api/tblusers/search?username=' + username);
   }
 
   getpermissions(role_id: string) {
@@ -311,7 +311,7 @@ export class EcolService {
     // tslint:disable-next-line:max-line-length
     // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/qall?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
+    return this.httpClient.get<any>(environment.api + '/api/tqall?filter[include]=guarantors&filter[include]=demandsdues&filter[where][accnumber]=' + accnumber);
   }
 
   getddAccount(accnumber) {
@@ -326,11 +326,11 @@ export class EcolService {
 
   getcustwithAccount(custnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/qall?filter[where][custnumber]=' + custnumber);
+    return this.httpClient.get<any>(environment.api + '/api/tqall?filter[where][custnumber]=' + custnumber);
   }
 
   getcardAccount(cardacct) {
-    // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:max-line-length/qall
     return this.httpClient.get<any>(environment.api + '/api/tcards?filter[where][cardacct]=' + cardacct);
   }
 
@@ -579,8 +579,7 @@ export class EcolService {
 
   downloadFile(file: string) {
     const body = { filename: file };
-
-    return this.httpClient.post(environment.uploadurl + '/filesapi/download', body, {
+    return this.httpClient.post(environment.uploadurl + '/download', body, {
       responseType: 'blob',
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
@@ -660,7 +659,7 @@ export class EcolService {
   }
 
   totaltqall() {
-    return this.httpClient.get<any>(environment.api + '/api/qall/total');
+    return this.httpClient.get<any>(environment.api + '/api/tqall/total');
   }
 
   totalnotes(custnumber) {

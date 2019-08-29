@@ -47,9 +47,9 @@ export class HeaderComponent implements OnInit {
 
       this.user = {
           picture: 'assets/img/user/coop.jpg',
-          username: this.userdata.username,
-          division: this.userdata.team,
-          role: this.userdata.role
+          username: this.userdata.USERNAME,
+          division: this.userdata.TEAM,
+          role: this.userdata.ROLE
       };
 
     }

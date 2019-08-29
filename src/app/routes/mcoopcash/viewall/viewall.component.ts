@@ -63,8 +63,8 @@ export class ViewallComponent implements OnInit {
             field: 'CLIENTNAME'
           },
           {
-            headerName: 'AMOUNTDISBURCED',
-            field: 'AMOUNTDISBURCED'
+            headerName: 'AMOUNTDISBURSED',
+            field: 'AMOUNTDISBURSED'
           },
           {
             headerName: 'ARREARS CATEGORY',

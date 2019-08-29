@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  adlogin: false,
+  adlogin: true,
   api: 'https://ecollectweb.co-opbank.co.ke',
   mongo: 'https://ecollectweb.co-opbank.co.ke',
   nodeapi: 'https://ecollectweb.co-opbank.co.ke/nodeapi',

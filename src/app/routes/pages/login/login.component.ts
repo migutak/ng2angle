@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
         // AD login
         if (ADLOGIN) {
             const body = {
-                username : value.username,
+                username : (value.username).toLowerCase(),
                 password: value.password
             };
             this.ecolService.auth(body).subscribe(response => {
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
                 this.loading = false;
             });
         } else {
-            this.getuser(value.username, value.password);
+            this.getuser((value.username).toLowerCase(), value.password);
         }
     }
 
@@ -97,10 +97,10 @@ export class LoginComponent implements OnInit {
                 // store user details and basic auth credentials in local storage
                 // to keep user logged in between page refreshes
                 // get user permissions
-                this.ecolService.getpermissions(user.role).subscribe(permission => {
+                this.ecolService.getpermissions(user[0].ROLE).subscribe(permission => {
                     // console.log(permission);
                     user.authdata = window.btoa(username + ':' + password);
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify(user[0]));
                     localStorage.setItem('userpermission', JSON.stringify(permission));
                     localStorage.setItem('profile', '1');
                     // this.router.navigate([this.returnUrl]);

@@ -81,17 +81,17 @@ export class SearchComponent implements OnInit {
       this.ecolService.getuser(username).subscribe(data => {
         if (data.length > 0) {
           this.valForm.patchValue({
-            username: data[0].username,
-            firstname: data[0].firstname,
-            lastname: data[0].lastname,
-            surname: data[0].surname,
-            division: data[0].division,
-            team: data[0].team,
-            branch: data[0].branch,
-            email: data[0].email,
-            active: data[0].active,
-            expirydate: data[0].expirydate,
-            role: data[0].role
+            username: data[0].USERNAME,
+            firstname: data[0].FIRSTNAME,
+            lastname: data[0].LASTNAME,
+            surname: data[0].SURNAME,
+            division: data[0].DIVISION,
+            team: data[0].TEAM,
+            branch: data[0].BRANCH,
+            email: data[0].EMAIL,
+            active: data[0].ACTIVE,
+            expirydate: data[0].EXPIRYDATE,
+            role: data[0].ROLE
           });
           // success
         swal('Successful!', 'user details retrieved!', 'success');
