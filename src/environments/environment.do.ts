@@ -14,7 +14,7 @@ export const environment = {
   xlstemplate: '/root/xls/upload_notes.xlsx',
   applink: 'http://68.183.63.158',
   emailapi: 'http://68.183.63.158:8000/api/email/send',
-  auth: 'http://68.183.63.158:8080/ecol_apis/api/restlogin',
+  auth: 'http://68.183.63.158:8080/adlogin',
   filesapi: 'http://68.183.63.158:3200/filesapi', // activityupload
   accplanlink: 'http://68.183.63.158:3001',
   kibanarpt: 'http://68.183.63.158:5601',

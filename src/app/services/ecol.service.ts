@@ -203,6 +203,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tblusers/search?username=' + username);
   }
 
+  getcmdacc(custnumber: string) {
+    return this.httpClient.get<any>(environment.api + '/api/tqall/cmdacc?custnumber=' + custnumber);
+  }
+
   getpermissions(role_id: string) {
     return this.httpClient.get<any>(environment.api + '/api/permissionsettings?filter[where][role_id]=' + role_id);
   }
