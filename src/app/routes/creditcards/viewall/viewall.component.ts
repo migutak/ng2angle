@@ -71,7 +71,7 @@ export class ViewallComponent {
 
         // this.gridApi.setDatasource(this.dataSource);
         this.http
-          .get(environment.api + "/api/tcards")
+          .get(environment.api + "/upload")
           .subscribe(data => {
             
             params.api.setRowData(<any>data);
@@ -94,7 +94,7 @@ export class ViewallComponent {
 
       {
         headerName: 'CARDACCT',
-        field: 'cardacct',
+        field: 'accnumber',
         cellRenderer: function (params) {
           return '<a  href="#" target="_blank">' + params.value + '</a>';
         },
@@ -102,13 +102,13 @@ export class ViewallComponent {
       },
       {
         headerName: 'CARDNUMBER',
-        field: 'cardnumber',
+        field: 'custnumber',
         width: 90,
 
       },
       {
         headerName: 'CARDNAME',
-        field: 'cardname',
+        field: 'custname',
         width: 90,
 
       },
@@ -134,7 +134,7 @@ export class ViewallComponent {
       },
       {
         headerName: 'CYCLE',
-        field: 'cycle',
+        field: 'bucket',
         width: 90,
       },
       {

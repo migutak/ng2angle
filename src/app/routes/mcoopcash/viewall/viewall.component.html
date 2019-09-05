@@ -16,22 +16,14 @@
   <button (click)="onBtExport()">Export to 
     CSV</button>
   
-         <ag-grid-angular   #agGrid  class="ag-theme-balham"
-         style="width: 100%; height: 660px;"
-                            [rowData]="rowData"
-                            [columnDefs]="columnDefs"
-                            [gridOptions]="gridOptions"
-                            [enableSorting]="true"
-                            [enableFilter]="true"
-                            [floatingFilter]="true"
-                            [pagination]="true" 
-                            [rowSelection]="selectionMode"
-                            
-                            [animateRows]="true"
-                           
-                            (rowSelected)="getSelectedRows($event)">
-         
-         </ag-grid-angular>
+    <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 600px;"
+    [gridOptions]="gridOptions"
+    enableSorting="true"
+    enableFilter="true"
+    enableColResize="true"
+    (gridReady)="gridReady($event)" [columnDefs]="columnDefs" [overlayLoadingTemplate]="overlayLoadingTemplate"
+    [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
+  </ag-grid-angular>
          <button (click)="onBtFirst()">To First</button> <button (click)="onBtLast()" id="btLast">To Last</button>
           <button (click)="onBtPrevious()">To Previous</button> <button (click)="onBtNext()">To Next</button>
           <button (click)="onBtPageFive()">To Page 5</button> <button (click)="onBtPageFifty()">To Page 50</button>

@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
@@ -6,8 +5,6 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
 import * as $ from 'jquery';
-import 'ag-grid-enterprise';
-import 'ag-grid-enterprise/chartsModule';
 
 
 @Component({
@@ -15,351 +12,274 @@ import 'ag-grid-enterprise/chartsModule';
   templateUrl: './viewall.component.html',
   styleUrls: ['./viewall.component.scss']
 })
+export class ViewallComponent implements OnInit {
 
-export class ViewallComponent {
-    private gridApi;
-    private gridColumnApi;
-  
-    private columnDefs;
-    private components;
-    private defaultColDef;
-    private rowSelection;
-    private rowModelType;
-    private paginationPageSize;
-    private cacheOverflowSize;
-    private maxConcurrentDatasourceRequests;
-    private infiniteInitialRowCount;
-    private maxBlocksInCache;
-    private getRowNodeId;
-    private rowData: [];
-  sortingOrder: string[];
-  
-    constructor(private http: HttpClient) {
-      this.columnDefs = [
-        {
-          headerName: 'ACCNUMBER',
-          field: 'accnumber',
-          
-          width: 90,
-          cellRenderer: function (params) {
-            return '<a  href="#" target="_blank">' + params.value + '</a>';
-          },
-          // resizable: true,
-          // checkboxSelection: true
-        },
-        {
-          headerName: 'CUSTNUMBER',
-          field: 'custnumber',
-          width: 90,
-          filter: 'agTextColumnFilter'
-          // resizable: true, sortable: true, filter: true
-        },
-        {
-          headerName: 'CUSTNAME',
-          field: 'client_name',
-          width: 90,
-          
-          filter: 'agTextColumnFilter',
-          sortingOrder: ["asc","desc"]
-          // width: 450,
-          // resizable: true
-        },
-        {
-          headerName: 'DAYSINARREARS',
-          field: 'daysinarr',
-          width: 90,
-          cellStyle: function (params) {
-            if (params.value < '30') {
-              return { color: 'red' };
-            } else if (params.value > '90') {
-              return { color: 'red' };
-            } else {
-              return null;
-            }
-          },
-          // resizable: true
-        },
-        {
-          headerName: 'TOTALARREARS',
-          field: 'instamount',
-          width: 90,
-          // resizable: true,
-          // valueFormatter: this.currencyFormatter
-        },
-        {
-          headerName: 'OUSTBALANCE',
-          field: 'oustbalance',
-          width: 90,
-          // valueFormatter: this.currencyFormatter
-          // resizable: true
-        },
-        {
-          headerName: 'BUCKET',
-          field: 'bucket',
-          width: 90,
-          // resizable: true
-        },
-        {
-          headerName: 'AROCODE',
-          field: 'arocode',
-          width: 90,
-          // resizable: true
-        },
-        {
-          headerName: 'RROCODE',
-          field: 'rrocode',
-          width: 90,
-          // resizable: true,
-          // filter: true
-        },
-        {
-          headerName: 'SECTION',
-          field: 'section',
-          width: 90,
-        },
-        {
-          headerName: 'COLOFFICER',
-          field: 'colofficer',
-          width: 90,
-        },
-        
-      ];
-      this.components = {
-        loadingRenderer: function(params) {
-          if (params.value !== undefined) {
-            return params.value;
-          } else {
-            return '<img src="../assets/img/user/loader.gif">';
-          }
+  public overlayLoadingTemplate;
+  public overlayNoRowsTemplate;
+  filterText: any;
+
+  constructor(private ecolService: EcolService, private http: HttpClient) {
+    this.gridOptions = <GridOptions>{
+      enableSorting: true,
+          enableFilter: true,
+      headerHeight: 40,
+      pagination: true,
+      rowSelection: 'single',
+      rowModelType: 'infinite',
+      cacheBlockSize: 20,
+      paginationPageSize: 20
+    };
+
+    this.overlayLoadingTemplate =
+      // tslint:disable-next-line:max-line-length
+      '<img src="assets/img/user/cooop1.gif" />';
+    this.overlayNoRowsTemplate =
+      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">This is a custom \'no rows\' overlay</span>';
+
+  }
+
+
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+  resizeEvent = 'resize.ag-grid';
+  $win = $(window);
+  new = true;
+  username: string;
+  searchText: string;
+  model: any = {};
+  noTotal: number;
+
+  gridOptions: GridOptions;
+  gridApi: GridApi;
+  // private rowClassRules;
+
+  columnDefs = [
+    {
+      headerName: 'ACCNUMBER',
+      field: 'accnumber',
+      filter: "agTextColumnFilter",
+      cellRenderer: function (params) {
+        return '<a  href="#" target="_blank">' + params.value + '</a>';
+      },
+      // resizable: true,
+      // checkboxSelection: true
+    },
+    {
+      headerName: 'CUSTNUMBER',
+      field: 'custnumber',
+      // resizable: true, sortable: true, filter: true
+    },
+    {
+      headerName: 'CUSTNAME',
+      filter: "agTextColumnFilter",
+      field: 'clientname',
+     
+      filterParams:{
+        newRowsAction: "keep"
+      },
+      
+      // width: 450,
+      // resizable: true
+    },
+    {
+      headerName: 'DAYSINARREARS',
+      field: 'daysinarr',
+      cellStyle: function (params) {
+        if (params.value < '30') {
+          return { color: 'red' };
+        } else if (params.value > '90') {
+          return { color: 'red' };
+        } else {
+          return null;
         }
-      };
-      this.defaultColDef = {
-        sortable: true,
-        resizable: true,
-        // enableCharts: true,
-        // enableRangeSelection: true
-      };
-      this.rowSelection = "multiple";
-      this.rowModelType = "infinite";
-      this.sortingOrder=["desc", "asc", null ];
-      // this.paginationPageSize = 100;
-      this.cacheOverflowSize = 100;
-      this.maxConcurrentDatasourceRequests = 2;
-      this.infiniteInitialRowCount = 100;
-      this.maxBlocksInCache = 10;
-      this.getRowNodeId = function(item) {
-        return item.id;
-      };
+      },
+      // resizable: true
+    },
+    {
+      headerName: 'TOTALARREARS',
+      field: 'instamount',
+      // resizable: true,
+      valueFormatter: this.currencyFormatter
+    },
+    {
+      headerName: 'OUSTBALANCE',
+      field: 'oustbalance',
+      valueFormatter: this.currencyFormatter
+      // resizable: true
+    },
+    {
+      headerName: 'BUCKET',
+      field: 'bucket'
+      // resizable: true
+    },
+    {
+      headerName: 'AROCODE',
+      field: 'arocode'
+      // resizable: true
+    },
+    {
+      headerName: 'RROCODE',
+      field: 'rrocode',
+      // resizable: true,
+      // filter: true
+    },
+    {
+      headerName: 'SECTION',
+      field: 'section'
+    },
+    {
+      headerName: 'COLOFFICER',
+      field: 'colofficer'
     }
+  ];
+
+  rowData1: any;
+
   
-    onGridReady(params) {
-      this.gridApi = params.api;
-      this.gridColumnApi = params.columnApi;
+
+
+  dataSource: IDatasource = {
+    getRows: (params: IGetRowsParams) => {
+
+      // Use startRow and endRow for sending pagination to Backend
+      // params.startRow : Start Page
+      // params.endRow : End Page
+      //
+      this.apiService(20, params.startRow).subscribe(response => {
+        params.successCallback(
+          response.rows, response.total
+        );
+        this.gridOptions.api.hideOverlay();
+      });
+    }
+  };
+
+  currencyFormatter(params) {
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+  onRowDoubleClicked(event: any) {
+    this.model = event.node.data;
+    // console.log(this.model);
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
+  }
+
   
-      this.http
-        .get<any>(environment.api + "/api/tqall")
-        .subscribe(data => {
-          data.forEach(function(data, index) {
-            data.id = "R" + (index + 1);
-          });
-          var dataSource = {
-            rowCount: null,
-            getRows: function(params) {
-              console.log("asking for " + params.startRow + " to " + params.endRow);
-              setTimeout(function() {
-                var dataAfterSortingAndFiltering = sortAndFilter(data, params.sortModel, params.filterModel);
-                var rowsThisPage = dataAfterSortingAndFiltering.slice(params.startRow, params.endRow);
-                var lastRow = -1;
-                if (dataAfterSortingAndFiltering.length <= params.endRow) {
-                  lastRow = dataAfterSortingAndFiltering.length;
-                }
-                params.successCallback(rowsThisPage, lastRow);
-              }, 500);
-            }
-          };
-          params.api.setDatasource(dataSource);
+
+  // onQuickFilterChanged($event) {
+  //   // this.gridOptions.api.setQuickFilter($event.target.value);
+  //   this.searchText = $event.target.value;
+  // }
+
+  onSearch() {
+    if (this.model.searchText === undefined) {
+      return;
+    }
+    this.clear();
+    this.gridApi.showLoadingOverlay();
+    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
+      //
+      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
+      this.gridApi.hideOverlay();
+    });*/
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiServiceSearch(20, params.startRow).subscribe(response => {
+          console.log(response);
+          params.successCallback(
+            response.rows, response.total
+          );
+          this.gridOptions.api.hideOverlay();
         });
-    }
+      }
+    };
+
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  clear() {
+    const ds = {
+      getRows(params: any) {
+        params.successCallback([], 0);
+      }
+    };
+    this.gridOptions.api.setDatasource(ds);
+  }
+
+  reset() {
+    this.gridApi.showLoadingOverlay();
+    this.clear();
+    this.dataSource = {
+      getRows: (params: IGetRowsParams) => {
+        // Use startRow and endRow for sending pagination to Backend
+        // params.startRow : Start Page
+        // params.endRow : End Page
+        //
+        this.apiService(20, params.startRow).subscribe(response => {
+          params.successCallback(
+            response.rows, response.total
+          );
+          this.gridOptions.api.hideOverlay();
+        });
+      }
+    };
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+  }
+
+  public ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.username;
+
+    /*this.ecolService.totaltqall().subscribe(viewall => {
+      this.noTotal = viewall[0].TOTALVIEWALL;
+    });*/
+  }
+
+  gridReady(params) {
+    this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit();
+    this.gridApi.setDatasource(this.dataSource);
+    this.gridOptions.api.showLoadingOverlay();
+  }
+
+  apiService(perPage, currentPos) {
+    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+    return this.http.get<any>(environment.api + '/api/mcoopcash_stage/paged?limit=' + perPage + '&page=' + currentPos);
   }
   
-  function countries() {
-    return [
-      "United States",
-      "Russia",
-      "Australia",
-      "Canada",
-      "Norway",
-      "China",
-      "Zimbabwe",
-      "Netherlands",
-      "South Korea",
-      "Croatia",
-      "France",
-      "Japan",
-      "Hungary",
-      "Germany",
-      "Poland",
-      "South Africa",
-      "Sweden",
-      "Ukraine",
-      "Italy",
-      "Czech Republic",
-      "Austria",
-      "Finland",
-      "Romania",
-      "Great Britain",
-      "Jamaica",
-      "Singapore",
-      "Belarus",
-      "Chile",
-      "Spain",
-      "Tunisia",
-      "Brazil",
-      "Slovakia",
-      "Costa Rica",
-      "Bulgaria",
-      "Switzerland",
-      "New Zealand",
-      "Estonia",
-      "Kenya",
-      "Ethiopia",
-      "Trinidad and Tobago",
-      "Turkey",
-      "Morocco",
-      "Bahamas",
-      "Slovenia",
-      "Armenia",
-      "Azerbaijan",
-      "India",
-      "Puerto Rico",
-      "Egypt",
-      "Kazakhstan",
-      "Iran",
-      "Georgia",
-      "Lithuania",
-      "Cuba",
-      "Colombia",
-      "Mongolia",
-      "Uzbekistan",
-      "North Korea",
-      "Tajikistan",
-      "Kyrgyzstan",
-      "Greece",
-      "Macedonia",
-      "Moldova",
-      "Chinese Taipei",
-      "Indonesia",
-      "Thailand",
-      "Vietnam",
-      "Latvia",
-      "Venezuela",
-      "Mexico",
-      "Nigeria",
-      "Qatar",
-      "Serbia",
-      "Serbia and Montenegro",
-      "Hong Kong",
-      "Denmark",
-      "Portugal",
-      "Argentina",
-      "Afghanistan",
-      "Gabon",
-      "Dominican Republic",
-      "Belgium",
-      "Kuwait",
-      "United Arab Emirates",
-      "Cyprus",
-      "Israel",
-      "Algeria",
-      "Montenegro",
-      "Iceland",
-      "Paraguay",
-      "Cameroon",
-      "Saudi Arabia",
-      "Ireland",
-      "Malaysia",
-      "Uruguay",
-      "Togo",
-      "Mauritius",
-      "Syria",
-      "Botswana",
-      "Guatemala",
-      "Bahrain",
-      "Grenada",
-      "Uganda",
-      "Sudan",
-      "Ecuador",
-      "Panama",
-      "Eritrea",
-      "Sri Lanka",
-      "Mozambique",
-      "Barbados"
-    ];
+
+  apiServiceSearch(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/mcoopcash_stage/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
   }
-  function sortAndFilter(allOfTheData, sortModel, filterModel) {
-    return sortData(sortModel, filterData(filterModel, allOfTheData));
+  
+  
+sortAndFilter(allOfTheData, sortModel, filterModel) {
+  return this.sortData(sortModel, this.filterData(filterModel, allOfTheData));
+}
+sortData(sortModel, data) {
+ 
+}
+applyFilter(){
+  this.gridApi.setFilterModel({"clientname":{filter: this.filterText}})
+}
+
+ filterData(filterModel, data) {
+  let filterPresent = filterModel && Object.keys(filterModel).length > 0;
+  if (!filterPresent) {
+    return data;
   }
-  function sortData(sortModel, data) {
-    var sortPresent = sortModel && sortModel.length > 0;
-    if (!sortPresent) {
-      return data;
-    }
-    var resultOfSort = data.slice();
-    resultOfSort.sort(function(a, b) {
-      for (var k = 0; k < sortModel.length; k++) {
-        var sortColModel = sortModel[k];
-        var valueA = a[sortColModel.colId];
-        var valueB = b[sortColModel.colId];
-        if (valueA == valueB) {
-          continue;
-        }
-        var sortDirection = sortColModel.sort === "asc" ? 1 : -1;
-        if (valueA > valueB) {
-          return sortDirection;
-        } else {
-          return sortDirection * -1;
-        }
-      }
-      return 0;
-    });
-    return resultOfSort;
-  }
-  function filterData(filterModel, data) {
-    var filterPresent = filterModel && Object.keys(filterModel).length > 0;
-    if (!filterPresent) {
-      return data;
-    }
-    var resultOfFilter = [];
-    for (var i = 0; i < data.length; i++) {
-      var item = data[i];
-      if (filterModel.age) {
-        var age = item.age;
-        var allowedAge = parseInt(filterModel.age.filter);
-        if (filterModel.age.type == "equals") {
-          if (age !== allowedAge) {
-            continue;
-          }
-        } else if (filterModel.age.type == "lessThan") {
-          if (age >= allowedAge) {
-            continue;
-          }
-        } else {
-          if (age <= allowedAge) {
-            continue;
-          }
-        }
-      }
-      if (filterModel.year) {
-        if (filterModel.year.values.indexOf(item.year.toString()) < 0) {
-          continue;
-        }
-      }
-      if (filterModel.country) {
-        if (filterModel.country.values.indexOf(item.country) < 0) {
-          continue;
-        }
-      }
-      resultOfFilter.push(item);
-    }
-    return resultOfFilter;
-  }
+  data = data.filter(i=>{
+    if(Object.keys(i).some(k => i[k] && i[k].toString().toLowerCase().includes(filterModel['-'].filter)))
+      return i;
+  })
+  return data;
+}
+
+
+}
