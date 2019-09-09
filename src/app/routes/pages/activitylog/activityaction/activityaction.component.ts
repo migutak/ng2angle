@@ -282,7 +282,8 @@ export class ActivityActionComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    console.log('currentUser', currentUser);
+    this.username = currentUser.USERNAME;
 
     // post data
     this.ecolService.loader();
@@ -313,7 +314,7 @@ export class ActivityActionComponent implements OnInit {
       this.savebody.noteimp = 'Y';
     }
     // add action
-    console.log(this.savebody);
+    // console.log(this.savebody);
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
       this.sendPtpsData(this.accnumber);

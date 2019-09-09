@@ -85,7 +85,7 @@ export class BulknotesComponent implements OnInit {
     const bulknotes = data.notes;
     const filename = data.files[0].originalname;
     if (data.success === true) {
-      if (bulknotes.length < 2000) {
+      if (bulknotes.length < 5000) {
         swal({
           type: 'success',
           title: 'ALL Good',

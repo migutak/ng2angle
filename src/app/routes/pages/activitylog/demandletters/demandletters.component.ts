@@ -700,7 +700,7 @@ export class DemandLettersComponent implements OnInit {
   }
 
   downloadDemand(filepath, filename) {
-    this.ecolService.demanddownload(filepath).subscribe(data => {
+    this.ecolService.demanddownload2(filename).subscribe(data => {
       saveAs(data, filename);
     }, error => {
       console.log(error.error);

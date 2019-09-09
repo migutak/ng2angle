@@ -8,15 +8,22 @@
     <div class="page-header">
       <form #searchForm="ngForm" class="form-horizontal" novalidate autocomplete="off">
         <div class="row">
-          <div class="col-xl-4 col-lg-6 form-inline">
+          <div class="col-xl-6 col-lg-12 form-inline">
             <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText"
               name="searchText" #searchText="ngModel" minlength="4" (input)="onSearch()" required />
+
+                <div class="checkbox c-checkbox form-check-inline">
+                  <label>
+                      <input type="checkbox" id="includeloanods" [(ngModel)]="model.includeloanods" name="includeloanods" />
+                      <span class="fa fa-check"></span>  Exclude savings/LoanOD/CAwOD/SAMinBal </label>
+                </div>
+
             <button type="submit" class="mr-1 btn btn-primary" (click)="onSearch()"
               [disabled]="!searchForm.valid || !searchForm.dirty"><span class="fa fa-search"></span>
               Search</button>
               
           </div>
-          <div class="col-xl-4 col-lg-6 form-inline">
+          <div class="col-xl-6 col-lg-12 form-inline">
               <button class="btn btn-outline-green" type="button" (click)="reset()"><span
                 class="fas fa-sync"></span> Reset</button>
           </div>

@@ -57,7 +57,11 @@ export class CreditbuildupComponent implements OnInit {
       headerName: 'ACCNUMBER',
       field: 'ACCNUMBER',
       cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+        if(params.value !== undefined) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        } else {
+          return '<img src="assets/img/user/loading.gif">';
+        }
       },
       width: 350,
       resizable: true,

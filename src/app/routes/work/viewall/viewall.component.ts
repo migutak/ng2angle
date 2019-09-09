@@ -57,9 +57,13 @@ export class ViewallComponent implements OnInit {
   columnDefs = [
     {
       headerName: 'ACCNUMBER',
-      field: 'accnumber',
+      field: 'ACCNUMBER',
       cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+        if(params.value !== undefined) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        } else {
+          return '<img src="assets/img/user/loading.gif">';
+        }
       },
       width: 250,
       resizable: true,
@@ -67,18 +71,18 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'CUSTNUMBER',
-      field: 'custnumber',
+      field: 'CUSTNUMBER',
       resizable: true, sortable: true, filter: true
     },
     {
       headerName: 'CUSTNAME',
-      field: 'client_name',
+      field: 'CLIENT_NAME',
       width: 450,
       resizable: true
     },
     {
       headerName: 'DAYSINARREARS',
-      field: 'daysinarr',
+      field: 'DAYSINARREARS',
       cellStyle: function (params) {
         if (params.value < '30') {
           return { color: 'red' };
@@ -92,40 +96,44 @@ export class ViewallComponent implements OnInit {
     },
     {
       headerName: 'TOTALARREARS',
-      field: 'instamount',
+      field: 'INSTAMOUNT',
       resizable: true,
       valueFormatter: this.currencyFormatter
     },
     {
       headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
+      field: 'OUSTBALANCE',
       valueFormatter: this.currencyFormatter,
       resizable: true
     },
     {
       headerName: 'BUCKET',
-      field: 'bucket',
+      field: 'BUCKET',
       resizable: true
     },
     {
       headerName: 'AROCODE',
-      field: 'arocode',
+      field: 'AROCODE',
       resizable: true
     },
     {
       headerName: 'RROCODE',
-      field: 'rrocode',
+      field: 'RROCODE',
       resizable: true,
       filter: true,
       sortable: true,
     },
     {
       headerName: 'SECTION',
-      field: 'section'
+      field: 'SECTION'
+    },
+    {
+      headerName: 'PRODUCT',
+      field: 'PRODUCTCODE'
     },
     {
       headerName: 'COLOFFICER',
-      field: 'colofficer'
+      field: 'COLOFFICER'
     }
   ];
 
@@ -149,7 +157,11 @@ export class ViewallComponent implements OnInit {
   };
 
   currencyFormatter(params) {
-    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    if(params.value !== undefined) {
+      return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    } else {
+      return ''
+    }
   }
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
@@ -169,25 +181,34 @@ export class ViewallComponent implements OnInit {
     }
     this.clear();
     this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.rows, response.total
-          );
-          this.gridOptions.api.hideOverlay();
-        });
-      }
-    };
+    if(this.model.includeloanods) {
+      this.dataSource = {
+        getRows: (params: IGetRowsParams) => {
+          // Use startRow and endRow for sending pagination to Backend
+          // params.startRow : Start Page
+          // params.endRow : End Page
+          //
+          this.apiServiceSearchwithoutods(20, params.startRow).subscribe(response => {
+            params.successCallback(
+              response.rows, response.total
+            );
+            this.gridOptions.api.hideOverlay();
+          });
+        }
+      };
+    } else {
+      this.dataSource = {
+        getRows: (params: IGetRowsParams) => {
+          this.apiServiceSearch(20, params.startRow).subscribe(response => {
+            params.successCallback(
+              response.rows, response.total
+            );
+            this.gridOptions.api.hideOverlay();
+          });
+        }
+      };
+    }
+    
 
     this.gridApi.setDatasource(this.dataSource);
   }
@@ -245,6 +266,11 @@ export class ViewallComponent implements OnInit {
   apiServiceSearch(perPage, currentPos) {
     // tslint:disable-next-line:max-line-length
     return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
+  }
+
+  apiServiceSearchwithoutods(perPage, currentPos) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<any>(environment.api + '/api/tqall/searchwithoutloanods?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
   }
 
 }

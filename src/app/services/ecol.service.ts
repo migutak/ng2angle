@@ -598,6 +598,15 @@ export class EcolService {
     });
   }
 
+  demanddownload2(file: string) {
+    const body = { filename: environment.letters_path + file };
+
+    return this.httpClient.post(environment.demanddownload + '/filesapi/download', body, {
+      responseType: 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  }
+
   logout() {
     //  remove user from local storage to log user out
     localStorage.removeItem('currentUser');
