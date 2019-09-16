@@ -282,7 +282,7 @@ export class ActivityActionComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log('currentUser', currentUser);
+    
     this.username = currentUser.USERNAME;
 
     // post data

@@ -56,17 +56,12 @@ export class BulknotesComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
     });
-
-    /*this.username = this.route.snapshot.queryParamMap.get('username');
-    this.route.queryParamMap.subscribe(queryParams => {
-      this.username = queryParams.get('username');
-    });*/
 
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {

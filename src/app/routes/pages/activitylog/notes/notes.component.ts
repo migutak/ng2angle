@@ -52,7 +52,7 @@ export class NotesComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.route.queryParams.subscribe(params => {
       this.cust = params['custnumber'];

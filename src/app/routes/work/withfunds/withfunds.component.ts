@@ -126,7 +126,7 @@ export class WithfundsComponent implements OnInit {
     this.model = event.node.data;
     // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.username + '&sys=collections', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
   }
 
   onSearch() {

@@ -86,7 +86,7 @@ export class PredelqComponent implements OnInit {
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
   }
 
   onGridReady(params) {

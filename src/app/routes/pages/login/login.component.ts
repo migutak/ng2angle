@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
 
     getuser(username, password) {
         this.ecolService.login(username).subscribe(user => {
-            if (user !== null || user !== undefined) {
+            if (user.length > 0) {
                 // store user details and basic auth credentials in local storage
                 // to keep user logged in between page refreshes
                 // get user permissions

@@ -279,7 +279,7 @@ export class DemandLettersComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.ecolService.loader();
     this.ecolService.getAccount(this.accnumber).subscribe(data => {
@@ -700,7 +700,7 @@ export class DemandLettersComponent implements OnInit {
   }
 
   downloadDemand(filepath, filename) {
-    this.ecolService.demanddownload2(filename).subscribe(data => {
+    this.ecolService.demanddownload(filepath).subscribe(data => {
       saveAs(data, filename);
     }, error => {
       console.log(error.error);
