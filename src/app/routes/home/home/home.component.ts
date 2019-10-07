@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
         localStorage.setItem('profile', '0');
 
         this.http.get<any>(environment.nodeapi + '/loans/buckets').subscribe(data => {
-            console.log(data);
             this.dataSource.data = data.data;
         }, error => {
             console.log(error);

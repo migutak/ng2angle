@@ -73,7 +73,7 @@ export class MultipleptpComponent implements OnInit {
 
   ptpfunc(form) {
     const ptpamount = form.value.ptpamount;
-    const ptpdate = (moment(form.value.ptpdate).format('DD-MM-YYYY')).toUpperCase();
+    const ptpdate = (moment(form.value.ptpdate).format('DD-MMM-YYYY')).toUpperCase();
     const owner = this.username;
     const accnumber = this.accnumber;
 
