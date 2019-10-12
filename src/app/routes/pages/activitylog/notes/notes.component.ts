@@ -40,9 +40,19 @@ export class NotesComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Start watching for user inactivity.
+    this.userIdle.startWatching();
+
+    // Start watching when user idle is starting.
+    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+
+    // Start watch when time is up.
+    this.userIdle.onTimeout().subscribe(() => console.log('Time is up!'));
+
     // check if logged in
     this.ecolService.ifLogged();
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.ecolService.ifClosed();
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
     this.route.queryParams.subscribe(params => {

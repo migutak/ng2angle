@@ -6,6 +6,8 @@ import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 import { FileUploader, FileItem , ParsedResponseHeaders} from 'ng2-file-upload';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const URL = environment.xlsuploadapi;
 
@@ -19,6 +21,8 @@ export class BulknotesComponent implements OnInit {
   custnumber;
   accnumber;
   username: string;
+  form: FormGroup;
+  uploadResponse;
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
@@ -32,8 +36,9 @@ export class BulknotesComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
 
-  constructor(public settings: SettingsService,
+  constructor(private formBuilder: FormBuilder, public settings: SettingsService,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
     private ecolService: EcolService) {
     //
     //
@@ -72,6 +77,9 @@ export class BulknotesComponent implements OnInit {
     });
 
     // get account details
+    this.form = this.formBuilder.group({
+      avatar: ['']
+    });
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -125,6 +133,39 @@ export class BulknotesComponent implements OnInit {
       console.log(error);
       swal('Error!', ' Cannot download template  file!', 'error');
     });
+  }
+
+
+
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.get('avatar').setValue(file);
+    }
+  }
+
+  onSubmit() {
+    this.spinner.show();
+    const formData = new FormData();
+    formData.append('avatar', this.form.get('avatar').value);
+
+    this.ecolService.uploadFile(formData).subscribe(
+      (res) => {
+        this.uploadResponse = res;
+        this.spinner.hide();
+          console.log(res);
+          swal({
+            type: 'success',
+            title: 'All Good!',
+            text: 'Excel bulk notes upload is a success',
+          });
+      },
+      (err) => {  
+        console.log(err);
+        this.spinner.hide();
+        swal('Error!', ' File Not Uploaded!', 'error'); 
+      }
+    );
   }
 
 }

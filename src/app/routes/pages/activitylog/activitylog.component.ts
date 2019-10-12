@@ -104,7 +104,8 @@ export class ActivityLogComponent implements OnInit {
   ngOnInit() {
     // check if logged in
     this.ecolService.ifLogged();
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.ecolService.ifClosed();
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');

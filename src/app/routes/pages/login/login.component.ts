@@ -99,6 +99,10 @@ export class LoginComponent implements OnInit {
                 this.ecolService.getpermissions(user.role).subscribe(permission => {
                     // console.log(permission);
                     user.authdata = window.btoa(username + ':' + password);
+                    sessionStorage.setItem('currentUser', JSON.stringify(user));
+                    sessionStorage.setItem('userpermission', JSON.stringify(permission));
+                    sessionStorage.setItem('profile', '1');
+
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     localStorage.setItem('userpermission', JSON.stringify(permission));
                     localStorage.setItem('profile', '1');

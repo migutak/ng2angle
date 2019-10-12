@@ -33,7 +33,7 @@ export class AllcardsComponent implements OnInit {
   }
 
 
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
   resizeEvent = 'resize.ag-grid';
   $win = $(window);
@@ -65,8 +65,9 @@ export class AllcardsComponent implements OnInit {
     {
       headerName: 'CARDNAME',
       field: 'CARDNAME',
+      filter: "agTextColumnFilter",
       resizable: true,
-      filter: true
+      floatingFilter: true
     },
     {
       headerName: 'DATEDISBURSED',
@@ -152,7 +153,7 @@ export class AllcardsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.username = currentUser.username;
 
     this.ecolService.totalcardswatch().subscribe(viewall => {

@@ -9,6 +9,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { AgGridModule } from 'ag-grid-angular';
 import'ag-grid-enterprise'; 
 import { AppComponent } from './app.component';
+import { UserIdleModule } from 'angular-user-idle';
 
 
 
@@ -30,6 +31,7 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     imports: [
         BrowserModule,
+        UserIdleModule.forRoot({idle: 60, timeout: 30}),
         AgGridModule.withComponents([]),
         HttpClientModule,
         FormsModule,

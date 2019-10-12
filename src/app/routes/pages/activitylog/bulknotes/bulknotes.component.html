@@ -1,4 +1,10 @@
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Processing Notes Upload...</p>
+</ngx-spinner>
+
 <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <h2>Bulk notes from xlsx file </h2>
         <div id="accordion">
           <div class="card">
@@ -26,10 +32,12 @@
                           <button class="btn btn-secondary btn-block">Multiple</button>
                           <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
                         </label>-->
-                        <label for="file2" class="file-upload">
+                        
+                        <label for="avatar" class="file-upload">
                           <button class="btn btn-secondary btn-block">Single</button>
-                          <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
+                          <input (change)="onFileSelect($event)" type="file" name="avatar" id="avatar" type="file" ng2FileSelect [uploader]="uploader" />
                         </label>
+                      
                       </div>
                     </div>
                   </div>
@@ -65,10 +73,12 @@
                                 <span *ngIf="item.isError"><i class="fas fa-times"></i></span>
                               </td>
                               <td nowrap>
-                                <button type="button" class="btn btn-info btn-xs" (click)="item.upload()"
+              
+                                <button (ngSubmit)="onSubmit()" type="submit" class="btn btn-info btn-xs" 
                                   [disabled]="item.isReady || item.isUploading || item.isSuccess">
                                   <span class="fa icon-cloud-upload mr"></span> Upload
                                 </button>
+                               
                                 <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"
                                   [disabled]="!item.isUploading">
                                   <span class="icon-close mr"></span> Cancel
@@ -85,25 +95,25 @@
                     <div class="card">
                       <div class="card-body">
                         <div>
-                          <div>
+                          <!-- <div>
                             Queue progress:
                             <div class="progress">
                               <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
                               </div>
                             </div>
-                          </div>
-                          <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
+                          </div> -->
+                          <!-- <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()"
                             [disabled]="!uploader.getNotUploadedItems().length">
                             <span class="fa icon-cloud-upload mr"></span> Upload all
-                          </button>
-                          <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                          </button> -->
+                          <!-- <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
                             [disabled]="!uploader.isUploading">
                             <span class="icon-close mr"></span> Cancel all
-                          </button>
-                          <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+                          </button> -->
+                          <!-- <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
                             [disabled]="!uploader.queue.length">
                             <span class="icon-trash mr"></span> Remove all
-                          </button>
+                          </button> -->
                         </div>
                       </div>
                     </div>
@@ -113,4 +123,5 @@
             </div>
           </div>
         </div>
+      </form>
       </div>

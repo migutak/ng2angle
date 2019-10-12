@@ -57,26 +57,54 @@ export class ViewallComponent implements OnInit {
     {
       headerName: 'ACCNUMBER',
       field: 'accnumber',
+      
       filter: "agTextColumnFilter",
-      cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
-      },
+      // cellRenderer: function (params) {
+      //   return '<a  href="#" target="_blank">' + params.value + '</a>';
+      // },
+      cellRenderer:
+      function(params) {
+        if (params.value !== undefined) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        } else {
+          return '<img src="assets/img/user/loading.gif">';
+        }
+      }
       // resizable: true,
       // checkboxSelection: true
     },
     {
       headerName: 'CUSTNUMBER',
       field: 'custnumber',
+      cellRenderer:
+      function(params) {
+        if (params.value !== "") {
+          return params.value;
+        } else {
+          return '<img src="assets/img/user/loading.gif">';
+        }
+      }
       // resizable: true, sortable: true, filter: true
     },
     {
       headerName: 'CUSTNAME',
       filter: "agTextColumnFilter",
       field: 'clientname',
+    //   getQuickFilterText: function(params) {
+    //     return params.value.name;
+    // }
      
       filterParams:{
         newRowsAction: "keep"
       },
+      cellRenderer:
+      function(params) {
+        if (params.value !== undefined) {
+          return params.value;
+        } else {
+          return '<img src="assets/img/user/loading.gif">';
+        }
+      }
       
       // width: 450,
       // resizable: true

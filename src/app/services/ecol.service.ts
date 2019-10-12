@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -9,10 +9,18 @@ import { Router } from '@angular/router';
 })
 export class EcolService {
 
+
+  SERVER_URL: string = "http://localhost/upload";
   constructor(
     private httpClient: HttpClient,
     private router: Router
     ) { }
+
+    public uploadFile(data) {
+      let uploadURL = `${this.SERVER_URL}/import_excel.php`;
+  
+      return this.httpClient.post<any>(uploadURL, data);
+    }
 
   loader() {
 
@@ -436,6 +444,11 @@ export class EcolService {
 
   logout() {
     //  remove user from local storage to log user out
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('accountInfo');
+    sessionStorage.removeItem('userpermission');
+    sessionStorage.removeItem('profile');
+
     localStorage.removeItem('currentUser');
     localStorage.removeItem('accountInfo');
     localStorage.removeItem('userpermission');
@@ -507,6 +520,19 @@ export class EcolService {
   }
 
   ifLogged() {
+    if (!sessionStorage.getItem('currentUser')) {
+      swal({title: 'You\'re Not Logged In',
+      imageUrl: "assets/img/user/notlogg.png",
+      text: 'Kindly, log in to continue!',
+      
+      confirmButtonColor: '#7ac142',
+      confirmButtonText: 'Okay'});
+      this.router.navigate( ['/login'] );
+      return false;
+    }
+  }
+
+  ifClosed() {
     if (!localStorage.getItem('currentUser')) {
       swal({title: 'You\'re Not Logged In',
       imageUrl: "assets/img/user/notlogg.png",

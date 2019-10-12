@@ -180,7 +180,7 @@
                     <a  class="nav-link" dropdownToggle><span style="color: white; margin-right: 10px; font-weight: 900; text-transform:uppercase;"><strong>{{user.username}} | {{user.role}}   </strong></span> <em  class="icon-user"></em>
                     </a>
                     <div *dropdownMenu class="dropdown-menu animated bounceInUp" role="menu">
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" (click)=logout() href="#">Logout</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
                         <a class="dropdown-item" href="#">Separated link</a>
