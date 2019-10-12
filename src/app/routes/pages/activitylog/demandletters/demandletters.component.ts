@@ -685,7 +685,7 @@ export class DemandLettersComponent implements OnInit {
   }
 
   demandshistory(body) {
-    console.log('demandshistory', body);
+    // console.log('demandshistory', body);
     this.ecolService.demandshistory(body).subscribe(data => {
       this.getdemandshistory(this.accnumber);
     });

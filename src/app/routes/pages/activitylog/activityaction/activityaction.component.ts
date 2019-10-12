@@ -95,7 +95,7 @@ export class ActivityActionComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.spinner.show();
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
