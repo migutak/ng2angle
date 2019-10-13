@@ -63,31 +63,37 @@ export class FilesComponent implements OnInit {
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
       const obj = JSON.parse(response);
-      for (let i = 0; i < obj.files.length; i++) {
-        const bulk = {
-          'accnumber': this.accnumber,
-          'custnumber': this.custnumber,
-          'destpath': obj.files[i].path,
-          'filesize': obj.files[i].size,
-          'filetype': obj.files[i].mimetype,
-          'filepath': obj.files[i].path,
-          'filename': obj.files[i].originalname,
-          'doctype': obj.files[i].originalname,
-          'docdesc': this.model.filedesc,
-          'colofficer': this.username,
-          'userdesctype': this.model.userdesctype
-        };
-        this.ecolService.uploads(bulk).subscribe(resp => {
-          this.getfileshistory(this.custnumber);
-          swal('Good!', 'File uploaded successfully!', 'success');
-        }, error => {
-          swal('Oooops!', 'File uploaded but unable to add to files history!', 'warning');
-        });
+      console.log(obj)
+      if(obj.success) {
+        for (let i = 0; i < obj.files.length; i++) {
+          const bulk = {
+            'accnumber': this.accnumber,
+            'custnumber': this.custnumber,
+            'destpath': obj.files[i].path,
+            'filesize': obj.files[i].size,
+            'filetype': obj.files[i].mimetype,
+            'filepath': obj.files[i].path,
+            'filename': obj.files[i].originalname,
+            'doctype': obj.files[i].originalname,
+            'docdesc': this.model.filedesc,
+            'colofficer': this.username,
+            'userdesctype': this.model.userdesctype
+          };
+          this.ecolService.uploads(bulk).subscribe(resp => {
+            this.getfileshistory(this.custnumber);
+            swal('Good!', 'File uploaded successfully!', 'success');
+          }, error => {
+            swal('Oooops!', 'File uploaded but unable to add to files history!', 'warning');
+          });
+        }
+      } else {
+        swal('Oooops!', 'unable to upload file!', 'error');
       }
+      
     };
 
     this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any => {
-      // error server response
+      swal('Oooops!', 'unable to upload file!', 'error');
     };
   }
 
@@ -102,11 +108,6 @@ export class FilesComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');
     });
-
-    /*this.username = this.route.snapshot.queryParamMap.get('username');
-    this.route.queryParamMap.subscribe(queryParams => {
-      this.username = queryParams.get('username');
-    });*/
 
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {

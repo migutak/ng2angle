@@ -1,6 +1,4 @@
 ### STAGE 1: Build ###
-
-
 # base image
 FROM nginx:1.16.0-alpine
 

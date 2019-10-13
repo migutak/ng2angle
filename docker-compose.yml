@@ -5,7 +5,7 @@ services:
     container_name: ecollect
     restart: always
     ports:
-      - "80:80"
+      - "7000:80"
 
   ecollect_apis:
     image: migutak/ecollect_apis:1.0.0
@@ -36,8 +36,8 @@ services:
     container_name: uploads
     restart: always
     environment:
-      - FILEPATH=C:\\logs\\
-      - CORS=http://localhost
+      - FILEPATH=C:\logs\
+      - CORS=http://localhost:7000
       - DB_USER=ecol
       - DB_PASSWORD=ecol
       - DB_CONNECTIONSTRING=dbsvr2dr:1523/ecoltst

@@ -15,7 +15,7 @@ export const environment = {
   applink: 'http://localhost:7000',
   emailapi: 'http://localhost:8000/api/email/send',
   auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
-  filesapi: 'http://localhost:3100/filesapi', // activityupload
+  filesapi: 'http://localhost:3000/filesapi', // activityupload
   accplanlink: 'http://localhost:3001',
   kibanarpt: 'http://localhost:5601',
   birt: 'http://localhost:8090/birt',
