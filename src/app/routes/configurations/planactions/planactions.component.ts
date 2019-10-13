@@ -20,7 +20,7 @@ export class PlanactionsComponent implements OnInit {
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
     this.getplanactions();
     this.getid();
   }
@@ -52,7 +52,7 @@ export class PlanactionsComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.model.actionid = form.actioncode;
     this.model.actiontitle = form.actiontitle;
@@ -82,7 +82,7 @@ export class PlanactionsComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.model.actioncode = form.actionid;
     this.model.actiontitle = form.actiontitle;
@@ -94,7 +94,7 @@ export class PlanactionsComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.model.actionid = form.actioncode;
     this.model.actiontitle = form.actiontitle;

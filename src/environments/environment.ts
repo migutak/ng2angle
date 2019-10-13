@@ -9,8 +9,6 @@ export const environment = {
   mongo: 'http://localhost:8001',
   nodeapi: 'http://localhost:6001/nodeapi',
   letters_api: 'http://localhost:8004/docx/',
-  // letters_api: 'https://ecollecttst.co-opbank.co.ke/docx/',
-  // letters_path: '/users/kevinabongo/Demands/',
   letters_path: 'd:\\demands\\',
   uploadurl: 'http://localhost:4000',
   demanddownload: 'http://localhost:3000',

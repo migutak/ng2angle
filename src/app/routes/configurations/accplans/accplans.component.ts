@@ -30,7 +30,7 @@ export class AccplansComponent implements OnInit {
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
     this.getallplans();
     this.getallactions();
   }
@@ -183,7 +183,7 @@ export class AccplansComponent implements OnInit {
         // console.log(form);
         this.ecolService.ifLogged();
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.username = currentUser.username;
+        this.username = currentUser.USERNAME;
         // save to db
         this.ecolService.delete_s_plan_actions(form.id).subscribe(response => {
           // console.log(response); {count: 1}
@@ -210,7 +210,7 @@ export class AccplansComponent implements OnInit {
     // console.log(form);
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.model.plan = form.planid;
     this.model.actionid = form.actionid;

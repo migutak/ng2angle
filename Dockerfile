@@ -1,3 +1,6 @@
+### STAGE 1: Build ###
+
+
 # base image
 FROM nginx:1.16.0-alpine
 
@@ -11,3 +14,4 @@ EXPOSE 80
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
+# docker build -t migutak/ecollect:1.0.0 .

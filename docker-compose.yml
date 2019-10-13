@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+  ecollect:
+    image: migutak/ecollect:1.0.0
+    container_name: ecollect
+    restart: always
+    ports:
+      - "80:80"
+
+  ecollect_apis:
+    image: migutak/ecollect_apis:1.0.0
+    container_name: ecollect_apis
+    restart: always
+    environment:
+      - DB_HOST=192.168.0.12
+      - DB_PORT=1521
+      - DB_USER=ecol
+      - DB_PASSWORD=ecol
+      - DB_DATABASE=ORCLCDB.localdomain
+    ports:
+      - "8000:8000"
+
+  oracledb_node:
+    image: migutak/oracledbnode:1.0.0
+    container_name: oracledb_node
+    restart: always
+    environment:
+      - DB_USER=ecol
+      - DB_PASSWORD=ecol
+      - DB_CONNECTIONSTRING=192.168.0.12:1521/ORCLCDB.localdomain
+    ports:
+      - "6001:6001"
+
+  uploads:
+    image: migutak/uploads:1.0.0
+    container_name: uploads
+    restart: always
+    environment:
+      - FILEPATH=C:\\logs\\
+      - CORS=http://localhost
+      - DB_USER=ecol
+      - DB_PASSWORD=ecol
+      - DB_CONNECTIONSTRING=dbsvr2dr:1523/ecoltst
+    ports:
+      - "4000:4000"
+      - "5000:5000"
+      - "5001:5001"
+      - "3000:3000"
