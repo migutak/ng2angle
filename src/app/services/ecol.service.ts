@@ -241,6 +241,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tqall/' + accnumber);
   }
 
+  getthisptp (id) {
+    return this.httpClient.get<any>(environment.api + '/api/ptps/' + id);
+  }
+
   getwatch (accnumber) {
     return this.httpClient.get<any>(environment.api + '/api/watch_stage/' + accnumber);
   }
@@ -514,7 +518,7 @@ export class EcolService {
 
   getptps(accnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber);
+    return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber + '&filter[order]=actiondate DESC');
   }
 
   sendDemandEmail(data) {
@@ -525,13 +529,16 @@ export class EcolService {
     return this.httpClient.post<any>(environment.api + '/api/sms', data);
   }
 
+  ammendptp(data) {
+    return this.httpClient.post<any>(environment.nodeapi + '/ptpsammend/ammendptp', data);
+  }
+
   demandshistory(data) {
     return this.httpClient.post<any>(environment.api + '/api/demandshistory', data);
   }
 
   uploads(data) {
-    console.log('upload data...', data);
-    return this.httpClient.post<any>(environment.api + '/api/uploads', data);
+      return this.httpClient.post<any>(environment.api + '/api/uploads', data);
   }
 
   getdemandshistory(accnumber) {
@@ -613,6 +620,11 @@ export class EcolService {
     localStorage.removeItem('accountInfo');
     localStorage.removeItem('userpermission');
     localStorage.removeItem('profile');
+
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('accountInfo');
+    sessionStorage.removeItem('userpermission');
+    sessionStorage.removeItem('profile');
   }
 
   getloggedinusers() {
@@ -693,6 +705,19 @@ export class EcolService {
 
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
+      swal({title: 'You\'re Not Logged In',
+      imageUrl: 'assets/img/user/notlogg.png',
+      text: 'Kindly, log in to continue!',
+
+      confirmButtonColor: '#7ac142',
+      confirmButtonText: 'Okay'});
+      this.router.navigate( ['/login'] );
+      return false;
+    }
+  }
+
+  ifclosed() {
+    if (!sessionStorage.getItem('currentUser')) {
       swal({title: 'You\'re Not Logged In',
       imageUrl: 'assets/img/user/notlogg.png',
       text: 'Kindly, log in to continue!',

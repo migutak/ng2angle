@@ -36,6 +36,10 @@ export class ActivityHomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    // check if logged!
+    this.ecolService.ifLogged();
+    this.ecolService.ifclosed();
+
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.accnumber = queryParams.get('accnumber');

@@ -18,7 +18,7 @@ export const environment = {
   filesapi: 'http://68.183.63.158:3200/filesapi', // activityupload
   accplanlink: 'http://68.183.63.158:3001',
   kibanarpt: 'http://68.183.63.158:5601',
-  birt: 'http://68.183.63.158:8080/birt',
+  birt: 'http://68.183.63.158:8787/birt',
   kibana: 'http://68.183.63.158:5601/app/kibana#/dashboard?_g=0',
   manuals_path: '/root/ecol_manuals/'
 };

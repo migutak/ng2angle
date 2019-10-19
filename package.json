@@ -79,6 +79,7 @@
     "ngx-infinite-scroll": "6.0.1",
     "ngx-pagination": "^4.0.0",
     "ngx-select-ex": "3.6.7",
+    "ngx-smart-modal": "^7.2.1",
     "ngx-spinner": "^7.0.0",
     "ngx-toggle": "^2.0.1",
     "ngx-ui-switch": "^8.0.0",

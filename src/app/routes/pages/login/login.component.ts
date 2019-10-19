@@ -103,6 +103,10 @@ export class LoginComponent implements OnInit {
                     localStorage.setItem('currentUser', JSON.stringify(user[0]));
                     localStorage.setItem('userpermission', JSON.stringify(permission));
                     localStorage.setItem('profile', '1');
+
+                    sessionStorage.setItem('currentUser', JSON.stringify(user[0]));
+                    sessionStorage.setItem('userpermission', JSON.stringify(permission));
+                    sessionStorage.setItem('profile', '1');
                     // this.router.navigate([this.returnUrl]);
                     this.router.navigate(['/home']);
                 });

@@ -18,7 +18,7 @@ export const environment = {
   filesapi: 'http://localhost:3000/filesapi', // activityupload
   accplanlink: 'http://localhost:3001',
   kibanarpt: 'http://localhost:5601',
-  birt: 'http://localhost:8090/birt',
+  birt: 'http://localhost:8787/birt',
   kibana: 'http://localhost:5601/app/kibana#/dashboard?_g=0',
   manuals_path: 'C:\\ecol_manuals\\'
 };

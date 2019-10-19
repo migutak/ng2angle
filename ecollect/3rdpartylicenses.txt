@@ -1,6 +1,3 @@
-jqwidgets-scripts
-http://www.jqwidgets.com/license/
-
 @swimlane/ngx-datatable
 MIT
 (The MIT License)
@@ -26,6 +23,9 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+jqwidgets-scripts
+http://www.jqwidgets.com/license/
 
 ngx-select-ex
 MIT

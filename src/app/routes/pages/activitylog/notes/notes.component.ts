@@ -51,6 +51,7 @@ export class NotesComponent implements OnInit {
   ngOnInit() {
     // check if logged in
     this.ecolService.ifLogged();
+    this.ecolService.ifclosed();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 

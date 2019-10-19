@@ -1,7 +1,6 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
-import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
@@ -40,7 +39,7 @@ export class ViewallComponent implements OnInit {
 
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+  applink = 'http://localhost:4000'
 
   resizeEvent = 'resize.ag-grid';
   $win = $(window);

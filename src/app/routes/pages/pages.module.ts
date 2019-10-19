@@ -38,6 +38,7 @@ import { CollateralsComponent } from '../pages/activitylog/collaterals/collatera
 import { ActivitydashComponent } from '../pages/activitydash/activitydash.component';
 import { EditnoteComponent } from '../pages/activitylog/editnote/editnote.component';
 import { PtpsComponent } from './activitylog/ptps/ptps.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
@@ -62,6 +63,7 @@ import { PtpsComponent } from './activitylog/ptps/ptps.component';
         ToasterModule.forRoot(),
         CustomFormsModule,
         BsDatepickerModule.forRoot(),
+        NgxSmartModalModule.forRoot(),
         NgxPaginationModule
         // RouterModule.forChild(routes)
     ],

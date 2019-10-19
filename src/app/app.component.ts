@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     });
 
     // idle logout
-    this.bnIdle.startWatching(15000).subscribe((res) => {
+    this.bnIdle.startWatching(900).subscribe((res) => {
       if (res) {
         this.ecolService.logout();
         this._router.navigate(['/login']);
@@ -66,6 +66,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    // check if logged!
+    this.ecolService.ifLogged();
+    this.ecolService.ifclosed();
+
     document.addEventListener('click', e => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'A') { e.preventDefault(); }

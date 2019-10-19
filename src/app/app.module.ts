@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { AppComponent } from './app.component';
-
+import { NgxSmartModalModule } from 'ngx-smart-modal';;
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
@@ -33,6 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
         SharedModule.forRoot(),
         RoutesModule,
         SlimLoadingBarModule,
+        NgxSmartModalModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

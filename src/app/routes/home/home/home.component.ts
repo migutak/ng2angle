@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 declare var $: any;
 import { environment } from '../../../../environments/environment';
+import { EcolService } from '../../../services/ecol.service';
 
 @Component({
     selector: 'app-home',
@@ -12,7 +13,7 @@ import { environment } from '../../../../environments/environment';
 
 export class HomeComponent implements OnInit {
     dataSource: any;
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, private ecolService: EcolService,) {
         this.dataSource = {
             chart: {
               caption: 'Book Bucket Distribution',
@@ -32,6 +33,9 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        // check if logged in
+        this.ecolService.ifLogged();
+        this.ecolService.ifclosed();
         //
         if (localStorage.getItem('profile') === '1') {
             window.location.reload();

@@ -92,8 +92,10 @@ export class ActivityActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    // check if logged in
+    // check if logged!
     this.ecolService.ifLogged();
+    this.ecolService.ifclosed();
+    
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
