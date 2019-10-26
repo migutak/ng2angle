@@ -13,3 +13,4 @@ EXPOSE 80
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
 # docker build -t migutak/ecollect:1.0.0 .
+# docker save -o migutak_ecollect.tar migutak/ecollect:1.0.0

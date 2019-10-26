@@ -5,7 +5,7 @@ services:
     container_name: ecollect
     restart: always
     ports:
-      - "7000:80"
+      - "80:80"
     networks:
     - ecol-network
 
@@ -14,11 +14,11 @@ services:
     container_name: ecollect_apis
     restart: always
     environment:
-      - DB_HOST=192.168.0.12
+      - DB_HOST=dbsvr2dr
       - DB_PORT=1521
       - DB_USER=ecol
       - DB_PASSWORD=ecol
-      - DB_DATABASE=ORCLCDB.localdomain
+      - DB_DATABASE=ecoltst
     ports:
       - "8000:8000"
     networks:
@@ -31,7 +31,7 @@ services:
     environment:
       - DB_USER=ecol
       - DB_PASSWORD=ecol
-      - DB_CONNECTIONSTRING=192.168.0.12:1521/ORCLCDB.localdomain
+      - DB_CONNECTIONSTRING=dbsvr2dr:1521/ecoltst
     ports:
       - "6001:6001"
     networks:
@@ -42,12 +42,12 @@ services:
     container_name: uploads
     restart: always
     environment:
-      - CORS=http://localhost:7000
+      - CORS=http://ecollecttst.co-opbank.co.ke
       - DB_USER=ecol
       - DB_PASSWORD=ecol
-      - DB_CONNECTIONSTRING=192.168.0.12:1521/ORCLCDB.localdomain
+      - DB_CONNECTIONSTRING=dbsvr2dr:1523/ecoltst
     volumes:
-      - c:\logs:/var/uploads
+      - /app/uploads:/var/uploads
     ports:
       - "4000:4000"
       - "5000:5000"
@@ -61,7 +61,7 @@ services:
     container_name: docx
     restart: always
     volumes:
-      - d:\demands:/app/demands
+      - /app/demands:/app/demands
     environment:
       - FILEPATH=/app/demands/
       - IMAGEPATH=/app/docxletters/routes/
@@ -77,9 +77,9 @@ services:
     environment:
       - DB_USER=ecol
       - DB_PASSWORD=ecol
-      - DB_CONNECTIONSTRING=192.168.0.12:1521/ORCLCDB.localdomain
+      - DB_CONNECTIONSTRING=dbsvr2dr:1523/ecoltst
       - LICENSE='MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4',
-      - APPLINK=http://localhost:7000    
+      - APPLINK=http://ecollecttst.co-opbank.co.ke    
     ports:
       - "9000:4000"
     networks:
@@ -89,7 +89,7 @@ services:
     container_name: birt
     image: migutak/birt:1.0.0
     volumes:
-      - D:\angularprojects\birt\reports:/usr/local/tomcat/webapps/birt
+      - /app/birt/reports:/usr/local/tomcat/webapps/birt
     restart: always
     ports:
       - 8787:8080

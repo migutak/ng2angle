@@ -182,7 +182,7 @@ export class PtpsComponent implements OnInit {
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
   }
 
   gridReady(params) {

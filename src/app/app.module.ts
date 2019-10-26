@@ -14,6 +14,12 @@ import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 
+import 'ag-grid-enterprise';
+//License goes here
+import { LicenseManager } from "ag-grid-enterprise";
+
+LicenseManager.setLicenseKey('MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4');
+
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');

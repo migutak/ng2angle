@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {GridOptions, IDatasource, IGetRowsParams, ColDef} from 'ag-grid';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EcolService } from '../../../services/ecol.service';
 @Component({
   selector: 'app-viewall',
   templateUrl: './viewall.component.html',
