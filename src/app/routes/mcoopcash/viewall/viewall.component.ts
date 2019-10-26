@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {GridOptions, IDatasource, IGetRowsParams, ColDef} from 'ag-grid';
+import { Component, OnInit } from '@angular/core';
+import { GridOptions, IDatasource, IGetRowsParams, ColDef } from 'ag-grid';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
@@ -7,104 +7,142 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   templateUrl: './viewall.component.html',
   styleUrls: ['./viewall.component.scss']
 })
+
 export class ViewallComponent implements OnInit {
+  private gridApi;
+  private gridColumnApi;
 
-  public gridOptions: GridOptions;
+  private columnDefs;
+  private defaultColDef;
+  private rowModelType;
+  private cacheBlockSize;
+  private maxBlocksInCache;
+  private rowData: [];
 
-  public gridApi;
-  public gridColumnApi;
-  public columnDefs;
-  public sortingOrder;
-    model: any = {};
-    username: string;
-    public searchValue;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  username: string;
+  searchText: string;
+  model: any = {};
 
-    constructor(public http: HttpClient) {
-        this.gridOptions = <GridOptions>{
-
-          unSortIcon: true,
-      // suppressCellSelection: true,
-
-      enableColResize: true,
-      domLayout: 'autoHeight',
-      rowSelection: 'single',
-      rowModelType: 'normal',
-      // rowModelType: 'infinite',
-
-      pagination: true,
-      paginationPageSize: 20,
-      onGridReady: (params) => {
-        params.api.sizeColumnsToFit();
-        this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
-        // this.gridApi.setDatasource(this.dataSource);
-        this.http
-        .get(environment.nodeapi + '/mcoopcash_stage/raw')
-        .subscribe(resp => {
-          params.api.setRowData(<any> resp);
-        });
-
-      },
-      onGridSizeChanged: (params) => {
-        params.api.sizeColumnsToFit();
-      }
-        };
-        this.gridOptions.columnDefs = [
-          {
-            headerName: 'LOANACCNUMBER',
-            field: 'LOANACCNUMBER',
-            cellRenderer: function (params) {
-              return '<a  href="#" target="_blank">' + params.value + '</a>';
-            }
-          },
-          {
-            headerName: 'CLIENTNAME',
-            field: 'CLIENTNAME'
-          },
-          {
-            headerName: 'AMOUNTDISBURSED',
-            field: 'AMOUNTDISBURSED'
-          },
-          {
-            headerName: 'ARREARS CATEGORY',
-            field: 'ARREARS_CATEGORY'
-          },
-          {
-            headerName: 'LOAN TYPE',
-            field: 'LOAN_TYPE'
-          },
-          {
-            headerName: 'EMPLOYER',
-            field: 'EMPLOYER'
-          },
-          {
-            headerName: 'IDNUMBER',
-            field: 'IDNUMBER'
-          },
-          {
-            headerName: 'AROCODE',
-            field: 'AROCODE'
+  constructor(private http: HttpClient) {
+    this.columnDefs = [
+      {
+        field: 'LOANACCNUMBER',
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return '<a  href="#" target="_blank">' + params.value + '</a>';
+          } else {
+            return '<img src="assets/img/user/loading.gif">';
           }
-        ];
-        this.sortingOrder = ['desc', 'asc', null ];
-    }
+        },
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      { field: 'CLIENTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'IDNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'ARREARS_CATEGORY', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'LOAN_TYPE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DISBURSALDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {
+        field: 'AMOUNTDISBURSED',
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
+        },
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
+      },
+      {
+        field: 'REPAYMENTAMOUNT',
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
+        },
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
+      },
+      { field: 'EMPLOYER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'LASTPAYMENTDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DUEDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'LOANSTATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'ADDRESS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'PHONENUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+    ];
+    this.defaultColDef = {
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true
+    };
+    this.rowModelType = "serverSide";
+    this.cacheBlockSize = 50;
+    this.maxBlocksInCache = 0;
+  }
 
-    public ngOnInit(): void {
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.username = currentUser.USERNAME;
-    }
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
 
-    onRowDoubleClicked(event: any) {
-      this.model = event.node.data;
-      // tslint:disable-next-line:max-line-length
-      window.open(environment.applink + '/activitylog?accnumber=' + this.model.LOANACCNUMBER + '&custnumber=' + this.model.LOANACCNUMBER + '&username=' + this.username + '&sys=mcoopcash', '_blank');
-    }
-    getSelectedRows(event) {
-      //
-    }
+    const datasource = {
+      getRows(params) {
+        console.log(JSON.stringify(params.request, null, 1));
 
-    quickSearch() {
-      this.gridApi.setQuickFilter(this.searchValue);
+        fetch(environment.nodeapi + '/gridmcoopcashviewall/viewall', {
+          method: 'post',
+          body: JSON.stringify(params.request),
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+          .then(httpResponse => httpResponse.json())
+          .then(response => {
+            params.successCallback(response.rows, response.lastRow);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          })
+      }
+    };
+
+    params.api.setServerSideDatasource(datasource);
+  }
+
+  ServerSideDatasource(server) {
+    return {
+      getRows(params) {
+        setTimeout(function () {
+          var response = server.getResponse(params.request);
+          if (response.success) {
+            params.successCallback(response.rows, response.lastRow);
+          } else {
+            params.failCallback();
+          }
+        }, 500);
+      }
+    };
+  }
+
+  currencyFormatter(params) {
+    if (params.value !== undefined) {
+      return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    } else {
+      return ''
     }
+  }
+
+  onRowDoubleClicked(event: any) {
+    this.model = event.node.data;
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.LOANACCNUMBER + '&custnumber=' + this.model.LOANACCNUMBER + '&username=' + this.username + '&sys=mcoopcash', '_blank');
+  }
+
+
+  public ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.USERNAME;
+  }
 
 }
