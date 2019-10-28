@@ -141,7 +141,6 @@ export class AllcardsComponent implements OnInit {
 
     onRowDoubleClicked(event: any) {
       this.model = event.node.data;
-      // console.log(this.model);
       // tslint:disable-next-line:max-line-length
       window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
     }
@@ -174,27 +173,6 @@ export class AllcardsComponent implements OnInit {
       };
       this.gridOptions.api.setDatasource(ds);
     }
-
-    /*reset() {
-      this.gridApi.showLoadingOverlay();
-      this.clear();
-      this.dataSource = {
-        getRows: (params: IGetRowsParams) => {
-          // Use startRow and endRow for sending pagination to Backend
-          // params.startRow : Start Page
-          // params.endRow : End Page
-          //
-          this.apiService(20, params.startRow).subscribe(response => {
-            params.successCallback(
-              response.data, response.totalRecords
-            );
-            this.gridOptions.api.hideOverlay();
-          });
-        }
-      };
-      this.gridApi.sizeColumnsToFit();
-      this.gridApi.setDatasource(this.dataSource);
-    }*/
 
     apiService(perPage, currentPos) {
       // tslint:disable-next-line:max-line-length
