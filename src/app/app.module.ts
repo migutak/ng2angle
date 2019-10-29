@@ -13,12 +13,13 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
+import { license } from '../../env';
 
 import 'ag-grid-enterprise';
 //License goes here
 import { LicenseManager } from "ag-grid-enterprise";
 
-LicenseManager.setLicenseKey('sample');
+LicenseManager.setLicenseKey(license.value);
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {

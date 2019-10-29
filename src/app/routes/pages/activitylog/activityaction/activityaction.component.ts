@@ -342,7 +342,7 @@ export class ActivityActionComponent implements OnInit {
       console.log('send ptp reminder email ...');
       const ptpemailbody = {
         toemail: '',
-        ccemail: '',
+        ccemail: this.username,
         ptpamount: 0,
         ptpdate: 0
       }
