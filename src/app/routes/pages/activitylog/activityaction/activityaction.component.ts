@@ -22,8 +22,11 @@ const URL = environment.valor;
 export class ActivityActionComponent implements OnInit {
 
   bsValue = new Date();
-  // bsValue = this.currentDate();
-  minDate: Date;
+  public minDate: NgbDateStruct;
+  minxDate: Date;
+  year = parseInt(moment().format('YYYY'));
+  month = parseInt(moment().format('MM'));
+  day = parseInt(moment().format('DD'));
 
   accnumber: string;
   custnumber: string;
@@ -81,14 +84,14 @@ export class ActivityActionComponent implements OnInit {
   constructor(
     public settings: SettingsService,
     private route: ActivatedRoute,
-    private router: Router,
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
   ) {
-    this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate() - 1);
+    this.minDate = { year: this.year, month: this.month, day: this.day };
+    this.minxDate = new Date();
+    this.minxDate.setDate(this.minxDate.getDate() - 1);
   }
 
   ngOnInit() {
@@ -259,6 +262,10 @@ export class ActivityActionComponent implements OnInit {
       collectoraction: ['', Validators.required],
       party: [{ value: '', disabled: true }],
       ptpamount: [{ value: 0, disabled: true }],
+      ptpemail: [{ value: '', disabled: true }],
+      toemail: [{ value: '', disabled: true }],
+      ptpsms: [{ value: '', disabled: true }],
+      ptpsmsnumber: [{ value: '', disabled: true }],
       ptp: [{ value: 'No', disabled: true }],
       ptptype: [{ value: '', disabled: true }],
       ptpdate: [{ value: this.currentDate, disabled: true }],
@@ -281,6 +288,16 @@ export class ActivityActionComponent implements OnInit {
       return;
     }
 
+    if (this.f.ptpemail.value && this.f.toemail.value == '') {
+      alert('Please fill Customer email');
+      return;
+    }
+
+    if (this.f.ptpsms.value && this.f.ptpsmsnumber.value == '') {
+      alert('Please fill Customer Mobile number');
+      return;
+    }
+
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -295,6 +312,10 @@ export class ActivityActionComponent implements OnInit {
       ptpamount: this.f.ptpamount.value,
       ptp: this.f.ptp.value,
       ptpdate: this.f.ptpdate.value,
+      ptpemail: this.f.ptpemail.value,
+      toemail: this.f.toemail.value,
+      ptpsms: this.f.ptpsms.value,
+      ptpsmsnumber: this.f.ptpsmsnumber.value,
       // tslint:disable-next-line:max-line-length
       collectornote: this.f.collectornote.value + '   Reason for default: ' + this.f.reason.value + '   Reason details: ' + this.f.rfdother.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
@@ -315,14 +336,21 @@ export class ActivityActionComponent implements OnInit {
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
     }
+
+    if (this.f.ptpemail.value) {
+      // send ptp reminder email
+      console.log('send ptp reminder email ...');
+      const ptpemailbody = {
+        toemail: '',
+        ccemail: '',
+        ptpamount: 0,
+        ptpdate: 0
+      }
+    }
     // add action
-    // console.log(this.savebody);
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
       this.sendPtpsData(this.accnumber);
-      // swal('Success!', 'activity saved', 'success');
-      // build form
-      // this.buildForm();
       // watch stream put watch_static
       if (this.sys === 'watchcc') {
         const watchccbody = {
@@ -437,6 +465,10 @@ export class ActivityActionComponent implements OnInit {
   changePtp(value) {
     if (value === 'Yes') {
       this.actionForm.controls.ptptype.enable();
+      this.actionForm.controls.ptpemail.enable();
+      this.actionForm.controls.toemail.enable();
+      this.actionForm.controls.ptpsms.enable();
+      this.actionForm.controls.ptpsmsnumber.enable();
     } else {
       this.actionForm.controls.ptpamount.disable();
       this.actionForm.controls.ptpdate.disable();
@@ -444,6 +476,14 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptpamount.setValue(0);
       this.actionForm.controls.ptpdate.setValue(Date());
       this.actionForm.controls.ptptype.setValue('');
+      this.actionForm.controls.ptpemail.setValue('');
+      this.actionForm.controls.ptpemail.disable();
+      this.actionForm.controls.ptpsmsnumber.setValue('');
+      this.actionForm.controls.ptpsmsnumber.disable();
+      this.actionForm.controls.ptpsms.setValue('');
+      this.actionForm.controls.ptpsms.disable();
+      this.actionForm.controls.toemail.setValue('');
+      this.actionForm.controls.toemail.disable();
     }
   }
 

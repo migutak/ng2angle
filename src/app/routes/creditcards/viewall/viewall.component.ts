@@ -10,17 +10,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class ViewallComponent implements OnInit {
-  private gridApi;
-  private gridColumnApi;
+  public gridApi;
+  public gridColumnApi;
   public overlayLoadingTemplate;
   public overlayNoRowsTemplate;
 
-  private columnDefs;
-  private defaultColDef;
-  private rowModelType;
-  private cacheBlockSize;
-  private maxBlocksInCache;
-  private rowData: [];
+  public columnDefs;
+  public defaultColDef;
+  public rowModelType;
+  public cacheBlockSize;
+  public maxBlocksInCache;
+  public rowData: [];
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;

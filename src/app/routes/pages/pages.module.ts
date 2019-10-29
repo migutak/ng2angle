@@ -61,7 +61,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
         FormsModule,
         NgSelectModule,
         ToasterModule.forRoot(),
-        CustomFormsModule,
+        // CustomFormsModule,
         BsDatepickerModule.forRoot(),
         NgxSmartModalModule.forRoot(),
         NgxPaginationModule

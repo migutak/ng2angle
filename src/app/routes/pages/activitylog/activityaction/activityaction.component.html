@@ -47,7 +47,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <ng-select id="reason" name="reason" formControlName="reason"  placeholder="Select reason"
+              <ng-select id="reason" name="reason" formControlName="reason" placeholder="Select reason"
                 [ngClass]="{ 'is-invalid': f.reason.errors }" (ngModelChange)="changeReason(actionForm.value.reason)">
                 <ng-option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</ng-option>
               </ng-select>
@@ -79,41 +79,41 @@
         </div>
 
         <div class="row" style="padding-top: 20px">
-            <div class="col-xl-2 col-md-3">
-              Promise type
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                  <div class="form-group row">
-                      <label class="col-md-0 col-form-label"></label>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="inlineRadio1" type="radio" formControlName="ptptype" name="ptptype"
-                          value="single" (click)="handleChange('single')" />
-                        <label class="form-check-label" for="inlineRadio1">Single </label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="inlineRadio2" type="radio" formControlName="ptptype" name="ptptype"
-                          value="multiple" (click)="handleChange('multiple')" />
-                        <label class="form-check-label" for="inlineRadio2">Multiple </label>
-                      </div>
-                      <div class="form-check form-check-inline" [hidden]="capture">
-                        <span><button class="btn btn-link" (click)="multiplecapturefnc()">Capture multiple</button></span>
-                      </div>
-                  </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-                CMD status
-            </div>
-            <div class="col-md-3">
-              <div class="col-md-12">
-                <ng-select id="cmdstatus" name="cmdstatus" formControlName="cmdstatus"
-                  [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
-                  <ng-option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus">{{cmd.cmdstatus}}</ng-option>
-                </ng-select>
+          <div class="col-xl-2 col-md-3">
+            Promise type
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <div class="form-group row">
+                <label class="col-md-0 col-form-label"></label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" id="inlineRadio1" type="radio" formControlName="ptptype"
+                    name="ptptype" value="single" (click)="handleChange('single')" />
+                  <label class="form-check-label" for="inlineRadio1">Single </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" id="inlineRadio2" type="radio" formControlName="ptptype"
+                    name="ptptype" value="multiple" (click)="handleChange('multiple')" />
+                  <label class="form-check-label" for="inlineRadio2">Multiple </label>
+                </div>
+                <div class="form-check form-check-inline" [hidden]="capture">
+                  <span><button class="btn btn-link" (click)="multiplecapturefnc()">Capture multiple</button></span>
+                </div>
               </div>
             </div>
           </div>
+          <div class="col-md-3">
+            CMD status
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <ng-select id="cmdstatus" name="cmdstatus" formControlName="cmdstatus"
+                [ngClass]="{ 'is-invalid': f.cmdstatus.errors }">
+                <ng-option *ngFor="let cmd of cmdstatus" [value]="cmd.cmdstatus">{{cmd.cmdstatus}}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
 
         <div class="row" style="padding-top: 20px">
           <div class="col-xl-2 col-md-3">
@@ -126,14 +126,14 @@
             </div>
           </div>
           <div class="col-md-3">
-              Route for review
+            Route for review
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-                <ng-select id="route" name="route" formControlName="route">
-                    <ng-option *ngFor="let r of reviewers" [value]="r.username">{{r.firstname}} {{r.lastname}} {{r.surname}}
-                    </ng-option>
-                </ng-select>
+              <ng-select id="route" name="route" formControlName="route">
+                <ng-option *ngFor="let r of reviewers" [value]="r.username">{{r.firstname}} {{r.lastname}} {{r.surname}}
+                </ng-option>
+              </ng-select>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@
             <div class="col-md-12">
               <div class="input-group">
                 <input class="form-control" placeholder="yyyy-mm-dd" id="ptpdate" name="ptpdate" name="ptpdate"
-                  ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate" />
+                  ngbDatepicker #p="ngbDatepicker" formControlName="ptpdate" [minDate]="minDate" />
                 <div class="input-group-append">
                   <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i
                         class="fa fa-calendar"></i>
@@ -156,26 +156,19 @@
             </div>
           </div>
           <div class="col-md-3">
-              Review date
+            Review date
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-                <div class="input-group">
-                    <input type="text"
-                      placeholder="Review date"
-                      class="form-control"
-                      formControlName="reviewdate"
-                      #dp="bsDatepicker"
-                      bsDatepicker
-                      [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
-                      
-                      >
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
-                            class="fa fa-calendar"></i>
-                        </span></button>
-                    </div>
-                  </div>
+              <div class="input-group">
+                <input type="text" placeholder="Review date" class="form-control" formControlName="reviewdate"
+                  #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                        class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -198,34 +191,45 @@
           </div>
         </div>
 
-        <!--<div class="row" style="padding-top: 20px">
-          <div class="col-xl-2 col-md-3">
-            s
-          </div>
-          <div class="col-md-3">
-              <div class="col-md-12">
-                s
-              </div>
-                <pre *ngIf="actionForm.value.reviewdate">{{actionForm.value.reviewdate | date}}</pre> [minDate]="minDate"
-            </div>
-        </div>-->
-
         <div class="row" style="padding-top: 20px">
           <div class="col-md-12">
             <label>Collector note</label>
-            <textarea class="form-control" rows="3" id="collectornote" name="collectornote"
-              class="form-control" formControlName="collectornote" class="form-control"
+            <textarea class="form-control" rows="3" id="collectornote" name="collectornote" class="form-control"
+              formControlName="collectornote" class="form-control"
               [ngClass]="{ 'is-invalid': f.collectornote.errors }"></textarea>
           </div>
           <p *ngIf="f.collectornote.errors?.minlength">minimum of five(5) characters is required</p>
-
         </div>
         <div class="form-group row">
-          <div class="col-md-9 col-form-label">
+          <div class="col-md-3 col-form-label">
             <div class="checkbox c-checkbox form-check-inline">
               <label>
-                  <input type="checkbox" [checked]="false" name="flag" id="flag" name="flag" formControlName="flag" />
-                  Flag this note <span class="fa fa-check"></span></label>
+                <input type="checkbox" [checked]="false" name="ptpemail" id="ptpemail" name="ptpemail"
+                  formControlName="ptpemail" />
+                Send PTP Reminder email <span class="fa fa-check"></span></label>
+            </div>
+            <div class="">
+              <input type="text" name="toemail" id="toemail" name="toemail" class="form-control"
+                formControlName="toemail" placeholder="Customer email" />
+            </div>
+          </div>
+          <div class="col-md-3 col-form-label">
+            <div class="checkbox c-checkbox form-check-inline">
+              <label>
+                <input type="checkbox" [checked]="false" name="ptpsms" id="ptpsms" name="ptpsms"
+                  formControlName="ptpsms" />
+                Send PTP Reminder SMS <span class="fa fa-check"></span></label>
+            </div>
+            <div class="">
+              <input type="text" name="ptpsmsnumber" id="ptpsmsnumber" name="ptpsmsnumber" class="form-control"
+                formControlName="ptpsmsnumber" placeholder="Customer Tel." />
+            </div>
+          </div>
+          <div class="col-md-3 col-form-label">
+            <div class="checkbox c-checkbox form-check-inline">
+              <label>
+                <input type="checkbox" [checked]="false" name="flag" id="flag" name="flag" formControlName="flag" />
+                Flag this note <span class="fa fa-check"></span></label>
             </div>
           </div>
         </div>

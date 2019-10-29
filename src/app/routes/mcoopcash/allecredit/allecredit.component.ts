@@ -9,15 +9,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class AllecreditComponent implements OnInit {
-  private gridApi;
-  private gridColumnApi;
+  public gridApi;
+  public gridColumnApi;
 
-  private columnDefs;
-  private defaultColDef;
-  private rowModelType;
-  private cacheBlockSize;
-  private maxBlocksInCache;
-  private rowData: [];
+  public columnDefs;
+  public defaultColDef;
+  public rowModelType;
+  public cacheBlockSize;
+  public maxBlocksInCache;
+  public rowData: [];
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;

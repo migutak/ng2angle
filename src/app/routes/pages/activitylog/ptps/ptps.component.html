@@ -64,7 +64,9 @@
                     <label>Promise Date:</label>
                     <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd" name="ptpdate" id="ptpdate"
-                            [(ngModel)]="ammendptp.ptpdate" ngbDatepicker #d="ngbDatepicker" required>
+                            [(ngModel)]="ammendptp.ptpdate" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate"
+                            [minDate]="minDate"
+                            required>
                         <div class="input-group-append">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i

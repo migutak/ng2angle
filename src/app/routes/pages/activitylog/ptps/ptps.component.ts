@@ -3,7 +3,7 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { environment } from '../../../../../environments/environment';
-import { NgbActiveModal, NgbModal, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import * as moment from 'moment';
 import swal from 'sweetalert2';
@@ -26,12 +26,26 @@ export class PtpsComponent implements OnInit {
   iscard: Boolean = false;
   p = 1;
   currentDate: any = new Date();
+  public minDate: NgbDateStruct;
+  public maxDate: NgbDateStruct;
+
+  year = parseInt(moment().format('YYYY'));
+  maxyear = parseInt(moment().add(5, 'days').format('YYYY'));
+  month = parseInt(moment().format('MM'));
+  maxmonth = parseInt(moment().add(5, 'days').format('MM'));
+  day = parseInt(moment().format('DD'));
+  maxday = parseInt(moment().add(5, 'days').format('DD'));
+  //
+
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
     private ecolService: EcolService,
     public ngxSmartModalService: NgxSmartModalService,
     private datePipe: DatePipe) {
-    //
+    // console.log(this.day, this.maxday)
+    this.minDate = { year: this.year, month: this.month, day: this.day };
+    this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
+
   }
 
   ngOnInit() {
@@ -65,7 +79,7 @@ export class PtpsComponent implements OnInit {
       this.ptps = data;
       for (let i = 0; i < data.length; i++) {
         // if ((this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() <= (this.ptps[i].PTPDATE).toUpperCase()) {
-        
+
         if (this.ptps[i].ammended === 'y') {
           this.ptps[i].showedit = false;
         } else {
