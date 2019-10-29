@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { AppComponent } from './app.component';
-import { NgxSmartModalModule } from 'ngx-smart-modal';;
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
@@ -18,7 +18,7 @@ import 'ag-grid-enterprise';
 //License goes here
 import { LicenseManager } from "ag-grid-enterprise";
 
-LicenseManager.setLicenseKey('MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4');
+LicenseManager.setLicenseKey('sample');
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
