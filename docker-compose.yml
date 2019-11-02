@@ -61,27 +61,12 @@ services:
     container_name: docx
     restart: always
     volumes:
-      - d:\demands:/app/demands
+      - d:\demands:/app/demands/
     environment:
       - FILEPATH=/app/demands/
       - IMAGEPATH=/app/docxletters/routes/
     ports:
       - "8004:8004"
-    networks:
-    - ecol-network
-
-  grids_viewall:
-    image: migutak/grids_viewall:1.0.0
-    container_name: grids_viewall
-    restart: on-failure
-    environment:
-      - DB_USER=ecol
-      - DB_PASSWORD=ecol
-      - DB_CONNECTIONSTRING=192.168.0.12:1521/ORCLCDB.localdomain
-      - LICENSE='MjAwMDAwMDAwMDAwMA==598447838c89eb4366146127615e40a4',
-      - APPLINK=http://localhost:7000    
-    ports:
-      - "9000:4000"
     networks:
     - ecol-network
 

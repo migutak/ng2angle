@@ -444,7 +444,7 @@ export class SendLetterComponent implements OnInit {
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
           if (response.result === 'fail') {
             swal.close();
-            this.poperrorToast('Letter NOT sent on email!');
+            this.poperrorToast('Letter not sent on email!');
           } else {
             // add to history
             this.demandshistory(this.demandhisdetails);
@@ -454,7 +454,8 @@ export class SendLetterComponent implements OnInit {
               id: this.demandid,
               from : 'loans',
               datesent : this.currentDate(),
-              sentby: this.username
+              sentby: this.username,
+              status: 'manual-sent'
             };
             this.ecolService.demandstatus(status).subscribe(data => {
               //

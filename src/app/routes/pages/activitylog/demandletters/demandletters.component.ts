@@ -503,6 +503,7 @@ export class DemandLettersComponent implements OnInit {
     swal.close();
     this.popinfoToast('Letter Queued to be sent');
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
+      console.log('==uploaddata==', uploaddata)
       if (uploaddata.result === 'success') {
         //
         // swal('Success!', 'Letter generated!', 'success');
