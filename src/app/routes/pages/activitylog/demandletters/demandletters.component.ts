@@ -133,7 +133,7 @@ export class DemandLettersComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -341,7 +341,7 @@ export class DemandLettersComponent implements OnInit {
                     'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
                   };
 
-                  // console.log('to history ', this.demandhisdetails);
+                  console.log('to history ', this.demandhisdetails);
                   this.demandshistory(this.demandhisdetails);
                   // send sms
                   this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
@@ -403,7 +403,7 @@ export class DemandLettersComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.ecolService.loader();
     this.ecolService.getcardAccount(this.accnumber).subscribe(carddata => {
@@ -503,7 +503,7 @@ export class DemandLettersComponent implements OnInit {
     swal.close();
     this.popinfoToast('Letter Queued to be sent');
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
-      console.log('==uploaddata==', uploaddata)
+      // console.log('==uploaddata==', uploaddata)
       if (uploaddata.result === 'success') {
         //
         // swal('Success!', 'Letter generated!', 'success');
@@ -540,9 +540,10 @@ export class DemandLettersComponent implements OnInit {
         this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
           if (response.result === 'fail') {
             swal.close();
-            this.poperrorToast('Letter NOT sent on email!');
+            this.poperrorToast('Letter not sent on email!');
           } else {
             // add to history
+            // console.log('to history ', this.demandhisdetails)
             this.demandshistory(this.demandhisdetails);
             this.getdemandshistory(this.accnumber);
             // send sms
