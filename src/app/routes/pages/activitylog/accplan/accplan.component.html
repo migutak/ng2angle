@@ -1,0 +1,49 @@
+Click <a href="#" target="_blank" (click)="openaccplan()">here</a> to open detailed account plan
+<hr>
+Current Plan:
+<select id="plan" #plan="ngModel" [(ngModel)]="model.plan" name="plan" class="form-control"
+    [ngClass]="{ 'is-invalid': plan.errors }" (ngModelChange)="changeAction(plan.value)">
+    <option value="">Please select</option>
+    <option *ngFor="let plan of allplans" [value]="plan.planid">
+        {{plan.plantitle}}</option>
+</select>
+<!--<pre>{{model | json}}</pre>-->
+<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <table class="table" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Action3</th>
+                <th>Plan action</th>
+                <th>Complete</th>
+                <th>Date action taken</th>
+                <th>Last update by</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let current of currentplan; let in = index">
+                <td>{{current.actionid}}</td>
+                <td><input type="text" name="actiontitle-{{in}}" [(ngModel)]="current.actiontitle" [disabled]="true"></td>
+                <td>
+                    <div class="checkbox c-checkbox form-check-inline">
+                        <label>
+                            <input type="checkbox" [checked]="current.completed" name="completed-{{in}}" [(ngModel)]="current.completed" />
+                            <span class="fa fa-check"></span></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="datecompleted-{{in}}" [(ngModel)]="current.datecompleted"
+                            ngbDatepicker #p="ngbDatepicker" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" (click)="p.toggle()" type="button"><span><i
+                                        class="fa fa-calendar"></i>
+                                </span></button>
+                        </div>
+                    </div>
+                </td>
+                <td><input type="text" name="updateby-{{in}}" [(ngModel)]="current.updateby" [disabled]="true" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-block btn-outline-success" (click)="saveplan()">Save Plan</button>
+</div>

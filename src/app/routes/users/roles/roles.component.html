@@ -1,0 +1,132 @@
+<div class="content-heading">
+  <div>Roles
+    <small>roles and the assigned permissions</small></div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="card b">
+        <div class="card-header bg-gray-lighter text-bold">Roles</div>
+        <div class="list-group">
+          <a href="#" class="list-group-item" (click)="permission(settingActive=1, 'admin')" [ngClass]="{'active': (settingActive == 1)}">Administrator</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=2, 'telecollector')" [ngClass]="{'active': (settingActive == 2)}">Tele Collector</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=3, 'teamleader')" [ngClass]="{'active': (settingActive == 3)}">Team
+            Leader</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=4, 'branchmanager')" [ngClass]="{'active': (settingActive == 4)}">Branch
+            Manager</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=5, 'branchuser')" [ngClass]="{'active': (settingActive == 5)}">Branch
+            User</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=6, 'remedial')" [ngClass]="{'active': (settingActive == 6)}">Remedial</a>
+          <a href="#" class="list-group-item" (click)="permission(settingActive=7, 'creditcards')" [ngClass]="{'active': (settingActive == 7)}">Credit
+            Cards</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="card b">
+        <div class="card-header bg-gray-lighter text-bold">Permissions</div>
+        <div class="card-body">
+          <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)"
+            novalidate="">
+            <div class="list-group">
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Administrator</p>
+                  <small>System management</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="administrator" [formControl]="valForm.controls['administrator']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Collector activity</p>
+                  <small>record a collection activity</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="activity" [formControl]="valForm.controls['activity']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Team Leader</p>
+                  <small>Team leader</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="teamleader" [formControl]="valForm.controls['teamleader']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Service providers</p>
+                  <small>outsource accounts</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="external_agents" [formControl]="valForm.controls['external_agents']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Configuration</p>
+                  <small>Manage demand letter configurations</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="configurations" [formControl]="valForm.controls['configurations']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                  <div>
+                    <p class="text-bold mb-0">MCoop Cash</p>
+                    <small>M-Coop Cash Collections</small>
+                  </div>
+                  <div class="ml-auto">
+                    <input type="checkbox" formControlName="mcoopcash" [formControl]="valForm.controls['mcoopcash']" />
+                  </div>
+                </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Collections</p>
+                  <small>Collections dept related activities</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="collection" [formControl]="valForm.controls['collection']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Dashboard</p>
+                  <small>access to collection dashboard</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="dashboard" [formControl]="valForm.controls['dashboard']" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Remedials</p>
+                  <small>access remedial functionalities</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="remedial" [formControl]="valForm.controls['remedial']" checked="" />
+                </div>
+              </div>
+              <div class="list-group-item d-flex align-items-center">
+                <div>
+                  <p class="text-bold mb-0">Credit cards</p>
+                  <small>access and action credit cards</small>
+                </div>
+                <div class="ml-auto">
+                  <input type="checkbox" formControlName="creditcards" [formControl]="valForm.controls['creditcards']" />
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <button class="btn btn-info" type="submit">Update Permissions</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="content-heading">
+  <div>Demand Letters Due
+    <small>demand letters not send either manual or auto</small></div>
+</div>
+<!-- START card-->
+<div class="card card-default">
+  <div class="card-header">Demands Due and NOT sent: {{radioModel || 'ALL'}}</div>
+  <!-- START box placeholder
+<div class="box-placeholder"></div>-->
+<div class="row">
+    <div class="col-xl-4">
+        <div class="btn-group" (click)="refreshgrid()">
+          <label class="btn btn-outline-success" [(ngModel)]="radioModel" btnRadio="Demand1" uncheckable>Demand-1 <span
+              class="badge badge-danger">{{total?.DEMAND1}}</span></label>
+          <label class="btn btn-outline-success" [(ngModel)]="radioModel" btnRadio="Demand2" uncheckable>Demand-2 <span
+              class="badge badge-danger">{{total?.DEMAND2}}</span></label>
+          <label class="btn btn-outline-info" [(ngModel)]="radioModel" btnRadio="Prelisting" uncheckable>Pre-listing <span class="badge badge-danger">{{total?.PRELISTING}}</span></label>
+          <label class="btn btn-outline-warning" [(ngModel)]="radioModel" btnRadio="Day40" uncheckable>40Day <span class="badge badge-danger">{{total?.DAY40}}</span></label>
+          <label class="btn btn-outline-inverse" [(ngModel)]="radioModel" btnRadio="Day90" uncheckable>90Day <span class="badge badge-danger">{{total?.DAY90}}</span></label>
+          <label class="btn btn-outline-danger" [(ngModel)]="radioModel" btnRadio="Postlisting" uncheckable>Post-listing
+            <span class="badge badge-danger">{{total?.POSTLISTING}}</span></label>
+        </div>
+      </div>
+      <div class="col-xl-4"></div>
+      <div class="col-xl-4">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <select class="form-control" #column>
+                <option value="">Nothing</option>
+                <option value="SUPPORT">SECTION</option>
+                <option value="COLOFFICER">COLOFFICER</option>
+                <option value="BRANCHCODE">BRANCHCODE</option>
+            </select>
+          
+            <input class="form-control" type="text" placeholder="Search ..." #tvalue />
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button" (click)="filterfunction(column.value, tvalue.value)">
+                <em class="fa fa-search"></em>
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
+</div>
+  
+
+  <!-- END box placeholder-->
+  <jqxGrid #myGrid (onCellselect)="myGridOnCellSelect($event)" 
+    [theme]="'energyblue'" [width]="'100%'" [source]="dataAdapter" [columns]="columns" [selectionmode]="'singlecell'" [columnsresize]="true"
+    [sortable]="true" [pageable]="true" [autoheight]="false" [height]="550" [sortable]="true" [altrows]="true"
+    [enabletooltips]="true" [filterable]="true">
+  </jqxGrid>
+
+</div>

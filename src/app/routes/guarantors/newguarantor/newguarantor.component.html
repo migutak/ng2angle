@@ -1,0 +1,107 @@
+<div class="content-heading">
+  <div>Guarantors
+     <small>add a guarantor</small></div>
+</div>
+<!-- START row-->
+<div class="row">
+  <div class="col-md-10">
+      <!-- START card-->
+      <div class="card card-default">
+          <div class="card-header">Enter Guarantor details</div>
+          <div class="card-body">
+              <form #newGuarantorForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(newGuarantorForm)" autocomplete="off">
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-form-label">Customer custnumber</label>
+                      <div class="col-xl-10">
+                          <input class="form-control" type="text" name="custnumber" id="custnumber" #custnumber="ngModel" [(ngModel)]="model.custnumber" required placeholder="custnumber" />
+                          <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">custnumber is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-form-label">Customer accnumber</label>
+                      <div class="col-xl-10">
+                          <input class="form-control" type="text" name="accnumber" id="accnumber" #accnumber="ngModel" [(ngModel)]="model.accnumber" required placeholder="accnumber" />
+                          <div class="validation-error" *ngIf="accnumber.invalid && accnumber.touched">accnumber is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-form-label">Guarantor nationid</label>
+                      <div class="col-xl-10">
+                          <input class="form-control" type="text" name="nationid" id="nationid" #nationid="ngModel" [(ngModel)]="model.nationid" required placeholder="nationid" />
+                          <div class="validation-error" *ngIf="nationid.invalid && nationid.touched">nationid is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-form-label">Guarantor Name</label>
+                      <div class="col-xl-10">
+                          <input class="form-control" type="text" name="guarantorname" id="guarantorname" #guarantorname="ngModel" [(ngModel)]="model.guarantorname" required placeholder="GuarantorName" />
+                          <div class="validation-error" *ngIf="guarantorname.invalid && guarantorname.touched">Guarantor Name is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Guarantor address</label>
+                    <div class="col-xl-10">
+                        <input class="form-control" type="text" name="address" id="address" #address="ngModel" [(ngModel)]="model.address" required placeholder="Address" />
+                        <div class="validation-error" *ngIf="address.invalid && address.touched">address is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Postal Code</label>
+                    <div class="col-xl-10">
+                        <input class="form-control" type="text" name="postalcode" id="postalcode" #postalcode="ngModel" [(ngModel)]="model.postalcode" required placeholder="PostalCode" />
+                        <div class="validation-error" *ngIf="postalcode.invalid && postalcode.touched">postalcode is required</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-xl-2 col-form-label">Telephone Number</label>
+                  <div class="col-xl-10">
+                      <input class="form-control" type="text" name="telnumber" id="telnumber" #telnumber="ngModel" [(ngModel)]="model.telnumber" required placeholder="TelNumber" />
+                      <div class="validation-error" *ngIf="telnumber.invalid && telnumber.touched">telnumber is required</div>
+                  </div>
+              </div>
+              <!---<div class="form-group row">
+                  <label class="col-xl-2 col-form-label">Email</label>
+                  <div class="col-xl-10">
+                      <input class="form-control" type="text" name="email" id="email" #email="ngModel" [(ngModel)]="model.email" [ngClass]="{ 'is-invalid': email.touched && email.invalid }" required placeholder="email" />
+                      <div *ngIf="email.invalid" class="validation-error">
+                          <div *ngIf="email.errors.required">Email is required</div>
+                          <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                      </div>
+                  </div>
+              </div>-->
+              <div class="form-group row">
+                  <label class="col-xl-2 col-form-label" for="email">Email</label>
+                  <div class="col-xl-10">
+                    <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': email.invalid }" required email />
+                    <div *ngIf="email.invalid" class="validation-error">
+                        <div *ngIf="email.errors.required">Email is required</div>
+                        <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                    </div>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-xl-2 col-form-label">Active</label>
+                <div class="d-flex align-items-center mb-3">
+                  <div class="ml-auto">
+                      <label class="switch switch-lg m-0">
+                          <input type="checkbox" checked="checked" name="active" id="active" #active="ngModel" [(ngModel)]="model.active" />
+                          <span></span>
+                      </label>
+                  </div>
+                </div>
+              </div>
+              
+                  <div class="form-group row">
+                      <label class="col-xl-2 col-form-label"></label>
+                      <div class="col-xl-10">
+                          <button [disabled]="!newGuarantorForm.valid || !newGuarantorForm.dirty" class="btn btn-sm btn-outline-primary" type="submit">Submit</button>
+                          <button class="btn btn-sm btn-outline-danger" type="button" (click)="cancel()">Cancel</button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <!-- END card-->
+  </div>
+</div>
+<!-- END row-->

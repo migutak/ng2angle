@@ -1,0 +1,151 @@
+<div class="content-heading">
+  <div>
+    Demand Letters
+    <small>Individual Customer Suspensions</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+    <p style="font-size: 20px; color: white">Processing ...</p>
+  </ngx-spinner>
+  <div class="row">
+    <div id="accordion" class="col-xl-12">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapseOne">
+            Demand Letter Configurations
+          </a>
+        </div>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xl-4">
+                <div class="card card-primary">
+                  <div class="card-body">
+                    <form #custsuspensionForm="ngForm" class="form-horizontal" (ngSubmit)="putSuspension(custsuspensionForm.value)"
+                      *ngIf="new" autocomplete="off" novalidate>
+                      <fieldset>
+                        <div class="form-group row mb">
+                          <div class="col-md-12">
+                            <label class="mt">Customer Number/ Card account</label>
+                            <input type="text" class="form-control" name="custnumber" id="custnumber" #custnumber="ngModel"
+                            [(ngModel)]="model.custnumber" [ngClass]="{ 'is-invalid': custnumber.invalid }" required/>
+
+                            <input type="hidden" class="form-control" name="owner" id="owner" #owner="ngModel"
+                            [(ngModel)]="model.owner"/>
+                            <hr />
+                            <label class="mt">Select Demand Letter to suspend</label>
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="demand1" id="demand1" #demand1="ngModel"
+                                  [(ngModel)]="model.demand1" [checked]="model.demand1" />
+                                <span class="fa fa-check"></span> Demand1</label>
+                            </div>
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="demand2" id="demand2" #demand2="ngModel"
+                                  [(ngModel)]="model.demand2" [checked]="model.demand2" />
+                                <span class="fa fa-check"></span> Demand2</label>
+                            </div>
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="prelisting" id="prelisting" #prelisting="ngModel"
+                                  [(ngModel)]="model.prelisting" [checked]="model.prelisting" />
+                                <span class="fa fa-check"></span> Prelisting</label>
+                            </div>
+
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="overduecc" id="overduecc" #overduecc="ngModel"
+                                  [(ngModel)]="model.overduecc" [checked]="model.overduecc" />
+                                <span class="fa fa-check"></span> Overduecc</label>
+                            </div>
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="prelistingcc" id="prelistingcc" #prelistingcc="ngModel"
+                                  [(ngModel)]="model.prelistingcc" [checked]="model.prelistingcc" />
+                                <span class="fa fa-check"></span> Prelistingcc</label>
+                            </div>
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="suspension" id="suspension" #suspension="ngModel"
+                                  [(ngModel)]="model.suspension" [checked]="model.suspension" />
+                                <span class="fa fa-check"></span> suspension</label>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="checkbox c-checkbox">
+                                  <input type="checkbox" name="postlistingsecured" id="postlistingsecured" #postlistingsecured="ngModel"
+                                    [(ngModel)]="model.postlistingsecured" [checked]="model.postlistingsecured" />
+                                  <span class="fa fa-check"></span> Postlistingsecured</label>
+                              </div>
+                              <div class="col-md-10">
+                                <label class="checkbox c-checkbox">
+                                  <input type="checkbox" name="postlistingunsecuredcc" id="postlistingunsecuredcc" #postlistingunsecuredcc="ngModel"
+                                    [(ngModel)]="model.postlistingunsecuredcc" [checked]="model.postlistingunsecuredcc" />
+                                  <span class="fa fa-check"></span> PostlistingUnsecuredcc</label>
+                              </div>
+                              <div class="col-md-10">
+                                <label class="checkbox c-checkbox">
+                                  <input type="checkbox" name="postlistingunsecured" id="postlistingunsecured" #postlistingunsecured="ngModel"
+                                    [(ngModel)]="model.postlistingunsecured" [checked]="model.postlistingunsecured" />
+                                  <span class="fa fa-check"></span> PostlistingUnsecured</label>
+                              </div>
+  
+                              <div class="col-md-10">
+                                <label class="checkbox c-checkbox">
+                                  <input type="checkbox" name="day90" id="day90" #day90="ngModel"
+                                    [(ngModel)]="model.day90" [checked]="model.day90" />
+                                  <span class="fa fa-check"></span> Day90</label>
+                              </div>
+                              <div class="col-md-10">
+                                <label class="checkbox c-checkbox">
+                                  <input type="checkbox" name="day40" id="day40" #day40="ngModel"
+                                    [(ngModel)]="model.day40" [checked]="model.day40" />
+                                  <span class="fa fa-check"></span> Day40</label>
+                              </div>
+                              <div class="col-md-10">
+                                <label class="checkbox c-checkbox">
+                                  <input type="checkbox" name="day30" id="day30" #day30="ngModel"
+                                    [(ngModel)]="model.day30" [checked]="model.day30" />
+                                  <span class="fa fa-check"></span> Day30</label>
+                              </div>
+                              <div class="col-md-10">
+                                  <label class="checkbox c-checkbox">
+                                    <input type="checkbox" name="prelistingremedial" id="prelistingremedial" #prelistingremedial="ngModel"
+                                      [(ngModel)]="model.prelistingremedial" [checked]="model.prelistingremedial" />
+                                    <span class="fa fa-check"></span> Prelistingremedial</label>
+                              </div>
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div class="float-left">
+                          <button [disabled]="!custsuspensionForm.valid || !custsuspensionForm.dirty" type="submit" class="btn btn-outline-success" type="submit">
+                            <em class="fa fa-pencil fa-fw"></em>Update</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-8">
+                <div class="col-xl-12">
+                  <h4 class="page-header"> Customer Demand Letter Suspensions
+                    <small></small>
+                  </h4>
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <input class="mb form-control" placeholder="Filter..." type="text"
+                        (keyup)="onQuickFilterChanged($event)" />
+                    </div>
+                  </div>
+                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 400px"
+                    [gridOptions]="gridOptions" (rowClicked)='onRowClicked($event)' (gridReady)="gridReady($event)">
+                  </ag-grid-angular>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

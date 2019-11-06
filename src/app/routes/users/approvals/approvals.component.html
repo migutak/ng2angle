@@ -1,0 +1,45 @@
+<div class="content-heading">
+    <div>Approvals
+        <small>Each time these actions are taken, an approval will be generated.</small></div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+          <form [formGroup]="valForm" class="form-validate form-horizontal" (submit)="submitForm($event, valForm.value)" novalidate="">
+              <div class="checkbox c-checkbox">
+                  <label>
+                      <input type="checkbox" formControlName="checkbox" />
+                      <span class="fa fa-check"></span>Create user</label>
+              </div>
+              <div class="checkbox c-checkbox">
+                  <label>
+                      <input type="checkbox" formControlName="checkbox" />
+                      <span class="fa fa-check"></span>SMS template</label>
+              </div>
+              <div class="checkbox c-checkbox">
+                  <label>
+                      <input type="checkbox" formControlName="checkbox" />
+                      <span class="fa fa-check"></span>Email template</label>
+              </div>
+              <div class="checkbox c-checkbox">
+                  <label>
+                      <input type="checkbox" formControlName="checkbox" />
+                      <span class="fa fa-check"></span>Repossession</label>
+              </div>
+              <div class="checkbox c-checkbox">
+                  <label>
+                      <input type="checkbox" formControlName="checkbox" />
+                      <span class="fa fa-check"></span>Investigations</label>
+              </div>
+              <div class="checkbox c-checkbox">
+                  <label>
+                      <input type="checkbox" formControlName="checkbox" />
+                      <span class="fa fa-check"></span>Invoices</label>
+              </div>
+              <div class="text-center">
+                  <button class="btn btn-info" type="submit">Save</button>
+              </div>
+          </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="content-heading">
+    <div>Note:
+        <small>Edit note</small></div>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- START card-->
+            <div class="card card-default">
+                <form [formGroup]="editnoteForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+                    <div class="card-body">
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                id
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                        <input type="number" class="form-control" formControlName="id"
+                                        class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                accnumber
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                        <input type="text" class="form-control" formControlName="accnumber"
+                                        class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                custnumber
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                        <input type="text" class="form-control" formControlName="custnumber"
+                                        class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Owner
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="owner" name="owner" id="owner"
+                                        class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Note Date
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                        <input type="text" class="form-control" formControlName="notedate" name="notedate" id="notedate"
+                                        class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-md-12">
+                                <label for="nodemade">Collector note</label>
+                                <textarea class="form-control" rows="5" id="notemade" name="notemade"
+                                    name="notemade" class="form-control" formControlName="notemade"
+                                    class="form-control"
+                                    [ngClass]="{ 'is-invalid': f.notemade.errors }"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-9 col-form-label">
+                                <!--<label class="switch switch-label switch-outline-warning-alt">
+                                      <input type="checkbox" class="switch-input">
+                                      Pin this note <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
+                                    </label>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" [disabled]="editnoteForm.invalid" class="btn btn-sm btn-primary"><i
+                                class="fa fa-dot-circle-o"></i> Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger" (click)="cancel()"><i class="fa fa-ban"></i>
+                            Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <!-- END card-->
+        </div>
+    </div>
+</div>
