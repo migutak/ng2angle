@@ -24,4 +24,8 @@ export class AllReportsComponent implements OnInit {
         window.open(environment.birt + report, '_blank');
     }
 
+    kibanaopen(report) {
+        window.open(report, '_blank');
+    }
+
 }

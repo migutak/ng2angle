@@ -96,10 +96,15 @@
                             <em class="fa fa-chart-bar fa-fw"></em>E-Collect utilization Report</a>
                     </li>
                     <li>
-                            <a href=""
-                                (click)="open('/frameset?__report=accplans.rptdesign&__title=Account plan Report')">
-                                <em class="fa fa-chart-bar fa-fw"></em>Account plan Report - Simple</a>
-                        </li>
+                        <a href=""
+                            (click)="kibanaopen('http://localhost:5601/app/kibana#/discover/d0eb9e90-02da-11ea-8776-0993bdaa8bda?_g=(filters%3A!())')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Account plan Report - Simple</a>
+                    </li>
+                    <li>
+                        <a href=""
+                            (click)="kibanaopen('http://localhost:5601/app/kibana#/discover/09f3cf70-02de-11ea-8776-0993bdaa8bda?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Promises to Pay</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -29,12 +29,16 @@ export class PtpsComponent implements OnInit {
   public minDate: NgbDateStruct;
   public maxDate: NgbDateStruct;
 
+
   year = parseInt(moment().format('YYYY'));
   maxyear = parseInt(moment().add(5, 'days').format('YYYY'));
+  minyear = parseInt(moment().subtract(5, 'days').format('YYYY'));
   month = parseInt(moment().format('MM'));
   maxmonth = parseInt(moment().add(5, 'days').format('MM'));
+  minmonth = parseInt(moment().subtract(5, 'days').format('MM'));
   day = parseInt(moment().format('DD'));
   maxday = parseInt(moment().add(5, 'days').format('DD'));
+  minday = parseInt(moment().subtract(5, 'days').format('DD'));
   //
 
   constructor(public settings: SettingsService,
@@ -42,9 +46,9 @@ export class PtpsComponent implements OnInit {
     private ecolService: EcolService,
     public ngxSmartModalService: NgxSmartModalService,
     private datePipe: DatePipe) {
-    // console.log(this.day, this.maxday)
-    this.minDate = { year: this.year, month: this.month, day: this.day };
-    this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
+    // console.log('this.ammendptp.ptpdate', this.ammendptp.ptpdate)
+    // this.minDate = { year: this.year, month: this.month, day: this.day };
+    // this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
 
   }
 
@@ -103,6 +107,32 @@ export class PtpsComponent implements OnInit {
 
       // open modal
       this.ngxSmartModalService.getModal('myModal').open()
+
+      // console.log('diff', moment().diff(this.ammendptp.ptpdate, 'days') + 5)
+
+      this.year = parseInt(moment(this.ammendptp.ptpdate).format('YYYY'));
+      this.maxyear = parseInt(moment(this.ammendptp.ptpdate).add(5, 'days').format('YYYY'));
+      this.minyear = parseInt(moment(this.ammendptp.ptpdate).subtract(5, 'days').format('YYYY'));
+      this.month = parseInt(moment(this.ammendptp.ptpdate).format('MM'));
+      this.maxmonth = parseInt(moment(this.ammendptp.ptpdate).add(5, 'days').format('MM'));
+      this.minmonth = parseInt(moment(this.ammendptp.ptpdate).subtract(5, 'days').format('MM'));
+      this.day = parseInt(moment(this.ammendptp.ptpdate).format('DD'));
+      this.maxday = parseInt(moment(this.ammendptp.ptpdate).add(5, 'days').format('DD'));
+      this.minday = parseInt(moment(this.ammendptp.ptpdate).subtract(5, 'days').format('DD'));
+
+      this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
+
+      // min should not be less than today
+      if (moment().diff(this.ammendptp.ptpdate, 'days') + 5 >= 0) {
+       // console.log(true);
+        this.year = parseInt(moment().format('YYYY'));
+        this.month = parseInt(moment().format('MM'));
+        this.day = parseInt(moment().format('DD'));
+        this.minDate = { year: this.year, month: this.month, day: this.day };
+      } else {
+        this.minDate = { year: this.minyear, month: this.minmonth, day: this.minday };
+      }
+
     }, error => {
       console.log(error);
     });

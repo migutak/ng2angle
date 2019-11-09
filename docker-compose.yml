@@ -43,9 +43,6 @@ services:
     restart: always
     environment:
       - CORS=http://localhost:7000
-      - DB_USER=ecol
-      - DB_PASSWORD=ecol
-      - DB_CONNECTIONSTRING=192.168.0.12:1521/ORCLCDB.localdomain
     volumes:
       - c:\logs:/var/uploads
     ports:

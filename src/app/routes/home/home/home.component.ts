@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 declare var $: any;
 import { environment } from '../../../../environments/environment';
@@ -13,6 +12,8 @@ import { EcolService } from '../../../services/ecol.service';
 
 export class HomeComponent implements OnInit {
     dataSource: any;
+    public portfoliodash = environment.portfoliodash;
+
     constructor(public http: HttpClient, private ecolService: EcolService,) {
         this.dataSource = {
             chart: {
@@ -43,11 +44,11 @@ export class HomeComponent implements OnInit {
         //
         localStorage.setItem('profile', '0');
 
-        this.http.get<any>(environment.nodeapi + '/loans/buckets').subscribe(data => {
+        /*this.http.get<any>(environment.nodeapi + '/loans/buckets').subscribe(data => {
             this.dataSource.data = data.data;
         }, error => {
             console.log(error);
-        });
+        });*/
     }
 
 }
