@@ -517,7 +517,7 @@ export class SendLetterComponent implements OnInit {
   }
 
   downloadFile(filepath, filename) {
-    this.ecolService.downloadFile(filepath).subscribe(data => {
+    this.ecolService.demanddownload(filepath).subscribe(data => {
       saveAs(data, filename);
     }, error => {
       console.log(error.error);

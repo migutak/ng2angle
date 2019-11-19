@@ -124,7 +124,7 @@ export class PtpsComponent implements OnInit {
 
       // min should not be less than today
       if (moment().diff(this.ammendptp.ptpdate, 'days') + 5 >= 0) {
-       // console.log(true);
+        // console.log(true);
         this.year = parseInt(moment().format('YYYY'));
         this.month = parseInt(moment().format('MM'));
         this.day = parseInt(moment().format('DD'));
