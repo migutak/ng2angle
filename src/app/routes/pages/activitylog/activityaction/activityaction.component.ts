@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgOption } from '@ng-select/ng-select';
 import * as moment from 'moment';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 const URL = environment.valor;
 
@@ -47,6 +48,13 @@ export class ActivityActionComponent implements OnInit {
   cure: any = [];
   excuse: any = [];
   capture = true;
+  ptps: any = [];
+  ptp_m: any = {};
+  en_ptp: any = {};
+  edit = false;
+  isptptosave = false;
+  p = 1;
+
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
     { collectoractionid: 'IC', collectoraction: 'INCOMING CALL' },
@@ -88,6 +96,7 @@ export class ActivityActionComponent implements OnInit {
     private ecolService: EcolService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
+    public ngxSmartModalService: NgxSmartModalService,
   ) {
     this.minDate = { year: this.year, month: this.month, day: this.day };
     this.minxDate = new Date();
@@ -498,11 +507,18 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptpamount.setValue(0);
       this.actionForm.controls.ptpdate.setValue(Date());
+
+      // this.openptpModal();
     }
   }
 
   multiplecapturefnc() {
     // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/multipleptp?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=collections', '_blank');
+  }
+
+  openptpModal() {
+    // open modal
+    this.ngxSmartModalService.getModal('myModal').open()
   }
 }
