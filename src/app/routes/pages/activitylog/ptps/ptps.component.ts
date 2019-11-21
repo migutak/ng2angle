@@ -157,11 +157,13 @@ export class PtpsComponent implements OnInit {
         const day: string = (form.value.ptpdate.day).toString();
 
         const ptpdate = ((moment(yr + mn + day, "YYYYMMDD").format('DD-MMM-YYYY'))).toUpperCase();
+        const ptpdate2 = ((moment(yr + mn + day, "YYYYMMDD").format('YYYY-MM-DD')));
         form.value.ptpdate = ptpdate
         const body: any = {
           id: this.ammendptp.id,
           ptpamount: form.value.ptpamount,
           ptpdate: ptpdate,
+          ptpdate2: ptpdate2,
           ammendby: this.username,
           ammendcomment: form.value.comment
         }

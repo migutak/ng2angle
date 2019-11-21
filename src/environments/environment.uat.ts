@@ -6,7 +6,7 @@ export const environment = {
   nodeapi: 'http://172.16.19.151:6100/nodeapi',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'http://172.16.19.151:8004/docx/',
-  uploadurl: 'http://172.16.19.151:3100/filesapi',
+  uploadurl: 'http://172.16.19.151:3000/filesapi',
   demanddownload: 'http://172.16.19.151:3000',
   valor: 'http://172.16.19.151:3000/valor',
   metrics: 'http://172.16.19.151/appmetrics-dash',

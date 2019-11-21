@@ -99,7 +99,7 @@ export class EcolService {
     return this.httpClient.get(url);
   }
   getexcuse() {
-    const url = environment.api + '/api/excuse';
+    const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
     return this.httpClient.get(url);
   }
   getcure() {
@@ -352,6 +352,11 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans');
   }
 
+  single_s_plans(planid) {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_plans/' + planid);
+  }
+
   getplanactions(planid) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/tbl_s_plan_actions?filter[where][planid]=' + planid);
@@ -500,6 +505,10 @@ export class EcolService {
   getallteles(custnumber) {
     // return this.httpClient.get<any>(environment.api + '/api/teles/alltele?custnumber=' + custnumber);
     return this.httpClient.get<any>(environment.nodeapi + '/teles/all?custnumber=' + custnumber);
+  }
+
+  activeptps(accnumber) {
+    return this.httpClient.get<any>(environment.nodeapi + '/activeptps/active?accnumber=' + accnumber);
   }
 
   getallplans() {

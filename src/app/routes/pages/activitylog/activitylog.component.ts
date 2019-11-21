@@ -163,7 +163,10 @@ export class ActivityLogComponent implements OnInit {
     this.ecolService.s_check_account_plans(accnumber).subscribe(data => {
       // check if there if a plan
       if (data && data.length) {
-        this.plan = data[0].planid;
+        this.ecolService.single_s_plans(data[0].planid).subscribe(plandata => {
+          this.plan = plandata.plantitle;
+        })
+        
       }
     }, error => {
       console.log(error);

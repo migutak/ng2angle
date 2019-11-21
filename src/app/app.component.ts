@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     });
 
     // idle logout
-    this.bnIdle.startWatching(900).subscribe((res) => {
+    this.bnIdle.startWatching(3600).subscribe((res) => {
       if (res) {
         this.ecolService.logout();
         this._router.navigate(['/login']);

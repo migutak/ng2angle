@@ -325,8 +325,8 @@ export class ActivityActionComponent implements OnInit {
       toemail: this.f.toemail.value,
       ptpsms: this.f.ptpsms.value,
       ptpsmsnumber: this.f.ptpsmsnumber.value,
-      // tslint:disable-next-line:max-line-length
-      collectornote: this.f.collectornote.value + '   Reason for default: ' + this.f.reason.value + '   Reason details: ' + this.f.rfdother.value,
+      // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value
+      collectornote: this.f.collectornote.value + '   Reason for default: ' + this.f.reason.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
@@ -473,6 +473,20 @@ export class ActivityActionComponent implements OnInit {
 
   changePtp(value) {
     if (value === 'Yes') {
+      // check if ptp exists
+      this.ecolService.activeptps(this.accnumber).subscribe(activedata => {
+        if(activedata && activedata.data.length > 0){
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'a/c already has a running promise to pay. Check under Promises to pay menu'
+          }).then((result) => {
+              this.actionForm.controls.ptp.setValue('No');
+          });
+
+        }
+      });
+
       this.actionForm.controls.ptptype.enable();
       this.actionForm.controls.ptpemail.enable();
       this.actionForm.controls.toemail.enable();
