@@ -50,10 +50,12 @@ export class ActivityActionComponent implements OnInit {
   capture = true;
   ptps: any = [];
   ptp_m: any = {};
+  ptpmultiple: any = {};
   en_ptp: any = {};
   edit = false;
   isptptosave = false;
   p = 1;
+  autodial_telnumber: string;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -159,12 +161,15 @@ export class ActivityActionComponent implements OnInit {
   getaccount(accnumber) {
     this.ecolService.getAccount(accnumber).subscribe(data => {
       this.account = data[0];
+      this.autodial_telnumber = this.account.cellnumber || this.account.mobile || this.account.phonenumber || this.account.telnumber || this.account.celnumber;
+      this.model.emailaddress = data[0].emailaddress;
       // build form
       this.buildForm();
       if (swal.isVisible) { swal.close(); }
       this.spinner.hide();
     });
   }
+
 
   getwatch(accnumber) {
     this.ecolService.getwatch(accnumber).subscribe(data => {
@@ -272,9 +277,9 @@ export class ActivityActionComponent implements OnInit {
       party: [{ value: '', disabled: true }],
       ptpamount: [{ value: 0, disabled: true }],
       ptpemail: [{ value: '', disabled: true }],
-      toemail: [{ value: '', disabled: true }],
+      toemail: [{ value: this.model.emailaddress, disabled: true }],
       ptpsms: [{ value: '', disabled: true }],
-      ptpsmsnumber: [{ value: '', disabled: true }],
+      ptpsmsnumber: [{ value: this.autodial_telnumber, disabled: true }],
       ptp: [{ value: 'No', disabled: true }],
       ptptype: [{ value: '', disabled: true }],
       ptpdate: [{ value: this.currentDate, disabled: true }],
@@ -483,7 +488,6 @@ export class ActivityActionComponent implements OnInit {
           }).then((result) => {
               this.actionForm.controls.ptp.setValue('No');
           });
-
         }
       });
 
@@ -501,11 +505,11 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptptype.setValue('');
       this.actionForm.controls.ptpemail.setValue('');
       this.actionForm.controls.ptpemail.disable();
-      this.actionForm.controls.ptpsmsnumber.setValue('');
+      // this.actionForm.controls.ptpsmsnumber.setValue('');
       this.actionForm.controls.ptpsmsnumber.disable();
       this.actionForm.controls.ptpsms.setValue('');
       this.actionForm.controls.ptpsms.disable();
-      this.actionForm.controls.toemail.setValue('');
+      // this.actionForm.controls.toemail.setValue('');
       this.actionForm.controls.toemail.disable();
     }
   }
@@ -516,13 +520,13 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptpamount.enable();
       this.actionForm.controls.ptpdate.enable();
     } else {
-      this.capture = false;
+      // this.capture = false;
       this.actionForm.controls.ptpamount.disable();
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptpamount.setValue(0);
       this.actionForm.controls.ptpdate.setValue(Date());
 
-      // this.openptpModal();
+      this.openptpModal();
     }
   }
 
@@ -534,5 +538,37 @@ export class ActivityActionComponent implements OnInit {
   openptpModal() {
     // open modal
     this.ngxSmartModalService.getModal('myModal').open()
+  }
+
+  deleteptp(form) {
+    const index: number = this.ptps.indexOf(form);
+    if (index !== -1) {
+        this.ptps.splice(index, 1);
+        if (this.ptps.length === 0) {
+          this.isptptosave = false;
+        }
+    }
+  }
+
+  ptpfunc(form) {
+    const ptpamount = form.value.ptpamount;
+    const ptpdate = (moment(form.value.ptpdate).format('DD-MMM-YYYY')).toUpperCase();
+    const owner = this.username;
+    const accnumber = this.accnumber;
+
+    this.ptps.push({ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber});
+    this.ptpmultiple = {};
+    this.isptptosave = true;
+  }
+
+  saveallptps() {
+    this.ecolService.postptps(this.ptps).subscribe(resp => {
+      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function() {
+        // this.ngxSmartModalService.getModal('myModal').close()
+      });
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Error occurred during processing!', 'error');
+    });
   }
 }

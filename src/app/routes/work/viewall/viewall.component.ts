@@ -24,6 +24,7 @@ export class ViewallComponent implements OnInit {
   username: string;
   searchText: string;
   model: any = {};
+  pivotPanelShow = true;
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.columnDefs = [
@@ -97,7 +98,8 @@ export class ViewallComponent implements OnInit {
       width: 120,
       resizable: true,
       sortable: true,
-      floatingFilter: true
+      floatingFilter: true,
+      unSortIcon: true
     };
     this.rowModelType = "serverSide";
     this.cacheBlockSize = 50;

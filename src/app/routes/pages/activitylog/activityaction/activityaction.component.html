@@ -244,3 +244,75 @@
     <pre>{{actionForm.value | json}}</pre>-->
   </div>
 </div>
+
+<ngx-smart-modal [dismissable]="false" #myModal identifier="myModal">
+  <div class="modal-header">
+    <h4 class="modal-title">Mulptiple PTP</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <form #ptpForm="ngForm" (ngSubmit)="ptpfunc(ptpForm)" novalidate autocomplete="off">
+          <div class="form-group">
+            <label>Promise Amount:</label>
+            <input class="form-control" #ptpamount="ngModel" [(ngModel)]="ptpmultiple.ptpamount" name="ptpamount"
+              placeholder="ptp amount" [ngClass]="{ 'is-invalid': ptpamount.errors }" required />
+
+          </div>
+          <div class="form-group">
+            <label>Promise Date:</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="ptpdate" [(ngModel)]="ptpmultiple.ptpdate"
+                ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" required>
+              <div class="input-group-append">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i
+                        class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button *ngIf="!edit" class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="submit"
+            class="btn btn-sm btn-outline-primary" [disabled]="!ptpForm.valid">Add</button>
+          <button *ngIf="edit" [disabled]="ptpForm.invalid"
+            class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
+            (click)="updateptp(ptp)">Update</button>
+          <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label" type="button"
+            (click)="cancel()">Cancel</button>
+        </form>
+      </div>
+      <div class="col-md-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>accnumber</th>
+                    <th>ptp amount</th>
+                    <th>ptp date</th>
+                    <th>owner</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of ptps | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td><strong>{{p.accnumber}}</strong></td>
+                    <td>{{p.ptpamount}}</td>
+                    <td>{{p.ptpdate}}</td>
+                    <td>{{p.owner}}</td>
+                    <td>
+                      <button class="btn btn-outline-danger btn-sm" (click)="deleteptp(p)">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
+        <button [disabled]="!isptptosave" class="btn btn-block btn-outline-success" (click)="saveallptps()">Save all Promises</button>
+    </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-darck" (click)="myModal.close()">Close</button>
+  </div>
+</ngx-smart-modal>
