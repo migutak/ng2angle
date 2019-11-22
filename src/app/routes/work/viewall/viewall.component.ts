@@ -99,7 +99,8 @@ export class ViewallComponent implements OnInit {
       resizable: true,
       sortable: true,
       floatingFilter: true,
-      unSortIcon: true
+      unSortIcon: true,
+      suppressResize: false
     };
     this.rowModelType = "serverSide";
     this.cacheBlockSize = 50;

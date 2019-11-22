@@ -26,6 +26,7 @@ export class ViewallComponent implements OnInit {
   username: string;
   searchText: string;
   model: any = {};
+  pivotPanelShow = true;
 
   constructor(private http: HttpClient) {
     this.columnDefs = [
@@ -37,46 +38,55 @@ export class ViewallComponent implements OnInit {
           return '<a  href="#" target="_blank">' + params.value + '</a>';
         },
         width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'CARDNUMBER',
         field: 'CARDNUMBER',
         width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'CARDNAME',
         field: 'CARDNAME',
         width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'DAYSINARREARS',
         field: 'DAYSINARREARS',
         width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'EXPPMNT',
         field: 'EXPPMNT',
         width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'OUTSTANDING BALANCE',
         field: 'OUTBALANCE',
         width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'LIMIT',
         field: 'LIMIT',
         width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'CYCLE',
         field: 'CYCLE',
         width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'COLOFFICER',
         field: 'COLOFFICER',
         width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
 
     ];
@@ -89,6 +99,7 @@ export class ViewallComponent implements OnInit {
     this.rowModelType = "serverSide";
     this.cacheBlockSize = 50;
     this.maxBlocksInCache = 0;
+   // 
 
     this.overlayLoadingTemplate =
       // tslint:disable-next-line:max-line-length
@@ -100,6 +111,7 @@ export class ViewallComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
 
     const datasource = {
       getRows(params) {
