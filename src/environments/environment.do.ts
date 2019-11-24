@@ -14,11 +14,13 @@ export const environment = {
   xlstemplate: '/root/xls/upload_notes.xlsx',
   applink: 'http://68.183.63.158',
   emailapi: 'http://68.183.63.158:8000/api/email/send',
+  demandsmsapi: "https://rest.nexmo.com/sms/json",
   auth: 'http://68.183.63.158:8080/adlogin',
   filesapi: 'http://68.183.63.158:3200/filesapi', // activityupload
   accplanlink: 'http://68.183.63.158:3001',
   kibanarpt: 'http://68.183.63.158:5601',
   birt: 'http://68.183.63.158:8787/birt',
   kibana: 'http://68.183.63.158:5601/app/kibana#/dashboard?_g=0',
-  manuals_path: '/root/ecol_manuals/'
+  manuals_path: '/root/ecol_manuals/',
+  portfoliodash: 'http://68.183.63.158:5601/kibana'
 };

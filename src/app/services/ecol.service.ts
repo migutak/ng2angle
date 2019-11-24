@@ -534,6 +534,10 @@ export class EcolService {
     return this.httpClient.post<any>(environment.emailapi, data);
   }
 
+  sendDemandsms(data) {
+    return this.httpClient.post<any>(environment.demandsmsapi, data);
+  }
+
   sendsms(data) {
     return this.httpClient.post<any>(environment.api + '/api/sms', data);
   }

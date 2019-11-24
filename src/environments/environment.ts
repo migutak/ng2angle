@@ -18,6 +18,7 @@ export const environment = {
   xlstemplate: 'C:\\templates\\upload_notes.xlsx',
   applink: 'http://localhost:4500',
   emailapi: 'http://localhost:8005/demandemail/email',
+  demandsmsapi: "http://localhost:7000",
   auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
   filesapi: 'http://localhost:3100/filesapi', // activityupload
   accplanlink: 'http://localhost:3001',

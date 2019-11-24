@@ -13,6 +13,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
+import { ExtloginComponent } from './extletters/extlogin.component';
 import { RegisterComponent } from './register/register.component';
 import { RecoverComponent } from './recover/recover.component';
 import { LockComponent } from './lock/lock.component';
@@ -91,7 +92,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
         CollateralsComponent,
         ActivitydashComponent,
         EditnoteComponent,
-        PtpsComponent
+        PtpsComponent,
+        ExtloginComponent
     ],
     providers: [
         ToasterService,
@@ -119,7 +121,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
         CollateralsComponent,
         ActivitydashComponent,
         EditnoteComponent,
-        PtpsComponent
+        PtpsComponent,
+        ExtloginComponent
     ]
 })
 export class PagesModule { }

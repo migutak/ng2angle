@@ -14,6 +14,7 @@ export const environment = {
   xlstemplate: 'C:\\templates\\upload_notes.xlsx',
   applink: 'http://localhost:7000',
   emailapi: 'http://localhost:8000/api/email/send',
+  demandsmsapi: "https://rest.nexmo.com/sms/json",
   auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
   filesapi: 'http://localhost:3000/filesapi', // activityupload
   accplanlink: 'http://localhost:3001',

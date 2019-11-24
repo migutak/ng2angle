@@ -14,6 +14,7 @@ export const environment = {
   xlsuploadapi: 'https://ecollecttest.co-opbank.co.ke/xlsupload/',
   xlstemplate: 'C:\\Users\\Kevin\\Documents\\upload_notes.xlsx',
   emailapi: 'https://ecollecttest.co-opbank.co.ke/demandemail/email',
+  demandsmsapi: "https://rest.nexmo.com/sms/json",
   auth: 'https://ecollecttest.co-opbank.co.ke/adlogin',
   filesapi: 'https://ecollecttest.co-opbank.co.ke/filesapi',
   accplanlink: 'http://ecollecttest.co-opbank.co.ke:3001',

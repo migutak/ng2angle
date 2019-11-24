@@ -1,0 +1,40 @@
+
+<div class="signupform">
+        <div class="container">
+            <!-- main content -->
+            <!---728x90--->
+    
+            <div class="agile_info">
+    
+                <div class="w3_info">
+                <!---728x90--->
+                    <img src="../../assets/img/cooop.jpeg" alt="" />
+                    <h2></h2>
+                    <p></p>
+                    <form [formGroup]="valForm" role="form" name="loginForm" novalidate="" (submit)="submitForm($event, valForm.value)">
+                        <label>Enter your National ID</label>
+                        <div class="input-group">
+                            <span class="fa fa-envelope" aria-hidden="true"></span>
+                            <input type="text" placeholder="Enter Your Username" id="username" type="text" name="username" autocomplete="off" formControlName="username" required=""> 
+                        </div>
+                        <div class="text-danger" *ngIf="valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched)">ID is required</div>
+
+                        <div class="text-danger" *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)">Password is required</div>				
+                                <button [disabled]="!valForm.valid" class="btn btn-block btn-primary mt-3" type="submit">Login</button>
+                        
+                    <br/><br/><br/>
+                    <div class="loader" *ngIf="loading"></div>
+                    <div *ngIf="error" class="alert alert-danger text-center">{{error}}</div>                
+                    </form>
+                </div>
+            </div>
+            <!-- //main content -->
+        </div>
+        <!---728x90--->
+    
+        <!-- footer -->
+        <div class="footer">
+            <p>&copy; 2019 E-Collect&reg;. All Rights Reserved | Design by <a href="#" target="blank">Inteligen Infosys Ltd</a></p>
+        </div>
+        <!-- footer -->
+    </div>

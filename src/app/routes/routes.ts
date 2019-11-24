@@ -1,6 +1,7 @@
 import { LayoutComponent } from '../layout/layout.component';
 
 import { LoginComponent } from './pages/login/login.component';
+import { ExtloginComponent } from './pages/extletters/extlogin.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RecoverComponent } from './pages/recover/recover.component';
 import { LockComponent } from './pages/lock/lock.component';
@@ -64,6 +65,7 @@ export const routes = [
 
     // Not lazy-loaded routes
     { path: 'login', component: LoginComponent },
+    { path: 'extletters', component: ExtloginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'recover', component: RecoverComponent },
     { path: 'lock', component: LockComponent },
@@ -98,7 +100,7 @@ export const routes = [
     },
 
     // Not found
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: 'extlettersx', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }
 
 ];

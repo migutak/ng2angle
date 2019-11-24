@@ -207,6 +207,7 @@ export class SendLetterComponent implements OnInit {
   }
 
   generate() {
+    // console.log(this.model);
     this.ecolService.loader();
     this.processletter(this.model, this.model.accnumber, this.model.emailaddress);
     this.getdemandshistory(this.accnumber);
@@ -441,46 +442,88 @@ export class SendLetterComponent implements OnInit {
           this.emaildata.file = this.uploadedfilepath;
         }
 
-        this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
-          if (response.result === 'fail') {
-            swal.close();
-            this.poperrorToast('Letter not sent on email!');
-          } else {
-            // add to history
-            this.demandshistory(this.demandhisdetails);
-            this.getdemandshistory(this.accnumber);
-            // update demandsdue status as sent
-            const status = {
-              id: this.demandid,
-              from : 'loans',
-              datesent : this.currentDate(),
-              sentby: this.username,
-              status: 'manual-sent'
-            };
-            this.ecolService.demandstatus(status).subscribe(data => {
-              //
-            }, error => {console.log(error); });
-            // send sms
-            this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
-              const sms = respo.smstemplate;
-              this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
-              const smsdata = {
-                'demand': letter.demand,
-                'custnumber': this.model.custnumber,
-                'accnumber': this.model.accnumber,
-                'telnumber': this.model.celnumber,
-                'owner': this.username,
-                'message': this.smsMessage,
+        // send demandbyemail
+        if(this.model.sendemail) {
+          //
+          this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
+            if (response.result === 'fail') {
+              swal.close();
+              this.poperrorToast('Letter not sent on email!');
+            } else {
+              // add to history
+              this.demandshistory(this.demandhisdetails);
+              this.getdemandshistory(this.accnumber);
+              // update demandsdue status as sent
+              const status = {
+                id: this.demandid,
+                from : 'loans',
+                datesent : this.currentDate(),
+                sentby: this.username,
+                status: 'manual-sent'
               };
-              this.sendsms(smsdata);
-            }, error => {
-              console.log(error);
-            });
-
-            swal.close();
-            this.popsuccessToast('Letter sent on email!');
+              this.ecolService.demandstatus(status).subscribe(data => {
+                //
+              }, error => {console.log(error); });
+              // send sms
+              this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+                const sms = respo.smstemplate;
+                this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+                const smsdata = {
+                  'demand': letter.demand,
+                  'custnumber': this.model.custnumber,
+                  'accnumber': this.model.accnumber,
+                  'telnumber': this.model.celnumber,
+                  'owner': this.username,
+                  'message': this.smsMessage,
+                };
+                this.sendsms(smsdata);
+              }, error => {
+                console.log(error);
+              });
+  
+              swal.close();
+              this.popsuccessToast('Letter sent on email!');
+            }
+          });
+        }
+        
+        // send demandbysms
+        if(this.model.sendbysms){
+          const smsbody = {
+            "api_key": "ac17ea64 ",
+            "api_secret": "t3bIhJXlI34d2ydY",
+            // "to": "966564016956",
+            "to": this.model.cellnumber,
+            "from": "ecollect",
+            "text": "Dear Customer,\nPlease download your demand letter 1 from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Management "
           }
-        });
+          this.ecolService.sendDemandsms(smsbody).subscribe(response => {
+            console.log(response);
+            if (response.result === 'fail') {
+              swal.close();
+              this.poperrorToast('Letter not sent on sms!');
+            } else {
+              // add to history
+              this.demandshistory(this.demandhisdetails);
+              this.getdemandshistory(this.accnumber);
+              // update demandsdue status as sent
+              const status = {
+                id: this.demandid,
+                from : 'loans',
+                datesent : this.currentDate(),
+                sentby: this.username,
+                status: 'manual-sent'
+              };
+              this.ecolService.demandstatus(status).subscribe(data => {
+                //
+              }, error => {console.log(error); });
+              
+  
+              swal.close();
+              this.popsuccessToast('Letter sent on email!');
+            }
+          });
+        }
       } else {
         // error in letter generation
         swal('Error!', 'Error generating letter!', 'error');

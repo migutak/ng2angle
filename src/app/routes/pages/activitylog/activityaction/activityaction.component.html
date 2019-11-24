@@ -308,7 +308,7 @@
             </tbody>
         </table>
         <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
-        <button [disabled]="!isptptosave" class="btn btn-block btn-outline-success" (click)="saveallptps()">Save all Promises</button>
+        <button [disabled]="!isptptosave" class="btn btn-block btn-outline-success" (click)="saveallptps()" (click)="myModal.close()">Save all Promises</button>
     </div>
     </div>
   </div>
