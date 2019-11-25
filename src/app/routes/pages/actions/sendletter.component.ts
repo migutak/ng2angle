@@ -493,15 +493,15 @@ export class SendLetterComponent implements OnInit {
             "api_key": "ac17ea64 ",
             "api_secret": "t3bIhJXlI34d2ydY",
             // "to": "966564016956",
-            "to": this.model.cellnumber,
-            "from": "ecollect",
-            "text": "Dear Customer,\nPlease download your demand letter 1 from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Management "
+            "to": this.model.celnumber,
+            "from": "E-Collect",
+            "text": "Dear Customer,\nPlease download your "+this.model.demand+" from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Management "
           }
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
-            if (response.result === 'fail') {
+            if (response.error) {
               swal.close();
-              this.poperrorToast('Letter not sent on sms!');
+              this.poperrorToast('Failed to send Letter through sms!');
             } else {
               // add to history
               this.demandshistory(this.demandhisdetails);
@@ -520,7 +520,7 @@ export class SendLetterComponent implements OnInit {
               
   
               swal.close();
-              this.popsuccessToast('Letter sent on email!');
+              this.popsuccessToast('Letter sent on sms');
             }
           });
         }

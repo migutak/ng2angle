@@ -14,7 +14,7 @@ export const environment = {
   xlstemplate: '/root/xls/upload_notes.xlsx',
   applink: 'http://68.183.63.158',
   emailapi: 'http://68.183.63.158:8000/api/email/send',
-  demandsmsapi: "https://rest.nexmo.com/sms/json",
+  demandsmsapi: "http://68.183.63.158:7000",
   auth: 'http://68.183.63.158:8080/adlogin',
   filesapi: 'http://68.183.63.158:3200/filesapi', // activityupload
   accplanlink: 'http://68.183.63.158:3001',
