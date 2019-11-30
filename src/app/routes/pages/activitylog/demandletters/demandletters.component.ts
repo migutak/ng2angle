@@ -342,7 +342,7 @@ export class DemandLettersComponent implements OnInit {
                     'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
                   };
 
-                  console.log('to history ', this.demandhisdetails);
+                 // console.log('to history ', this.demandhisdetails);
                   this.demandshistory(this.demandhisdetails);
                   // send sms
                   this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
@@ -501,8 +501,8 @@ export class DemandLettersComponent implements OnInit {
   }
 
   generateletter(letter) {
-    console.log(this.model);
-    swal.close();
+    // console.log(this.model);
+    // swal.close();
     this.popinfoToast('Letter Queued to be sent');
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {

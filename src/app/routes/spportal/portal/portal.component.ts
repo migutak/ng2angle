@@ -10,8 +10,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class PortalComponent implements OnInit {
 
-    portalsrc = 'http://localhost:4200'
-
     ngOnInit() { }
 
     openPortal() {
