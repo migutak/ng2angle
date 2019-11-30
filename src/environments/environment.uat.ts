@@ -22,5 +22,6 @@ export const environment = {
   manuals_path: '/app/manuals/',
   birt: 'http://172.16.19.151:8787/birt',
   kibana: 'http://172.16.19.151:5601/app/kibana#/dashboard?_g=0',
-  portfoliodash: 'http://172.16.19.151:5601/goto/bf80fe14782362d8f9307501e75bf055?embed=true'
+  portfoliodash: 'http://172.16.19.151:5601/goto/bf80fe14782362d8f9307501e75bf055?embed=true',
+  portal: 'http://172.16.19.151:4300',
 };

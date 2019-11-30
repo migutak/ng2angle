@@ -8,6 +8,7 @@ import { environment } from '../../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
+import { license } from '../../../../../../env';
 
 const URL = environment.valor;
 
@@ -573,37 +574,24 @@ export class DemandLettersComponent implements OnInit {
         // send demandbysms
         if (this.model.sendbysms) {
           const smsbody = {
-            "api_key": "ac17ea64 ",
-            "api_secret": "t3bIhJXlI34d2ydY",
-            // "to": "966564016956",
+            "accountSid": license.accountSid,
+            "authToken": license.authToken,
             "to": this.model.celnumber,
-            "from": "E-Collect",
-            "text": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Management "
+            "from": license.from,
+            "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
           }
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
-            if (response.error) {
-              swal.close();
-              this.poperrorToast('Failed to send Letter through sms!');
-            } else {
+            if (response.result === 'OK') {
               // add to history
               this.demandshistory(this.demandhisdetails);
               this.getdemandshistory(this.accnumber);
-              // update demandsdue status as sent
-              const status = {
-                id: this.demandid,
-                from: 'loans',
-                datesent: this.currentDate(),
-                sentby: this.username,
-                status: 'manual-sent'
-              };
-              this.ecolService.demandstatus(status).subscribe(data => {
-                //
-              }, error => { console.log(error); });
-
 
               swal.close();
               this.popsuccessToast('Letter sent on sms!');
+            } else {
+              swal.close();
+              this.poperrorToast(response.response.message);
             }
           });
         }
@@ -718,26 +706,26 @@ export class DemandLettersComponent implements OnInit {
         // send demandbysms
         if (this.model.sendbysms) {
           const smsbody = {
-            "api_key": "ac17ea64 ",
-            "api_secret": "123#Today",
-            // "to": "966564016956",
+            "accountSid": license.accountSid,
+            "authToken": license.authToken,
             "to": this.model.celnumber,
-            "from": "E-Collect",
-            "text": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Management "
-          }
+            "from": license.from,
+            "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
+          };
+          //
+         //console.log(smsbody);
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
-            if (response.error) {
-              swal.close();
-              this.poperrorToast('Failed to send Letter through sms!');
-            } else {
+            if (response.result === 'OK') {
               // add to history
               this.demandshistory(this.demandhisdetails);
               this.getdemandshistory(this.accnumber);
 
-
               swal.close();
               this.popsuccessToast('Letter sent on sms!');
+            } else {
+              swal.close();
+              this.poperrorToast(response.response.message);
             }
           });
         }

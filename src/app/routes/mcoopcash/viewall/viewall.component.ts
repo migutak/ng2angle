@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GridOptions, IDatasource, IGetRowsParams, ColDef } from 'ag-grid';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Component({
@@ -23,6 +23,8 @@ export class ViewallComponent implements OnInit {
   username: string;
   searchText: string;
   model: any = {};
+
+  modules = AllModules;
 
   constructor(private http: HttpClient) {
     this.columnDefs = [

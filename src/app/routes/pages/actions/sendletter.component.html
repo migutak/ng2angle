@@ -193,7 +193,7 @@
                 <div class="form-group row">
                   <label class="col-xl-4 col-form-label"></label>
                   <div class="col-xl-8">
-                    <button [disabled]="!model.sendbysms || !model.sendpostal" class="btn btn-sm btn-secondary" type="button"
+                    <button [disabled]="!model.sendbysms && !model.sendemail" class="btn btn-sm btn-secondary" type="button"
                       (click)="generate()">Generate
                       & Send</button>
                   </div>

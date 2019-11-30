@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {GridOptions, IDatasource, IGetRowsParams, ColDef} from 'ag-grid';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EcolService } from '../../../services/ecol.service';
-import { AgGridNg2 } from 'ag-grid-angular';
+// import { EcolService } from '../../../services/ecol.service';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-allcards',
@@ -31,6 +31,8 @@ export class AllcardsComponent implements OnInit {
     model: any = {};
     username: string;
     public searchValue;
+
+    modules = AllModules;
 
     constructor(public http: HttpClient) {
         this.gridOptions = <GridOptions>{

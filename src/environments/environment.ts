@@ -26,5 +26,6 @@ export const environment = {
   birt: 'http://localhost:8787/birt',
   kibana: 'http://localhost:5601/app/kibana#/dashboard?_g=0',
   manuals_path: 'C:\\ecol_manuals\\',
-  portfoliodash: 'http://localhost:5601/goto/bf80fe14782362d8f9307501e75bf055?embed=true'
+  portfoliodash: 'http://localhost:5601/goto/bf80fe14782362d8f9307501e75bf055?embed=true',
+  portal: 'http://localhost:4300',
 };

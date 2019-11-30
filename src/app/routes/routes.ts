@@ -57,7 +57,7 @@ export const routes = [
             { path: 'repossessors', loadChildren: './repossessors/repossessors.module#RepossessorsModule' },
             { path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule' },
             { path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule' },
-            { path: 'yards', loadChildren: './yards/yards.module#YardsModule' },
+            { path: 'spportal', loadChildren: './spportal/spportal.module#SpPortalModule' },
             { path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule' }
         ],
         canActivate: [AuthGuard]

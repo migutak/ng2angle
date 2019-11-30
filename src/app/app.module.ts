@@ -15,9 +15,9 @@ import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 import { license } from '../../env';
 
-import 'ag-grid-enterprise';
-//License goes here 
-import { LicenseManager } from "ag-grid-enterprise";
+import '@ag-grid-enterprise/all-modules';
+//License goes here as for me
+import { LicenseManager } from "@ag-grid-enterprise/all-modules";
 
 LicenseManager.setLicenseKey(license.value);
 

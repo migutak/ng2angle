@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 import { AllcardsComponent } from './allcards/allcards.component';
 import { LoansComponent } from './loans/loans.component';
@@ -13,8 +13,6 @@ import { ZerobalanceComponent } from './zerobalance/zerobalance.component';
 import { DemandsdueComponent } from './creditcarddemands/demandsdue/demandsdue.component';
 import { DemandshistoryComponent } from './creditcarddemands/demandshistory/demandshistory.component';
 
-import { JqxDomService } from '../../shared/jqwidgets-dom.service';
-import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -47,10 +45,8 @@ const routes: Routes = [
     AgGridModule.withComponents([]),
     RouterModule.forChild(routes)
   ],
-  entryComponents: [jqxButtonComponent],
-  providers: [
-    JqxDomService
-  ],
+  entryComponents: [],
+  providers: [],
   exports: [
     RouterModule
 ]

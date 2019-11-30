@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { license } from '../../../../../env';
 
 const URL = environment.valor;
 
@@ -489,20 +490,19 @@ export class SendLetterComponent implements OnInit {
         
         // send demandbysms
         if(this.model.sendbysms){
+          // send generated letter to DMZ
+          
           const smsbody = {
-            "api_key": "ac17ea64 ",
-            "api_secret": "t3bIhJXlI34d2ydY",
-            // "to": "966564016956",
+            "accountSid": license.accountSid,
+            "authToken": license.authToken,
             "to": this.model.celnumber,
-            "from": "E-Collect",
-            "text": "Dear Customer,\nPlease download your "+this.model.demand+" from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Management "
+            "from": license.from,
+            "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
           }
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
-            if (response.error) {
-              swal.close();
-              this.poperrorToast('Failed to send Letter through sms!');
-            } else {
+            if (response.result === 'OK') {
+              
               // add to history
               this.demandshistory(this.demandhisdetails);
               this.getdemandshistory(this.accnumber);
@@ -521,6 +521,9 @@ export class SendLetterComponent implements OnInit {
   
               swal.close();
               this.popsuccessToast('Letter sent on sms');
+            } else {
+              swal.close();
+              this.poperrorToast(response.response.message);
             }
           });
         }

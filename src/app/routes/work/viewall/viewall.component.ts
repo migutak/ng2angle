@@ -1,8 +1,9 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-viewall',
@@ -25,6 +26,8 @@ export class ViewallComponent implements OnInit {
   searchText: string;
   model: any = {};
   pivotPanelShow = true;
+
+  modules = AllModules;
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.columnDefs = [

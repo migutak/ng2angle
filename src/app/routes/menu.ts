@@ -29,8 +29,14 @@ const Dashboard = {
     ]
 };
 
-
 const Reports = {
+    text: 'Reports',
+    link: '/reports/allreports',
+    icon: 'icon-speedometer'
+};
+
+
+/*const Reports = {
     text: 'Reports',
     link: '/dashboard',
     icon: 'icon-speedometer',
@@ -40,7 +46,7 @@ const Reports = {
             link: '/reports/allreports'
         }
     ]
-};
+};*/
 
 const DashboardAdmin = {
     text: 'Dashboard',
@@ -332,8 +338,8 @@ const serviceproviders = {
             link: '/valuers/allcases'
         },
         {
-            text: 'Yards',
-            link: '/yards/allcases'
+            text: 'Service Providers Portal',
+            link: '/spportal/portal'
         }
     ]
 };

@@ -22,5 +22,6 @@ export const environment = {
   birt: 'http://68.183.63.158:8787/birt',
   kibana: 'http://68.183.63.158:5601/app/kibana#/dashboard?_g=0',
   manuals_path: '/root/ecol_manuals/',
-  portfoliodash: 'http://68.183.63.158:5601/kibana'
+  portfoliodash: 'http://68.183.63.158:5601/kibana',
+  portal: 'http://68.183.63.158:4300',
 };

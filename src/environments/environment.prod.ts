@@ -22,5 +22,6 @@ export const environment = {
   manuals_path: '/app/manuals/',
   birt: 'http://ecollectweb.co-opbank.co.ke:8787/birt',
   kibana: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/dashboard?_g=0',
-  portfoliodash: 'https://ecollectweb.co-opbank.co.ke/kibana'
+  portfoliodash: 'https://ecollectweb.co-opbank.co.ke/kibana',
+  portal: 'http://ecollectweb.co-opbank.co.ke:4300',
 };

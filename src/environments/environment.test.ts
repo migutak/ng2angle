@@ -22,4 +22,5 @@ export const environment = {
   manuals_path: 'C:\\Users\\Kevin\\Documents\\ecol_manuals\\',
   birt: 'http://ecollecttest.co-opbank.co.ke:8787/birt',
   kibana: 'http://ecollecttest.co-opbank.co.ke:5601/app/kibana#/dashboard?_g=0',
+  secret: "123#Today"
 };
