@@ -93,6 +93,7 @@ export class ViewallComponent implements OnInit {
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
     },
       { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BRANCHCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BRANCHNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'COLOFFICER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
@@ -103,7 +104,10 @@ export class ViewallComponent implements OnInit {
       sortable: true,
       floatingFilter: true,
       unSortIcon: true,
-      suppressResize: false
+      suppressResize: false,
+      enableRowGroup: true,
+      enablePivot: true,
+      pivot: true
     };
     this.rowModelType = "serverSide";
     this.cacheBlockSize = 50;

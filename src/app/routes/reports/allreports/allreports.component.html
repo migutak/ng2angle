@@ -77,8 +77,8 @@
                     </li>
                     <li>
                         <a href=""
-                            (click)="open('/frameset?__report=accountplan.rptdesign&__title=Allocation Summary')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Account plan report</a>
+                            (click)="open('/frameset?__report=accountswithplan_details.rptdesign&__title=Allocation Summary')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Account plan report (Remedial)</a>
                     </li>
                     <li>
                         <a href=""
@@ -97,13 +97,23 @@
                     </li>
                     <li>
                         <a href=""
-                            (click)="kibanaopen('http://172.16.19.151:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()')">
+                            (click)="kibanaopenaccplan()">
                             <em class="fa fa-chart-bar fa-fw"></em>Account plan Report - Simple</a>
                     </li>
                     <li>
                         <a href=""
-                            (click)="kibanaopen('http://172.16.19.151:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))')">
+                            (click)="kibanaopenptp()">
                             <em class="fa fa-chart-bar fa-fw"></em>Promises to Pay</a>
+                    </li>
+                    <li>
+                        <a href=""
+                            (click)="open('/frameset?__report=notes_for_customer.rptdesign&__title=Customer Notes Report')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Customer Notes Report</a>
+                    </li>
+                    <li>
+                        <a href=""
+                            (click)="open('/frameset?__report=remedial_offerings.rptdesign&__title=Remedial Report')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Remedial Offering Report</a>
                     </li>
                 </ul>
             </div>

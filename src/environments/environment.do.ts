@@ -24,4 +24,6 @@ export const environment = {
   manuals_path: '/root/ecol_manuals/',
   portfoliodash: 'http://68.183.63.158:5601/kibana',
   portal: 'http://68.183.63.158:4300',
+  accplanreport: 'http://68.183.63.158:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()',
+  ptpreport: 'http://68.183.63.158:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
 };

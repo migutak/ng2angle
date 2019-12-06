@@ -10,6 +10,8 @@ import { environment } from '../../../../environments/environment';
 })
 export class AllReportsComponent implements OnInit {
 
+    report: string = null;
+
     ngOnInit() { }
 
     onNavigate(reportname) {
@@ -24,8 +26,14 @@ export class AllReportsComponent implements OnInit {
         window.open(environment.birt + report, '_blank');
     }
 
-    kibanaopen(report) {
-        window.open(report, '_blank');
+    kibanaopenaccplan() {
+        this.report = environment.accplanreport;
+        window.open(this.report, '_blank');
+    }
+
+    kibanaopenptp() {
+        this.report = environment.ptpreport;
+        window.open(this.report, '_blank');
     }
 
 }

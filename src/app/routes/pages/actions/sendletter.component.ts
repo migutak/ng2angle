@@ -407,7 +407,7 @@ export class SendLetterComponent implements OnInit {
   }
 
   generateletter(letter) {
-    swal.close();
+    // swal.close();
     this.popinfoToast('Letter Queued to be sent');
     this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {

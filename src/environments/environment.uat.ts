@@ -24,4 +24,6 @@ export const environment = {
   kibana: 'http://172.16.19.151:5601/app/kibana#/dashboard?_g=0',
   portfoliodash: 'http://172.16.19.151:5601/goto/bf80fe14782362d8f9307501e75bf055?embed=true',
   portal: 'http://172.16.19.151:4300',
+  accplanreport: 'http://172.16.19.151:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()',
+  ptpreport: 'http://172.16.19.151:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
 };
