@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import * as $ from 'jquery';
 

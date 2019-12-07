@@ -716,6 +716,23 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/deptcollateral/total?custnumber=' + custnumber);
   }
 
+  getbrokenptps() {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>(environment.nodeapi + '/loans/brokenptps');
+  }
+
+  totalcarddue() {
+    const url = environment.nodeapi + '/loans/demandlettersccdue/';
+    return this.httpClient.get(url);
+    // return this.httpClient.get<any>(environment.nodeapi + '/loans/demandlettersccdue/');
+  }
+
+  lettersdue() {
+    const url = environment.nodeapi + '/loans/demandlettersdue';
+    return this.httpClient.get(url);
+    // return this.httpClient.get<any>(environment.nodeapi + '/loans/demandlettersccdue/');
+  }
+
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
       swal({title: 'You\'re Not Logged In',

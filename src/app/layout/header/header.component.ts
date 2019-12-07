@@ -25,6 +25,10 @@ export class HeaderComponent implements OnInit {
     userdata: any;
     userperm: any;
     user: any;
+    totalBrokenPtps:any;
+    str: string;
+    str1: string;
+    str2: string;
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
@@ -55,6 +59,10 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getbrokenptps(); //gets count of broken ptps
+        this.getcardlettersdue(); // gets count of demand letters due for creditcards
+        this.lettersdue();
+
         this.isNavSearchVisible = false;
 
         const ua = window.navigator.userAgent;
@@ -72,19 +80,6 @@ export class HeaderComponent implements OnInit {
 
     }
 
-    /*getnotification() {
-        this.ecolService.notifications().subscribe(data => {
-            console.log(data[0]);
-            this.nu_of_brokenptps = data[0].brokenptp;
-            this.nu_of_cc_demands = data[0].demandsduecc;
-            this.nu_of_demandsdue = data[0].demandsdue;
-            this.nu_of_alerts = this.nu_of_brokenptps + this.nu_of_cc_demands + this.nu_of_demandsdue;
-            console.log(this.nu_of_alerts);
-        }, error => {
-            console.log(error);
-        });
-    }*/
-
     toggleUserBlock(event) {
         event.preventDefault();
         this.userblockService.toggleVisibility();
@@ -95,6 +90,45 @@ export class HeaderComponent implements OnInit {
         event.stopPropagation();
         this.setNavSearchVisible(true);
     }
+
+    getbrokenptps() {
+        this.ecolService.getbrokenptps().subscribe((data: any) => {
+            
+          this.str = JSON.stringify(data, null, 4);
+          
+          let obj: any= JSON.parse(this.str);
+          this.totalBrokenPtps = obj.data[0].TOTAL;
+          console.log(typeof obj.data[0].TOTAL);
+          
+        }, error => {
+          console.log(error);
+        });
+      }
+
+      lettersdue() {
+        this.ecolService.lettersdue().subscribe((data: any) => {
+          this.str2 = JSON.stringify(data, null, 4);
+          
+          let obj1: any= JSON.parse(this.str2);
+          this.nu_of_demandsdue = obj1.data[0].TOTALVIEWALL;
+          
+        }, error => {
+          console.log(error);
+        });
+      }
+
+
+      getcardlettersdue() {
+        this.ecolService.totalcarddue().subscribe((data: any) => {
+          this.str1 = JSON.stringify(data, null, 4);
+          
+          let obj1: any= JSON.parse(this.str1);
+          this.nu_of_cc_demands = obj1.data[0].TOTALVIEWALL;
+          
+        }, error => {
+          console.log(error);
+        });
+      }
 
     setNavSearchVisible(stat: boolean) {
         // console.log(stat);

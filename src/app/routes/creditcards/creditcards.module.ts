@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { AgGridModule } from '@ag-grid-community/angular';
+
+import { AgGridModule } from 'ag-grid-angular';
+
 
 import { AllcardsComponent } from './allcards/allcards.component';
 import { LoansComponent } from './loans/loans.component';

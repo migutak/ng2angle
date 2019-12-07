@@ -109,10 +109,12 @@
         </li>
 
         <!-- START Alert menu-->
+
         <li class="nav-item dropdown dropdown-list" dropdown>
             <a title="Overdue" class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
                 <em class="icon-bell"></em>
-                <span class="badge badge-danger">{{nu_of_alerts}}</span>
+                <span   class="badge badge-danger">{{totalBrokenPtps*1  +nu_of_cc_demands*1 + nu_of_demandsdue*1}}</span>
+                <!-- {{ num1*1   +num2*1 }} -->
             </a>
             <!-- START Dropdown menu-->
             <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
@@ -127,7 +129,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="m-0">PTPs</p>
-                                    <p class="m-0 text-muted text-sm">{{nu_of_brokenptps}} Broken PTP(s)</p>
+                                    <p class="m-0 text-muted text-sm">{{totalBrokenPtps}} Broken PTP(s)</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +153,7 @@
                                 </div>
                                 <div class="media-body">
                                     <p class="m-0">Card Letters</p>
-                                    <p class="m-0 text-muted text-sm">{{nu_of_cc_demands}} demand letter(s)</p>
+                                    <p class="m-0 text-muted text-sm">{{nu_of_cc_demands}} demand letter(s) due</p>
                                 </div>
                             </div>
                         </div>
