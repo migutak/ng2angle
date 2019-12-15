@@ -1,0 +1,402 @@
+<div class="content-heading">Account information</div>
+<div class="card">
+<ngb-tabset (tabChange)="beforeChange($event)">
+    <ngb-tab title="Account info">
+        <ng-template ngbTabContent>
+            <div>
+                <div class="loader" *ngIf="loader"></div>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">account number:</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.accnumber || account?.cardacct || account?.loanaccnumber}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Outstanding balance:</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.oustbalance || account?.outbalance || account?.loanamount}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Total arrears/EXPPMNT:</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.instamount || account?.EXPPMNT}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Bucket/cycle:</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.bucket || account?.cycle || account?.grade}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">arocode :</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.arocode}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">rrocode :</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.rrocode}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Branchname :</label>
+                        <div class="col-lg-10">
+                            <strong>{{account?.branchcode}}</strong>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Other accounts">
+        <ng-template ngbTabContent>
+            <!--<form>
+                <div class="form-group form-inline">
+                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                </div> ; index as i  <th scope="row">{{ i + 1 }}</th> <th scope="col">#</th>
+            </form>-->
+            <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">accnumber</th>
+                        <th scope="col">productcode</th>
+                        <th scope="col">oustbalance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let other of otheraccs | paginate: { itemsPerPage: 5, currentPage: p }">
+                       
+                        <td>
+                            {{ other.ACCNUMBER }}
+                        </td>
+                        <td>{{ other.PRODUCTCODE }}</td>
+                        <td>{{ other.OUTSBALANCE | number }}</td>
+                    </tr>
+                </tbody>
+                
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Collateral info">
+        <ng-template ngbTabContent>
+                <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">description</th>
+                        <th scope="col">forced sale value</th>
+                        <th scope="col">market value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of collaterals; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            {{ c.description }}
+                        </td>
+                        <td>{{ c.fsv }}</td>
+                        <td>{{ c. msv}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Directors">
+        <ng-template ngbTabContent>
+                <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">IDNuber</th>
+                        <th scope="col">Telnumber</th>
+                        <th scope="col">address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let director of directors; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            {{ director.name }}
+                        </td>
+                        <td>{{ director.idnumber }}</td>
+                        <td>{{ director.telnumber }}</td>
+                        <td>{{ director.address }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Credit card">
+        <ng-template ngbTabContent>
+            <!--<form>
+                            <div class="form-group form-inline">
+                                Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                            </div>
+                        </form>-->
+            <div class="loader" *ngIf="loader"></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CardNumber</th>
+                        <th scope="col">CardAcct</th>
+                        <th scope="col">CardName</th>
+                        <th scope="col">OustBalance</th>
+                        <th scope="col">ExpAmount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let card of cards; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            {{ card.cardnumber }}
+                        </td>
+                        <td>
+                            {{ card.cardacct }}
+                        </td>
+                        <td>
+                            {{ card.cardname }}
+                        </td>
+                        <td>{{ card.oustbalance | number }}</td>
+                        <td>{{ card.expamount | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="with same idNumber">
+        <ng-template ngbTabContent>
+            <!--<form>
+                                <div class="form-group form-inline">
+                                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+                                </div>
+                            </form>-->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">accnumber</th>
+                        <th scope="col">arocode</th>
+                        <th scope="col">oustbalance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of accwithid; index as i">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                            {{ d.accnumber }}
+                        </td>
+                        <td>{{ d.arocode }}</td>
+                        <td>{{ d.oustbalance | number }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            .
+        </ng-template>
+    </ngb-tab>
+    <!--<ngb-tab title="CRB Balances" [disabled]="true">
+        <ng-template ngbTabContent>
+        </ng-template>
+    </ngb-tab>-->
+</ngb-tabset>
+</div>
+<!---<form class="card">
+    <tabset [justified]="true" class="ie-fix-flex">
+        <tab>
+            <ng-template tabHeading>Account info</ng-template>
+
+        </tab>
+        <tab>
+            <ng-template tabHeading>PTPs</ng-template>
+
+        </tab>
+        <tab>
+            <ng-template tabHeading>Other accounts</ng-template>
+            <div>
+                <div class="card-header">Customer accounts</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Tax</th>
+                                <th class="text-center">Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="">Product #123</a>
+                                </td>
+                                <td>$ 100.00</td>
+                                <td>5</td>
+                                <td>21%</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success">In Stock</span>
+                                </td>
+                                <td>$ 605.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+        <tab>
+            <ng-template tabHeading>Collateral info</ng-template>
+            <div>
+                <div class="card-header">Collateral list</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Tax</th>
+                                <th class="text-center">Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="">Product #123</a>
+                                </td>
+                                <td>$ 100.00</td>
+                                <td>5</td>
+                                <td>21%</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success">In Stock</span>
+                                </td>
+                                <td>$ 605.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+        <tab>
+            <ng-template tabHeading>Directors</ng-template>
+            <div>
+                <form action="" method="post" novalidate="novalidate">
+                    <accordion [closeOthers]="true" class="card-group">
+                        <accordion-group #stepgroup1 [isOpen]="step1" panelClass="b mb-2">
+                            <div accordion-heading><strong>Name: </strong></div>
+                            <div id="collapse01">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p>
+                                            <strong>address: </strong>
+                                        </p>
+                                        <p class="mb-0">tel:</p>
+                                        <p>mobile:</p>
+                                        <hr />
+                                    </div>
+                                    <div class="col-lg-6">
+                                        account list
+                                    </div>
+                                </div>
+                            </div>
+                        </accordion-group>
+                    </accordion>
+                </form>
+            </div>
+        </tab>
+        <tab>
+            <ng-template tabHeading>Credit cards</ng-template>
+            <div>
+                <div class="card-header">Customer credit cards</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Tax</th>
+                                <th class="text-center">Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="">Product #123</a>
+                                </td>
+                                <td>$ 100.00</td>
+                                <td>5</td>
+                                <td>21%</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success">In Stock</span>
+                                </td>
+                                <td>$ 605.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+        <tab>
+            <ng-template tabHeading>With same idnumber</ng-template>
+            <div>
+                <div class="card-header">Accounts on the same nationID</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Tax</th>
+                                <th class="text-center">Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="">Product #123</a>
+                                </td>
+                                <td>$ 100.00</td>
+                                <td>5</td>
+                                <td>21%</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success">In Stock</span>
+                                </td>
+                                <td>$ 605.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</form>-->

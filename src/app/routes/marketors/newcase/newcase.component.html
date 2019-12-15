@@ -1,0 +1,151 @@
+<div class="content-heading">
+    <div>Marketers
+        <small>New entry for marketing</small></div>
+</div>
+<!-- START row-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- START card-->
+        <div class="card card-default">
+            <div class="card-header">Enter Case details</div>
+            <div class="card-body">
+                <form #newMarketerForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(newMarketerForm)"
+                    autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Enter the customer number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="custnumber" id="custnumber"
+                                #custnumber="ngModel" [(ngModel)]="model.custnumber"
+                                [ngClass]="{ 'is-invalid': custnumber.invalid }" required placeholder="custnumber" />
+                            <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">custnumber is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Select account number</label>
+                        <div class="col-xl-8">
+                            <ng-select id="accnumber" name="accnumber" #accnumber="ngModel"
+                                [(ngModel)]="model.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }">
+                                <ng-option *ngFor="let a of accounts" [value]="a.accnumber">{{a.accnumber}}</ng-option>
+                            </ng-select>
+                            <div class="validation-error" *ngIf="accnumber.invalid && accnumber.touched">accnumber is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Name of customer</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="custname" id="custname" #custname="ngModel"
+                                [(ngModel)]="model.custname" [ngClass]="{ 'is-invalid': custname.invalid }" required
+                                placeholder="name" />
+                            <div class="validation-error" *ngIf="custname.invalid && custname.touched">custname is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Ownership</label>
+                        <div class="col-xl-8">
+                            <ng-select id="ownership" name="ownership" [items]="selectedSimpleItem" #ownership="ngModel"
+                                [(ngModel)]="model.ownership" [ngClass]="{ 'is-invalid': ownership.errors }" required>
+                            </ng-select>
+                            <div class="validation-error" *ngIf="ownership.invalid && ownership.touched">Ownership is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Account balance</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="oustbalance" id="oustbalance"
+                                #oustbalance="ngModel" [(ngModel)]="model.oustbalance"
+                                [ngClass]="{ 'is-invalid': oustbalance.invalid }" required
+                                placeholder="account balance" />
+                            <div class="validation-error" *ngIf="oustbalance.invalid && oustbalance.touched">Oustbalance
+                                is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Date of input</label>
+                        <div class="col-xl-8">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd" id="dateinput" name="dateinput" [(ngModel)]="model.dateinput" [ngClass]="{ 'is-invalid': dateinput.invalid }"
+                                    name="dateinput" ngbDatepicker #dateinput="ngbDatepicker" required />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" (click)="dateinput.toggle()" type="button"><span><i
+                                                class="fa fa-calendar"></i>
+                                        </span></button>
+                                </div>
+                            </div>
+                            <div class="validation-error" *ngIf="dateinput.invalid && dateinput.touched">Date of input
+                                is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">rro code</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="rrocode" id="rrocode" #rrocode="ngModel"
+                                [(ngModel)]="model.rrocode" [ngClass]="{ 'is-invalid': rrocode.invalid }" required
+                                placeholder="rrocode" />
+                            <div class="validation-error" *ngIf="rrocode.invalid && rrocode.touched">rrocode is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="fsv">Forced Sale Value</label>
+                        <div class="col-xl-8">
+                            <input type="text" class="form-control" id="fsv" name="fsv" [(ngModel)]="model.fsv"
+                                #fsv="ngModel" [ngClass]="{ 'is-invalid': fsv.invalid }" required
+                                placeholder="forced sale value" />
+                            <div *ngIf="fsv.invalid" class="validation-error">
+                                <div *ngIf="fsv.errors.required && fsv.touched">Forced sale value is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">File Number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="fileno" id="fileno" #fileno="ngModel"
+                                [(ngModel)]="model.fileno" [ngClass]="{ 'is-invalid': fileno.invalid }" required
+                                placeholder="fileno" />
+                            <div class="validation-error" *ngIf="fileno.invalid && fileno.touched">fileno is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Property L.R. No.</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="propertyno" id="propertyno"
+                                #propertyno="ngModel" [(ngModel)]="model.propertyno"
+                                [ngClass]="{ 'is-invalid': propertyno.invalid }" required placeholder="propertyno" />
+                            <div class="validation-error" *ngIf="propertyno.invalid && propertyno.touched">propertyno is
+                                required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Open Market Value</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="omv" id="omv" #omv="ngModel"
+                                [(ngModel)]="model.omv" [ngClass]="{ 'is-invalid': omv.invalid }" required
+                                placeholder="omv" />
+                            <div class="validation-error" *ngIf="omv.invalid && omv.touched">omv is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                            <button [disabled]="!newMarketerForm.valid || !newMarketerForm.dirty"
+                                class="btn btn-sm btn-outline-primary" type="submit">Submit</button>
+                            <button class="btn btn-sm btn-outline-danger" type="button"
+                                (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <pre>{{model | json}}</pre>
+            </div>
+        </div>
+        <!-- END card-->
+    </div>
+</div>
+<!-- END row-->

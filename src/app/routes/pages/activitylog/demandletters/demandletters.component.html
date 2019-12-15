@@ -1,0 +1,343 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+  <p style="font-size: 20px; color: white">Sending demand notice ...</p>
+</ngx-spinner>
+<div>
+  <toaster-container [toasterconfig]="config"></toaster-container>
+  <h2>Demand letter</h2>
+  <form #sendLetterForm="ngForm" class="form-horizontal" autocomplete="off">
+      <ngb-tabset>
+          <ngb-tab title="Customer Details">
+            <ng-template ngbTabContent>
+                <div class="card-body">
+                    <div class="card card-default">
+                      <div class="card-body">
+                        <form class="form-horizontal" autocomplete="off">
+                          <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">Demand</label>
+                            <div class="col-xl-8">
+                              <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand" #demand="ngModel"
+                                [ngClass]="{ 'is-invalid': demand.invalid }" required>
+                                <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">accnumber</label>
+                            <div class="col-xl-8">
+                              <input class="form-control" type="text" name="accnumber" id="accnumber" [(ngModel)]="model.accnumber"
+                                #accnumber="ngModel" [ngClass]="{ 'is-invalid': accnumber.invalid }" required />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">custnumber</label>
+                            <div class="col-xl-8">
+                              <input class="form-control" type="text" name="custnumber" id="custnumber" [(ngModel)]="model.custnumber"
+                                #custnumber="ngModel" [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                              <label class="col-xl-4 col-form-label">address</label>
+                              <div class="col-xl-8">
+                                <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
+                                  #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
+          
+                                  <datalist id="daddress">
+                                      <option *ngFor="let a of addresses">{{a.address}}</option>
+                                  </datalist>
+          
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-xl-4 col-form-label">postcode</label>
+                              <div class="col-xl-8">
+                                <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
+                                  #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" list="dpostcode" required />
+          
+                                  <datalist id="dpostcode">
+                                      <option *ngFor="let p of postcodes">{{p.postcode}}</option>
+                                  </datalist>
+          
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-xl-4 col-form-label">email address</label>
+                              <div class="col-xl-8">
+                                <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
+                                  #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
+          
+                                  <datalist id="browsers">
+                                      <option *ngFor="let e of emails">{{e.email}}</option>
+                                  </datalist>
+          
+                              </div>
+                            </div>
+                          <div class="form-group row">
+                              <label class="col-xl-4 col-form-label">cellnumber</label>
+                              <div class="col-xl-8">
+                                <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
+                                  #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
+          
+                                  <datalist id="cellnumber">
+                                      <option *ngFor="let t of teles">{{t.telephone}}</option>
+                                  </datalist>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-4 col-form-label">Save to contacts</label>
+                                <div class="col-xl-8">
+                                    <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts(model)">
+                                        <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
+                                        </span>Save this contact</button>
+                                </div>
+                            </div>
+                          <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">Preview</label>
+                            <div class="col-xl-8">
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="inlineCheckbox1" type="checkbox" [(ngModel)]="model.showlogo"
+                                  name="showlogo" value="Y" />
+                                <label class="form-check-label" for="inlineCheckbox1">show logo and footer</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="inlineRadio1" type="radio" [(ngModel)]="model.format" name="format"
+                                  value="msword" />
+                                <label class="form-check-label" for="inlineRadio1">Word (Recomended)</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="inlineRadio2" type="radio" [(ngModel)]="model.format" name="format"
+                                  value="pdf" />
+                                <label class="form-check-label" for="inlineRadio2">pdf</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-xl-4 col-form-label"></label>
+                            <div class="col-xl-4">
+                              <input id="previewtosend" type="checkbox" name="previewtosend" id="previewtosend"
+                                [(ngModel)]="model.previewtosend" #previewtosend="ngModel" />
+                              <label for="previewtosend"> Preview and send physically</label>
+                            </div>
+                            <div class="col-xl-4">
+                              <button [disabled]="demand.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
+                                type="button" (click)="openletter_choose(model)">Preview letter</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                <fieldset>
+                    <div class="form-group row">
+                      <label class="col-md-0 col-form-label"></label>
+                      <div class="col-md-12">
+                        <label class="checkbox c-checkbox c-checkbox-rounded">
+                          <input id="sendemailinput" type="checkbox" [disabled]="!emailaddress.valid || demand.invalid" name="sendemail" id="sendemail"
+                            [(ngModel)]="model.sendemail" #sendemail="ngModel" />
+                          <span class="fa fa-check"></span>Send to email</label>
+                        <label class="checkbox c-checkbox c-checkbox-rounded">
+                          <input type="checkbox" [disabled]="!addressline1.valid || demand.invalid" name="sendpostal" id="sendpostal"
+                            [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
+                          <span class="fa fa-check"></span>Send to post address</label>
+                        <label class="checkbox c-checkbox c-checkbox-rounded">
+                          <input type="checkbox" [disabled]="!celnumber.valid || demand.invalid" name="sendbysms" id="sendbysms"
+                            [(ngModel)]="model.sendbysms" #sendbysms="ngModel" />
+                          <span class="fa fa-check"></span>SMS delivery</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div class="form-group row">
+                    <label class="col-xl-4 col-form-label"></label>
+                    <div class="col-xl-8">
+                      <button [disabled]="!model.sendemail && !model.sendbysms" class="btn btn-sm btn-secondary" type="button" (click)="generate_choose()">Generate
+                        & Send</button>
+                    </div>
+                  </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Upload a demand letter">
+              <ng-template ngbTabContent>
+                  <div class="card-body">
+                      <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Select Demand</label>
+                        <div class="col-xl-8">
+                          <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand" #demand="ngModel"
+                            [ngClass]="{ 'is-invalid': demand.invalid }" required>
+                            <option *ngFor="let demand of itemsDemands">{{demand}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-3">
+                          <div class="card">
+                            <div class="card-body">
+                              <h4 class="page-header mt0">Select files</h4>
+                              <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                                [uploader]="uploader" class="box-placeholder my-drop-zone">
+                                Drop files here
+                              </div>
+                              <p class="text-bold">Upload options</p>
+                              <label for="file1" class="file-upload">
+                                <button class="btn btn-secondary btn-block">Select Multiple</button>
+                                <input id="file1" type="file" ng2FileSelect [uploader]="uploader" multiple />
+                              </label>
+                              <label for="file2" class="file-upload">
+                                <button class="btn btn-secondary btn-block">Select Single</button>
+                                <input id="file2" type="file" ng2FileSelect [uploader]="uploader" />
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-9" style="margin-bottom: 40px">
+                          <div class="card">
+                            <div class="card-body">
+                              <p class="float-right badge badge-info" *ngIf="uploader?.queue?.length">Queue length: {{
+                                uploader?.queue?.length }}</p>
+                              <h4 class="page-header mt0">Upload queue</h4>
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th width="50%">Name</th>
+                                    <th>Size</th>
+                                    <th>Progress</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of uploader.queue">
+                                    <td><strong>{{ item?.file?.name }}</strong></td>
+                                    <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                    <td>
+                                      <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                      </div>
+                                    </td>
+                                    <td class="text-center">
+                                      <span *ngIf="item.isSuccess"><i class="fa fa-ok"></i></span>
+                                      <span *ngIf="item.isCancel"><i class="icon-close mr"></i></span>
+                                      <span *ngIf="item.isError"><i class="fas fa-times"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                      <button type="button" class="btn btn-info btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="fa icon-cloud-upload mr"></span> Upload
+                                      </button>
+                                      <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                        <span class="icon-close mr"></span> Cancel
+                                      </button>
+                                      <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                                        <span class="icon-trash mr"></span> Remove
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body">
+                              <div>
+                                <div>
+                                  Queue progress:
+                                  <div class="progress">
+                                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                  </div>
+                                </div>
+                                <button type="button" class="btn btn-info btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                  <span class="fa icon-cloud-upload mr"></span> Upload all
+                                </button>
+                                <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                  <span class="icon-close mr"></span> Cancel all
+                                </button>
+                                <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                  <span class="icon-trash mr"></span> Remove all
+                                </button>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                  <input class="form-check-input" id="uploadedfile" type="checkbox" [(ngModel)]="model.uploadedfile"
+                                    name="uploadedfile" value="Y" />
+                                  <label class="form-check-label" for="uploadedfile">Use this file in demand letter email</label>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </ng-template>
+            </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>History Demand Letters <span class="badge badge-primary">{{demands?.length}}</span></ng-template>
+            <ng-template ngbTabContent>
+                <div class="card-body">
+                    <table class="wd-wide">
+                        <tbody>
+                          <tr *ngFor="let d of demands">
+                            <td class="wd-xs">
+                              <div class="px-2">
+                                <button class="btn btn-outline-success btn-sm" (click)="downloadDemand(d.filepath, d.filename)">
+                                  <i class="fa fa-download"></i>
+                                </button>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="px-2">
+                                <h4 class="mb-2">{{d.demand}}</h4>
+                                <small class="text-muted">{{d.owner}}</small>
+                              </div>
+                            </td>
+                            <td class="wd-sm  d-none d-lg-table-cell">
+                              <div class="px-2">
+                                <p class="m-0">Date sent</p>
+                                <small class="text-muted">{{d.datesent | date}}</small>
+                              </div>
+                            </td>
+                            <td class="wd-xs d-none d-lg-table-cell">
+                              <div class="px-2">
+                                <p class="m-0 text-muted">
+                                  <em class="icon-envelop mr-2 fa-lg"></em><button class="btn btn-link" (click)="resend(d.filepath)">resend
+                                    on email</button></p>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+          <ng-template ngbTabTitle>Guarantors <span class="badge badge-primary">{{guarantors?.length}}</span></ng-template>
+            <ng-template ngbTabContent>
+                <div class="card-body">
+                    <!-- START table-responsive-->
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Gurarantor Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Postal Code</th>
+                            <th scope="col">Tenumber</th>
+                            <th scope="col">Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let g of guarantors">
+                            <th scope="row">{{g.idnumber}}</th>
+                            <td>{{g.guarantorname}}</td>
+                            <td>{{g.address}}</td>
+                            <td>{{g.postalcode}}</td>
+                            <td>{{g.telnumber}}</td>
+                            <td>{{g.email}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- END table-responsive-->
+                  </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+    
+  </form>
+</div>

@@ -1,0 +1,10 @@
+<div class="content-heading">
+    <div>E-Credit
+      <small>view all E-Credit</small></div>
+</div>
+<ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="myGrid" class="ag-theme-balham"
+[columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [rowModelType]="rowModelType"
+[maxBlocksInCache]="maxBlocksInCache" [animateRows]="true"
+[floatingFilter]="true" [rowData]="rowData" [pagination]="true" [enableSorting]="true" [enableFilter]="true"
+[enableColResize]="true" [paginationAutoPageSize]="true" (rowClicked)='onRowDoubleClicked($event)'
+(gridReady)="onGridReady($event)"></ag-grid-angular> 

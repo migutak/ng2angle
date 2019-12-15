@@ -1,0 +1,53 @@
+version: "3.3"
+services:
+  ecollect:
+    image: migutak/ecollect:1.0.0
+    container_name: ecollect
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+    - ecol-network
+
+  uploads:
+    image: migutak/uploads:1.0.0
+    container_name: uploads
+    restart: always
+    environment:
+      - CORS=http://ecollecttst.co-opbank.co.ke
+    volumes:
+      - /home/ecollectadmin/uploads:/var/uploads
+    ports:
+      - "4000:4000"
+      - "5000:5000"
+      - "5001:5001"
+      - "3000:3000"
+    networks:
+    - ecol-network
+
+  docxletters:
+    image: migutak/docxletters:1.0.0
+    container_name: docx
+    restart: always
+    volumes:
+      - /home/ecollectadmin/demands:/app/demands
+    environment:
+      - FILEPATH=/app/demands/
+      - IMAGEPATH=/app/docxletters/routes/
+    ports:
+      - "8004:8004"
+    networks:
+    - ecol-network
+
+  birt:
+    container_name: birt
+    image: migutak/birt:1.0.0
+    volumes:
+      - /app/birt/reports:/usr/local/tomcat/webapps/birt
+    restart: always
+    ports:
+      - 8787:8080
+
+networks:
+  ecol-network:
+    driver: bridge

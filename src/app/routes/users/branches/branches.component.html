@@ -1,0 +1,96 @@
+<div class="content-heading">
+  <div>Branches
+    <small>Create and manage branches</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card card-default">
+        <div class="card-header">Branch List</div>
+        <div class="card-body">
+          <form #searchForm="ngForm" class="form-horizontal" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-xl-4 col-lg-6 form-inline">
+                <input class="mb form-control" placeholder="Search..." type="text" [(ngModel)]="model.searchText"
+                  name="searchText" #searchText="ngModel" minlength="4" required />
+                <button type="button" class="btn btn-outline-inverse" (click)="onSearch()"
+                  [disabled]="!searchForm.valid || !searchForm.dirty"><span class="fa fa-search"></span>
+                  Search</button>
+
+              </div>
+              <div class="col-xl-4 col-lg-6 form-inline">
+                <button class="mr-1 mb-1 btn btn-outline-green" type="button" (click)="reset()"><span
+                    class="fa fa-search"></span> Reset</button>
+              </div>
+            </div>
+            <p *ngIf="searchText.errors?.minlength">minimum of four(4) search characters is required</p>
+          </form>
+          <scrollable class="list-group" height="600">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>BranchCode#</th>
+                    <th>Branch Name</th>
+                    <th>Branch Manager</th>
+                    <th>Branch Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let b of branches">
+                    <td><button class="btn btn-link" (click)="update(b)">{{b.branchcode}}</button></td>
+                    <td>{{b.branchname}}</td>
+                    <td>{{b.manager}}</td>
+                    <td>{{b.branchemail}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </scrollable>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card card-default">
+        <div class="card-body">
+          <form [formGroup]="branchForm" class="form-validate form-horizontal"
+            (submit)="submitForm($event, branchForm.value)" novalidate="" autocomplete="off">
+            <div class="form-group">
+              <p>BranchCode#</p>
+              <input class="form-control" type="text" formControlName="branchcode" name="branchcode"
+                [formControl]="branchForm.controls['branchcode']" [ngClass]="{ 'is-invalid': f.branchcode.errors }"
+                required />
+            </div>
+            <div class="form-group">
+              <p>Branch Name</p>
+              <input class="form-control" type="text" formControlName="branchname"
+                [formControl]="branchForm.controls['branchname']" [ngClass]="{ 'is-invalid': f.branchname.errors }"
+                required />
+            </div>
+            <div class="form-group">
+              <p>Branch Manager</p>
+              <input class="form-control" type="text" formControlName="manager"
+                [formControl]="branchForm.controls['manager']" [ngClass]="{ 'is-invalid': f.manager.errors }"
+                required />
+            </div>
+            <div class="form-group">
+              <p>Branch Email</p>
+              <input class="form-control" type="text" formControlName="branchemail"
+                [formControl]="branchForm.controls['branchemail']" />
+            </div>
+            <div class="form-group">
+              <p>Region</p>
+              <input class="form-control" type="text" formControlName="region"
+                [formControl]="branchForm.controls['region']" />
+            </div>
+            <div class="form-group">
+              <button [disabled]="branchForm.invalid" class="btn btn-outline-primary">Update or create new
+                Branch</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

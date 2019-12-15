@@ -1,0 +1,215 @@
+<!-- Shows hand on header icons -->
+<style>
+    li:hover {
+        cursor: pointer;
+    }
+
+    .badge {
+        -webkit-animation: badge 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) infinite alternate-reverse both;
+        animation: badge 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) infinite alternate-reverse both;
+    }
+    
+    @-webkit-keyframes badge {
+        0% {
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    @keyframes badge {
+        0% {
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    /* @keyframes shake {
+  0% { transform: skewX(-15deg); }
+  5% { transform: skewX(15deg); }
+  10% { transform: skewX(-25deg); }
+  15% { transform: skewX(10deg); }
+  20% { transform: skewX(0deg); }
+  100% { transform: skewX(0deg); }  
+} */
+</style>
+
+
+<!-- START Top Navbar-->
+<nav class="navbar topnavbar" role="navigation">
+    <!-- START navbar header-->
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#/">
+            <div class="brand-logo">
+                <!---<img class="img-fluid" src="assets/img/logo.png" alt="App Logo" />-->
+                <img title="Cooperative Bank of Kenya"
+                    style="max-width:40% !important; height:40px !important; margin-top:6px !important;border-radius: 50%;"
+                    [src]="user.picture" alt="Avatar" />
+                <span style="color: white"><strong>E-Collect&reg;</strong></span>
+            </div>
+            <div class="brand-logo-collapsed">
+                <img class="img-fluid" [src]="user.picture" alt="App Logo" />
+            </div>
+        </a>
+    </div>
+    <!-- END navbar header-->
+    <!-- START Left navbar-->
+    <ul class="navbar-nav mr-auto flex-row">
+        <li class="nav-item">
+            <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+            <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize=""
+                (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
+                <em class="fas fa-bars"></em>
+            </a>
+            <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+            <a class="nav-link sidebar-toggle d-md-none"
+                (click)="settings.toggleLayoutSetting('asideToggled'); $event.stopPropagation()">
+                <em class="fas fa-bars"></em>
+            </a>
+        </li>
+        <!-- START User avatar toggle-->
+        <!--<li class="nav-item d-none d-md-block">
+            Button used to collapse the left sidebar. Only visible on tablet and desktops
+            <a  class="nav-link" (click)="toggleUserBlock($event)">
+                <em class="icon-user"></em>
+            </a>
+        </li>-->
+        <!-- END User avatar toggle-->
+        <!-- START lock screen
+        <li class="nav-item d-none d-md-block">
+            <a class="nav-link"  title="Lock screen" [routerLink]="'/lock'">
+                <em class="icon-lock"></em>
+            </a>
+        </li>
+         END lock screen-->
+        <!---<li class="nav-item d-none d-md-block">
+                <a class="nav-link"  title="Lock screen" (click)="logout()">
+                    <em class="icon-lock"></em>
+                </a>
+        </li>-->
+    </ul>
+    <!-- END Left navbar-->
+    <!-- START Right Navbar-->
+    <ul class="navbar-nav flex-row">
+
+        <!-- Fullscreen (only desktops)-->
+        <li class="nav-item d-none d-md-block">
+            <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)" title="Go Fullscreen">
+                <em class="fa fa-expand"></em>
+            </a>
+        </li>
+
+        <!-- START Alert menu-->
+
+        <li class="nav-item dropdown dropdown-list" dropdown>
+            <a title="Overdue" class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
+                <em class="icon-bell"></em>
+                <span   class="badge badge-danger">{{totalBrokenPtps*1  +nu_of_cc_demands*1 + nu_of_demandsdue*1}}</span>
+                <!-- {{ num1*1   +num2*1 }} -->
+            </a>
+            <!-- START Dropdown menu-->
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
+                <div class="dropdown-item">
+                    <!-- START list group-->
+                    <div class="list-group">
+                        <!-- list item-->
+                        <div [routerLink]="['/work/ptps']" class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fas fa-hand-holding-usd fa-2x text-info"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">PTPs</p>
+                                    <p class="m-0 text-muted text-sm">{{totalBrokenPtps}} Broken PTP(s)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- list item-->
+                        <div [routerLink]="['/demand/demands']" class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-envelope fa-2x text-warning"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">Loan Letters</p>
+                                    <p class="m-0 text-muted text-sm">You have {{nu_of_demandsdue}} demands to send</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div [routerLink]="['/creditcards/creditcarddemands/demandsdue']"
+                            class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-envelope fa-2x text-warning"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">Card Letters</p>
+                                    <p class="m-0 text-muted text-sm">{{nu_of_cc_demands}} demand letter(s) due</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- list item-->
+                        <div [routerLink]="['/work/overdue']" class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="align-self-start mr-2">
+                                    <em class="fa fa-tasks fa-2x text-success"></em>
+                                </div>
+                                <div class="media-body">
+                                    <p class="m-0">Overdue actions</p>
+                                    <p class="m-0 text-muted text-sm">{{nu_of_overdue}} overdue task(s)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- last list item
+                       <div class="list-group-item list-group-item-action">
+                          <span class="d-flex align-items-center">
+                             <span class="text-sm">More notifications</span>
+                             <span class="badge badge-danger ml-auto">14</span>
+                          </span>
+                       </div>-->
+                    </div>
+                    <!-- END list group-->
+                </div>
+            </div>
+            <!-- END Dropdown menu-->
+        </li>
+        <!-- END Alert menu-->
+
+
+        <!-- START Theme button-->
+        <li class="nav-item">
+            <a title="Theme settings" class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()">
+                <em class="fas fa-cog"></em>
+            </a>
+        </li>
+        <!-- END Theme button-->
+
+
+        <li class="nav-item dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><em class="icon-user"></em>
+                {{user.username}} | {{user.role}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#" class="dropdown-item"><i class="fa fas-user-o"></i> Profile</a></li>
+                <li><a href="#" class="dropdown-item"><i class="fa fas-calendar-o"></i> Calendar</a></li>
+                <li><a href="#" class="dropdown-item"><i class="fa fas-sliders"></i> Settings</a></li>
+                <li class="divider dropdown-divider"></li>
+                <li><a href="#" (click)="logout()" class="dropdown-item"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!-- END Right Navbar-->
+
+    <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch>
+
+</nav>
+<!-- END Top Navbar-->

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e962c704-3d16-40b4-b140-21d4a94711eb" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1UsX9j7Z8WhWTrWzucP0hVlWffF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.protractor.protractor_package" value="$PROJECT_DIR$/node_modules/protractor" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="Tests (ng2angle)" type="JavaScriptTestRunnerKarma">
+      <config-file value="$PROJECT_DIR$/src/karma.conf.js" />
+      <karma-package-dir value="$PROJECT_DIR$/node_modules/@angular/cli" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="E2E Tests (ng2angle-e2e)" type="JavaScriptTestRunnerProtractor">
+      <config-file value="$PROJECT_DIR$/e2e/protractor.conf.js" />
+      <node-interpreter value="project" />
+      <protractor-package value="$PROJECT_DIR$/node_modules/protractor" />
+      <protractor-options value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular CLI Server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e962c704-3d16-40b4-b140-21d4a94711eb" name="Default Changelist" comment="" />
+      <created>1576146127144</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576146127144</updated>
+      <workItem from="1576146140250" duration="3202000" />
+      <workItem from="1576159341238" duration="83000" />
+      <workItem from="1576159478402" duration="20000" />
+      <workItem from="1576168029297" duration="3545000" />
+      <workItem from="1576178646507" duration="48260000" />
+      <workItem from="1576404826968" duration="15676000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1576230312831">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1576230312831" />
+    <state x="463" y="123" key="FileChooserDialogImpl" timestamp="1576234545238">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1576234545238" />
+    <state width="1308" height="159" key="GridCell.Tab.0.bottom" timestamp="1576147095878">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1308" height="159" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1576147095878" />
+    <state width="1308" height="159" key="GridCell.Tab.0.center" timestamp="1576147095878">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1308" height="159" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1576147095878" />
+    <state width="1308" height="159" key="GridCell.Tab.0.left" timestamp="1576147095878">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1308" height="159" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1576147095878" />
+    <state width="1308" height="159" key="GridCell.Tab.0.right" timestamp="1576147095878">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1308" height="159" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1576147095878" />
+    <state x="184" y="11" key="SettingsEditor" timestamp="1576234559723">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="184" y="11" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1576234559723" />
+    <state x="380" y="0" width="606" height="738" key="find.popup" timestamp="1576405625100">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="380" y="0" width="606" height="738" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1576405625100" />
+    <state x="339" y="165" key="run.anything.popup" timestamp="1576249837848">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1576249837848" />
+  </component>
+</project>

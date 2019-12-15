@@ -1,0 +1,130 @@
+<div class="content-heading">
+  <div>
+    Account Plans
+    <small>Account plan settings</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+    <p style="font-size: 20px; color: white">Processing ...</p>
+  </ngx-spinner>
+  <div class="row">
+    <div id="accordion" class="col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapseOne">
+            Account Plan Configurations
+          </a>
+        </div>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="card card-primary">
+                  <div class="card-body">
+                    <fieldset>
+                      <div class="form-check mb-2 mr-sm-2">
+                        <div class="form-check" *ngFor="let i of items">
+                          <input class="form-check-input" id="plan" type="radio" (click)="setradio(i)" ngModel
+                            name="plan" [value]="i.planid" />
+                          <label class="form-check-label" for="plan">{{i.plantitle}}</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <form #addplanForm="ngForm" (ngSubmit)="newplan(addplanForm.value)" novalidate autocomplete="off">
+                      <div class="form-row">
+                        <div class="col">
+                          <input type="text" class="form-control" name="plantitle" id="plantitle" #plantitle="ngModel"
+                            [(ngModel)]="model.plantitle" placeholder="plan name"
+                            [ngClass]="{ 'is-invalid': plantitle.invalid }" required>
+                        </div>
+                        <div class="col">
+                          <button [disabled]="!addplanForm.valid || !addplanForm.dirty" type="submit"
+                            class="btn btn-primary"><em class="fa fa-check fa-fw"></em> add new plan</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="accordion" class="col-xl-8">
+      <div class="col-xl-12">
+        <div class="card card-default">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseDemand1">
+              {{selected_plan}} actions:
+            </a>
+          </div>
+          <div id="collapseDemand1" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+              <table class="table" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>actionid</th>
+                    <th>actiontitle</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let p of planactions">
+                    <td>{{p.planid}}</td>
+                    <td>{{p.actionid}}</td>
+                    <td>{{p.actiontitle}}</td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-danger btn-sm" (click)="editaction(p)">
+                          <i class="fas fa-edit"></i> delete
+                        </button>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="lead mt-3"></p>
+              <p>Add action</p>
+              <hr>
+              <form #addactionForm="ngForm" class="form-horizontal" (ngSubmit)="addactionSubmit(addactionForm.value)">
+
+                <div class="form-group row mb">
+                  <div class="col-md-12">
+                    <label class="mt">Plan</label>
+                    <input #plan="ngModel" id="plan" name="plan" [(ngModel)]="model.plan" readonly required />
+                  </div>
+                </div>
+
+                <fieldset>
+                  <div class="form-group row mb">
+                    <div class="col-md-12">
+                      <label class="mt">Select action to add to plan</label>
+                      <ng-select id="planaction" name="planaction" [(ngModel)]="model.planaction"
+                        placeholder="No action selected" #planaction="ngModel" [(ngModel)]="model.planaction"
+                        [ngClass]="{ 'is-invalid': planaction.invalid }" required>
+                        <ng-option *ngFor="let a of actions" [value]="a.actionid">{{a.actiontitle}}</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="clearfix">
+                  <div class="float-left">
+                    <button *ngIf="!edit" [disabled]="!addactionForm.valid || !addactionForm.dirty" class="btn btn-outline-primary"
+                      type="submit">
+                      <em class="fa fa-check fa-fw"></em>Add</button>
+                    <button *ngIf="edit" [disabled]="addactionForm.invalid"
+                      class="mb-1 mr-1 btn btn-sm btn-outline-warning  col-form-label" type="button"
+                      (click)="deleteaction(model)">Delete</button>
+                    <button *ngIf="edit" class="mb-1 mr-1 btn btn-sm btn-outline-danger  col-form-label"
+                      type="button" (click)="cancel()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
