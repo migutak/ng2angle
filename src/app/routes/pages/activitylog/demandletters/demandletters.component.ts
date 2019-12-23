@@ -9,8 +9,10 @@ import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 import { license } from '../../../../../../env';
+import { HttpClient } from '@angular/common/http';
 
 const URL = environment.valor;
+const apiUrl = environment.letters_api;
 
 @Component({
   selector: 'app-demandletters',
@@ -84,6 +86,7 @@ export class DemandLettersComponent implements OnInit {
     private ecolService: EcolService,
     private spinner: NgxSpinnerService,
     public toasterService: ToasterService,
+    private httpClient: HttpClient
   ) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -342,7 +345,7 @@ export class DemandLettersComponent implements OnInit {
                     'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
                   };
 
-                 // console.log('to history ', this.demandhisdetails);
+                  // console.log('to history ', this.demandhisdetails);
                   this.demandshistory(this.demandhisdetails);
                   // send sms
                   this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
@@ -500,14 +503,108 @@ export class DemandLettersComponent implements OnInit {
     });
   }
 
-  generateletter(letter) {
-    // console.log(this.model);
+  async generateletter(letter) {
     // swal.close();
-    this.popinfoToast('Letter Queued to be sent');
-    this.ecolService.generateLetter(letter).subscribe(uploaddata => {
+    this.popinfoToast('Letter in queue');
+    // await letter generation
+    const uploaddata = await this.httpClient.post<any>(apiUrl + letter.demand + '/download', letter).toPromise();
+    // console.log("Data: " + JSON.stringify(uploaddata)); 
+    // console.log("Data: ", uploaddata.result); 
+    if (uploaddata.result === 'success') {
+      this.popsuccessToast('Letter generated ...');
+      // save to history
+      this.demandhisdetails = {
+        'accnumber': this.model.accnumber,
+        'custnumber': this.model.custnumber,
+        'address': this.model.addressline1,
+        'email': this.model.emailaddress,
+        'telnumber': this.model.telnumber,
+        'filepath': uploaddata.message,
+        'filename': uploaddata.filename,
+        'datesent': new Date(),
+        'owner': this.username,
+        'byemail': this.model.sendemail,
+        'byphysical': this.model.sendphysical,
+        'bypost': this.model.sendpostal,
+        'demand': letter.demand,
+        'customeremail': this.model.emailaddress,
+        'status': 'queued',
+        'reissued': 'N',
+        'guarantorsno': this.guarantors.length || [],
+        'guarantorsemail': this.guarantoremails,
+        'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
+      };
+      //
+      this.emaildata.file = uploaddata.message;
+      // use uploaded fie on email
+      if (this.model.uploadedfile) {
+        this.emaildata.file = this.uploadedfilepath;
+      }
+
+      // send demandbyemail
+      if (this.model.sendemail) {
+        this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
+          if (response.result === 'fail') {
+            swal.close();
+            this.poperrorToast('Letter not sent on email!');
+          } else {
+            this.demandshistory(this.demandhisdetails);
+            this.getdemandshistory(this.accnumber);
+            // send sms
+            this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
+              const sms = respo.smstemplate;
+              this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
+              const smsdata = {
+                'demand': letter.demand,
+                'custnumber': this.model.custnumber,
+                'accnumber': this.model.accnumber,
+                'telnumber': this.model.celnumber,
+                'owner': this.username,
+                'message': this.smsMessage,
+              };
+              this.sendsms(smsdata);
+            }, error => {
+              console.log(error);
+            });
+
+            swal.close();
+            this.popsuccessToast('Letter sent on email!');
+          }
+        }); // end
+      } // end send demandbyemail
+
+      // send demandbysms
+      if (this.model.sendbysms) {
+        const smsbody = {
+          "accountSid": license.accountSid,
+          "authToken": license.authToken,
+          "to": this.model.celnumber,
+          "from": license.from,
+          "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
+        }
+        this.ecolService.sendDemandsms(smsbody).subscribe(response => {
+          console.log(response);
+          if (response.result === 'OK') {
+            // add to history
+            this.demandshistory(this.demandhisdetails);
+            this.getdemandshistory(this.accnumber);
+
+            swal.close();
+            this.popsuccessToast('Letter sent on sms!');
+          } else {
+            swal.close();
+            this.poperrorToast(response.response.message);
+          }
+        });
+      } // end demandbysms
+
+      
+    }
+
+    /*this.ecolService.generateLetter(letter).subscribe(uploaddata => {
       if (uploaddata.result === 'success') {
         
-        this.popsuccessToast('Letter generated and queued to be sent');
+        this.popsuccessToast('Letter generated ...');
         // save to history
         this.demandhisdetails = {
           'accnumber': this.model.accnumber,
@@ -602,7 +699,7 @@ export class DemandLettersComponent implements OnInit {
     }, error => {
       console.log(error);
       swal('Error!', 'Cannot generate letter!', 'error');
-    });
+    });*/
   }  // end generateletter
 
   processlettercc(demand, cardacct, emailaddress) {
@@ -686,16 +783,16 @@ export class DemandLettersComponent implements OnInit {
               this.demandshistory(this.demandhisdetails);
               this.getdemandshistory(this.accnumber);
               // send sms
-                this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
-                const smsdata = {
-                  'demand': letter.demand,
-                  'custnumber': this.model.custnumber,
-                  'accnumber': this.model.accnumber,
-                  'telnumber': this.model.celnumber,
-                  'owner': this.username,
-                  'message': this.smsMessage,
-                };
-                this.sendsms(smsdata);
+              this.smsMessage = 'Dear Customer, We have sent a Loan Repayment  Demand  Notice to your address. To enquire call  0711049000';
+              const smsdata = {
+                'demand': letter.demand,
+                'custnumber': this.model.custnumber,
+                'accnumber': this.model.accnumber,
+                'telnumber': this.model.celnumber,
+                'owner': this.username,
+                'message': this.smsMessage,
+              };
+              this.sendsms(smsdata);
 
               swal.close();
               this.popsuccessToast('Letter sent on email!');
@@ -713,7 +810,7 @@ export class DemandLettersComponent implements OnInit {
             "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
           };
           //
-         //console.log(smsbody);
+          //console.log(smsbody);
           this.ecolService.sendDemandsms(smsbody).subscribe(response => {
             console.log(response);
             if (response.result === 'OK') {
@@ -739,7 +836,7 @@ export class DemandLettersComponent implements OnInit {
     });
   }  // end generateletter
 
-  
+
 
   sendsms(smsdata) {
     this.ecolService.sendsms(smsdata).subscribe(result => {

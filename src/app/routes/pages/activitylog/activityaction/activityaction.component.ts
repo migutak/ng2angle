@@ -302,10 +302,10 @@ export class ActivityActionComponent implements OnInit {
       return;
     }
 
-    if (this.f.ptpemail.value && this.f.toemail.value == '') {
+    /*if (this.f.ptpemail.value && this.f.toemail.value == '') {
       alert('Please fill Customer email');
       return;
-    }
+    }*/
 
     if (this.f.ptpsms.value && this.f.ptpsmsnumber.value == '') {
       alert('Please fill Customer Mobile number');
@@ -361,6 +361,8 @@ export class ActivityActionComponent implements OnInit {
         ptpdate: 0
       }
     }
+
+    
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
