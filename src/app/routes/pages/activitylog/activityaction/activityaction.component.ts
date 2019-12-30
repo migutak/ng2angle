@@ -56,6 +56,7 @@ export class ActivityActionComponent implements OnInit {
   isptptosave = false;
   p = 1;
   autodial_telnumber: string;
+  ptpid: any = 0;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -133,6 +134,8 @@ export class ActivityActionComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       this.sys = queryParams.get('sys');
     });
+
+    this.ptpid = this.route.snapshot.queryParamMap.get('ptpid');
 
     // build form
     this.buildForm();
@@ -396,7 +399,18 @@ export class ActivityActionComponent implements OnInit {
         };
 
         this.ecolService.putwatch(watchbody).subscribe(resp => {
-          //
+        }, error => { console.log(error); });
+      }
+
+      if (this.sys === 'ptp') {
+        const ptpbody = {
+          id: this.ptpid,
+          comment: this.f.collectornote.value,
+          reviewdate: moment().format('DD-MMM-YYYY'),
+          owner: this.username
+        };
+
+        this.ecolService.reviewptp(ptpbody).subscribe(resp => {
         }, error => { console.log(error); });
       }
 

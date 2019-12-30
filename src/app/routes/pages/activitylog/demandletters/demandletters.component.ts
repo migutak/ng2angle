@@ -597,8 +597,6 @@ export class DemandLettersComponent implements OnInit {
           }
         });
       } // end demandbysms
-
-      
     }
 
     /*this.ecolService.generateLetter(letter).subscribe(uploaddata => {
@@ -840,7 +838,7 @@ export class DemandLettersComponent implements OnInit {
 
   sendsms(smsdata) {
     this.ecolService.sendsms(smsdata).subscribe(result => {
-      swal('Successful!', 'Demand letter SMS sent!', 'success');
+      swal('Successful!', 'Demand letter sent!', 'success');
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during sending email!', 'error');

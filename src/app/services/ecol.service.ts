@@ -462,6 +462,10 @@ export class EcolService {
     return this.httpClient.post<any>(environment.nodeapi + '/teles/update' , data);
   }
 
+  reviewptp(data) {
+    return this.httpClient.post<any>(environment.nodeapi + '/brokenptps/review' , data);
+  }
+
   put_s_actions(data) {
     return this.httpClient.put<any>(environment.api + '/api/tbl_s_actions/' + data.actionid , data);
   }

@@ -1,5 +1,17 @@
 version: "3.3"
 services:
+  #Nginx Service to proxy to NodePort
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    volumes:
+      - nginx-prod.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    networks:
+    - ecol-network
+
   ecollect:
     image: migutak/ecollect:1.0.0
     container_name: ecollect

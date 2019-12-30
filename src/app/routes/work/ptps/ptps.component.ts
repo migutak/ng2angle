@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
-import * as $ from 'jquery';
+import { HttpClient } from '@angular/common/http';
+import { GridOptions, IDatasource, IGetRowsParams, GridApi, InfiniteRowModelModule, Module } from '@ag-grid-community/all-modules';
+import { AllCommunityModules } from "@ag-grid-community/all-modules";
 
 @Component({
   selector: 'app-ptps',
@@ -14,6 +14,7 @@ export class PtpsComponent implements OnInit {
 
   public overlayLoadingTemplate;
   public overlayNoRowsTemplate;
+  public modules: Module[] = AllCommunityModules;
 
   constructor(private ecolService: EcolService, private http: HttpClient) {
     this.gridOptions = <GridOptions>{
@@ -36,7 +37,7 @@ export class PtpsComponent implements OnInit {
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   resizeEvent = 'resize.ag-grid';
-  $win = $(window);
+  //$win = $(window);
   new = true;
   username: string;
   searchText: string;
@@ -57,12 +58,20 @@ export class PtpsComponent implements OnInit {
       width: 350
     },
     {
+      headerName: 'CUSTNUMBER',
+      field: 'CUSTNUMBER'
+    },
+    {
       headerName: 'STATUS',
       field: 'MET'
     },
     {
-      headerName: 'CUST_NAME',
-      field: 'client_name',
+      headerName: 'PTPID',
+      field: 'ID'
+    },
+    {
+      headerName: 'CLIENT_NAME',
+      field: 'CLIENT_NAME',
       width: 350
     },
     {
@@ -82,13 +91,20 @@ export class PtpsComponent implements OnInit {
       field: 'PAYMETHOD'
     },
     {
-      headerName: 'OWNER',
+      headerName: 'COLOFFICER',
       field: 'OWNER'
+    },
+    {
+      headerName: 'AROCODE',
+      field: 'AROCODE'
+    },
+    {
+      headerName: 'BRANCHNAME',
+      field: 'BRANCHNAME'
     }
   ];
 
   rowData1: any;
-
 
   dataSource: IDatasource = {
     getRows: (params: IGetRowsParams) => {
@@ -112,12 +128,12 @@ export class PtpsComponent implements OnInit {
 
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  }
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
+    console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&ptpid=' + this.model.ID + '&sys=ptp', '_blank');
   }
 
   onQuickFilterChanged($event) {

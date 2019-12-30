@@ -633,7 +633,7 @@ export class SendLetterComponent implements OnInit {
   sendsms(smsdata) {
     this.ecolService.sendsms(smsdata).subscribe(result => {
       // swal('Successful!', 'Demand letter SMS sent!', 'success');
-      this.popsuccessToast('Demand letter SMS sent!');
+      this.popsuccessToast('Demand letter sent!');
     }, error => {
       console.log(error);
       // swal('Error!', 'Error occurred during sending email!', 'error');

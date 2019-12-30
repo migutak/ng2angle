@@ -29,8 +29,9 @@
       enableSorting="true"
         enableFilter="true"
         enableColResize="true"
+        [modules]="modules"
         (gridReady)="gridReady($event)" [columnDefs]="columnDefs" [overlayLoadingTemplate]="overlayLoadingTemplate"
-        [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowDoubleClicked)='onRowDoubleClicked($event)'>
+        [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowClicked)='onRowDoubleClicked($event)'>
       </ag-grid-angular>
     </div>
   </div>

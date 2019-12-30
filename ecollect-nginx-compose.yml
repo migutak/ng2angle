@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  #Nginx Service to proxy to NodePort
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx-prod.conf:/etc/nginx/nginx.conf
+      - /etc/ssl/certs/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt
+      - /etc/ssl/private/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+    - ecol-network
+
+networks:
+  ecol-network:
+    driver: bridge
