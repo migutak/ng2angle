@@ -32,6 +32,6 @@ spec:
     spec:
       containers:
       - name: ecollect
-        image: ecollectweb.co-opbank.co.ke:5000/ecollect:1.0.0
+        image: ecollectweb.co-opbank.co.ke:5000/ecollect:u.0.0
         ports:
         - containerPort: 80

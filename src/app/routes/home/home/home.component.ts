@@ -12,9 +12,12 @@ import { EcolService } from '../../../services/ecol.service';
 
 export class HomeComponent implements OnInit {
     dataSource: any;
+    homedash: string;
+
     public portfoliodash = environment.portfoliodash;
 
     constructor(public http: HttpClient, private ecolService: EcolService,) {
+        this.homedash = environment.homedash;
         this.dataSource = {
             chart: {
               caption: 'Book Bucket Distribution',
