@@ -62,7 +62,7 @@ export class CustContactsComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+    this.username = currentUser.USERNAME;
 
     this.addcontact.custnumber = this.custnumber;
     this.addcontact.telephone = form.contactnumber;

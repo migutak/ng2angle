@@ -49,6 +49,7 @@ export class FilesComponent implements OnInit {
   ) {
     //
     this.uploader.onBuildItemForm = (item, form) => {
+      form.append('userdesctype', this.model.userdesctype);
       form.append('docdesc', this.model.docdesc);
       form.append('accnumber', this.accnumber);
       form.append('owner', this.username);
@@ -64,6 +65,7 @@ export class FilesComponent implements OnInit {
       // success
       const obj = JSON.parse(response);
       console.log(obj)
+      console.log(this.model)
       if(obj.success) {
         for (let i = 0; i < obj.files.length; i++) {
           const bulk = {
@@ -77,7 +79,7 @@ export class FilesComponent implements OnInit {
             'doctype': obj.files[i].originalname,
             'docdesc': this.model.filedesc,
             'colofficer': this.username,
-            'userdesctype': this.model.userdesctype
+            'userdesctype': this.model.userdesctype || 'other'
           };
           this.ecolService.uploads(bulk).subscribe(resp => {
             this.getfileshistory(this.custnumber);
@@ -134,5 +136,11 @@ export class FilesComponent implements OnInit {
       console.log(error.error);
       swal('Error!', ' Cannot download  file!', 'error');
     });
+  }
+
+  changeCity(e) {
+    console.log(e.target);
+    this.model.userdesctype == e.target.value;
+    console.log(this.model.userdesctype);
   }
 }

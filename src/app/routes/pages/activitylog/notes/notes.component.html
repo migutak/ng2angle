@@ -4,44 +4,23 @@
 
 <div class="form-group row">
   <label class="col-md-0 col-form-label"></label>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" id="inlineRadio1" type="radio" [(ngModel)]="model.noteselector" name="noteselector"
-      value="bulk" (click)="handleChange('bulk')" />
-    <label class="form-check-label" for="inlineRadio1">Bulk uploaded <span
-        class="badge badge-primary float-right">{{bulknotelength}}</span></label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" id="inlineRadio2" type="radio" [(ngModel)]="model.noteselector" name="noteselector"
-      value="collector" [checked]='true' (click)="handleChange('collector')" />
-    <label class="form-check-label" for="inlineRadio2">Collector made <span
-        class="badge badge-success float-right">{{noteslength}}</span></label>
-  </div>
+  
 
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" id="inlineRadio2" type="radio" [(ngModel)]="model.noteselector" name="noteselector"
-      value="flagged" (click)="handleChange('flagged')" />
-    <label class="form-check-label" for="inlineRadio2">Flagged important <span
-        class="badge badge-danger float-right">{{flaggedlength}}</span></label>
+  <div class="btn-group">
+    <button  name="noteselector" value="bulk" (click)="handleChange('bulk')"  class="btn-sample btn-outline btn btn-sm">Bulk uploaded&nbsp;&nbsp; <span
+      class="badge badge-primary float-right">{{bulknotelength}}</span></button>
+    &nbsp;&nbsp;
+    <button  name="noteselector"
+       value="collector" (click)="handleChange('collector')"  class="btn-sample btn-outline btn btn-sm">Collector made&nbsp;&nbsp; <span
+      class="badge badge-success float-right">{{noteslength}}</span></button>
+    &nbsp;&nbsp;
+    <button  name="noteselector"
+       value="flagged" (click)="handleChange('flagged')"  class="btn-sample btn-outline btn btn-sm">Flagged important&nbsp;&nbsp; <span
+      class="badge badge-success float-right">{{flaggedlength}}</span></button>
   </div>
 </div>
 
 <div *ngIf="isSelected('collector')">
-  <!--<ul class="timeline">
-    <li class="timeline-event" *ngFor="let note of noteData">
-      <label class="timeline-event-icon"></label>
-      <div class="timeline-event-copy">
-        <p class="timeline-event-thumbnail">{{note.NOTEDATE}}</p>
-        <p style="color: blue"><strong>{{note.OWNER}} {{note.NOTESRC}} on Account {{note.ACCNUMBER}}</strong></p>
-        <p>
-          {{note.NOTEMADE}}
-          <small><a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-success">
-              <span class="far fa-edit" aria-hidden="true"></span>
-              <span style="color: red;"><strong>Edit</strong></span>
-            </a></small>
-        </p>
-      </div>
-    </li>
-  </ul>-->
   <ul class="timeline">
     <li *ngFor="let note of noteData | paginate: { itemsPerPage: 5, currentPage: p }">
       <a href="#"><small>{{note.OWNER}} {{note.NOTESRC}} on Account {{note.ACCNUMBER}}</small></a>

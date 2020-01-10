@@ -15,32 +15,67 @@
               <p>Address: {{accountdetails?.addressline1 || accountdetails?.address}} Tel:
                 {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}
               </p>
-              <div class="dropdown show">
-                {{autodial_telnumber}}
-                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
-                  ... More contacts <span class="badge badge-info">{{totalTeles}}</span>
-                </a>
-                <a class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em
-                    class="fas fa-sync fa-fw"></em>refresh</a> |
-                <a class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw"
-                    style="color: black"></em> Dial</a>
+              <div class="row">
+                <button class="btn btn-secondary btn-sm" type="button">{{autodial_telnumber}}</button>
+                <div class="dropdown">
 
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a *ngFor="let t of teles" class="dropdown-item" href="#"
-                    (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
+                  <button *ngIf="teles?.length== 0" disabled title="No More Contacts to Show"
+                    class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More contacts <span class="badge badge-info">{{totalTeles}}</span>
+                  </button>
+
+                  <button *ngIf="teles?.length!== 0" title="Press here for more contacts"
+                    class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More contacts <span class="badge badge-info">{{totalTeles}}</span>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                    <a *ngFor="let t of teles" class="dropdown-item" href="#"
+                      (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
+                  </div>
+
                 </div>
+                <button class="btn btn-secondary btn-sm" href="#" role="button" (click)="refreshTeles()"><em
+                    class="fas fa-sync fa-fw"></em>refresh</button>
+
+                <button class="btn btn-secondary btn-sm" href="#" role="button" (click)="dialAvaya()"><em
+                    class="fa fa-phone fa-fw" style="color: black"></em> Dial</button>
               </div>
+              <!--              end of row-->
+
+
+              <!--              <div class="dropdown show">-->
+              <!--                {{autodial_telnumber}}-->
+              <!--                <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink"-->
+              <!--                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">-->
+              <!--                  ... More contacts <span class="badge badge-info">{{totalTeles}}</span>-->
+              <!--                </a>-->
+              <!--                <a class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em-->
+              <!--                    class="fas fa-sync fa-fw"></em>refresh</a> |-->
+              <!--                <a class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw"-->
+              <!--                    style="color: black"></em> Dial</a>-->
+
+              <!--                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+              <!--                  <a *ngFor="let t of teles" class="dropdown-item" href="#"-->
+              <!--                    (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>-->
+              <!--                </div>-->
+              <!--              </div>-->
             </div>
+            <!--            <button class="btn btn-link" href="#" role="button" (click)="refreshTeles()" style="color: white"><em-->
+            <!--              class="fas fa-sync fa-fw"></em>refresh</button> |-->
+            <!--            <button class="btn btn-link" href="#" role="button" (click)="dialAvaya()"><em class="fa fa-phone fa-fw"&ndash;&gt;-->
+            <!--              style="color: black"></em> Dial</button>-->
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row" style="background-color:red">
-      <div style="padding-left: 10px; color: white">
-          <p style="margin-left: 10px">Current Account Plan: {{plan}}</p> 
-      </div>
+  <div [ngStyle]="{backgroundColor: getColor()}" class="row" [ngClass]="{NONE: plan === 'NONE'}">
+    <div style="padding-left: 10px; color: white">
+      <p style="margin-left: 10px">Current Account Plan: {{plan}}</p>
+    </div>
   </div>
   <div class="row">
     <div class="hidden-xs col-sm-2">
