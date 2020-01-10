@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { GridOptions, IDatasource, IGetRowsParams, GridApi, InfiniteRowModelModule, Module } from '@ag-grid-community/all-modules';
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-ptps',
@@ -14,209 +15,134 @@ export class PtpsComponent implements OnInit {
 
   public overlayLoadingTemplate;
   public overlayNoRowsTemplate;
-  public modules: Module[] = AllCommunityModules;
+  // public modules: Module[] = AllCommunityModules;
 
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
+  public gridApi;
+  public gridColumnApi;
 
-    this.overlayLoadingTemplate =
-      // tslint:disable-next-line:max-line-length
-      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Please wait while your rows are loading</span>';
-    this.overlayNoRowsTemplate =
-      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Response: \'no rows\' found</span>';
-
-  }
+  public columnDefs;
+  public defaultColDef;
+  public rowModelType;
+  public cacheBlockSize;
+  public maxBlocksInCache;
+  public rowData: [];
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-  resizeEvent = 'resize.ag-grid';
-  //$win = $(window);
-  new = true;
   username: string;
   searchText: string;
   model: any = {};
-  noTotal: number;
+  pivotPanelShow = true;
 
-  gridOptions: GridOptions;
-  gridApi: GridApi;
-  // private rowClassRules;
+  modules = AllModules;
 
-  columnDefs = [
-    {
-      headerName: 'ACCNUMBER',
-      field: 'ACCNUMBER',
-      cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+  constructor() {
+    this.columnDefs = [
+      {
+        headerName: 'ACCNUMBER',
+        field: 'ACCNUMBER',
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return '<a  href="#" target="_blank">' + params.value + '</a>';
+          } else {
+            return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
+          }
+        },
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
       },
-      width: 350
-    },
-    {
-      headerName: 'CUSTNUMBER',
-      field: 'CUSTNUMBER'
-    },
-    {
-      headerName: 'STATUS',
-      field: 'MET'
-    },
-    {
-      headerName: 'PTPID',
-      field: 'ID'
-    },
-    {
-      headerName: 'CLIENT_NAME',
-      field: 'CLIENT_NAME',
-      width: 350
-    },
-    {
-      headerName: 'PTPAMOUNT',
-      field: 'PTPAMOUNT',
-    },
-    {
-      headerName: 'PTPDATE',
-      field: 'PTPDATE'
-    },
-    {
-      headerName: 'ACTIONDATE',
-      field: 'ACTIONDATE'
-    },
-    {
-      headerName: 'PAYMETHOD',
-      field: 'PAYMETHOD'
-    },
-    {
-      headerName: 'COLOFFICER',
-      field: 'OWNER'
-    },
-    {
-      headerName: 'AROCODE',
-      field: 'AROCODE'
-    },
-    {
-      headerName: 'BRANCHNAME',
-      field: 'BRANCHNAME'
-    }
-  ];
+      {
+        headerName: 'STATUS',
+        field: 'MET',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        headerName: 'CUST_NAME',
+        field: 'CLIENT_NAME',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        headerName: 'PTPAMOUNT',
+        field: 'PTPAMOUNT',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        headerName: 'PTPDATE',
+        field: 'PTPDATE',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        headerName: 'ACTIONDATE',
+        field: 'ACTIONDATE',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        headerName: 'PAYMETHOD',
+        field: 'PAYMETHOD',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        headerName: 'OWNER',
+        field: 'OWNER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      }
+    ];
+    this.defaultColDef = {
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true,
+      unSortIcon: true,
+      suppressResize: false,
+      enableRowGroup: true,
+      enablePivot: true,
+      pivot: true
+    };
+    this.rowModelType = 'serverSide';
+    this.cacheBlockSize = 50;
+    this.maxBlocksInCache = 0;
+  }
 
-  rowData1: any;
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
 
-  dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
+    const datasource = {
+      // tslint:disable-next-line:no-shadowed-variable
+      getRows(params) {
+        console.log(JSON.stringify(params.request, null, 1));
 
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
-      this.apiService(20, params.startRow).subscribe(response => {
-        params.successCallback(
-          response.data, response.totalRecords
-        );
-        if (response.data.length > 0) {
-          this.gridOptions.api.hideOverlay();
-        } else {
-          this.gridOptions.api.showNoRowsOverlay();
-        }
-      });
-    }
-  };
+        fetch(environment.nodeapi + '/gridbrokenptps/viewall', {
+          method: 'post',
+          body: JSON.stringify(params.request),
+          headers: { 'Content-Type': 'application/json; charset=utf-8' }
+        })
+          .then(httpResponse => httpResponse.json())
+          .then(response => {
+            params.successCallback(response.rows, response.lastRow);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          });
+      }
+    };
 
+    params.api.setServerSideDatasource(datasource);
+  }
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
-    console.log(this.model);
+    // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&ptpid=' + this.model.ID + '&sys=ptp', '_blank');
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=ptp', '_blank');
   }
 
-  onQuickFilterChanged($event) {
-    // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
-  }
-
-  onSearch() {
-    if (this.model.searchText === undefined) {
-      return;
-    }
-    this.clear();
-    this.gridApi.showLoadingOverlay();
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          console.log(response);
-          params.successCallback(
-            response.data, response.totalRecords
-          );
-          if (response.data.length > 0) {
-            this.gridOptions.api.hideOverlay();
-          } else {
-            this.gridOptions.api.showNoRowsOverlay();
-          }
-        });
-      }
-    };
-
-    this.gridApi.setDatasource(this.dataSource);
-  }
-
-  clear() {
-    const ds = {
-      getRows(params: any) {
-        params.successCallback([], 0);
-      }
-    };
-    this.gridOptions.api.setDatasource(ds);
-  }
-
-  reset() {
-    this.gridApi.showLoadingOverlay();
-    this.clear();
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        this.apiService(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.data, response.totalRecords
-          );
-          if (response.data.length > 0) {
-            this.gridOptions.api.hideOverlay();
-          } else {
-            this.gridOptions.api.showNoRowsOverlay();
-          }
-        });
-      }
-    };
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-  }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
   }
 
-  gridReady(params) {
-    this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-    this.gridOptions.api.showLoadingOverlay();
-  }
-
-  apiService(perPage, currentPos) {
-    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.nodeapi + '/brokenptps/all?offset=' + currentPos + '&rows=' + perPage);
-  }
-
-  apiServiceSearch(perPage, currentPos) {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.nodeapi + '/brokenptps/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
-  }
 
 }
