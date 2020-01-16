@@ -4,6 +4,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { SharedModule } from '../../shared/shared.module';
 import { NewcaseComponent } from './newcase/newcase.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
         SharedModule,
         FormsModule,
         NgSelectModule,
+        NgxSpinnerModule,
         NgbModule,
         RouterModule.forChild(routes),
         AgGridModule.withComponents([])

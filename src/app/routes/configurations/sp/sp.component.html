@@ -1,7 +1,7 @@
 <div class="content-heading">
     <div>
-      SMS
-      <small>SMS Configurations</small>
+      Service Providers
+      <small>S-P Configurations</small>
     </div>
   </div>
   <div class="container-fluid">
@@ -12,13 +12,13 @@
       <div class="card">
         <div class="card-header">
           <a class="card-link" data-toggle="collapse" href="#collapseOne">
-            SMS
+            Service Providers
           </a>
-        </div>  
+        </div>
         <div id="collapseOne" class="collapse show" data-parent="#accordion">
           <div class="card-body">
             <div class="row">
-              <div class="col-xl-6">
+              <div class="col-xl-4">
                 <div class="card card-primary">
                   <div class="card-body">
                     <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="addNew(settingsForm)" *ngIf="new">
@@ -70,29 +70,66 @@
                     <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editForm)" *ngIf="!new">
                       <p class="lead mt-3"></p>
                       <div class="form-group">
-                        <p>Demand Letter</p>
-                        <input class="form-control" name="letterid" id="letterid" #letterid="ngModel"
-                          [(ngModel)]="model.letterid" [disabled]="true" required/>
+                        <p>Service Provider</p>
+                        <input class="form-control" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
+                          [(ngModel)]="model.SPTITLE" [disabled]="true" required/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
-                        <p>Day in arrears when the letter will be sent (Between 0 and 120)</p>
-                        <input class="form-control" type="number" name="daysinarr" id="daysinarr" #daysinarr="ngModel"
-                          [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.invalid }"
-                          required />
-                        <!--<div *ngIf="daysinarr.errors.min">Minimum required is 0</div>
-                                <div *ngIf="daysinarr.errors.max">Maximum required is 120</div>-->
+                        <p>Contact Person</p>
+                        <input class="form-control" name="CONTACTPERSON" id="CONTACTPERSON" #CONTACTPERSON="ngModel"
+                          [(ngModel)]="model.CONTACTPERSON" [disabled]="false" required/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
-                        <p>Send to [MemoGroups]</p>
-                        <input class="form-control" name="memogroup" id="memogroup" #memogroup="ngModel"
-                          [(ngModel)]="model.memogroup" [disabled]="true" />
+                        <p>Telephone</p>
+                        <input class="form-control" name="TELEPHONE" id="TELEPHONE" #TELEPHONE="ngModel"
+                          [(ngModel)]="model.TELEPHONE" [disabled]="false" required/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>SPCode</p>
+                        <input class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
+                          [(ngModel)]="model.SPCODE" [disabled]="false" required/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Start Date</p>
+                        <input class="form-control" name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
+                          [(ngModel)]="model.STARTDATE" [disabled]="true" required/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Account Number</p>
+                        <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
+                          [(ngModel)]="model.ACCNUMBER" [disabled]="false" required/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Coverage</p>
+                        <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
+                          [(ngModel)]="model.COVERAGE" [disabled]="false" required/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Address</p>
+                        <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
+                          [(ngModel)]="model.ADDRESS" [disabled]="false"/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>End of Indemnity</p>
+                        <input class="form-control" name="ENDOFINDEMNITY" id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
+                          [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false" required/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Email</p>
+                        <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
+                          [(ngModel)]="model.EMAIL" [disabled]="false" required/>
                       </div>
                       <fieldset>
                           <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Suspend</label>
-                            <p></p>
                             <div class="col-md-10">
                               <label class="checkbox c-checkbox">
                                 <input type="checkbox" name="active" id="active" #active="ngModel"
@@ -120,7 +157,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-xl-6">
+              <div class="col-xl-8">
                 <div class="col-xl-12">
                   <h4 class="page-header">
                     <small>search, sorting, filter ...</small>
@@ -131,7 +168,7 @@
                         (keyup)="onQuickFilterChanged($event)" />
                     </div>
                   </div>
-                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 400px"
+                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 700px"
                     [gridOptions]="gridOptions"
                     (rowClicked) = 'onRowClicked($event)'
                     (gridReady)="gridReady($event)">

@@ -21,6 +21,8 @@ export class CustContactsComponent implements OnInit {
   addcontact: any = {};
   username: string;
   edit = false;
+  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  emailPattern = '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$';
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,

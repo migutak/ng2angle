@@ -11,11 +11,11 @@ declare var $: any;
 
 
 @Component({
-  selector: 'app-sms',
-  templateUrl: './sms.component.html',
-  styleUrls: ['./sms.component.scss']
+  selector: 'app-sp',
+  templateUrl: './sp.component.html',
+  styleUrls: ['./sp.component.scss']
 })
-export class SmsComponent implements OnInit {
+export class SpComponent implements OnInit {
 
   resizeEvent = 'resize.ag-grid';
   $win = $(window);
@@ -27,24 +27,24 @@ export class SmsComponent implements OnInit {
   // Basic example
   columnDefs = [
     {
-      headerName: 'Type',
-      field: 'memogroup',
+      headerName: 'Service Provider',
+      field: 'SPTITLE',
       width: 150
     }, {
-      headerName: 'Message',
-      field: 'letterid',
+      headerName: 'Contact',
+      field: 'CONTACTPERSON',
       width: 120
     }, {
-      headerName: 'Daysinarr',
-      field: 'daysinarr',
+      headerName: 'Telephone',
+      field: 'TELEPHONE',
       width: 90
     }, {
-      headerName: 'Lastupdateby',
-      field: 'lastupdateby',
+      headerName: 'Startdate',
+      field: 'STARTDATE',
       width: 90
     }, {
-      headerName: 'Lastupdate',
-      field: 'lastupdate',
+      headerName: 'Endofindemnity',
+      field: 'ENDOFINDEMNITY',
       width: 100
     }];
   rowData1: any;
@@ -77,17 +77,18 @@ export class SmsComponent implements OnInit {
       // onRowClicked: this.RowSelected,
     };
 
-    http.get<any>(environment.api + '/api/autoletters').subscribe(resp => {
+    http.get<any>(environment.api + '/api/sptypes').subscribe(resp => {
       this.rowData1 = resp;
     });
   }
 
   onRowClicked(event: any) {
+    console.log(event.node.data)
     this.new = false;
     this.model = event.node.data;
     this.model.lastupdateby = this.username;
     this.model.lastupdate = new Date();
-    this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
+    // this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
   }
 
   onQuickFilterChanged($event) {
@@ -98,8 +99,7 @@ export class SmsComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
-    // get memos
-    this.getMemos();
+    
   }
 
   gridReady(params) {
@@ -133,14 +133,7 @@ export class SmsComponent implements OnInit {
     });
   }
 
-  getMemos() {
-    this.ecolService.getmemo().subscribe(res => {
-      for (let i = 0; i < res.data.length; i ++) {
-        this.items.push(res.data[i].MEMO) ;
-      }
-      // console.log('Array==>', this.items);
-    });
-  }
+  
 
   // postautoLetter
 

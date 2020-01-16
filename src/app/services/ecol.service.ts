@@ -249,6 +249,14 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/watch_stage/' + accnumber);
   }
 
+  accounts (custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/watch_stage?filter[where][custnumber]=' + custnumber);
+  }
+
+  account (accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/watch_stage/' + accnumber);
+  }
+
   getfileshistory (custnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');

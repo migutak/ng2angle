@@ -14,7 +14,7 @@ const Guarantors = {
 const Manuals = {
     text: 'Manuals and scripts',
     link: '/manuals/all',
-    icon: 'icon-people'
+    icon: 'icon-doc'
 };
 
 const Dashboard = {
@@ -32,7 +32,7 @@ const Dashboard = {
 const Reports = {
     text: 'Reports',
     link: '/reports/allreports',
-    icon: 'icon-speedometer'
+    icon: 'icon-graph'
 };
 
 
@@ -423,7 +423,13 @@ const Predelq = {
 const SMS = {
     text: 'SMS',
     link: '/configurations/sms',
-    icon: 'icon-note'
+    icon: 'icon-speech'
+};
+
+const SP = {
+    text: 'Service Providers',
+    link: '/configurations/sp',
+    icon: 'icon-docs'
 };
 
 const AccountPlans = {
@@ -561,6 +567,7 @@ const teamleader_menu = [
     Allocations,
     SMS,
     AccountPlans,
+    SP,
     headingDocumentations,
     Manuals
 ];

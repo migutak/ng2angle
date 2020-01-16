@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -15,13 +16,42 @@ import * as _ from 'lodash';
 export class NewcaseComponent implements OnInit {
     model: any = {};
     selectedSimpleItem = ['OWNER', 'THIRD PARTY'];
-    accounts: any = [
-        {accnumber: '000000000'}
-    ];
+    accounts: any = [];
 
-    constructor(private ecolService: EcolService, private router: Router) { }
+    constructor(private ecolService: EcolService,
+        private router: Router,
+        private spinner: NgxSpinnerService, ) { }
 
     ngOnInit() {
+    }
+
+    onBlurMethod() {
+        this.spinner.show();
+        this.ecolService.accounts(this.model.custnumber).subscribe(accounts => {
+            if (accounts.length > 0) {
+                this.accounts = accounts;
+                this.spinner.hide();
+            } else {
+                alert('No accounts found!');
+                this.spinner.hide();
+            }
+        })
+    }
+
+    onBlurAccount() {
+        this.spinner.show();
+        this.ecolService.account(this.model.accnumber).subscribe(account => {
+            console.log(this.model.accnumber, account);
+            if (account) {
+                this.model.custname = account.custname;
+                this.model.arocode = account.arocode;
+                this.model.oustbalance = account.oustbalance;
+                this.spinner.hide();
+            } else {
+                alert('No accounts found!');
+                this.spinner.hide();
+            }
+        })
     }
 
     onSubmit(form) {
@@ -41,7 +71,7 @@ export class NewcaseComponent implements OnInit {
             ownership: form.value.ownership
         };
         this.ecolService.newmarketer(body).subscribe(data => {
-            swal('Successful!', 'saved successfully!', 'success');
+            swal('Success!', 'saved successfully!', 'success');
         }, error => {
             console.log(error);
             swal('Error!', 'Error occurred during processing!', 'error');

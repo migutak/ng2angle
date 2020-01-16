@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SmsComponent } from './sms/sms.component';
+import { SpComponent } from './sp/sp.component';
 import { AllocationsComponent } from './allocations/allocations.component';
 import { AccplansComponent } from './accplans/accplans.component';
 import { PlanactionsComponent } from './planactions/planactions.component';
@@ -17,6 +18,7 @@ import { CustomFormsModule } from 'ng2-validation';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
   { path: 'sms', component: SmsComponent },
+  { path: 'sp', component: SpComponent },
   { path: 'allocations', component: AllocationsComponent },
   { path: 'accplans', component: AccplansComponent },
   { path: 'planactions', component: PlanactionsComponent },
@@ -36,6 +38,7 @@ const routes: Routes = [
   ],
   declarations: [
     SmsComponent,
+    SpComponent,
     AllocationsComponent,
     AccplansComponent,
     PlanactionsComponent,

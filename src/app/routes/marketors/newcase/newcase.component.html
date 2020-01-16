@@ -3,8 +3,12 @@
         <small>New entry for marketing</small></div>
 </div>
 <!-- START row-->
-<div class="row">
+<div class="container">
     <div class="col-md-12">
+
+        <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#00543d" type="square-spin">
+            <!--<p style="font-size: 20px; color: white">Processing ...</p>-->
+          </ngx-spinner>
         <!-- START card-->
         <div class="card card-default">
             <div class="card-header">Enter Case details</div>
@@ -15,7 +19,7 @@
                         <label class="col-xl-4 col-form-label">Enter the customer number</label>
                         <div class="col-xl-8">
                             <input class="form-control" type="text" name="custnumber" id="custnumber"
-                                #custnumber="ngModel" [(ngModel)]="model.custnumber"
+                                #custnumber="ngModel" [(ngModel)]="model.custnumber" (blur)="onBlurMethod()"
                                 [ngClass]="{ 'is-invalid': custnumber.invalid }" required placeholder="custnumber" />
                             <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">custnumber is
                                 required</div>
@@ -25,7 +29,7 @@
                         <label class="col-xl-4 col-form-label">Select account number</label>
                         <div class="col-xl-8">
                             <ng-select id="accnumber" name="accnumber" #accnumber="ngModel"
-                                [(ngModel)]="model.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }">
+                                [(ngModel)]="model.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" (blur)="onBlurAccount()">
                                 <ng-option *ngFor="let a of accounts" [value]="a.accnumber">{{a.accnumber}}</ng-option>
                             </ng-select>
                             <div class="validation-error" *ngIf="accnumber.invalid && accnumber.touched">accnumber is
