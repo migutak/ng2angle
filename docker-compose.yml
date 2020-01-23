@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   ecollect:
-    image: migutak/ecollect:1.0.0
+    image: 172.16.19.151:5000/ecollect:1.0.0
     container_name: ecollect
     restart: always
     ports:
@@ -10,7 +10,7 @@ services:
     - ecol-network
 
   ecollect_apis:
-    image: migutak/ecollect_apis:1.0.0
+    image: 172.16.19.151:5000/ecollect_apis:1.0.0
     container_name: ecollect_apis
     restart: always
     environment:
@@ -25,7 +25,7 @@ services:
     - ecol-network
 
   oracledb_node:
-    image: migutak/oracledbnode:1.0.0
+    image: 172.16.19.151:5000/oracledbnode:1.0.0
     container_name: oracledb_node
     restart: always
     environment:
@@ -38,7 +38,7 @@ services:
     - ecol-network
 
   uploads:
-    image: migutak/uploads:1.0.0
+    image: 172.16.19.151:5000/uploads:1.0.0
     container_name: uploads
     restart: always
     environment:
@@ -54,7 +54,7 @@ services:
     - ecol-network
 
   docxletters:
-    image: migutak/docxletters:1.0.0
+    image: 172.16.19.151:5000/docxletters:1.0.0
     container_name: docx
     restart: always
     volumes:
@@ -69,7 +69,7 @@ services:
 
   birt:
     container_name: birt
-    image: migutak/birt:1.0.0
+    image: 172.16.19.151:5000/birt:1.0.0
     volumes:
       - D:\angularprojects\birt\reports:/usr/local/tomcat/webapps/birt
     restart: always
