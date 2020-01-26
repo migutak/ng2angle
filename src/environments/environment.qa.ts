@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   adlogin: false,
+  sendsms: true,
   api: 'http://localhost:8000',
   mongo: 'http://localhost:8001',
   nodeapi: 'http://localhost:6001/nodeapi',

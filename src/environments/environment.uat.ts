@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   adlogin: false,
+  sendsms: false,
   api: 'http://172.16.19.151:8000',
   mongo: 'http://172.16.19.151',
   nodeapi: 'http://172.16.19.151:6100/nodeapi',

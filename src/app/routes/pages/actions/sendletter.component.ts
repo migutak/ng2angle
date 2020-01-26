@@ -486,20 +486,42 @@ export class SendLetterComponent implements OnInit {
           "from": license.from,
           "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
         }
-        this.ecolService.sendDemandsms(smsbody).subscribe(response => {
-          console.log(response);
-          if (response.result === 'OK') {
-            // add to history
-            this.demandshistory(this.demandhisdetails);
-            this.getdemandshistory(this.accnumber);
-
-            swal.close();
+        // if test call sendsms otherwise post to sms table
+        if(environment.sendsms) {
+          // call sms api
+          this.ecolService.sendDemandsms(smsbody).subscribe(response => {
+            console.log(response);
+            if (response.result === 'OK') {
+              // add to history
+              this.demandshistory(this.demandhisdetails);
+              this.getdemandshistory(this.accnumber);
+  
+              swal.close();
+              this.popsuccessToast('Letter sent on sms!');
+            } else {
+              swal.close();
+              this.poperrorToast(response.response.message);
+            }
+          });
+        } else {
+          // post to sms table
+          const smsbody = {
+            custnumber: this.custnumber,
+            accnumber: this.accnumber,
+            owner: this.username,
+            message: "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department ",
+            arrears: 0,
+            datesent: new Date(),
+            telnumber: this.model.celnumber
+          };
+          this.ecolService.postsms(smsbody).subscribe(data => {
             this.popsuccessToast('Letter sent on sms!');
-          } else {
-            swal.close();
-            this.poperrorToast(response.response.message);
-          }
-        });
+          }, error => {
+            console.log(error);
+            this.poperrorToast('Error: ' + error.message);
+          });
+        }
+        
       } // end demandbysms
     }
     /*this.ecolService.generateLetter(letter).subscribe(uploaddata => {

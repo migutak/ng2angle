@@ -356,7 +356,6 @@ export class ActivityActionComponent implements OnInit {
 
     if (this.f.ptpemail.value) {
       // send ptp reminder email
-      console.log('send ptp reminder email ...');
       const ptpemailbody = {
         toemail: '',
         ccemail: this.username,

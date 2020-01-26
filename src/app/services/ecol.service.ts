@@ -303,7 +303,7 @@ export class EcolService {
   }
 
   postsms (body) {
-    return this.httpClient.post(environment.api + '/api/sms/', body);
+    return this.httpClient.post<any>(environment.api + '/api/sms/', body);
   }
 
   getdemandSettings() {

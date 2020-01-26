@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   adlogin: false,
+  sendsms: true,
   api: 'https://68.183.63.158',
   nodeapi: 'https://68.183.63.158/nodeapi',
   letters_api: 'https://68.183.63.158/docx/',
