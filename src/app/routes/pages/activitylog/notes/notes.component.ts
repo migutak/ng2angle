@@ -5,6 +5,7 @@ import { isNullOrUndefined } from 'util';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { ExcelService } from '../../../../services/excel.service';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class NotesComponent implements OnInit {
     private datePipe: DatePipe,
     private spinner: NgxSpinnerService,
     private ecolService: EcolService,
+    private excelService: ExcelService
   ) {
   }
 
@@ -151,5 +153,10 @@ export class NotesComponent implements OnInit {
     }
     return (this.selectedLink === name); // if current radio button is selected, return true, else return false
   }
+
+ 
+download(){
+  this.excelService.generateExcel(this.cust);
+}
 }
 

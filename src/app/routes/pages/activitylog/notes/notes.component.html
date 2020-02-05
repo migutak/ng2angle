@@ -20,6 +20,10 @@
   </div>
 </div>
 
+<div class="form-group row">
+  <button (click)="download()"> Download {{cust}} Notes</button>
+</div>
+
 <div *ngIf="isSelected('collector')">
   <ul class="timeline">
     <li *ngFor="let note of noteData | paginate: { itemsPerPage: 5, currentPage: p }">

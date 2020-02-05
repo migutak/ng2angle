@@ -13,7 +13,7 @@ export class EcolService {
   constructor(
     private httpClient: HttpClient,
     private router: Router
-    ) { }
+  ) { }
 
   loader() {
 
@@ -191,7 +191,7 @@ export class EcolService {
   }
 
   auth(body: object) {
-    return this.httpClient.post<any>(environment.auth,  body);
+    return this.httpClient.post<any>(environment.auth, body);
   }
 
   putuser(user: object) {
@@ -218,7 +218,7 @@ export class EcolService {
 
   s_check_account_plans(accnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/tbl_s_accounts?filter[where][accnumber]=' + accnumber );
+    return this.httpClient.get<any>(environment.api + '/api/tbl_s_accounts?filter[where][accnumber]=' + accnumber);
   }
 
   saveaccountplan(body) {
@@ -228,7 +228,7 @@ export class EcolService {
 
   putaccountplan(body) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.put<any>(environment.api + '/api/tbl_s_account_plans/'  + body.id, body);
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_account_plans/' + body.id, body);
   }
 
   put_s_accounts(body) {
@@ -236,28 +236,28 @@ export class EcolService {
     return this.httpClient.put<any>(environment.api + '/api/tbl_s_accounts', body);
   }
 
-  getaccount (accnumber) {
+  getaccount(accnumber) {
     // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
     return this.httpClient.get<any>(environment.api + '/api/tqall/' + accnumber);
   }
 
-  getthisptp (id) {
+  getthisptp(id) {
     return this.httpClient.get<any>(environment.api + '/api/ptps/' + id);
   }
 
-  getwatch (accnumber) {
+  getwatch(accnumber) {
     return this.httpClient.get<any>(environment.api + '/api/watch_stage/' + accnumber);
   }
 
-  accounts (custnumber) {
+  accounts(custnumber) {
     return this.httpClient.get<any>(environment.api + '/api/watch_stage?filter[where][custnumber]=' + custnumber);
   }
 
-  account (accnumber) {
+  account(accnumber) {
     return this.httpClient.get<any>(environment.api + '/api/watch_stage/' + accnumber);
   }
 
-  getfileshistory (custnumber) {
+  getfileshistory(custnumber) {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');
   }
@@ -287,22 +287,22 @@ export class EcolService {
   }
 
   putautoLetter(letter) {
-    return this.httpClient.put<any>(environment.api + '/api/autoletters' , letter);
+    return this.httpClient.put<any>(environment.api + '/api/autoletters', letter);
   }
 
   postcheckautoLetter(data) {
-    return this.httpClient.post<any>(environment.api + '/api/autoletters/checkduplicate' , data);
+    return this.httpClient.post<any>(environment.api + '/api/autoletters/checkduplicate', data);
   }
 
   postautoLetter(letter) {
-    return this.httpClient.post<any>(environment.api + '/api/autoletters' , letter);
+    return this.httpClient.post<any>(environment.api + '/api/autoletters', letter);
   }
 
   putLetter(letter) {
-    return this.httpClient.put<any>(environment.api + '/api/demandsettings' , letter);
+    return this.httpClient.put<any>(environment.api + '/api/demandsettings', letter);
   }
 
-  postsms (body) {
+  postsms(body) {
     return this.httpClient.post<any>(environment.api + '/api/sms/', body);
   }
 
@@ -467,19 +467,19 @@ export class EcolService {
   }
 
   putteles(data) {
-    return this.httpClient.post<any>(environment.nodeapi + '/teles/update' , data);
+    return this.httpClient.post<any>(environment.nodeapi + '/teles/update', data);
   }
 
   reviewptp(data) {
-    return this.httpClient.post<any>(environment.nodeapi + '/brokenptps/review' , data);
+    return this.httpClient.post<any>(environment.nodeapi + '/brokenptps/review', data);
   }
 
   put_s_actions(data) {
-    return this.httpClient.put<any>(environment.api + '/api/tbl_s_actions/' + data.actionid , data);
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_actions/' + data.actionid, data);
   }
 
   put_s_plan_actions(data) {
-    return this.httpClient.put<any>(environment.api + '/api/tbl_s_plan_actions' + data.planid , data);
+    return this.httpClient.put<any>(environment.api + '/api/tbl_s_plan_actions' + data.planid, data);
   }
 
   s_plan_actions(planid) {
@@ -487,11 +487,11 @@ export class EcolService {
   }
 
   delete_s_plan_actions(id) {
-    return this.httpClient.delete<any>(environment.api + '/api/tbl_s_plan_actions/' + id );
+    return this.httpClient.delete<any>(environment.api + '/api/tbl_s_plan_actions/' + id);
   }
 
   delete_s_planmemos(id) {
-    return this.httpClient.delete<any>(environment.api + '/api/tbl_s_planmemos/' + id );
+    return this.httpClient.delete<any>(environment.api + '/api/tbl_s_planmemos/' + id);
   }
 
   putcardwatch(data) {
@@ -563,7 +563,7 @@ export class EcolService {
   }
 
   uploads(data) {
-      return this.httpClient.post<any>(environment.api + '/api/uploads', data);
+    return this.httpClient.post<any>(environment.api + '/api/uploads', data);
   }
 
   getdemandshistory(accnumber) {
@@ -607,7 +607,7 @@ export class EcolService {
   gettotalletters(column, value, letter) {
     if (column) {
       // tslint:disable-next-line:max-line-length
-      return this.httpClient.get<any>(environment.api + '/api/demandsdue/grouptotal?column=' + column + '&value=' + value );
+      return this.httpClient.get<any>(environment.api + '/api/demandsdue/grouptotal?column=' + column + '&value=' + value);
     } else {
       return this.httpClient.get<any>(environment.api + '/api/demandsdue/grouptotal?letter=' + letter);
     }
@@ -747,27 +747,70 @@ export class EcolService {
 
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
-      swal({title: 'You\'re Not Logged In',
-      imageUrl: 'assets/img/user/notlogg.png',
-      text: 'Kindly, log in to continue!',
+      swal({
+        title: 'You\'re Not Logged In',
+        imageUrl: 'assets/img/user/notlogg.png',
+        text: 'Kindly, log in to continue!',
 
-      confirmButtonColor: '#7ac142',
-      confirmButtonText: 'Okay'});
-      this.router.navigate( ['/login'] );
+        confirmButtonColor: '#7ac142',
+        confirmButtonText: 'Okay'
+      });
+      this.router.navigate(['/login']);
       return false;
     }
   }
 
   ifclosed() {
     if (!sessionStorage.getItem('currentUser')) {
-      swal({title: 'You\'re Not Logged In',
-      imageUrl: 'assets/img/user/notlogg.png',
-      text: 'Kindly, log in to continue!',
+      swal({
+        title: 'You\'re Not Logged In',
+        imageUrl: 'assets/img/user/notlogg.png',
+        text: 'Kindly, log in to continue!',
 
-      confirmButtonColor: '#7ac142',
-      confirmButtonText: 'Okay'});
-      this.router.navigate( ['/login'] );
+        confirmButtonColor: '#7ac142',
+        confirmButtonText: 'Okay'
+      });
+      this.router.navigate(['/login']);
       return false;
     }
   }
+
+  downloadXlsFile(data, filename = 'data') {
+    let csvData = this.ConvertToCSV(data, ['id', 'accnumber', 'custnumber', 'notemade', 'owner', 'noteimp', 'notesrc', 'notedate']);
+    console.log(csvData)
+    let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
+    let dwldLink = document.createElement("a");
+    let url = URL.createObjectURL(blob);
+    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+    if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute("target", "_blank");
+    }
+    dwldLink.setAttribute("href", url);
+    dwldLink.setAttribute("download", filename + ".csv");
+    dwldLink.style.visibility = "hidden";
+    document.body.appendChild(dwldLink);
+    dwldLink.click();
+    document.body.removeChild(dwldLink);
+  }
+
+  ConvertToCSV(objArray, headerList) {
+    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+    let row = 'S.No,';
+    for (let index in headerList) {
+      row += headerList[index] + ',';
+    }
+    row = row.slice(0, -1);
+    str += row + '\r\n';
+    for (let i = 0; i < array.length; i++) {
+      let line = (i + 1) + '';
+      for (let index in headerList) {
+        let head = headerList[index];
+        line += ',' + array[i][head];
+      }
+      str += line + '\r\n';
+    }
+    return str;
+  }
+
 }

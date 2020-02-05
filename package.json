@@ -51,6 +51,7 @@
     "core-js": "2.5.4",
     "easy-pie-chart": "2.1.7",
     "enhanced-resolve": "3.3.0",
+    "exceljs": "^3.7.0",
     "file-saver": "^2.0.0",
     "flot": "themicon/flot",
     "fullcalendar": "3.9.0",

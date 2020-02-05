@@ -117,9 +117,9 @@
                           </div>
                         </td>
                         <td class="text-center">
-                          <span *ngIf="item.isSuccess"><i class="fa fa-ok"></i></span>
-                          <span *ngIf="item.isCancel"><i class="icon-close mr"></i></span>
-                          <span *ngIf="item.isError"><i class="fas fa-times"></i></span>
+                          <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                      <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                      <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                         </td>
                         <td nowrap>
                           <button type="button" class="btn btn-info btn-xs" (click)="item.upload()"

@@ -63,9 +63,10 @@ export class FilesComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
+      console.log(item);
       const obj = JSON.parse(response);
-      console.log(obj)
-      console.log(this.model)
+      //console.log(obj)
+      //console.log(this.model)
       if(obj.success) {
         for (let i = 0; i < obj.files.length; i++) {
           const bulk = {
@@ -79,7 +80,8 @@ export class FilesComponent implements OnInit {
             'doctype': obj.files[i].originalname,
             'docdesc': this.model.filedesc,
             'colofficer': this.username,
-            'userdesctype': this.model.userdesctype || 'other'
+            'userdesctype': this.model.userdesctype || 'other',
+            'code': ''
           };
           this.ecolService.uploads(bulk).subscribe(resp => {
             this.getfileshistory(this.custnumber);

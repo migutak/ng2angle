@@ -40,6 +40,7 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
 import { EditnoteComponent } from '../pages/activitylog/editnote/editnote.component';
 import { PtpsComponent } from './activitylog/ptps/ptps.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { DatePipe } from '@angular/common';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
@@ -97,7 +98,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     ],
     providers: [
         ToasterService,
-        DataService
+        DataService,
+        DatePipe
     ],
     exports: [
         RouterModule,
