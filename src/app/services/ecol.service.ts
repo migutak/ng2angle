@@ -241,6 +241,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/tqall/' + accnumber);
   }
 
+  getStaticLoans(accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/tbl_portfolio_static?filter[where][accnumber]=' + accnumber);
+  }
+
   getthisptp(id) {
     return this.httpClient.get<any>(environment.api + '/api/ptps/' + id);
   }

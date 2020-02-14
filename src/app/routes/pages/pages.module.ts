@@ -39,6 +39,7 @@ import { CollateralsComponent } from '../pages/activitylog/collaterals/collatera
 import { ActivitydashComponent } from '../pages/activitydash/activitydash.component';
 import { EditnoteComponent } from '../pages/activitylog/editnote/editnote.component';
 import { PtpsComponent } from './activitylog/ptps/ptps.component';
+import { WriteoffstoryComponent } from './activitylog/writeoffstory/writeoffstory.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DatePipe } from '@angular/common';
 
@@ -94,7 +95,8 @@ import { DatePipe } from '@angular/common';
         ActivitydashComponent,
         EditnoteComponent,
         PtpsComponent,
-        ExtloginComponent
+        ExtloginComponent,
+        WriteoffstoryComponent
     ],
     providers: [
         ToasterService,
@@ -124,7 +126,8 @@ import { DatePipe } from '@angular/common';
         ActivitydashComponent,
         EditnoteComponent,
         PtpsComponent,
-        ExtloginComponent
+        ExtloginComponent,
+        WriteoffstoryComponent
     ]
 })
 export class PagesModule { }

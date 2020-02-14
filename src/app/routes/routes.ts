@@ -28,6 +28,7 @@ import { BulknotesComponent } from './pages/activitylog/bulknotes/bulknotes.comp
 import { CollateralsComponent } from './pages/activitylog/collaterals/collaterals.component';
 import { ActivitydashComponent } from './pages/activitydash/activitydash.component';
 import { PtpsComponent } from './pages/activitylog/ptps/ptps.component';
+import { WriteoffstoryComponent } from './pages/activitylog/writeoffstory/writeoffstory.component';
 
 export const routes = [
 
@@ -93,6 +94,7 @@ export const routes = [
             { path: 'guarantors', component: GuarantorsComponent },
             { path: 'editnote', component: EditnoteComponent },
             { path: 'ptps', component: PtpsComponent },
+            { path: 'writeoffstory', component: WriteoffstoryComponent },
             { path: '**', redirectTo: 'notes' }
           ],
           canActivate: [AuthGuard]

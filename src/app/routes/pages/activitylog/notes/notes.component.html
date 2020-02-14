@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-group row">
-  <button (click)="download()"> Download {{cust}} Notes</button>
+  <button type="button" (click)="download()" class="btn btn-outline-info" [disabled]="download_disabled">Download {{cust}} Notes</button>
 </div>
 
 <div *ngIf="isSelected('collector')">
@@ -42,7 +42,7 @@
   <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs" (click)="loadmore($event)">load more
     notes...</button>
   <button *ngIf="pager.reachedend" disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
 </div>
 
 <div *ngIf="isSelected('bulk')">

@@ -49,6 +49,7 @@ export class ActivityActionComponent implements OnInit {
   excuse: any = [];
   capture = true;
   ptps: any = [];
+  static: any = [];
   ptp_m: any = {};
   ptpmultiple: any = {};
   en_ptp: any = {};
@@ -157,6 +158,7 @@ export class ActivityActionComponent implements OnInit {
       this.getwatch(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
+      
     }
 
   }
@@ -166,6 +168,21 @@ export class ActivityActionComponent implements OnInit {
       this.account = data[0];
       this.autodial_telnumber = this.account.cellnumber || this.account.mobile || this.account.phonenumber || this.account.telnumber || this.account.celnumber;
       this.model.emailaddress = data[0].emailaddress;
+      this.getstatic(this.accnumber);
+      
+    });
+  }
+
+  getstatic(accnumber) {
+    this.ecolService.getStaticLoans(accnumber).subscribe(data => {
+    
+      if (data && data.length > 0) {
+        this.account.reviewdate = data[0].reviewdate;
+        this.account.excuse = data[0].excuse;
+        this.account.cmdstatus = data[0].cmdstatus;
+        this.account.routetostate = data[0].routetostate;
+        this.account.excuse_other = data[0].excuse_other;
+      }
       // build form
       this.buildForm();
       if (swal.isVisible) { swal.close(); }
@@ -180,7 +197,7 @@ export class ActivityActionComponent implements OnInit {
       if (data.watch) {
         this.account.reviewdate = data.watch.reviewdate || '',
           this.account.excuse = data.watch.excuse || '',
-          this.account.cmdstatus = data.watch.cmdstatus || 'Hardcore',
+          this.account.cmdstatus = data.watch.cmdstatus || '',
           this.account.routetostate = data.watch.routetostate || 'ACTIVE COLLECTIONS',
           this.account.excuse_other = data.watch.rfdother;
       }
@@ -201,7 +218,7 @@ export class ActivityActionComponent implements OnInit {
 
   getwatchcardstatic(cardacct) {
     this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
-      console.log(data);
+      
       if (data && data.length > 0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
@@ -367,6 +384,7 @@ export class ActivityActionComponent implements OnInit {
     
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
+      console.log(data)
       this.sendNotesData(this.custnumber);
       this.sendPtpsData(this.accnumber);
       // watch stream put watch_static
@@ -433,7 +451,7 @@ export class ActivityActionComponent implements OnInit {
       });
     }, error => {
       console.log(error);
-      swal('Error!', 'activitylog ::: service is currently not available', 'error');
+      swal('Error!', 'activitylog service is currently not available', 'error');
     });
   }
 
