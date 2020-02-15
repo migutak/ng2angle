@@ -595,6 +595,14 @@ export class EcolService {
   guarantorletters(data) {
     return this.httpClient.post<any>(environment.api + '/api/guarantorletters', data);
   }
+  
+  woffstory(data) {
+    return this.httpClient.put<any>(environment.api + '/api/writeoffstory', data);
+  }
+
+  searchwoffstory(accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/writeoffstory?filter[where][accnumber]=' + accnumber);
+  }
 
   getperm(role: string) {
     return this.httpClient.get<any>(environment.api + '/api/permissionsettings?filter[where][role_id]=' + role);

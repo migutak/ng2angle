@@ -20,12 +20,8 @@ export class WriteoffstoryComponent implements OnInit {
   model: any = {};
   username: string;
   sys: string;
-  sms: any = [];
-  teles: any = [];
-  dataSms: any = {};
+  data: any = {};
   account: any = [];
-  charactersRemaining = 0;
-  iscard: Boolean = false;
   p = 1;
 
   constructor(public settings: SettingsService,
@@ -57,11 +53,6 @@ export class WriteoffstoryComponent implements OnInit {
       this.accnumber = queryParams.get('accnumber');
     });
 
-    /*this.username = this.route.snapshot.queryParamMap.get('username');
-    this.route.queryParamMap.subscribe(queryParams => {
-      this.username = queryParams.get('username');
-    });*/
-
     this.custnumber = this.route.snapshot.queryParamMap.get('custnumber');
     this.route.queryParamMap.subscribe(queryParams => {
       this.custnumber = queryParams.get('custnumber');
@@ -70,47 +61,23 @@ export class WriteoffstoryComponent implements OnInit {
     this.sys = this.route.snapshot.queryParamMap.get('sys');
     this.route.queryParamMap.subscribe(queryParams => {
       this.sys = queryParams.get('sys');
-    });
-
+    }); 
     
 
+    // update writeoffstory
+    this.getwriteoffstory(this.accnumber);
+
   }
 
-
-
-  
-  getaccount(account) {
-    this.ecolService.getaccount(account).subscribe(data => {
-      this.account = data;
+  getwriteoffstory(accnumber) {
+    this.ecolService.searchwoffstory(accnumber).subscribe(data => {
+      if(data && data.length>0){
+        data.writeoffstoryMessage = data[0].woffstory;
+      }
     });
   }
 
-  getmcoopcashaccount(loanaccaccount) {
-    this.ecolService.getmcoopcashAccount(loanaccaccount).subscribe(data => {
-      this.account = data;
-    });
-  }
-
-  getcard(cardacct) {
-    this.ecolService.getcardAccount(cardacct).subscribe(data => {
-      this.account = data[0];
-    });
-  }
-
-  getwatchcard(cardacct) {
-    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
-      this.account = data[0];
-    });
-  }
-
-  getwatch(accnumber) {
-    this.ecolService.getwatch(accnumber).subscribe(data => {
-      console.log(data);
-      this.account = data;
-    });
-  }
-
-  sendsmsfunc(form) {
+  updatefunc(form) {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -121,29 +88,26 @@ export class WriteoffstoryComponent implements OnInit {
       custnumber: this.custnumber,
       accnumber: this.accnumber,
       owner: this.username,
-      message: form.value.smsMessage + form.value.smsCallback,
-      arrears: this.account.totalarrears,
-      datesent: new Date(),
-      telnumber: form.value.smsNumber
+      woffstory: form.value.smsMessage,
+      lastupdate: this.currentDate
     };
-    this.ecolService.postsms(body).subscribe(data => {
-      swal('Success!', 'sms sent', 'success');
-      form.value.message = '';
-      this.addActivity(body.message);
+    this.ecolService.woffstory(body).subscribe(data => {
+      swal('Success!', 'Writeoff story updated', 'success');
+      this.addActivity(body.woffstory);
     }, error => {
       console.log(error);
-      swal('Error!', 'sms service currently not available', 'error');
+      swal('Error!', 'Service currently not available', 'error');
     });
   }
 
-  addActivity(sms) {
+  addActivity(msg) {
     const body = {
-      collectoraction: 'SMS',
+      collectoraction: 'REVW',
       party: '',
       ptpamount: '',
       ptp: '',
       ptpdate: this.currentDate,
-      collectornote: sms,
+      collectornote: msg,
       reviewdate: moment(this.account.reviewdate).format('DD-MMM-YYYY'),
       reason: this.account.excuse,
       cmdstatus: this.account.cmdstatus,
@@ -153,7 +117,7 @@ export class WriteoffstoryComponent implements OnInit {
       custnumber: this.custnumber,
       arramount: this.account.totalarrears || 0,
       oustamount: this.account.oustbalance || 0,
-      notesrc: 'sent sms',
+      notesrc: 'added a writeoff story',
       noteimp: 'N',
       rfdother: '',
       owner: this.username,
@@ -164,7 +128,7 @@ export class WriteoffstoryComponent implements OnInit {
       this.sendNotesData(this.custnumber);
     }, error => {
       console.log(error);
-      swal('Error!', 'activitylog ::: service is currently not available', 'error');
+      swal('Error!', 'activitylog service is currently not available', 'error');
     });
   }
 
