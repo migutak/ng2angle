@@ -15,8 +15,8 @@ export class AllReportsComponent implements OnInit {
 
     constructor(
         private exportWoffstoryservice: ExportWoffStoryService
-      ) {
-      }
+    ) {
+    }
 
     ngOnInit() { }
 
