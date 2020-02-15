@@ -350,8 +350,8 @@ export class ActivityActionComponent implements OnInit {
       toemail: this.f.toemail.value,
       ptpsms: this.f.ptpsms.value,
       ptpsmsnumber: this.f.ptpsmsnumber.value,
-      // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value
-      collectornote: this.f.collectornote.value + '   Reason for default: ' + this.f.reason.value,
+      // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value + '   Reason for default: ' + this.f.reason.value
+      collectornote: this.f.collectornote.value ,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,

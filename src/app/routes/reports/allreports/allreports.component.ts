@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 declare var $: any;
 import { environment } from '../../../../environments/environment';
+import { ExportWoffStoryService } from '../../../services/exportwoffstory.service';
 
 @Component({
     selector: 'app-allreports',
@@ -11,6 +12,11 @@ import { environment } from '../../../../environments/environment';
 export class AllReportsComponent implements OnInit {
 
     report: string = null;
+
+    constructor(
+        private exportWoffstoryservice: ExportWoffStoryService
+      ) {
+      }
 
     ngOnInit() { }
 
@@ -34,6 +40,10 @@ export class AllReportsComponent implements OnInit {
     kibanaopenptp() {
         this.report = environment.ptpreport;
         window.open(this.report, '_blank');
+    }
+
+    exportwoffstory() {
+        this.exportWoffstoryservice.generateWoffstory();
     }
 
 }

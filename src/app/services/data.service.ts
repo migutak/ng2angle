@@ -8,6 +8,7 @@ export class DataService {
 
   public dataSubject = new BehaviorSubject<number>(0);
   public notesSubject = new BehaviorSubject<number>(0);
+  public woffstorySubject = new BehaviorSubject<number>(0);
   public guarantorsSubject = new BehaviorSubject<number>(0);
   public contactsSubject = new BehaviorSubject<number>(0);
   public collateralSubject = new BehaviorSubject<number>(0);
@@ -21,6 +22,10 @@ export class DataService {
 
   getNotesData(): Observable<any> {
     return this.notesSubject.asObservable();
+  }
+
+  getWoffstoryData(): Observable<any> {
+    return this.woffstorySubject.asObservable();
   }
 
   getCollateral(): Observable<any> {
@@ -53,6 +58,10 @@ export class DataService {
 
   pustNotesData(dataToPush: number): void {
     this.notesSubject.next(dataToPush);
+  }
+
+  pushWoffstoryData(dataToPush: number): void {
+    this.woffstorySubject.next(dataToPush);
   }
 
   pushContacts(dataToPush: number): void {

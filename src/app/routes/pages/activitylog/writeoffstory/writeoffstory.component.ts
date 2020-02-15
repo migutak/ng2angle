@@ -15,14 +15,10 @@ export class WriteoffstoryComponent implements OnInit {
 
   accnumber: string;
   custnumber: string;
-  accountdetails: any;
-  smsMessage: [];
-  model: any = {};
   username: string;
   sys: string;
   data: any = {};
   account: any = [];
-  p = 1;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -72,7 +68,7 @@ export class WriteoffstoryComponent implements OnInit {
   getwriteoffstory(accnumber) {
     this.ecolService.searchwoffstory(accnumber).subscribe(data => {
       if(data && data.length>0){
-        data.writeoffstoryMessage = data[0].woffstory;
+        this.data.writeoffstoryMessage = data[0].woffstory;
       }
     });
   }
@@ -80,16 +76,14 @@ export class WriteoffstoryComponent implements OnInit {
   updatefunc(form) {
     // check if logged in
     this.ecolService.ifLogged();
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
 
     this.ecolService.loader();
     const body = {
       custnumber: this.custnumber,
       accnumber: this.accnumber,
       owner: this.username,
-      woffstory: form.value.smsMessage,
-      lastupdate: this.currentDate
+      woffstory: form.value.writeoffstoryMessage,
+      lastupdate: this.currentDate()
     };
     this.ecolService.woffstory(body).subscribe(data => {
       swal('Success!', 'Writeoff story updated', 'success');
@@ -126,6 +120,7 @@ export class WriteoffstoryComponent implements OnInit {
     // add action
     this.ecolService.postactivitylogs(body).subscribe(data => {
       this.sendNotesData(this.custnumber);
+      this.sendWoffstoryData(this.accnumber);
     }, error => {
       console.log(error);
       swal('Error!', 'activitylog service is currently not available', 'error');
@@ -135,6 +130,12 @@ export class WriteoffstoryComponent implements OnInit {
   sendNotesData(custnumber) {
     this.ecolService.totalnotes(custnumber).subscribe(data => {
       this.dataService.pustNotesData(data[0].TOTAL);
+    });
+  }
+
+  sendWoffstoryData(accnumber) {
+    this.ecolService.searchwoffstory(accnumber).subscribe(data => {
+      this.dataService.pushWoffstoryData(data.length);
     });
   }
 

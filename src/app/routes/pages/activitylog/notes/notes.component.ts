@@ -87,7 +87,7 @@ export class NotesComponent implements OnInit {
   getNotes(custnumber) {
     this.ecolService.totalnotes(custnumber).subscribe(data => {
       this.noteslength = data[0].TOTAL;
-      if (data[0].TOTAL || data[0].TOTAL>0) {
+      if (data[0].TOTAL && data[0].TOTAL>0) {
         this.download_disabled = false;
       }
     });
@@ -98,12 +98,12 @@ export class NotesComponent implements OnInit {
     this.query.limit = this.pager.limit;
     this.query.skip = this.pager.limit * this.pager.current;
 
-    // const filter = encodeURI(JSON.stringify(this.query));
-    // console.log('this.query ', this.query);
+    // 
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
+      
       // enable notes download button
-      if (data || data.length>0) {
+      if (data && data.length>0) {
         this.download_disabled = false;
       }
       // this.noteslength = data.length;

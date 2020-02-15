@@ -21,6 +21,7 @@ export class ActivityLogComponent implements OnInit {
   totalcollaterals: number;
   totalguarantors: number;
   totalfiles: number;
+  totalwoffstory: number;
 
   constructor(
     public settings: SettingsService,
@@ -56,6 +57,10 @@ export class ActivityLogComponent implements OnInit {
 
       dataService.getPtps().subscribe(data => {
         this.totalPtps = data;
+      });
+
+      dataService.getWoffstoryData().subscribe(data => {
+        this.totalwoffstory = data;
       });
   }
 
@@ -148,12 +153,20 @@ export class ActivityLogComponent implements OnInit {
     this.getTeles(this.custnumber);
     this.getptps(this.accnumber);
     this.planexists(this.accnumber);
-
+    this.getwoffstory(this.accnumber);
   }
 
   getptps(accnumber) {
     this.ecolService.getptps(accnumber).subscribe(data => {
       this.totalPtps = data.length;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getwoffstory(accnumber) {
+    this.ecolService.searchwoffstory(accnumber).subscribe(data => {
+      this.totalwoffstory = data.length;
     }, error => {
       console.log(error);
     });
