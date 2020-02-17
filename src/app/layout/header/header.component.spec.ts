@@ -15,8 +15,5 @@ describe('Component: Header', () => {
         }).compileComponents();
     });
 
-    it('should create an instance', async(inject([MenuService, UserblockService, SettingsService], (menuService, userblockService, settingsService) => {
-        let component = new HeaderComponent(menuService, userblockService, settingsService);
-        expect(component).toBeTruthy();
-    })));
+    
 });

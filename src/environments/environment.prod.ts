@@ -2,8 +2,7 @@ export const environment = {
   production: true,
   adlogin: false,
   sendsms: false,
-  //api: 'https://ecollectweb.co-opbank.co.ke',
-  api:'',
+  api: 'https://ecollectweb.co-opbank.co.ke',
   nodeapi: 'https://ecollectweb.co-opbank.co.ke/nodeapi',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'https://ecollectweb.co-opbank.co.ke/docx/',
@@ -27,5 +26,6 @@ export const environment = {
   portal: 'https://ecollectweb.co-opbank.co.ke/portal',
   accplanreport: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()',
   ptpreport: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-  ,homedash: 'http://172.16.19.151:5601/goto/f893ccd125308885e80090233919f80e?embed=true'
+  ,homedash: 'http://172.16.19.151:5601/goto/f893ccd125308885e80090233919f80e?embed=true',
+  workflow: 'http://ecollectweb.co-opbank.co.ke:8085/sysworkflow/en/neoclassic/login/login'
 };

@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+// import { EcolService } from '../../../services/ecol.service';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -29,7 +29,7 @@ export class ViewallComponent implements OnInit {
 
   modules = AllModules;
 
-  constructor(private ecolService: EcolService, private http: HttpClient) {
+  constructor() {
     this.columnDefs = [
       {
         field: 'ACCNUMBER',

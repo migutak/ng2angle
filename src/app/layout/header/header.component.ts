@@ -7,6 +7,7 @@ import { MenuService } from '../../core/menu/menu.service';
 import { EcolService } from '../../services/ecol.service';
 import swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-header',
@@ -155,6 +156,10 @@ export class HeaderComponent implements OnInit {
         if (screenfull.enabled) {
             screenfull.toggle();
         }
+    }
+
+    openworkflows() {
+        window.open(environment.workflow)
     }
 
     logout() {
