@@ -345,7 +345,7 @@ export class ActivityActionComponent implements OnInit {
       party: this.f.party.value,
       ptpamount: this.f.ptpamount.value,
       ptp: this.f.ptp.value,
-      ptpdate: this.f.ptpdate.value,
+      ptpdate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
       ptpemail: this.f.ptpemail.value,
       toemail: this.f.toemail.value,
       ptpsms: this.f.ptpsms.value,
@@ -384,7 +384,6 @@ export class ActivityActionComponent implements OnInit {
     
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
-      console.log(data)
       this.sendNotesData(this.custnumber);
       this.sendPtpsData(this.accnumber);
       // watch stream put watch_static

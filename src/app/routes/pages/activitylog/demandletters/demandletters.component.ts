@@ -11,7 +11,7 @@ import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster
 import { license } from '../../../../../../env';
 import { HttpClient } from '@angular/common/http';
 
-const URL = environment.valor;
+const URL = environment.filesapi;
 const apiUrl = environment.letters_api;
 
 @Component({

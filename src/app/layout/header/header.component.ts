@@ -72,12 +72,12 @@ export class HeaderComponent implements OnInit {
         }
 
         // Switch fullscreen icon indicator
-        const el = this.fsbutton.nativeElement.firstElementChild;
+        /*const el = this.fsbutton.nativeElement.firstElementChild;
         screenfull.on('change', () => {
             if (el) {
                 el.className = screenfull.isFullscreen ? 'fa fa-compress' : 'fa fa-expand';
             }
-        });
+        });*/
 
     }
 

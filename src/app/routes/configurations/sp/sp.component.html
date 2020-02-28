@@ -21,41 +21,99 @@
               <div class="col-xl-4">
                 <div class="card card-primary">
                   <div class="card-body">
-                    <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="addNew(settingsForm)" *ngIf="new">
-                      <fieldset>
+                    <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(settingsForm)" *ngIf="new">
                         <div class="form-group row mb">
                           <div class="col-md-12">
-                            <label class="mt">SMS Type</label>
-                            <ngx-select [allowClear]="true" [items]="itemsDemands" [disabled]="disabled"
-                              (data)="refreshValue($event)" name="letterid" id="letterid" #letterid="ngModel"
-                              [(ngModel)]="model.letterid" placeholder="No sms selected"
-                              [ngClass]="{ 'is-invalid': letterid.invalid }" required>
-                            </ngx-select>
+                            <div class="form-group">
+                              <p>Service Provider</p>
+                              <input class="form-control" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
+                                [(ngModel)]="model.SPTITLE" [disabled]="false" required autocomplete="off"/>
+                            </div>
   
-                            <label class="mt">Select Memo group(s) to send to</label>
-                            <ngx-select (data)="value" [multiple]="true" [items]="items" name="memogroup" id="memogroup"
-                              #memogroup="ngModel" [(ngModel)]="model.memogroup" [disabled]="disabled"
-                              (data)="refreshValue($event)" (selected)="selected($event)" placeholder="No memo selected">
-                            </ngx-select>
+                            <p class="my-2"></p>
+                            <div class="form-group">
+                              <p>Contact Person</p>
+                              <input class="form-control" name="CONTACTPERSON" id="CONTACTPERSON" #CONTACTPERSON="ngModel"
+                                [(ngModel)]="model.CONTACTPERSON" [disabled]="false" required autocomplete="off"/>
+                            </div>
                           </div>
                         </div>
-                      </fieldset>
                       <p class="my-2"></p>
                       <div class="form-group">
-                        <p>SMS Message (Between 0 and 120)</p>
-                        <input class="form-control" type="number" name="daysinarr" id="daysinarr" #daysinarr="ngModel"
-                          [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.invalid }" [range]="[1, 120]"
-                          required />
-                          <p *ngIf="daysinarr.errors?.range">Range accepted is 1 - 120</p>
-                        <!--<div *ngIf="daysinarr.errors.min">Minimum required is 0</div>
-                              <div *ngIf="daysinarr.errors.max">Maximum required is 120</div>-->
+                        <p>Telephone</p>
+                        <input class="form-control" name="TELEPHONE" id="TELEPHONE" #TELEPHONE="ngModel"
+                          [(ngModel)]="model.TELEPHONE" [disabled]="false" required autocomplete="off"/>
                       </div>
-  
-                      <!--<pre>{{model | json}}</pre>-->
-  
-                      <!--
-                        
-                      -->
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>SPCode</p>
+                          <select class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
+                          [(ngModel)]="model.SPCODE" [disabled]="false" required autocomplete="off">
+                            <option value="" selected>Choose...</option>
+                            <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
+                            <option>DEBT COLLECTORS</option>
+                            <option>INVESTIGATORS</option>
+                            <option>STORAGE YARDS</option>
+                            <option>VALUERS</option>
+                          </select>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Start Date</p>
+
+                          <div class="input-group">
+                            <input type="text" placeholder="Start Date" class="form-control" name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
+                            [(ngModel)]="model.STARTDATE" [disabled]="false" required
+                              #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" >
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                                    class="fa fa-calendar"></i>
+                                </span></button>
+                            </div>
+                          </div>
+
+
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Account Number</p>
+                        <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
+                          [(ngModel)]="model.ACCNUMBER" [disabled]="false" required autocomplete="off"/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Coverage</p>
+                        <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
+                          [(ngModel)]="model.COVERAGE" [disabled]="false" required autocomplete="off"/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Address</p>
+                        <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
+                          [(ngModel)]="model.ADDRESS" [disabled]="false" autocomplete="off"/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>End of Indemnity</p>
+                        <input class="form-control" name="ENDOFINDEMNITY" id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
+                          [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false" required autocomplete="off"/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Email</p>
+                        <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
+                          [(ngModel)]="model.EMAIL" [disabled]="false" required autocomplete="off"/>
+                      </div>
+                      <fieldset>
+                          <div class="form-group row">
+                            <div class="col-md-10">
+                              <label class="checkbox c-checkbox">
+                                <input type="checkbox" name="active" id="active" #active="ngModel"
+                                  [(ngModel)]="model.active" [checked]="model.active" />
+                                <span class="fa fa-check"></span> Active</label>
+                            </div>
+                          </div>
+                        </fieldset>
                       <p class="lead mt-3"></p>
                       <div>
                         <div class="clearfix">
@@ -72,68 +130,85 @@
                       <div class="form-group">
                         <p>Service Provider</p>
                         <input class="form-control" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
-                          [(ngModel)]="model.SPTITLE" [disabled]="true" required/>
+                          [(ngModel)]="model.SPTITLE" [disabled]="true" required autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Contact Person</p>
                         <input class="form-control" name="CONTACTPERSON" id="CONTACTPERSON" #CONTACTPERSON="ngModel"
-                          [(ngModel)]="model.CONTACTPERSON" [disabled]="false" required/>
+                          [(ngModel)]="model.CONTACTPERSON" [disabled]="false" required autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Telephone</p>
                         <input class="form-control" name="TELEPHONE" id="TELEPHONE" #TELEPHONE="ngModel"
-                          [(ngModel)]="model.TELEPHONE" [disabled]="false" required/>
+                          [(ngModel)]="model.TELEPHONE" [disabled]="false" required autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>SPCode</p>
-                        <input class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
-                          [(ngModel)]="model.SPCODE" [disabled]="false" required/>
+                        <select class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
+                          [(ngModel)]="model.SPCODE" [disabled]="false" required autocomplete="off">
+                            <option value="" selected>Choose...</option>
+                            <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
+                            <option>DEBT COLLECTORS</option>
+                            <option>INVESTIGATORS</option>
+                            <option>STORAGE YARDS</option>
+                            <option>VALUERS</option>
+                          </select>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Start Date</p>
-                        <input class="form-control" name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
-                          [(ngModel)]="model.STARTDATE" [disabled]="true" required/>
+
+                        <div class="input-group">
+                          <input type="text" placeholder="Start Date" class="form-control" name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
+                          [(ngModel)]="model.STARTDATE" [disabled]="false" required
+                            #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" >
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                                  class="fa fa-calendar"></i>
+                              </span></button>
+                          </div>
+                        </div>
+
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Account Number</p>
                         <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
-                          [(ngModel)]="model.ACCNUMBER" [disabled]="false" required/>
+                          [(ngModel)]="model.ACCNUMBER" [disabled]="false" required autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Coverage</p>
                         <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
-                          [(ngModel)]="model.COVERAGE" [disabled]="false" required/>
+                          [(ngModel)]="model.COVERAGE" [disabled]="false" required autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Address</p>
                         <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
-                          [(ngModel)]="model.ADDRESS" [disabled]="false"/>
+                          [(ngModel)]="model.ADDRESS" [disabled]="false" autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>End of Indemnity</p>
                         <input class="form-control" name="ENDOFINDEMNITY" id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
-                          [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false" required/>
+                          [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false" required autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Email</p>
                         <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
-                          [(ngModel)]="model.EMAIL" [disabled]="false" required/>
+                          [(ngModel)]="model.EMAIL" [disabled]="false" required autocomplete="off"/>
                       </div>
                       <fieldset>
                           <div class="form-group row">
                             <div class="col-md-10">
-                              <label class="checkbox c-checkbox">
-                                <input type="checkbox" name="active" id="active" #active="ngModel"
-                                  [(ngModel)]="model.active" [checked]="model.active" />
+                              <label for="active" class="checkbox c-checkbox">
+                                <input type="checkbox" name="ACTIVE" id="ACTIVE" #ACTIVE="ngModel"
+                                  [(ngModel)]="model.ACTIVE" [checked]="model.ACTIVE" />
                                 <span class="fa fa-check"></span> Active</label>
                             </div>
                           </div>

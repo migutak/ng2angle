@@ -57,7 +57,7 @@ export class EcolService {
 
   getallnotes(filter, cust) {
     //
-    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust + '&filter?[order]=notedate DESC';
+    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust ;
 
     if (filter !== '') {
       url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
@@ -68,8 +68,6 @@ export class EcolService {
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
     const response = this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' + '&filter[order]=notedate DESC');
-    // tslint:disable-next-line:max-line-length
-    // const response = this.httpClient.get<any>(environment.mongo + '/mongo/notes?filter[where][custnumber]=' + cust + '&filter?[order]=notedate DESC');
     return forkJoin([response]);
   }
 
@@ -85,7 +83,7 @@ export class EcolService {
   }
 
   getreviewers() {
-    const url = environment.api + '/api/tblusers?filter[where][role]=Reviewer';
+    const url = environment.api + '/api/tblusers?filter[where][role]=teamleader';
     return this.httpClient.get(url);
   }
 
@@ -116,9 +114,19 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+  sptype(body) {
+    const url = environment.api + '/api/sptypes';
+    return this.httpClient.post(url, body);
+  }
+
+  putsptype(body) {
+    const url = environment.api + '/api/sptypes';
+    return this.httpClient.put(url, body);
+  }
+
   postnotes(body) {
     const url = environment.api + '/api/notehis';
-    return this.httpClient.post(url, body);
+    return this.httpClient.post<any>(url, body);
   }
 
   insertbulknotes(body) {

@@ -2,18 +2,20 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { GridOptions } from 'ag-grid-community';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 declare var $: any;
 
 
 @Component({
   selector: 'app-sp',
   templateUrl: './sp.component.html',
-  styleUrls: ['./sp.component.scss']
+  styleUrls: ['./sp.component.scss'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class SpComponent implements OnInit {
 
@@ -63,9 +65,8 @@ export class SpComponent implements OnInit {
 
   constructor(
     private ecolService: EcolService,
-    private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    http: HttpClient
+    private http: HttpClient
   ) {
     // Basic example
     this.gridOptions = <GridOptions>{
@@ -83,7 +84,6 @@ export class SpComponent implements OnInit {
   }
 
   onRowClicked(event: any) {
-    console.log(event.node.data)
     this.new = false;
     this.model = event.node.data;
     this.model.lastupdateby = this.username;
@@ -114,9 +114,9 @@ export class SpComponent implements OnInit {
     this.model = {};
   }
 
-  fneditSubmit(form) {
+  fneditSubmit(body) {
     this.spinner.show();
-    this.ecolService.putautoLetter(this.model).subscribe(resp => {
+    this.ecolService.putsptype(body).subscribe(resp => {
       swal('Success!', 'Update successful!', 'success');
       this.getData();
       this.spinner.hide();
@@ -128,65 +128,27 @@ export class SpComponent implements OnInit {
   }
 
   getData() {
-    this.ecolService.getautoLetter().subscribe(res => {
-      this.rowData1 = res;
+    this.http.get<any>(environment.api + '/api/sptypes').subscribe(resp => {
+      this.rowData1 = resp;
     });
   }
 
   
 
-  // postautoLetter
-
-  addNew(form) {
+   editSubmit(form) {
     const body = {
-      'letterid': form.value.letterid,
-      'memogroup': form.value.memogroup,
-      'daysinarr': form.value.daysinarr,
-      'lastupdate': new Date(),
-      'lastupdateby': this.username,
-      'active': true
+      'SPTITLE': this.model.SPTITLE,
+      'CONTACTPERSON': form.value.CONTACTPERSON,
+      'TELEPHONE': form.value.TELEPHONE,
+      'SPCODE': form.value.SPCODE,
+      'STARTDATE': moment(form.value.STARTDATE).format('DD-MMM-YYYY'),
+      'ACCNUMBER': form.value.ACCNUMBER,
+      'COVERAGE': form.value.COVERAGE,
+      'ADDRESS': form.value.ADDRESS,
+      'ENDOFINDEMNITY': form.value.ENDOFINDEMNITY,
+      'EMAIL': form.value.EMAIL,
+      'ACTIVE': 'Y'
     };
-    // check duplicate
-    this.ecolService.postcheckautoLetter(body).subscribe(resp => {
-      //
-      let reject = false;
-      const acceptModel = [];
-      const rejectModel = [];
-      for (let i = 0; i < resp.length; i++) {
-        if (resp[i].isduplicate === true) {
-          // add to reject
-          reject = true;
-          rejectModel[i] = resp[i];
-        } else {
-          acceptModel[i] = resp[i];
-        }
-      }
-      if (reject) {
-        // reject request
-        swal('Error!', 'Request contains duplicates!', 'error');
-        swal({
-          type: 'error',
-          title: 'Duplicates detected...',
-          text:   JSON.stringify(rejectModel),
-          footer: '<a href>Find help on this issue?</a>'
-        });
-      } else {
-        // acccepts and post
-        this.spinner.show();
-        this.ecolService.postautoLetter(acceptModel).subscribe(data => {
-          swal('Success!', 'Successfully added!', 'success');
-          this.spinner.hide();
-          this.getData();
-        });
-      }
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Error occurred during processing!', 'error');
-    });
-  }
-
-
-  editSubmit(form) {
     swal({
       title: 'Are you sure?',
       text: 'You want to Update!',
@@ -197,7 +159,7 @@ export class SpComponent implements OnInit {
       confirmButtonText: 'Yes, Update!'
     }).then((result) => {
       if (result.value) {
-        this.fneditSubmit(form);
+        this.fneditSubmit(body);
       }
     });
   }

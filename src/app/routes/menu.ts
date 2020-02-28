@@ -432,6 +432,12 @@ const SP = {
     icon: 'icon-docs'
 };
 
+const INSURANCE = {
+    text: 'Insurance Co',
+    link: '/configurations/insurance',
+    icon: 'icon-docs'
+};
+
 const AccountPlans = {
     text: 'Account Plans',
     link: '/configurations',
@@ -568,6 +574,7 @@ const teamleader_menu = [
     SMS,
     AccountPlans,
     SP,
+    INSURANCE,
     headingDocumentations,
     Manuals
 ];

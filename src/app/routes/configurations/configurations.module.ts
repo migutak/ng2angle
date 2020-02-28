@@ -6,6 +6,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SmsComponent } from './sms/sms.component';
 import { SpComponent } from './sp/sp.component';
+import { InsuranceComponent } from './insurance/insurance.component';
 import { AllocationsComponent } from './allocations/allocations.component';
 import { AccplansComponent } from './accplans/accplans.component';
 import { PlanactionsComponent } from './planactions/planactions.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
   { path: 'sms', component: SmsComponent },
   { path: 'sp', component: SpComponent },
+  { path: 'insurance', component: InsuranceComponent },
   { path: 'allocations', component: AllocationsComponent },
   { path: 'accplans', component: AccplansComponent },
   { path: 'planactions', component: PlanactionsComponent },
@@ -39,6 +41,7 @@ const routes: Routes = [
   declarations: [
     SmsComponent,
     SpComponent,
+    InsuranceComponent,
     AllocationsComponent,
     AccplansComponent,
     PlanactionsComponent,

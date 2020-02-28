@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
@@ -6,6 +6,8 @@ import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import * as XLSX from 'xlsx';
+import { ViewChild } from '@angular/core';
 
 const URL = environment.xlsuploadapi;
 
@@ -20,6 +22,11 @@ export class BulknotesComponent implements OnInit {
   accnumber;
   username: string;
   sys: string;
+  willDownload = false;
+  outdata = [];
+
+  @ViewChild('myInput')
+  myInputVariable: ElementRef;
 
   public uploader: FileUploader = new FileUploader({ url: URL });
   public hasBaseDropZoneOver = false;
@@ -121,6 +128,148 @@ export class BulknotesComponent implements OnInit {
       console.log(error);
       swal('Error!', ' Cannot download template  file!', 'error');
     });
+  }
+
+
+  // xls to json
+  onFileChange(ev) {
+    const xfile = ev.target.files[0];
+    console.log('size', xfile.size);
+    console.log('type', xfile.type);
+
+    if (xfile.size > 300000) {
+      swal({
+        type: 'error',
+        title: 'Empty Values',
+        text: 'File too large. max is 300kb',
+      });
+      this.myInputVariable.nativeElement.value = "";
+      document.getElementById('output').innerHTML = "";
+      return;
+    }
+
+    if (xfile.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      swal({
+        type: 'error',
+        title: 'Empty Values',
+        text: 'Wrong file format',
+      });
+      this.myInputVariable.nativeElement.value = "";
+      document.getElementById('output').innerHTML = "";
+      return;
+    }
+
+    let workBook = null;
+    let jsonData = null;
+    const reader = new FileReader();
+    const file = ev.target.files[0];
+    reader.onload = (event) => {
+      const data = reader.result;
+      workBook = XLSX.read(data, { type: 'binary' });
+      jsonData = workBook.SheetNames.reduce((initial, name) => {
+        const sheet = workBook.Sheets[name];
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      //console.log('data-total', jsonData.Sheet1.length);
+
+      if(!jsonData.Sheet1) {
+        swal({
+          type: 'error',
+          title: 'Empty Values',
+          text: 'Wrong sheet name',
+        });
+        this.myInputVariable.nativeElement.value = "";
+        document.getElementById('output').innerHTML = "";
+        return;
+      };
+      this.outdata = jsonData.Sheet1;
+      
+      if(!this.outdata[0].accnumber || !this.outdata[0].notemade) {
+        swal({
+          type: 'error',
+          title: 'Empty Values',
+          text: 'Wrong field name',
+        });
+        this.myInputVariable.nativeElement.value = "";
+        document.getElementById('output').innerHTML = "";
+        return;
+      }
+      
+
+
+      for (var i = 0; i < jsonData.Sheet1.length; i++) {
+        // check for null
+        if (this.outdata[i].accnumber == null || this.outdata[i].notemade == null || typeof this.outdata[i].notemade === 'undefined' || typeof this.outdata[i].accnumber === 'undefined') {
+          swal({
+            type: 'warning',
+            title: 'Empty Values',
+            text: 'data in row no: ' + i + ' is empty and will be omitted',
+          });
+
+        } else {
+          this.outdata[i].owner = this.username;
+          this.outdata[i].custnumber = (this.outdata[i].accnumber).substring(5, 12);
+          this.outdata[i].notesrc = 'uploaded a note';
+        }
+
+      }
+
+      const dataString = JSON.stringify(jsonData);
+      document.getElementById('output').innerHTML = dataString.slice(0, 500).concat("...");
+      //this.setDownload(dataString);
+
+      // post
+
+      swal({
+        title: 'Confirmation',
+        imageUrl: 'assets/img/user/coop.jpg',
+        text: 'Do you want to proceed with the upload of the ' + this.outdata.length + ' rows?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Upload'
+      }).then((result) => {
+        if (result.value) {
+          // proceeed to post
+          this.ecolService.loader();
+          this.ecolService.postnotes(this.outdata).subscribe(resp => {
+            swal({
+              type: 'success',
+              title: 'ALL Good',
+              text: resp.length + ' rows has been processed!',
+            });
+          }, error => {
+            console.log(error);
+            swal({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong with xlxs upload!',
+            });
+          })
+        } else {
+          this.myInputVariable.nativeElement.value = "";
+          document.getElementById('output').innerHTML = "";
+          return;
+          swal.close();
+        }
+      });
+
+
+
+    }
+    reader.readAsBinaryString(file);
+
+  }
+
+
+  setDownload(data) {
+    this.willDownload = true;
+    setTimeout(() => {
+      const el = document.querySelector("#download");
+      el.setAttribute("href", `data:text/json;charset=utf-8,${encodeURIComponent(data)}`);
+      el.setAttribute("download", 'xlsxtojson.json');
+    }, 1000)
   }
 
 }
