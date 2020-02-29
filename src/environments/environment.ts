@@ -9,6 +9,7 @@ export const environment = {
   api: 'http://localhost:8000',
   mongo: 'http://localhost:8001',
   nodeapi: 'http://localhost:6001/nodeapi',
+  grids: 'http://localhost:6002/grids',
   letters_api: 'http://localhost:8004/docx/',
   letters_path: 'd:\\demands\\',
   uploadurl: 'http://localhost:4000',

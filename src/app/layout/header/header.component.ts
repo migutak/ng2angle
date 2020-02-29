@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
     nu_of_demandsdue = 0;
     nu_of_overdue = 0;
     nu_of_cc_demands = 0;
+    totalCases = 0;
     userdata: any;
     userperm: any;
     user: any;
@@ -99,7 +100,7 @@ export class HeaderComponent implements OnInit {
           
           let obj: any= JSON.parse(this.str);
           this.totalBrokenPtps = obj.data[0].TOTAL;
-          console.log(typeof obj.data[0].TOTAL);
+          // console.log(typeof obj.data[0].TOTAL);
           
         }, error => {
           console.log(error);

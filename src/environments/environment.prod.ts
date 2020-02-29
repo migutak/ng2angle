@@ -4,6 +4,7 @@ export const environment = {
   sendsms: false,
   api: 'https://ecollectweb.co-opbank.co.ke',
   nodeapi: 'https://ecollectweb.co-opbank.co.ke/nodeapi',
+  grids: 'https://ecollectweb.co-opbank.co.ke/grids',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'https://ecollectweb.co-opbank.co.ke/docx/',
   uploadurl: 'https://ecollectweb.co-opbank.co.ke/filesapi',

@@ -1,8 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-// import { EcolService } from '../../../services/ecol.service';
 import { environment } from '../../../../environments/environment';
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -42,11 +40,12 @@ export class ViewallComponent implements OnInit {
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
     },
-    { field: 'CLIENT_NAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+    { field: 'CLIENT_NAME', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
     { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+    { field: 'SECTION', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     {
         field: 'OUSTBALANCE',
         cellRenderer: function (params) {
@@ -120,9 +119,9 @@ export class ViewallComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
+        //console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridviewall/viewall', {
+        fetch(environment.grids + '/gridviewall/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

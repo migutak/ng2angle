@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 // import { HttpClient} from '@angular/common/http';
-import {AllModules} from '@ag-grid-enterprise/all-modules';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-allloans',
@@ -50,11 +50,12 @@ export class AllloansComponent implements OnInit {
       {
         headerName: 'CUSTNAME',
         field: 'CUSTNAME',
+        width: 300,
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
       },
       {
-        headerName: 'SETTLEACCNO',
-        field: 'SETTLEACCNO',
+        headerName: 'BRANCHNAME',
+        field: 'BRANCHNAME',
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
       },
       {
@@ -111,14 +112,13 @@ export class AllloansComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
+        // console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridviewallloans/viewall', {
+        fetch(environment.grids + '/gridviewallloans/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { 'Content-Type': 'application/json; charset=utf-8' }
-        })
-          .then(httpResponse => httpResponse.json())
+        }).then(httpResponse => httpResponse.json())
           .then(response => {
             params.successCallback(response.rows, response.lastRow);
           })
