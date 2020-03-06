@@ -107,11 +107,18 @@
                 <em class="fa fa-expand"></em>
             </a>
         </li>-->
+<!-- lock -->
+        <li class="nav-item d-none d-md-block">
+            <a class="nav-link" (click)="opentimeoutModal()" title="Lock Your screen">
+            <em class="fa fa-user-lock"></em>
+            </a>
+        </li>
 
         <!-- Workflows-->
         <li class="nav-item d-none d-md-block">
             <a class="nav-link" (click)="openworkflows()" title="Remedial Workflows">
-                <em class="fa fa-link"></em> Workflows
+                Workflows <em class="fa fa-external-link-alt"></em>
+
                 <span   class="badge badge-danger">{{totalCases}}</span>
             </a>
         </li>
@@ -204,7 +211,7 @@
 
         <li class="nav-item dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><em class="icon-user"></em>
-                {{user.username}} | {{user.role}} <b class="caret"></b></a>
+               {{time2}}, {{user.firstname}} {{user.surname}} | {{user.role}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="#" class="dropdown-item"><i class="fa fas-user-o"></i> Profile</a></li>
                 <li><a href="#" class="dropdown-item"><i class="fa fas-calendar-o"></i> Calendar</a></li>

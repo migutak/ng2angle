@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {GridOptions, IDatasource, IGetRowsParams, ColDef} from 'ag-grid';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({

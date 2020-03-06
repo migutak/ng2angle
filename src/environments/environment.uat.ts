@@ -5,6 +5,7 @@ export const environment = {
   api: 'http://172.16.19.151:8000',
   mongo: 'http://172.16.19.151',
   nodeapi: 'http://172.16.19.151:6001/nodeapi',
+  grids: 'http://172.16.19.151:6002/grids',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'http://172.16.19.151:8004/docx/',
   uploadurl: 'http://172.16.19.151:3000/filesapi',

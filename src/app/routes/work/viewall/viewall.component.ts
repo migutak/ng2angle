@@ -1,7 +1,6 @@
-
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import {AllModules} from '@ag-grid-enterprise/all-modules';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-viewall',
@@ -32,65 +31,65 @@ export class ViewallComponent implements OnInit {
       {
         field: 'ACCNUMBER',
         cellRenderer: function (params) {
-          if(params.value !== undefined) {
+          if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
           } else {
             return '<img src="assets/img/user/loading.gif">';
           }
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
-    },
-    { field: 'CLIENT_NAME', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
-    { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-    { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-    { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-    { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-    { field: 'SECTION', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-    {
+      },
+      { field: 'CLIENT_NAME', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'SECTION', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {
         field: 'OUSTBALANCE',
         cellRenderer: function (params) {
-            if (params.value !== undefined) {
-                return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-            } else {
-                return ''
-            }
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
-    },
-    {
+      },
+      {
         field: 'PRINCARREARS',
         cellRenderer: function (params) {
-            if (params.value !== undefined) {
-                return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-            } else {
-                return ''
-            }
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
-    },
-    {
+      },
+      {
         field: 'INSTAMOUNT',
         cellRenderer: function (params) {
-            if (params.value !== undefined) {
-                return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-            } else {
-                return ''
-            }
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
-    },
-    { field: 'LIMITAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-    {
+      },
+      { field: 'LIMITAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      {
         field: 'TOTALARREARS',
         cellRenderer: function (params) {
-            if (params.value !== undefined) {
-                return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-            } else {
-                return ''
-            }
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
-    },
+      },
       { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BRANCHCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
@@ -110,7 +109,7 @@ export class ViewallComponent implements OnInit {
     };
     this.rowModelType = "serverSide";
     this.cacheBlockSize = 50;
-    this.maxBlocksInCache = 0;   
+    this.maxBlocksInCache = 0;
   }
 
   onGridReady(params) {
@@ -121,7 +120,7 @@ export class ViewallComponent implements OnInit {
       getRows(params) {
         //console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.grids + '/gridviewall/viewall', {
+        fetch(environment.nodeapi + '/gridviewall/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }
@@ -156,7 +155,7 @@ export class ViewallComponent implements OnInit {
   }
 
   currencyFormatter(params) {
-    if(params.value !== undefined) {
+    if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     } else {
       return ''

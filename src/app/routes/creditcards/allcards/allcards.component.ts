@@ -12,186 +12,168 @@ import {AllModules} from '@ag-grid-enterprise/all-modules';
 })
 export class AllcardsComponent implements OnInit {
 
-  // dataSource: IDatasource = {
-  //   getRows: (params: IGetRowsParams) => {
-  //     this.apiService().subscribe(data => {
-
-  //       params.successCallback(data, 1000
-  //       );
-  //     })
-  //   }
-  // }
-
-  public gridOptions: GridOptions;
-
   public gridApi;
   public gridColumnApi;
+  public overlayLoadingTemplate;
+  public overlayNoRowsTemplate;
+
   public columnDefs;
-  public sortingOrder;
-    model: any = {};
-    username: string;
-    public searchValue;
+  public defaultColDef;
+  public rowModelType;
+  public cacheBlockSize;
+  public maxBlocksInCache;
+  public rowData: [];
 
-    modules = AllModules;
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  username: string;
+  searchText: string;
+  model: any = {};
+  pivotPanelShow = true;
+  modules = AllModules;
 
-    constructor(public http: HttpClient) {
-        this.gridOptions = <GridOptions>{
+  constructor(private http: HttpClient) {
+    this.columnDefs = [
 
-          unSortIcon: true,
-      // suppressCellSelection: true,
-
-      enableColResize: true,
-      domLayout: 'autoHeight',
-      rowSelection: 'single',
-      rowModelType: 'normal',
-      // rowModelType: 'infinite',
-
-      pagination: true,
-      paginationPageSize: 20,
-      onGridReady: (params) => {
-        params.api.sizeColumnsToFit();
-        this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
-        // this.gridApi.setDatasource(this.dataSource);
-        this.http
-        .get(environment.nodeapi + '/cards_watch_stage/raw')
-        .subscribe(resp => {
-          params.api.setRowData(<any> resp);
-        });
-
+      {
+        headerName: 'CARDACCT',
+        field: 'CARDACCT',
+        cellRenderer: function (params) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        },
+        width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
       },
-      onGridSizeChanged: (params) => {
-        params.api.sizeColumnsToFit();
-      }
-        };
-        this.gridOptions.columnDefs = [
+      {
+        headerName: 'CARDNUMBER',
+        field: 'CARDNUMBER',
+        width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'CARDNAME',
+        field: 'CARDNAME',
+        width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'DAYSINARREARS',
+        field: 'DAYSINARREARS',
+        width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'EXPPMNT',
+        field: 'EXPPMNT',
+        width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'OUTSTANDING BALANCE',
+        field: 'OUTBALANCE',
+        width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'LIMIT',
+        field: 'LIMIT',
+        width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'CYCLE',
+        field: 'CYCLE',
+        width: 90,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
+      {
+        headerName: 'COLOFFICER',
+        field: 'COLOFFICER',
+        width: 90,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+      },
 
-          {
-            headerName: 'CARDACCT',
-            field: 'CARDACCT',
-            cellRenderer: function (params) {
-              if(params.value !== undefined) {
-                return '<a  href="#" target="_blank">' + params.value + '</a>';
-              } else {
-                return '<img src="assets/img/user/loading.gif">';
-              }
-            },
-            width: 90,
-          },
-          {
-            headerName: 'CARDNUMBER',
-            field: 'CARDNUMBER',
-            width: 90,
-          },
-          {
-            headerName: 'CARDNAME',
-            field: 'CARDNAME',
-            width: 90,
-          },
-          {
-            headerName: 'DAYSINARREARS',
-            field: 'DAYSINARREARS',
-            width: 90,
-          },
-          {
-            headerName: 'EXPPMNT',
-            field: 'EXPPMNT',
-            width: 90,
-          },
-          {
-            headerName: 'OUTSTANDING BALANCE',
-            field: 'OUTBALANCE',
-            width: 90,
-          },
-          {
-            headerName: 'LIMIT',
-            field: 'LIMIT',
-            width: 90,
-          },
-          {
-            headerName: 'CYCLE',
-            field: 'CYCLE',
-            width: 90,
-          },
-          {
-            headerName: 'COLOFFICER',
-            field: 'COLOFFICER',
-            width: 90,
-          },
+    ];
+    this.defaultColDef = {
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true
+    };
+    this.rowModelType = "serverSide";
+    this.cacheBlockSize = 50;
+    this.maxBlocksInCache = 0;
+   // 
 
-        ];
-        this.sortingOrder = ['desc', 'asc', null ];
-    }
-
-    /*dataSource: IDatasource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiService(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.data, response.totalRecords
-          );
-        });
-      }
-    };*/
-    public ngOnInit(): void {
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      this.username = currentUser.USERNAME;
-    }
-
-    onRowDoubleClicked(event: any) {
-      this.model = event.node.data;
+    this.overlayLoadingTemplate =
       // tslint:disable-next-line:max-line-length
-      window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
-    }
+      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 1px solid #444; background: blue;">Please wait while your rows are loading</span>';
+    this.overlayNoRowsTemplate =
+      '<span style="padding: 10px; border: 1px solid #444; background: blue;">There are \'no rows\' </span>';
+  }
 
-    /*onSearch() {
-      if (this.model.searchText === undefined) {
-        return;
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
+
+    const datasource = {
+      getRows(params) {
+        //console.log(JSON.stringify(params.request, null, 1));
+
+        fetch(environment.nodeapi + '/gridallcards/viewall', {
+          method: 'post',
+          body: JSON.stringify(params.request),
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+          .then(httpResponse => httpResponse.json())
+          .then(response => {
+            params.successCallback(response.rows, response.lastRow);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          })
       }
-      this.clear();
-      this.gridApi.showLoadingOverlay();
-      this.dataSource = {
-        getRows: (params: IGetRowsParams) => {
-          this.apiServiceSearch(20, params.startRow).subscribe(response => {
-            params.successCallback(
-              response.data, response.totalRecords
-            );
-            this.gridOptions.api.hideOverlay();
-          });
-        }
-      };
+    };
 
-      this.gridApi.setDatasource(this.dataSource);
-    }*/
+    params.api.setServerSideDatasource(datasource);
+  }
 
-    clear() {
-      const ds = {
-        getRows(params: any) {
-          params.successCallback([], 0);
-        }
-      };
-      this.gridOptions.api.setDatasource(ds);
+  ServerSideDatasource(server) {
+    return {
+      getRows(params) {
+        setTimeout(function () {
+          var response = server.getResponse(params.request);
+          if (response.success) {
+            params.successCallback(response.rows, response.lastRow);
+          } else {
+            params.failCallback();
+          }
+        }, 500);
+      }
+    };
+  }
+
+  currencyFormatter(params) {
+    if (params.value !== undefined) {
+      return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    } else {
+      return ''
     }
+  }
 
-    apiService(perPage, currentPos) {
-      // tslint:disable-next-line:max-line-length
-      return this.http.get<any>(environment.nodeapi + '/tcards/all?rows=' + perPage + '&offset=' + currentPos);
-    }
+  onRowDoubleClicked(event: any) {
+    this.model = event.node.data;
+    // console.log(this.model);
+    // tslint:disable-next-line:max-line-length
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
+  }
 
-    apiServiceSearch(perPage, currentPos) {
-      // tslint:disable-next-line:max-line-length
-      return this.http.get<any>(environment.nodeapi + '/tcards/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
-    }
 
-    getSelectedRows(event) {
-      //
-    }
-
-    quickSearch() {
-      this.gridApi.setQuickFilter(this.searchValue);
-    }
+  public ngOnInit(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser.USERNAME;
+  }
 
 }

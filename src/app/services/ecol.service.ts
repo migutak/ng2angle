@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -67,13 +67,13 @@ export class EcolService {
 
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response = this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' + '&filter[order]=notedate DESC');
+    const response = this.httpClient.get<any>(environment.api + '/api/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' + '&filter[order]=notedate DESC');
     return forkJoin([response]);
   }
 
   getflaggednotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response = this.httpClient.get<any>(environment.api + '/api/notehis?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' + '&filter[order]=notedate DESC');
+    const response = this.httpClient.get<any>(environment.api + '/api/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' + '&filter[order]=notedate DESC');
     return forkJoin([response]);
   }
 
@@ -127,6 +127,14 @@ export class EcolService {
   postnotes(body) {
     const url = environment.api + '/api/notehis';
     return this.httpClient.post<any>(url, body);
+  }
+
+  bulknotes(body) {
+    const url = environment.nodeapi + '/xlsuploads/uploadbulk-test';
+    return this.httpClient.post<any>(url, body, {
+      reportProgress: true,
+      observe: 'events' 
+    });
   }
 
   insertbulknotes(body) {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { TreeModule } from 'angular-tree-component';
 
 import { SharedModule } from '../../shared/shared.module';
 import { DashboardsComponent } from './dashboards/dashboards.component';
@@ -15,6 +15,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         SharedModule,
+        TreeModule.forRoot(),
         RouterModule.forChild(routes)
     ],
     declarations: [

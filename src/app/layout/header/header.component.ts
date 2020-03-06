@@ -8,6 +8,7 @@ import { EcolService } from '../../services/ecol.service';
 import swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import {NgxSmartModalService} from 'ngx-smart-modal';
 
 @Component({
     selector: 'app-header',
@@ -31,6 +32,8 @@ export class HeaderComponent implements OnInit {
     str: string;
     str1: string;
     str2: string;
+    time: any;
+    time2: any;
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
@@ -40,6 +43,7 @@ export class HeaderComponent implements OnInit {
         public userblockService: UserblockService,
         public settings: SettingsService,
         public ecolService: EcolService,
+        public ngxsmartModalService: NgxSmartModalService,
         public router: Router) {
 
         // show only a few items on demo
@@ -55,7 +59,9 @@ export class HeaderComponent implements OnInit {
           picture: 'assets/img/user/coop.jpg',
           username: this.userdata.USERNAME,
           division: this.userdata.TEAM,
-          role: this.userdata.ROLE
+          role: this.userdata.ROLE,
+          firstname: this.userdata.FIRSTNAME,
+          surname: this.userdata.SURNAME
       };
 
     }
@@ -64,6 +70,7 @@ export class HeaderComponent implements OnInit {
         this.getbrokenptps(); //gets count of broken ptps
         this.getcardlettersdue(); // gets count of demand letters due for creditcards
         this.lettersdue();
+        this.getgreetings();
 
         this.isNavSearchVisible = false;
 
@@ -80,6 +87,22 @@ export class HeaderComponent implements OnInit {
             }
         });*/
 
+    }
+
+    getgreetings() {
+        const data = [
+            [0, 11, 'Good Morning'],
+            [12, 16, 'Good Afternoon'],
+            [17, 24, 'Good Evening'],
+        ],
+
+        hr = new Date().getHours();
+        for(let i=0; i<data.length; i++) {
+            if(hr > data[i][0] && hr <= data[i][1]) {
+                this.time = JSON.stringify(data[i][2]);
+                this.time2 = JSON.parse(this.time);
+            }
+        }
     }
 
     toggleUserBlock(event) {
@@ -163,9 +186,14 @@ export class HeaderComponent implements OnInit {
         window.open(environment.workflow)
     }
 
+    opentimeoutModal(){
+        this.ngxsmartModalService.getModal('lockModal').open();
+        localStorage.setItem('timeout', '1');
+    }
+
     logout() {
         swal({
-            title: (this.user.username).toUpperCase() + ', are you sure?',
+            title: (this.user.firstname).toUpperCase() + ', are you sure?',
             imageUrl: 'assets/img/user/coop.jpg',
             text: 'You want to logout!',
             showCancelButton: true,

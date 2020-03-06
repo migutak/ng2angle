@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { environment } from '../../../../../environments/environment';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { ViewChild } from '@angular/core';
 
@@ -24,6 +25,7 @@ export class BulknotesComponent implements OnInit {
   sys: string;
   willDownload = false;
   outdata = [];
+  fileUploadProgress: number = 0;
 
   @ViewChild('myInput')
   myInputVariable: ElementRef;
@@ -173,7 +175,7 @@ export class BulknotesComponent implements OnInit {
       }, {});
       //console.log('data-total', jsonData.Sheet1.length);
 
-      if(!jsonData.Sheet1) {
+      if (!jsonData.Sheet1) {
         swal({
           type: 'error',
           title: 'Empty Values',
@@ -184,8 +186,8 @@ export class BulknotesComponent implements OnInit {
         return;
       };
       this.outdata = jsonData.Sheet1;
-      
-      if(!this.outdata[0].accnumber || !this.outdata[0].notemade) {
+
+      if (!this.outdata[0].accnumber || !this.outdata[0].notemade) {
         swal({
           type: 'error',
           title: 'Empty Values',
@@ -195,7 +197,7 @@ export class BulknotesComponent implements OnInit {
         document.getElementById('output').innerHTML = "";
         return;
       }
-      
+
 
 
       for (var i = 0; i < jsonData.Sheet1.length; i++) {
@@ -207,12 +209,15 @@ export class BulknotesComponent implements OnInit {
             text: 'data in row no: ' + i + ' is empty and will be omitted',
           });
 
+        } else if (this.sys == 'cc') {
+          this.outdata[i].owner = this.username;
+          this.outdata[i].custnumber = this.outdata[i].accnumber;
+          this.outdata[i].notesrc = 'uploaded a note';
         } else {
           this.outdata[i].owner = this.username;
           this.outdata[i].custnumber = (this.outdata[i].accnumber).substring(5, 12);
           this.outdata[i].notesrc = 'uploaded a note';
         }
-
       }
 
       const dataString = JSON.stringify(jsonData);
@@ -233,12 +238,20 @@ export class BulknotesComponent implements OnInit {
         if (result.value) {
           // proceeed to post
           this.ecolService.loader();
-          this.ecolService.postnotes(this.outdata).subscribe(resp => {
-            swal({
-              type: 'success',
-              title: 'ALL Good',
-              text: resp.length + ' rows has been processed!',
-            });
+          this.ecolService.bulknotes(this.outdata).subscribe(events => {
+            if (events.type === HttpEventType.UploadProgress) {
+              this.fileUploadProgress = Math.round(events.loaded / events.total * 100);
+              console.log(this.fileUploadProgress);
+            } else if (events.type === HttpEventType.Response) {
+              // this.fileUploadProgress = '';
+              // console.log(events.body);          
+              swal({
+                type: 'success',
+                title: 'ALL Good',
+                text: events.body.rowsAffected + ' rows has been processed!',
+              });
+            }
+
           }, error => {
             console.log(error);
             swal({
@@ -254,8 +267,6 @@ export class BulknotesComponent implements OnInit {
           swal.close();
         }
       });
-
-
 
     }
     reader.readAsBinaryString(file);

@@ -43,6 +43,7 @@ import { WriteoffstoryComponent } from './activitylog/writeoffstory/writeoffstor
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DatePipe } from '@angular/common';
 
+
 /* Use this routes definition in case you want to make them lazy-loaded */
 /*const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -67,7 +68,7 @@ import { DatePipe } from '@angular/common';
         // CustomFormsModule,
         BsDatepickerModule.forRoot(),
         NgxSmartModalModule.forRoot(),
-        NgxPaginationModule
+        NgxPaginationModule,
         // RouterModule.forChild(routes)
     ],
     declarations: [

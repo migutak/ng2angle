@@ -111,8 +111,9 @@
           </button>
         </div>
         <hr />
-        Select xlsx file to upload
         
+        Select xlsx file to upload
+
         <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
           accept=".xlsx" />
 
@@ -120,6 +121,14 @@
         <br>
         <div *ngIf="willDownload">
           <a id="download"> Download JSON File </a>
+        </div>
+        <div *ngIf="fileUploadProgress">
+          Upload progress: {{ fileUploadProgress }}%
+        </div>
+        <!-- Progress Bar -->
+        <div class="progress form-group" *ngIf="fileUploadProgress > 0">
+          <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="fileUploadProgress">
+          </div>
         </div>
       </div>
 

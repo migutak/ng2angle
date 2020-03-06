@@ -1,0 +1,7 @@
+//blur background
+.overlay.nsm-overlay-open{
+    backdrop-filter: blur(5px) grayscale(90%)!important;
+}
+.div.overlay.nsm-overlay-open{
+    filter: blur(5px) grayscale(90%)!important;
+}

@@ -2,6 +2,27 @@
     <div>Reports
         <small></small></div>
 </div>
+<!--<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-4 col-md-6 col-xl-push-3 col-md-push-6">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <input class="form-control" #filter (keyup)="filterNodes(filter.value, tree)" placeholder="filter nodes" />
+                    </form>
+                    <tree-root #tree [nodes]="nodes" [focused]="true" [options]="customTemplateStringOptions" (onEvent)="onEvent($event)">
+                        <ng-template #treeNodeTemplate let-node>
+                            <span title="{{node.data.subTitle}}">{{ node.data.name }}</span>
+                            <span class="float-right">{{ childrenCount(node) }}</span>
+                            <button class="btn btn-secondary btn-xs" (click)="go($event)"><em class="fa fa-exclamation text-muted"></em></button>
+                        </ng-template>
+                        <ng-template #loadingTemplate>Loading, please hold....</ng-template>
+                    </tree-root>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
 <div class="container-fluid">
     <div class="col-md-12">
         <!-- Categories-->
@@ -102,7 +123,7 @@
                     </li>
                     <li>
                         <a href=""
-                            (click)="kibanaopenptp()">
+                        (click)="open('/frameset?__report=ptps.rptdesign&__title=Promises to Pay')">
                             <em class="fa fa-chart-bar fa-fw"></em>Promises to Pay</a>
                     </li>
                     <li>
@@ -119,6 +140,21 @@
                         <a href=""
                             (click)="exportwoffstory()">
                             <em class="fa fa-box"></em> Write-off story Report</a>
+                    </li>
+                    <li>
+                        <a href=""
+                            (click)="open('/frameset?__report=relegated.rptdesign&__title=Relegated accounts')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Relegated Accounts Report</a>
+                    </li>
+                    <li>
+                        <a href=""
+                            (click)="open('/frameset?__report=ipfcancellation.rptdesign&__title=IPF Cancellations')">
+                            <em class="fa fa-chart-bar fa-fw"></em>IPF Cancellations</a>
+                    </li>
+                    <li>
+                        <a href=""
+                            (click)="open('/frameset?__report=repossessions.rptdesign&__title=Asset Finance Repossessions')">
+                            <em class="fa fa-chart-bar fa-fw"></em>Asset Finance Repossessions</a>
                     </li>
                 </ul>
             </div>
