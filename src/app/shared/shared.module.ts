@@ -1,4 +1,4 @@
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -36,11 +36,10 @@ import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 // https://angular.io/styleguide#!#04-10
 @NgModule({
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -63,7 +62,8 @@ import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbut
         TooltipModule.forRoot(),
         PopoverModule.forRoot(),
         TypeaheadModule.forRoot(),
-        ToasterModule
+        ToasterModule,
+        NgxSpinnerModule
     ],
     providers: [
         ColorsService
@@ -113,7 +113,7 @@ import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbut
         ScrollableDirective,
         JqcloudDirective,
         jqxGridComponent,
-        jqxButtonComponent
+        NgxSpinnerModule
     ]
 })
 

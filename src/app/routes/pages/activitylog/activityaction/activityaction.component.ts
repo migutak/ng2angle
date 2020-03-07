@@ -12,7 +12,7 @@ import { NgOption } from '@ng-select/ng-select';
 import * as moment from 'moment';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
-const URL = environment.valor;
+//const URL = environment.valor;
 
 @Component({
   selector: 'app-sendletter',

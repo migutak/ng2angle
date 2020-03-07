@@ -87,7 +87,7 @@ export class NotesComponent implements OnInit {
   getNotes(custnumber) {
     this.ecolService.totalnotes(custnumber).subscribe(data => {
       this.noteslength = data[0].TOTAL;
-      if (data[0].TOTAL && data[0].TOTAL>0) {
+      if (data[0].TOTAL && data[0].TOTAL > 0) {
         this.download_disabled = false;
       }
     });
@@ -101,9 +101,9 @@ export class NotesComponent implements OnInit {
     // 
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
-      
+
       // enable notes download button
-      if (data && data.length>0) {
+      if (data && data.length > 0) {
         this.download_disabled = false;
       }
       // this.noteslength = data.length;
@@ -162,9 +162,9 @@ export class NotesComponent implements OnInit {
     return (this.selectedLink === name); // if current radio button is selected, return true, else return false
   }
 
- 
-download(){
-  this.excelService.generateExcel(this.cust);
-}
+
+  download() {
+    this.excelService.generateExcel(this.cust);
+  }
 }
 

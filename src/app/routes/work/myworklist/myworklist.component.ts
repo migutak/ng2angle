@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {GridOptions} from '@ag-grid-community/all-modules';
 import { environment } from '../../../../environments/environment';
 import { HttpClient} from '@angular/common/http';
-// import { EcolService } from '../../../services/ecol.ervice';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -11,17 +10,6 @@ import {AllModules} from '@ag-grid-enterprise/all-modules';
   styleUrls: ['./myworklist.component.scss']
 })
 export class MyworklistComponent implements OnInit {
-
-  // dataSource: IDatasource = {
-  //   getRows: (params: IGetRowsParams) => {
-  //     this.apiService().subscribe(data => {
-
-  //       params.successCallback(data, 1000
-  //       );
-  //     })
-  //   }
-  // }
-
   public gridOptions: GridOptions;
 
   public gridApi;
@@ -39,16 +27,8 @@ export class MyworklistComponent implements OnInit {
 
   constructor(public http: HttpClient) {
     this.gridOptions = <GridOptions>{
-
-
-      // suppressCellSelection: true,
-
-
-      // domLayout: 'autoHeight',
       rowSelection: 'single',
       rowModelType: 'normal',
-      // rowModelType: 'infinite',
-
       pagination: true,
       paginationPageSize: 20,
 
@@ -56,9 +36,6 @@ export class MyworklistComponent implements OnInit {
 
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-        // params.api.sizeColumnsToFit();
-        // this.gridApi.setDatasource(this.dataSource);
-        // environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username
         this.http
           .get(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username)
           .subscribe(resp => {
@@ -155,22 +132,6 @@ export class MyworklistComponent implements OnInit {
       pivot: true
     };
   }
-
-  /*dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
-      this.apiService(20, params.startRow).subscribe(response => {
-        params.successCallback(
-          response.data, response.totalRecords
-        );
-      });
-    }
-  };*/
-
-
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));

@@ -30,7 +30,7 @@
                           <ng-select id="planid" name="planid" [(ngModel)]="model.planid" placeholder="No plan selected"
                             #planid="ngModel" [(ngModel)]="model.planid" [ngClass]="{ 'is-invalid': planid.invalid }"
                             required>
-                            <ng-option *ngFor="let a of accplans"  [value]="a.planid">{{a.plantitle}}</ng-option>
+                            <ng-option *ngFor="let a of accplans" [value]="a.planid">{{a.plantitle}}</ng-option>
                           </ng-select>
 
                           <label class="mt">Select Memo group(s) to add</label>
@@ -100,8 +100,10 @@
                       (keyup)="onQuickFilterChanged($event)" />
                   </div>
                 </div>
+
                 <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 400px"
-                  [gridOptions]="gridOptions" [rowModelType]="rowModelType" (rowClicked)='onRowClicked($event)' (gridReady)="gridReady($event)">
+                  [gridOptions]="gridOptions" [modules]="modules" (rowClicked)='onRowClicked($event)'
+                  (gridReady)="gridReady($event)">
                 </ag-grid-angular>
               </div>
             </div>

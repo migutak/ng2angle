@@ -483,7 +483,7 @@ export class EcolService {
   }
 
   postplanmemo(data) {
-    return this.httpClient.post<any>(environment.api + '/api/tbl_s_planmemos', data);
+    return this.httpClient.post<any>(environment.api + '/api/tbl_s_planmemos/memoadd', data);
   }
 
   putteles(data) {

@@ -4,7 +4,9 @@ import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 import { GridOptions } from '@ag-grid-community/all-modules';
+import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
 declare var $: any;
@@ -22,7 +24,7 @@ export class PlanmemosComponent implements OnInit {
   new = true;
   memos: any = [];
   accplans: any = [];
-  public rowModelType;
+  modules=AllModules;
 
   gridOptions: GridOptions;
 
@@ -71,11 +73,8 @@ export class PlanmemosComponent implements OnInit {
       rowData: null,
       enableFilter: true,
       rowSelection: 'single',
-      rowModelType: 'clientSide'
       // onRowClicked: this.RowSelected,
     };
-
-    this.rowModelType = "clientSide";
 
     http.get<any>(environment.api + '/api/tbl_s_planmemos').subscribe(resp => {
       this.rowData1 = resp;
@@ -161,7 +160,6 @@ export class PlanmemosComponent implements OnInit {
         };
         postArray.push(body);
       }
-      console.log(postArray);
 
         this.spinner.show();
         this.ecolService.postplanmemo(postArray).subscribe(data => {

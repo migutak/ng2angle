@@ -1,12 +1,11 @@
-
 <div class="content-heading">
-    <div>Work List
-      <small>view my worklist</small></div>
-  </div>
-   <!-- START card-->
+  <div>Work List
+    <small>view my worklist</small></div>
+</div>
+<!-- START card-->
 <div class="card card-default">
-    <div class="col-xl-12">
-      <div class="page-header">
+  <div class="col-xl-12">
+    <!--<div class="page-header">
         <form #searchForm="ngForm" class="form-horizontal">
           <div class="row">
             <div class="col-xl-4 col-lg-6 form-inline">
@@ -28,7 +27,14 @@
       <ag-grid-angular #agGrid class="ag-angle" style="width: 100%; height: 600px;" [gridOptions]="gridOptions"
         (gridReady)="gridReady($event)" [columnDefs]="columnDefs" [overlayLoadingTemplate]="overlayLoadingTemplate"
         [overlayNoRowsTemplate]="overlayNoRowsTemplate" (rowDoubleClicked)='onRowDoubleClicked($event)'>
-      </ag-grid-angular>
-    </div>
+      </ag-grid-angular>-->
+
+    <ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham" style="width: 100%; height: 550px;"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [paginationAutoPageSize]="true"
+      [gridOptions]="gridOptions" [pagination]="true" [floatingFilter]="true"
+      [rowData]="rowData" [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true" [animateRows]="true"
+      (rowClicked)='onRowDoubleClicked($event)'>
+
+    </ag-grid-angular>
   </div>
-  
+</div>

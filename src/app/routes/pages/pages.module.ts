@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerModule } from 'ngx-spinner';
+// import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSelectModule } from 'ngx-select-ex';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -61,7 +61,7 @@ import { DatePipe } from '@angular/common';
         SharedModule,
         FileUploadModule,
         NgbModule,
-        NgxSpinnerModule,
+        //NgxSpinnerModule,
         NgxSelectModule,
         FormsModule,
         NgSelectModule,
@@ -129,7 +129,8 @@ import { DatePipe } from '@angular/common';
         EditnoteComponent,
         PtpsComponent,
         ExtloginComponent,
-        WriteoffstoryComponent
+        WriteoffstoryComponent,
+        
     ]
 })
 export class PagesModule { }
