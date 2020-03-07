@@ -42,13 +42,11 @@
                       </fieldset>
                       <p class="my-2"></p>
                       <div class="form-group">
-                        <p>SMS Message (Between 0 and 120)</p>
+                        <p>Day in arrears when the letter will be sent (Between 0 and 120)</p>
                         <input class="form-control" type="number" name="daysinarr" id="daysinarr" #daysinarr="ngModel"
                           [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.invalid }" [range]="[1, 120]"
                           required />
                           <p *ngIf="daysinarr.errors?.range">Range accepted is 1 - 120</p>
-                        <!--<div *ngIf="daysinarr.errors.min">Minimum required is 0</div>
-                              <div *ngIf="daysinarr.errors.max">Maximum required is 120</div>-->
                       </div>
   
                       <!--<pre>{{model | json}}</pre>-->
@@ -131,8 +129,9 @@
                         (keyup)="onQuickFilterChanged($event)" />
                     </div>
                   </div>
-                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 400px"
+                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 700px"
                     [gridOptions]="gridOptions"
+                    [modules]='modules'
                     (rowClicked) = 'onRowClicked($event)'
                     (gridReady)="gridReady($event)">
                   </ag-grid-angular>

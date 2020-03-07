@@ -4,7 +4,8 @@ import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { GridOptions } from '@ag-grid-community/all-modules';
+import {GridOptions} from '@ag-grid-community/all-modules';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
 declare var $: any;
@@ -21,7 +22,7 @@ export class SmsComponent implements OnInit {
   $win = $(window);
   new = true;
   memos: any = [];
-
+  modules = AllModules;
   gridOptions: GridOptions;
 
   // Basic example
@@ -138,7 +139,7 @@ export class SmsComponent implements OnInit {
       for (let i = 0; i < res.data.length; i ++) {
         this.items.push(res.data[i].MEMO) ;
       }
-      console.log('Array==>', this.items);
+      
     });
   }
 

@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
-import { isNullOrUndefined } from 'util';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
+import {isNullOrUndefined} from 'util';
+import {NgxSpinnerService} from 'ngx-spinner';
 import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
-import { ExcelService } from '../../../../services/excel.service';
+import {DatePipe} from '@angular/common';
+import {ExcelService} from '../../../../services/excel.service';
+import {GridOptions} from '@ag-grid-community/all-modules';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
+import {environment} from '../../../../../environments/environment';
+import { HttpClient} from '@angular/common/http';
 
 
 @Component({
@@ -15,6 +19,20 @@ import { ExcelService } from '../../../../services/excel.service';
   providers: [DatePipe]
 })
 export class NotesComponent implements OnInit {
+
+  public gridOptions: GridOptions;
+  private rowHeight;
+  private statusBar;
+  public gridApi;
+  public gridColumnApi;
+  public columnDefs;
+  public sortingOrder;
+  public defaultColDef;
+  public rowData: [];
+  modules = AllModules;
+  private str: string;
+  pivotPanelShow = true;
+
 
   noteData: any = [];
   notes: any = [];
@@ -26,7 +44,7 @@ export class NotesComponent implements OnInit {
   flaggedlength = 0;
   model: any = {};
   p = 1;
-  download_disabled: boolean = true;
+  download_disabled = true;
   private selectedLink: any = 'collector';
   pager = {
     limit: 10, // default number of notes
@@ -40,6 +58,7 @@ export class NotesComponent implements OnInit {
   };
 
   currentDate: any = new Date();
+
   constructor(
     private ecolservice: EcolService,
     private route: ActivatedRoute,
@@ -47,9 +66,117 @@ export class NotesComponent implements OnInit {
     private datePipe: DatePipe,
     private spinner: NgxSpinnerService,
     private ecolService: EcolService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    public http: HttpClient,
   ) {
+    this.gridOptions = <GridOptions>{
+
+
+      // suppressCellSelection: true,
+
+
+      // domLayout: 'autoHeight',
+      rowSelection: 'multiple',
+      rowModelType: 'normal',
+      // rowModelType: 'infinite',
+
+      pagination: true,
+      paginationPageSize: 50,
+
+      onGridReady: (params) => {
+
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+        // params.api.sizeColumnsToFit();
+        // this.gridApi.setDatasource(this.dataSource);
+        // environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username
+        this.http
+          .get(environment.api + '/api/notehis/allcustnotes?custnumber=' + this.cust)
+          .subscribe(resp => {
+            console.log(typeof resp); // to check whether object or array
+            this.str = JSON.stringify(resp, null, 4);
+            const obj: any = JSON.parse(this.str);
+
+            params.api.setRowData(obj);
+
+          });
+
+      }
+    };
+    this.columnDefs = [
+      {
+        field: 'ACCNUMBER',
+        // cellRenderer: function (params) {
+        //   if (params.value !== undefined) {
+        //     return '<a  href="#" target="_blank">' + params.value + '</a>';
+        //   } else {
+        //     return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
+        //   }
+        // },
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      {
+        field: 'CUSTNUMBER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        field: 'NOTEMADE',
+        autoHeight: true,
+        width: 220,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        field: 'NOTEDATE',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: 'keep', browserDatePicker: true, }, valueFormatter: this.dateFormatter,
+
+      },
+      {
+        field: 'NOTEIMP',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        field: 'NOTESRC',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      }
+    ];
+    this.sortingOrder = ['desc', 'asc', null ];
+    this.defaultColDef = {
+      cellStyle: { 'white-space': 'normal' },
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true,
+      unSortIcon: true,
+      suppressResize: false,
+      autoHeight: true,
+      enableRowGroup: true,
+      enablePivot: true,
+      pivot: true
+    };
+    this.rowHeight = 275;
+    this.statusBar = {
+      statusPanels: [
+        {
+          statusPanel: 'agTotalAndFilteredRowCountComponent',
+          align: 'left'
+        },
+        {
+          statusPanel: 'agTotalRowCountComponent',
+          align: 'center'
+        },
+        { statusPanel: 'agFilteredRowCountComponent' },
+        { statusPanel: 'agSelectedRowCountComponent' },
+        { statusPanel: 'agAggregationComponent' }
+      ]
+    };
+
+
   }
+  onColumnResized() {
+    this.gridApi.resetRowHeights();
+  }
+
 
   ngOnInit() {
     // check if logged in
@@ -98,7 +225,7 @@ export class NotesComponent implements OnInit {
     this.query.limit = this.pager.limit;
     this.query.skip = this.pager.limit * this.pager.current;
 
-    // 
+    //
     this.ecolservice.getallnotes(this.query, cust).subscribe(data => {
       this.notes = data;
 
@@ -154,6 +281,9 @@ export class NotesComponent implements OnInit {
   handleChange(e) {
     this.selectedLink = e;
   }
+  dateFormatter(params) {
+    return moment(params.value).format('MM/DD/YYYY HH:mm');
+  }
 
   isSelected(name: string) {
     if (!this.selectedLink) { // if no radio button is selected, always return false so every nothing is shown
@@ -166,5 +296,6 @@ export class NotesComponent implements OnInit {
   download() {
     this.excelService.generateExcel(this.cust);
   }
+
 }
 

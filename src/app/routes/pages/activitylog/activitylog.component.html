@@ -5,7 +5,7 @@
   <div class="card b text-white">
     <div class="card-body bg-cover clearfix" style="background-image: url(assets/img/bg10.jpg);">
       <div class="media mt-0 align-items-center">
-        <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image" />
+        <img class="mr-3 img-thumbnail rounded-circle" src="assets/img/user/coop.jpg" alt="Image"/>
         <div class="media-body">
           <div class="d-flex">
             <div>
@@ -16,32 +16,36 @@
                 {{accountdetails?.cellnumber || accountdetails?.mobile || accountdetails?.phonenumber || accountdetails?.telnumber || accountdetails?.celnumber}}
               </p>
               <div class="row">
-                <button class="btn btn-secondary btn-sm" type="button">{{autodial_telnumber}}</button>
+                <button #popover="ngbPopover" (click)="copyText(num())"
+                        class="btn btn-primary btn-sm" ngbPopover="{{autodial_telnumber}} copied!!" popoverTitle="Success"
+                        type="button">{{autodial_telnumber}}</button>
                 <div class="dropdown">
 
-                  <button *ngIf="teles?.length== 0" disabled title="No More Contacts to Show"
-                    class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button *ngIf="teles?.length== 0"  ngbPopover="No More Contacts to Show" disabled
+                           class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More contacts <span class="badge badge-info">{{totalTeles}}</span>
                   </button>
 
                   <button *ngIf="teles?.length!== 0" title="Press here for more contacts"
-                    class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More contacts <span class="badge badge-info">{{totalTeles}}</span>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                     <a *ngFor="let t of teles" class="dropdown-item" href="#"
-                      (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
+                       (click)='changeAutodialNumber(t.TELNUMBER)'>{{t.TELNUMBER}} | {{t.SOURCE}}</a>
                   </div>
 
                 </div>
                 <button class="btn btn-secondary btn-sm" href="#" role="button" (click)="refreshTeles()"><em
-                    class="fas fa-sync fa-fw"></em>refresh</button>
+                  class="fas fa-sync fa-fw"></em>refresh
+                </button>
 
                 <button class="btn btn-secondary btn-sm" href="#" role="button" (click)="dialAvaya()"><em
-                    class="fa fa-phone fa-fw" style="color: black"></em> Dial</button>
+                  class="fa fa-phone fa-fw" style="color: black"></em> Dial
+                </button>
               </div>
               <!--              end of row-->
 
@@ -83,61 +87,67 @@
         <h5>Menus</h5>
         <hr class="no-margin">
         <button [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          queryParamsHandling="merge" class="btn-sample btn-outline btn btn-block">Client Home</button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                queryParamsHandling="merge" class="btn-sample btn-outline btn btn-block">Client Home
+        </button>
         <button [routerLink]="['./notes']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Notes History<span
-            class="badge badge-danger float-right">{{notes}}</span></button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Notes History<span
+          class="badge badge-danger float-right">{{notes}}</span></button>
 
         <button [routerLink]="['./activityaction']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block">Collector Activity</button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block">Collector Activity
+        </button>
 
         <button [routerLink]="['./demandletters']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block">Demand Letters</button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                queryParamsHandling="merge" class="  btn-sample btn-outline  btn btn-block">Demand Letters
+        </button>
 
         <button [routerLink]="['./sms']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class="  btn-sample btn-outline  btn btn-block">Send SMS</button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class="  btn-sample btn-outline  btn btn-block">Send SMS
+        </button>
 
         <button [routerLink]="['./accplan']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class="  btn-sample btn-outline  btn btn-block">Account Plan</button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class="  btn-sample btn-outline  btn btn-block">Account Plan
+        </button>
 
         <button [routerLink]="['./contacts']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class=" btn-sample btn-outline btn btn-block">Customer Contacts<span
-            class="badge badge-danger float-right">{{totalcontacts}}</span></button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class=" btn-sample btn-outline btn btn-block">Customer Contacts<span
+          class="badge badge-danger float-right">{{totalcontacts}}</span></button>
 
         <button [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class=" btn-sample btn-outline btn btn-block">Remedial Collaterals<span
-            class="badge badge-danger float-right">{{totalcollaterals}}</span></button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class=" btn-sample btn-outline btn btn-block">Remedial Collaterals<span
+          class="badge badge-danger float-right">{{totalcollaterals}}</span></button>
 
         <button [routerLink]="['./guarantors']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Guarantors<span
-            class="badge badge-danger float-right">{{totalguarantors}}</span></button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Guarantors<span
+          class="badge badge-danger float-right">{{totalguarantors}}</span></button>
 
         <button [routerLink]="['./files']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Upload Files<span
-            class="badge badge-danger float-right">{{totalfiles}}</span></button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                queryParamsHandling="merge" class=" btn-sample btn-outline btn btn-block">Upload Files<span
+          class="badge badge-danger float-right">{{totalfiles}}</span></button>
 
         <button [routerLink]="['./bulknotes']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class="  btn-sample btn-outline  btn btn-block">Bulk Note Upload</button>
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class="  btn-sample btn-outline  btn btn-block">Bulk Note Upload
+        </button>
 
         <button [routerLink]="['./ptps']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class="  btn-sample btn-outline  btn btn-block">Promises to Pay<span
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class="  btn-sample btn-outline  btn btn-block">Promises to Pay<span
           class="badge badge-danger float-right">{{totalPtps}}</span></button>
-        
+
         <button [routerLink]="['./writeoffstory']" [routerLinkActive]="['active']"
-          [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
-          class="  btn-sample btn-outline  btn btn-block">Write-off Story<span
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class="  btn-sample btn-outline  btn btn-block">Write-off Story<span
           class="badge badge-danger float-right">{{totalwoffstory}}</span></button>
         <!--<ul class="list-unstyled">
           <li>
@@ -188,7 +198,7 @@
               class="badge badge-success float-right">{{totalcontacts}}</span>
             </a>
           </li>
-          <li *ngIf="collateralmenu"> 
+          <li *ngIf="collateralmenu">
             <a [routerLink]="['./remedialcollaterals']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}">
               <span class="fa fa-angle-double-right text-primary"></span>Remedial collaterals &nbsp;<span

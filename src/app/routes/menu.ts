@@ -313,7 +313,7 @@ const serviceproviders = {
     link: '/serviceproviders',
     icon: 'icon-drawer',
     submenu: [
-        /*{
+        {
             text: 'Debt Collectors',
             link: '/debtcollectors/allcases'
         },
@@ -336,7 +336,7 @@ const serviceproviders = {
         {
             text: 'Valuers',
             link: '/valuers/allcases'
-        },*/
+        },
         {
             text: 'Service Providers Portal',
             link: '/spportal/portal'

@@ -4,25 +4,33 @@
 
 <div class="form-group row">
   <label class="col-md-0 col-form-label"></label>
-  
+
 
   <div class="btn-group">
-    <button  name="noteselector" value="bulk" (click)="handleChange('bulk')"  class="btn-sample btn-outline btn btn-sm">Bulk uploaded&nbsp;&nbsp; <span
+    <button name="noteselector" value="bulk" (click)="handleChange('bulk')" class="btn-sample btn-outline btn btn-sm">
+      Bulk uploaded&nbsp;&nbsp; <span
       class="badge badge-primary float-right">{{bulknotelength}}</span></button>
     &nbsp;&nbsp;
-    <button  name="noteselector"
-       value="collector" (click)="handleChange('collector')"  class="btn-sample btn-outline btn btn-sm">Collector made&nbsp;&nbsp; <span
-      class="badge badge-success float-right">{{noteslength}}</span></button>
+    <button name="noteselector"
+            value="collector" (click)="handleChange('collector')" class="btn-sample btn-outline btn btn-sm">Collector
+      made&nbsp;&nbsp; <span
+        class="badge badge-success float-right">{{noteslength}}</span></button>
     &nbsp;&nbsp;
+    <button name="noteselector"
+            value="flagged" (click)="handleChange('flagged')" class="btn-sample btn-outline btn btn-sm">Flagged
+      important&nbsp;&nbsp; <span
+        class="badge badge-success float-right">{{flaggedlength}}</span></button>
     <button  name="noteselector"
-       value="flagged" (click)="handleChange('flagged')"  class="btn-sample btn-outline btn btn-sm">Flagged important&nbsp;&nbsp; <span
-      class="badge badge-success float-right">{{flaggedlength}}</span></button>
+             value="view" (click)="handleChange('view')"  class="btn-sample btn-outline btn btn-sm">Export/View All Notes&nbsp;&nbsp; <span
+      class="badge badge-success float-right">NEW</span></button>
   </div>
 </div>
 
 <div class="form-group row">
-  <button type="button" (click)="download()" class="btn btn-outline-info" [disabled]="download_disabled"><span class="glyphicon glyphicon-save"></span> Download {{cust}} Notes</button>
-  
+  <button type="button" (click)="download()" class="btn btn-outline-info" [disabled]="download_disabled"><span
+    class="glyphicon glyphicon-save"></span> Download {{cust}} Notes
+  </button>
+
 </div>
 
 <div *ngIf="isSelected('collector')">
@@ -33,16 +41,17 @@
       <p>
         {{note.NOTEMADE}}
         <small><a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-success">
-            <span class="far fa-edit" aria-hidden="true"></span>
-            <span style="color: red;"><strong>Edit</strong></span>
-          </a></small>
+          <span class="far fa-edit" aria-hidden="true"></span>
+          <span style="color: red;"><strong>Edit</strong></span>
+        </a></small>
       </p>
       <p>Reason for default: {{note.REASON || 'null'}}</p>
     </li>
   </ul>
-  
+
   <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs" (click)="loadmore($event)">load more
-    notes...</button>
+    notes...
+  </button>
   <button *ngIf="pager.reachedend" disabled="" class="mr-1 btn btn-danger btn-xs"> No Notes Available</button>
   <!--<pagination-controls (pageChange)="p = $event"></pagination-controls>-->
 </div>
@@ -84,4 +93,12 @@
 
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
+</div>
+
+<div *ngIf="isSelected('view')">
+  <button (click)="download()" type="button" class="btn btn-labeled btn-warning">
+    <span class="btn-label"><i class="fas fa-download"></i></span>Export Excel</button>
+  <!--grid-->
+  
+  <!--  end of grid-->
 </div>

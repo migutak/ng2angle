@@ -1,4 +1,9 @@
 .active {
-    background-color: #666;
-    color: white;
-  }
+  background-color: #666;
+  color: white;
+}
+
+
+:host ::ng-deep .popover-header {
+  background-color: #00543d!important;
+}
