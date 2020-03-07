@@ -773,16 +773,29 @@ export class EcolService {
     // return this.httpClient.get<any>(environment.nodeapi + '/loans/demandlettersccdue/');
   }
 
+  postinsurance(data) {
+    return this.httpClient.post<any>(environment.nodeapi + '/insurance/insert', data);
+  }
+
+  updateinsurance(data) {
+    return this.httpClient.post<any>(environment.nodeapi + '/insurance/update', data);
+  }
+
+  deleteinsurance(id) {
+    return this.httpClient.post<any>(environment.nodeapi + '/insurance/delete', id);
+  }
+
+
   ifLogged() {
     if (!localStorage.getItem('currentUser')) {
-      swal({
+      /*swal({
         title: 'You\'re Not Logged In',
         imageUrl: 'assets/img/user/notlogg.png',
         text: 'Kindly, log in to continue!',
 
         confirmButtonColor: '#7ac142',
         confirmButtonText: 'Okay'
-      });
+      });*/
       this.router.navigate(['/login']);
       return false;
     }
@@ -790,14 +803,14 @@ export class EcolService {
 
   ifclosed() {
     if (!sessionStorage.getItem('currentUser')) {
-      swal({
+      /*swal({
         title: 'You\'re Not Logged In',
         imageUrl: 'assets/img/user/notlogg.png',
         text: 'Kindly, log in to continue!',
 
         confirmButtonColor: '#7ac142',
         confirmButtonText: 'Okay'
-      });
+      });*/
       this.router.navigate(['/login']);
       return false;
     }

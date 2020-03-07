@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
+import {Component, OnInit} from '@angular/core';
+import {GridOptions} from '@ag-grid-community/all-modules';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
-import * as $ from 'jquery';
+import { HttpClient} from '@angular/common/http';
+// import { EcolService } from '../../../services/ecol.ervice';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-myallocations',
@@ -12,224 +12,180 @@ import * as $ from 'jquery';
 })
 export class MyallocationsComponent implements OnInit {
 
-  public overlayLoadingTemplate;
-  public overlayNoRowsTemplate;
+  // dataSource: IDatasource = {
+  //   getRows: (params: IGetRowsParams) => {
+  //     this.apiService().subscribe(data => {
 
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
+  //       params.successCallback(data, 1000
+  //       );
+  //     })
+  //   }
+  // }
 
-    this.overlayLoadingTemplate =
-      // tslint:disable-next-line:max-line-length
-      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Please wait while your rows are loading</span>';
-    this.overlayNoRowsTemplate =
-      '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">Response: \'no rows\' found</span>';
-
-      this.gridOptions.rowStyle = {color: 'red'};
-
-  }
-
-
+  public gridOptions: GridOptions;
+  private statusBar;
+  public gridApi;
+  public gridColumnApi;
+  public columnDefs;
+  public sortingOrder;
+  public defaultColDef;
+  public rowData: [];
+  public model: any = {};
+  username: string;
+  modules = AllModules;
+  private str: string;
+  pivotPanelShow = true;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-  resizeEvent = 'resize.ag-grid';
-  $win = $(window);
-  new = true;
-  username: string;
-  searchText: string;
-  model: any = {};
-  noTotal: number;
+  constructor(public http: HttpClient) {
+    this.gridOptions = <GridOptions>{
 
-  gridOptions: GridOptions;
-  gridApi: GridApi;
-  // private rowClassRules;
 
-  columnDefs = [
-    {
-      headerName: 'ACCNUMBER',
-      field: 'accnumber',
-      cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+      // suppressCellSelection: true,
+
+
+      // domLayout: 'autoHeight',
+      rowSelection: 'single',
+      rowModelType: 'normal',
+      // rowModelType: 'infinite',
+
+      pagination: true,
+      paginationPageSize: 20,
+
+      onGridReady: (params) => {
+
+        this.gridApi = params.api;
+        this.gridColumnApi = params.columnApi;
+        // params.api.sizeColumnsToFit();
+        // this.gridApi.setDatasource(this.dataSource);
+        // environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username
+        this.http
+          .get(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username)
+          .subscribe(resp => {
+            console.log(typeof resp); // to check whether object or array
+            this.str = JSON.stringify(resp, null, 4);
+            const obj: any = JSON.parse(this.str);
+
+            params.api.setRowData(obj.rows);
+
+          });
+
+      }
+    };
+    this.columnDefs = [
+      {
+        headerName: 'ACCNUMBER',
+        field: 'accnumber',
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return '<a  href="#" target="_blank">' + params.value + '</a>';
+          } else {
+            return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
+          }
+        },
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      width: 250
-    },
-    {
-      headerName: 'CUSTNUMBER',
-      field: 'custnumber'
-    },
-    {
-      headerName: 'CUSTNAME',
-      field: 'client_name',
-      width: 350
-    },
-    {
-      headerName: 'DAYSINARREARS',
-      field: 'daysinarr',
-    },
-    {
-      headerName: 'TOTALARREARS',
-      field: 'instamount',
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'OUSTBALANCE',
-      field: 'oustbalance',
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'BUCKET',
-      field: 'bucket'
-    },
-    {
-      headerName: 'AROCODE',
-      field: 'arocode'
-    },
-    {
-      headerName: 'RROCODE',
-      field: 'rrocode'
-    },
-    {
-      headerName: 'SECTION',
-      field: 'section'
-    },
-    {
-      headerName: 'COLOFFICER',
-      field: 'colofficer'
-    }
-  ];
-
-  rowData1: any;
-
-
-  dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
-
-      // Use startRow and endRow for sending pagination to Backend
-      // params.startRow : Start Page
-      // params.endRow : End Page
-      //
-      this.apiService(20, params.startRow).subscribe(response => {
-        params.successCallback(
-          response.rows, response.total
-        );
-        if (response.rows.length > 0) {
-          this.gridOptions.api.hideOverlay();
-        } else {
-          this.gridOptions.api.showNoRowsOverlay();
-        }
-      });
-    }
-  };
-
-  currencyFormatter(params) {
-    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
-  onRowDoubleClicked(event: any) {
-    this.model = event.node.data;
-    // console.log(this.model);
-    // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.accnumber + '&custnumber=' + this.model.custnumber + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
-  }
-
-  onQuickFilterChanged($event) {
-    // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
-  }
-
-  onSearch() {
-    if (this.model.searchText === undefined) {
-      return;
-    }
-    this.clear();
-    this.gridApi.showLoadingOverlay();
-    /*this.http.get<any>(environment.api + '/api/qall/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-      this.gridApi.hideOverlay();
-    });*/
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.rows, response.total
-          );
-          if (response.rows.length > 0) {
-            this.gridOptions.api.hideOverlay();
-          } else {
-            this.gridOptions.api.showNoRowsOverlay();
-          }
-        });
+      {
+        headerName: 'CUSTNUMBER',
+        field: 'custnumber',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'CUSTNAME',
+        field: 'client_name',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'DAYSINARREARS',
+        field: 'daysinarr',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'TOTALARREARS',
+        field: 'instamount',
+        valueFormatter: this.currencyFormatter,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'OUSTBALANCE',
+        field: 'oustbalance',
+        valueFormatter: this.currencyFormatter,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'BUCKET',
+        field: 'bucket',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'AROCODE',
+        field: 'arocode',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'RROCODE',
+        field: 'rrocode',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'SECTION',
+        field: 'section',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+      },
+      {
+        headerName: 'COLOFFICER',
+        field: 'colofficer',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
       }
+    ];
+    this.sortingOrder = ['desc', 'asc', null ];
+    this.defaultColDef = {
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true,
+      unSortIcon: true,
+      suppressResize: false,
+      enableRowGroup: true,
+      enablePivot: true,
+      pivot: true
     };
-
-    this.gridApi.setDatasource(this.dataSource);
+    this.statusBar = {
+      statusPanels: [
+        {
+          statusPanel: 'agTotalAndFilteredRowCountComponent',
+          align: 'left'
+        },
+        {
+          statusPanel: 'agTotalRowCountComponent',
+          align: 'center'
+        },
+        { statusPanel: 'agFilteredRowCountComponent' },
+        { statusPanel: 'agSelectedRowCountComponent' },
+        { statusPanel: 'agAggregationComponent' }
+      ]
+    };
   }
 
-  clear() {
-    const ds = {
-      getRows(params: any) {
-        params.successCallback([], 0);
-      }
-    };
-    this.gridOptions.api.setDatasource(ds);
-  }
-
-  reset() {
-    this.gridApi.showLoadingOverlay();
-    this.clear();
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiService(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.rows, response.total
-          );
-          if (response.rows.length > 0) {
-            this.gridOptions.api.hideOverlay();
-          } else {
-            this.gridOptions.api.showNoRowsOverlay();
-          }
-        });
-      }
-    };
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-  }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
   }
 
-  gridReady(params) {
-    this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-    this.gridOptions.api.showLoadingOverlay();
+
+  currencyFormatter(params) {
+    if (params.value !== undefined) {
+      return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    } else {
+      return '';
+    }
   }
 
-  apiService(perPage, currentPos) {
-    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
+  onRowDoubleClicked(event: any) {
+    this.model = event.node.data;
+    // console.log(this.model);
     // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username + '&limit=' + perPage + '&page=' + currentPos);
+    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
   }
-
-  apiServiceSearch(perPage, currentPos) {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.api + '/api/tqall/search?searchtext=' + this.model.searchText + '&limit=' + perPage + '&page=' + currentPos);
-  }
-
 }

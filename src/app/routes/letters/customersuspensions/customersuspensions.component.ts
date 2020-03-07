@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

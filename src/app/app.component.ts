@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
     });
 
     // idle logout
-    this.bnIdle.startWatching(3600).subscribe((res) => {
+    this.bnIdle.startWatching(7200).subscribe((res) => {
       if (res && !localStorage.getItem('currentUser')) {
         this.newsession();
         this.closetimeoutModal();
@@ -147,7 +147,6 @@ export class AppComponent implements OnInit {
     this.ecolService.ifclosed();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')); // to get username in localstorage..
     this.username = currentUser.USERNAME;
-    console.log(this.username);
 
     document.addEventListener('click', e => {
       const target = e.target as HTMLElement;
@@ -182,14 +181,14 @@ export class AppComponent implements OnInit {
 
   onreload() {
     if (localStorage.getItem('timeout')) {
-      swal({
+      /*swal({
         title: 'You reloaded the Timeout',
         imageUrl: 'assets/img/user/notlogg.png',
         text: 'Kindly, log in to continue!',
 
         confirmButtonColor: '#7ac142',
         confirmButtonText: 'Okay'
-      });
+      });*/
       this.router.navigate(['/login']);
       localStorage.removeItem('timeout');
     }

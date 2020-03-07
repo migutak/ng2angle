@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -38,6 +38,9 @@ import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbut
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ],
     imports: [
         CommonModule,
         FormsModule,

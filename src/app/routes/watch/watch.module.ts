@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CreditbuildupComponent } from './creditbuildup/creditbuildup.component';
 import { NocreditComponent } from './nocredit/nocredit.component';
 
-import { AgGridModule } from 'ag-grid-angular';
+import {AgGridModule} from '@ag-grid-community/angular';
 
 const routes: Routes = [
     { path: '', redirectTo: 'nocredit' },
@@ -18,7 +18,8 @@ const routes: Routes = [
     imports: [
         SharedModule,
         AgGridModule.withComponents([]),
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        AgGridModule
     ],
     declarations: [
         NocreditComponent,

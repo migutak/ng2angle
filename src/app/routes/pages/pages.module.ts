@@ -56,6 +56,7 @@ import { DatePipe } from '@angular/common';
 ];*/
 
 @NgModule({
+    
     imports: [
         SharedModule,
         FileUploadModule,

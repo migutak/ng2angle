@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from 'ag-grid-community';
+import { GridOptions, IDatasource, IGetRowsParams, GridApi } from '@ag-grid-community/all-modules';
 import * as $ from 'jquery';
 
 @Component({

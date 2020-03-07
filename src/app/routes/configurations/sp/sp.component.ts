@@ -4,7 +4,8 @@ import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { GridOptions } from 'ag-grid-community';
+import {GridOptions} from '@ag-grid-community/all-modules';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -25,6 +26,7 @@ export class SpComponent implements OnInit {
   memos: any = [];
 
   gridOptions: GridOptions;
+  modules = AllModules;
 
   // Basic example
   columnDefs = [

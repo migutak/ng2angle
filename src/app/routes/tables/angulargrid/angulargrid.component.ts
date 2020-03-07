@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 declare var $: any;
@@ -63,6 +63,7 @@ export class AngulargridComponent implements OnInit, OnDestroy {
         }];
 
     // Filter Example
+  // tslint:disable-next-line:max-line-length
     irishAthletes = ['John Joe Nevin', 'Katie Taylor', 'Paddy Barnes', 'Kenny Egan', 'Darren Sutherland', 'Margaret Thatcher', 'Tony Blair', 'Ronald Regan', 'Barack Obama'];
 
     columnDefsFilter = [{

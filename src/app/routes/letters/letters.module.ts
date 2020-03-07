@@ -9,7 +9,7 @@ import { CustomerSuspensionsComponent } from './customersuspensions/customersusp
 
 import { NgxSelectModule } from 'ngx-select-ex';
 import { FilterPipe} from './filter.pipe';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from '@ag-grid-community/angular';
 import { CustomFormsModule } from 'ng2-validation';
 
 const routes: Routes = [

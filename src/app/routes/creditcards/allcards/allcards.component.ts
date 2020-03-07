@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {GridOptions, IDatasource, IGetRowsParams, ColDef} from 'ag-grid';
-import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { EcolService } from '../../../services/ecol.service';
+import {environment} from '../../../../environments/environment';
+// import { HttpClient} from '@angular/common/http';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -11,11 +9,8 @@ import {AllModules} from '@ag-grid-enterprise/all-modules';
   styleUrls: ['./allcards.component.scss']
 })
 export class AllcardsComponent implements OnInit {
-
   public gridApi;
   public gridColumnApi;
-  public overlayLoadingTemplate;
-  public overlayNoRowsTemplate;
 
   public columnDefs;
   public defaultColDef;
@@ -29,68 +24,63 @@ export class AllcardsComponent implements OnInit {
   searchText: string;
   model: any = {};
   pivotPanelShow = true;
+
   modules = AllModules;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.columnDefs = [
 
       {
         headerName: 'CARDACCT',
         field: 'CARDACCT',
         cellRenderer: function (params) {
-          return '<a  href="#" target="_blank">' + params.value + '</a>';
+          if (params.value !== undefined) {
+            return '<a  href="#" target="_blank">' + params.value + '</a>';
+          } else {
+            return ''; // to remove the loading <img src="assets/img/user/loading.gif" alt="Loading Icon">
+          }
         },
-        width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
-        resizable: true
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'CARDNUMBER',
         field: 'CARDNUMBER',
-        width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CARDNAME',
         field: 'CARDNAME',
-        width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'DAYSINARREARS',
         field: 'DAYSINARREARS',
-        width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'EXPPMNT',
         field: 'EXPPMNT',
-        width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'OUTSTANDING BALANCE',
         field: 'OUTBALANCE',
-        width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'LIMIT',
         field: 'LIMIT',
-        width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'CYCLE',
         field: 'CYCLE',
-        width: 90,
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
       {
         headerName: 'COLOFFICER',
         field: 'COLOFFICER',
-        width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
       },
 
     ];
@@ -98,33 +88,31 @@ export class AllcardsComponent implements OnInit {
       width: 120,
       resizable: true,
       sortable: true,
-      floatingFilter: true
+      floatingFilter: true,
+      unSortIcon: true,
+      suppressResize: false,
+      enableRowGroup: true,
+      enablePivot: true,
+      pivot: true
     };
-    this.rowModelType = "serverSide";
+    this.rowModelType = 'serverSide';
     this.cacheBlockSize = 50;
     this.maxBlocksInCache = 0;
-   // 
-
-    this.overlayLoadingTemplate =
-      // tslint:disable-next-line:max-line-length
-      '<span class="ag-overlay-loading-center" style="padding: 10px; border: 1px solid #444; background: blue;">Please wait while your rows are loading</span>';
-    this.overlayNoRowsTemplate =
-      '<span style="padding: 10px; border: 1px solid #444; background: blue;">There are \'no rows\' </span>';
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.gridApi.sizeColumnsToFit();
 
     const datasource = {
+      // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
-        //console.log(JSON.stringify(params.request, null, 1));
+        console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridallcards/viewall', {
+        fetch(environment.nodeapi + '/gridcreditcardsviewallcards/viewall', {
           method: 'post',
           body: JSON.stringify(params.request),
-          headers: { "Content-Type": "application/json; charset=utf-8" }
+          headers: {'Content-Type': 'application/json; charset=utf-8'}
         })
           .then(httpResponse => httpResponse.json())
           .then(response => {
@@ -133,39 +121,23 @@ export class AllcardsComponent implements OnInit {
           .catch(error => {
             console.error(error);
             params.failCallback();
-          })
+          });
       }
     };
 
     params.api.setServerSideDatasource(datasource);
   }
 
-  ServerSideDatasource(server) {
-    return {
-      getRows(params) {
-        setTimeout(function () {
-          var response = server.getResponse(params.request);
-          if (response.success) {
-            params.successCallback(response.rows, response.lastRow);
-          } else {
-            params.failCallback();
-          }
-        }, 500);
-      }
-    };
-  }
-
   currencyFormatter(params) {
     if (params.value !== undefined) {
       return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     } else {
-      return ''
+      return '';
     }
   }
 
   onRowDoubleClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
     // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=watchcc', '_blank');
   }
@@ -175,5 +147,6 @@ export class AllcardsComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
   }
+
 
 }

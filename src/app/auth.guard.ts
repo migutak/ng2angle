@@ -27,13 +27,13 @@ export class AuthGuard implements CanActivate {
       this.router.navigate( ['/login'] );
       return false; */
 
-      swal({title: 'You\'re Not Logged In',
+      /*swal({title: 'You\'re Not Logged In',
       imageUrl: 'assets/img/user/notlogg.png',
       text: 'Kindly, log in to continue!',
 
       confirmButtonColor: '#7ac142',
       confirmButtonText: 'Okay'});
-      this.router.navigate( ['/login'] );
+      this.router.navigate( ['/login'] );*/
       return false;
 
     }

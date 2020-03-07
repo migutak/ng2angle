@@ -101,7 +101,7 @@
                   </div>
                 </div>
                 <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 400px"
-                  [gridOptions]="gridOptions" (rowClicked)='onRowClicked($event)' (gridReady)="gridReady($event)">
+                  [gridOptions]="gridOptions" [rowModelType]="rowModelType" (rowClicked)='onRowClicked($event)' (gridReady)="gridReady($event)">
                 </ag-grid-angular>
               </div>
             </div>
