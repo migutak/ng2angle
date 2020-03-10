@@ -114,6 +114,16 @@ export class EcolService {
     return this.httpClient.post(url, body);
   }
 
+  bulktotblportfolio(body) {
+    const url = environment.api + '/api/tbl_portfolio_static/actiondate';
+    return this.httpClient.post(url, body);
+  }
+
+  bulktotblcardsstatic(body) {
+    const url = environment.api + '/api/TBLCARD_STATIC/actiondate';
+    return this.httpClient.post(url, body);
+  }
+
   sptype(body) {
     const url = environment.api + '/api/sptypes';
     return this.httpClient.post(url, body);

@@ -209,7 +209,7 @@ export class BulknotesComponent implements OnInit {
             text: 'data in row no: ' + i + ' is empty and will be omitted',
           });
 
-        } else if (this.sys == 'cc') {
+        } else if (this.sys == 'cc' || this.sys == 'watchcc') {
           this.outdata[i].owner = this.username;
           this.outdata[i].custnumber = this.outdata[i].accnumber;
           this.outdata[i].notesrc = 'uploaded a note';
@@ -241,7 +241,7 @@ export class BulknotesComponent implements OnInit {
           this.ecolService.bulknotes(this.outdata).subscribe(events => {
             if (events.type === HttpEventType.UploadProgress) {
               this.fileUploadProgress = Math.round(events.loaded / events.total * 100);
-              console.log(this.fileUploadProgress);
+              //console.log(this.fileUploadProgress);
             } else if (events.type === HttpEventType.Response) {
               // this.fileUploadProgress = '';
               // console.log(events.body);          
@@ -250,6 +250,24 @@ export class BulknotesComponent implements OnInit {
                 title: 'ALL Good',
                 text: events.body.rowsAffected + ' rows has been processed!',
               });
+
+              // update tbl_portfolio_static
+              if (this.sys == 'cc' || this.sys == 'watchcc') {
+                //
+                this.ecolService.bulktotblcardsstatic(this.outdata).subscribe(result => {
+                  console.log(result);
+                }, error=>{
+                  console.log('bulknotes error',error);
+                })
+              } else {
+                //
+                this.ecolService.bulktotblportfolio(this.outdata).subscribe(result => {
+                  console.log(result);
+                }, error=>{
+                  console.log('bulknotes error',error);
+                })
+              }
+              
             }
 
           }, error => {

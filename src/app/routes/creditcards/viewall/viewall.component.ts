@@ -36,10 +36,14 @@ export class ViewallComponent implements OnInit {
         headerName: 'CARDACCT',
         field: 'CARDACCT',
         cellRenderer: function (params) {
-          return '<a  href="#" target="_blank">' + params.value + '</a>';
+          if (params.value !== undefined) {
+            return '<a  href="#" target="_blank">' + params.value + '</a>';
+          } else {
+            return 'No Rows Found';
+            // return ''; // to remove the loading <img src="assets/img/user/loading.gif" alt="Loading Icon">
+          }
         },
-        width: 90,
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
       },
       {
         headerName: 'CARDNUMBER',
@@ -119,6 +123,7 @@ export class ViewallComponent implements OnInit {
         console.log(JSON.stringify(params.request, null, 1));
 
         fetch(environment.nodeapi + '/gridcardsviewall/viewall', {
+        
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

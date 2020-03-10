@@ -52,10 +52,10 @@
                 <select class="form-control" formControlName="division" [formControl]="valForm.controls['division']">
                   <option value="">Please select</option>
                   <option value="SUPPORT">SUPPORT</option>
-                  <option value="REMEDIAL">REMEDIAL</option>
+                  <option value="REMEDIAL">REMEDIAL CREDIT</option>
                   <option value="CREDITCARD">CREDITCARD</option>
                   <option value="BRANCH">BRANCH</option>
-                  <option value="TELECOLLECTOR">TELECOLLECTOR</option>
+                  <!--<option value="TELECOLLECTOR">TELECOLLECTOR</option>-->
                 </select>
                 <span class="text-danger"
                   *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)">division
@@ -94,8 +94,8 @@
                 <label>Team</label>
                 <select class="form-control" formControlName="team" [formControl]="valForm.controls['team']">
                   <option value="">Please select</option>
-                  <option value="CMD-COLLECTIONS">CMD-COLLECTIONS</option>
-                  <option value="CMD-REMEDIAL">CMD-REMEDIAL</option>
+                  <!--<option value="CMD-COLLECTIONS">CMD-COLLECTIONS</option>-->
+                  <option value="CMD-REMEDIAL">REMEDIAL CREDIT</option>
                   <option value="CREDITCARD">CREDITCARD</option>
                   <option value="BRANCH">BRANCH</option>
                   <option value="OTHER">OTHER</option>
@@ -137,12 +137,12 @@
                         [formControl]="valForm.controls['role']" />
                       <span class="fa fa-circle"></span>Administrator</label>
                   </div>
-                  <div class="c-radio">
+                  <!--<div class="c-radio">
                     <label>
                       <input type="radio" name="role" value="telecollector" checked="" formControlName="role"
                         [formControl]="valForm.controls['role']" />
                       <span class="fa fa-circle"></span>Tele Collector</label>
-                  </div>
+                  </div>-->
                   <div class="c-radio">
                     <label>
                       <input type="radio" name="role" value="teamleader" formControlName="role"
@@ -153,7 +153,7 @@
                     <label>
                       <input type="radio" name="role" value="remedial" formControlName="role"
                         [formControl]="valForm.controls['role']" />
-                      <span class="fa fa-circle"></span>Remedial</label>
+                      <span class="fa fa-circle"></span>Remedial User</label>
                   </div>
                   <div class="c-radio">
                     <label>

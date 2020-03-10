@@ -18,7 +18,7 @@ export const environment = {
   demandsmsapi: "https://ecollectweb.co-opbank.co.ke/sms",
   auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
   filesapi: 'https://ecollectweb.co-opbank.co.ke/filesapi',
-  accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',
+  accplanlink: 'http://172.16.204.71:3001',
   kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
   manuals_path: '/app/manuals/',
   birt: 'http://ecollectweb.co-opbank.co.ke:8787/birt',

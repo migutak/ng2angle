@@ -70,12 +70,6 @@ export class NotesComponent implements OnInit {
     public http: HttpClient,
   ) {
     this.gridOptions = <GridOptions>{
-
-
-      // suppressCellSelection: true,
-
-
-      // domLayout: 'autoHeight',
       rowSelection: 'multiple',
       rowModelType: 'normal',
       // rowModelType: 'infinite',

@@ -34,7 +34,8 @@ export class ViewallComponent implements OnInit {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
           } else {
-            return '<img src="assets/img/user/loading.gif">';
+            return 'No Data Found';
+            // return '<img src="assets/img/user/loading.gif">';
           }
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
@@ -120,7 +121,8 @@ export class ViewallComponent implements OnInit {
       getRows(params) {
         //console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridviewall/viewall', {
+        //fetch(environment.nodeapi + '/gridviewall/viewall', {
+          fetch(environment.api + '/api/tqall/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

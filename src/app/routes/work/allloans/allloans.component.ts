@@ -37,7 +37,8 @@ export class AllloansComponent implements OnInit {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
           } else {
-            return ''; // <img src="assets/img/user/loading.gif">
+            return 'No Data Found';
+            //return ''; // <img src="assets/img/user/loading.gif">
           }
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
@@ -114,7 +115,8 @@ export class AllloansComponent implements OnInit {
       getRows(params) {
         // console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridviewallloans/viewall', {
+       // fetch(environment.nodeapi + '/gridviewallloans/viewall', {
+        fetch(environment.api + '/api/watch_stage/gridviewall_loans', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { 'Content-Type': 'application/json; charset=utf-8' }

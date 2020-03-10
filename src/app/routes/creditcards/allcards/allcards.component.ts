@@ -37,7 +37,8 @@ export class AllcardsComponent implements OnInit {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
           } else {
-            return ''; // to remove the loading <img src="assets/img/user/loading.gif" alt="Loading Icon">
+            return 'No Rows Found';
+            // return ''; // to remove the loading <img src="assets/img/user/loading.gif" alt="Loading Icon">
           }
         },
         filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
