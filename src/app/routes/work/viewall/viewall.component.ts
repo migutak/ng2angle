@@ -45,7 +45,7 @@ export class ViewallComponent implements OnInit {
       { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
-      { field: 'SECTION', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'SECTION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       {
         field: 'OUSTBALANCE',
         cellRenderer: function (params) {

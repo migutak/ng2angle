@@ -1,14 +1,15 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { EcolService } from '../../../../services/ecol.service';
+import {Component, OnInit, ElementRef} from '@angular/core';
+import {SettingsService} from '../../../../core/settings/settings.service';
+import {ActivatedRoute} from '@angular/router';
+import {EcolService} from '../../../../services/ecol.service';
 import swal from 'sweetalert2';
-import { saveAs } from 'file-saver';
-import { environment } from '../../../../../environments/environment';
-import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import {saveAs} from 'file-saver';
+import {environment} from '../../../../../environments/environment';
+import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {HttpClient, HttpEventType} from '@angular/common/http';
 import * as XLSX from 'xlsx';
-import { ViewChild } from '@angular/core';
+import {ViewChild} from '@angular/core';
+import {DataService} from '../../../../services/data.service';
 
 const URL = environment.xlsuploadapi;
 
@@ -18,19 +19,18 @@ const URL = environment.xlsuploadapi;
   styleUrls: ['./bulknotes.component.scss']
 })
 export class BulknotesComponent implements OnInit {
-
   custnumber;
   accnumber;
   username: string;
   sys: string;
   willDownload = false;
   outdata = [];
-  fileUploadProgress: number = 0;
+  fileUploadProgress = 0;
 
   @ViewChild('myInput')
   myInputVariable: ElementRef;
 
-  public uploader: FileUploader = new FileUploader({ url: URL });
+  public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
@@ -43,8 +43,9 @@ export class BulknotesComponent implements OnInit {
   }
 
   constructor(public settings: SettingsService,
-    private route: ActivatedRoute,
-    private ecolService: EcolService) {
+              private route: ActivatedRoute,
+              public dataService: DataService,
+              private ecolService: EcolService) {
     //
     //
     this.uploader.onBuildItemForm = (item, form) => {
@@ -133,20 +134,25 @@ export class BulknotesComponent implements OnInit {
   }
 
 
+
+
+
+
+
   // xls to json
   onFileChange(ev) {
     const xfile = ev.target.files[0];
     console.log('size', xfile.size);
     console.log('type', xfile.type);
 
-    if (xfile.size > 300000) {
+    if (xfile.size > 900000) {
       swal({
         type: 'error',
         title: 'Empty Values',
-        text: 'File too large. max is 300kb',
+        text: 'File too large. max is 900kb',
       });
-      this.myInputVariable.nativeElement.value = "";
-      document.getElementById('output').innerHTML = "";
+      this.myInputVariable.nativeElement.value = '';
+      document.getElementById('output').innerHTML = '';
       return;
     }
 
@@ -156,8 +162,8 @@ export class BulknotesComponent implements OnInit {
         title: 'Empty Values',
         text: 'Wrong file format',
       });
-      this.myInputVariable.nativeElement.value = "";
-      document.getElementById('output').innerHTML = "";
+      this.myInputVariable.nativeElement.value = '';
+      document.getElementById('output').innerHTML = '';
       return;
     }
 
@@ -167,13 +173,13 @@ export class BulknotesComponent implements OnInit {
     const file = ev.target.files[0];
     reader.onload = (event) => {
       const data = reader.result;
-      workBook = XLSX.read(data, { type: 'binary' });
+      workBook = XLSX.read(data, {type: 'binary'});
       jsonData = workBook.SheetNames.reduce((initial, name) => {
         const sheet = workBook.Sheets[name];
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
-      //console.log('data-total', jsonData.Sheet1.length);
+      // console.log('data-total', jsonData.Sheet1.length);
 
       if (!jsonData.Sheet1) {
         swal({
@@ -181,10 +187,10 @@ export class BulknotesComponent implements OnInit {
           title: 'Empty Values',
           text: 'Wrong sheet name',
         });
-        this.myInputVariable.nativeElement.value = "";
-        document.getElementById('output').innerHTML = "";
+        this.myInputVariable.nativeElement.value = '';
+        document.getElementById('output').innerHTML = '';
         return;
-      };
+      }
       this.outdata = jsonData.Sheet1;
 
       if (!this.outdata[0].accnumber || !this.outdata[0].notemade) {
@@ -193,15 +199,15 @@ export class BulknotesComponent implements OnInit {
           title: 'Empty Values',
           text: 'Wrong field name',
         });
-        this.myInputVariable.nativeElement.value = "";
-        document.getElementById('output').innerHTML = "";
+        this.myInputVariable.nativeElement.value = '';
+        document.getElementById('output').innerHTML = '';
         return;
       }
 
 
-
-      for (var i = 0; i < jsonData.Sheet1.length; i++) {
+      for (let i = 0; i < jsonData.Sheet1.length; i++) {
         // check for null
+        // tslint:disable-next-line:max-line-length
         if (this.outdata[i].accnumber == null || this.outdata[i].notemade == null || typeof this.outdata[i].notemade === 'undefined' || typeof this.outdata[i].accnumber === 'undefined') {
           swal({
             type: 'warning',
@@ -209,7 +215,7 @@ export class BulknotesComponent implements OnInit {
             text: 'data in row no: ' + i + ' is empty and will be omitted',
           });
 
-        } else if (this.sys == 'cc' || this.sys == 'watchcc') {
+        } else if (this.sys === 'cc') {
           this.outdata[i].owner = this.username;
           this.outdata[i].custnumber = this.outdata[i].accnumber;
           this.outdata[i].notesrc = 'uploaded a note';
@@ -221,8 +227,8 @@ export class BulknotesComponent implements OnInit {
       }
 
       const dataString = JSON.stringify(jsonData);
-      document.getElementById('output').innerHTML = dataString.slice(0, 500).concat("...");
-      //this.setDownload(dataString);
+      document.getElementById('output').innerHTML = dataString.slice(0, 500).concat('...');
+      // this.setDownload(dataString);
 
       // post
 
@@ -237,37 +243,42 @@ export class BulknotesComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           // proceeed to post
+          console.log(this.outdata);
           this.ecolService.loader();
           this.ecolService.bulknotes(this.outdata).subscribe(events => {
             if (events.type === HttpEventType.UploadProgress) {
               this.fileUploadProgress = Math.round(events.loaded / events.total * 100);
+              console.log(events.loaded);
               //console.log(this.fileUploadProgress);
             } else if (events.type === HttpEventType.Response) {
-              // this.fileUploadProgress = '';
-              // console.log(events.body);          
-              swal({
-                type: 'success',
-                title: 'ALL Good',
-                text: events.body.rowsAffected + ' rows has been processed!',
-              });
-
-              // update tbl_portfolio_static
-              if (this.sys == 'cc' || this.sys == 'watchcc') {
+              if (this.sys === 'cc' || this.sys === 'watchcc') {
                 //
                 this.ecolService.bulktotblcardsstatic(this.outdata).subscribe(result => {
                   console.log(result);
-                }, error=>{
-                  console.log('bulknotes error',error);
-                })
+                  this.sendNotesData(this.custnumber); // updates the notes counter on view
+                  swal({
+                    type: 'success',
+                    title: 'ALL Good',
+                    text: events.body.rowsAffected + ' rows has been processed!',
+                  });
+                }, error => {
+                  console.log('bulknotes error', error);
+                });
               } else {
                 //
                 this.ecolService.bulktotblportfolio(this.outdata).subscribe(result => {
                   console.log(result);
-                }, error=>{
-                  console.log('bulknotes error',error);
-                })
+                  this.sendNotesData(this.custnumber); // updates the notes counter on view
+                  swal({
+                    type: 'success',
+                    title: 'ALL Good',
+                    text: events.body.rowsAffected + ' rows has been processed!',
+                  });
+                }, error => {
+                  console.log('bulknotes error', error);
+                });
               }
-              
+
             }
 
           }, error => {
@@ -277,28 +288,25 @@ export class BulknotesComponent implements OnInit {
               title: 'Oops...',
               text: 'Something went wrong with xlxs upload!',
             });
-          })
+          });
         } else {
-          this.myInputVariable.nativeElement.value = "";
-          document.getElementById('output').innerHTML = "";
+          this.myInputVariable.nativeElement.value = '';
+          document.getElementById('output').innerHTML = '';
           return;
           swal.close();
         }
       });
 
-    }
+    };
     reader.readAsBinaryString(file);
 
   }
 
 
-  setDownload(data) {
-    this.willDownload = true;
-    setTimeout(() => {
-      const el = document.querySelector("#download");
-      el.setAttribute("href", `data:text/json;charset=utf-8,${encodeURIComponent(data)}`);
-      el.setAttribute("download", 'xlsxtojson.json');
-    }, 1000)
+  sendNotesData(custnumber) {
+    this.ecolService.totalnotes(custnumber).subscribe(data => {
+      this.dataService.pustNotesData(data[0].TOTAL);
+    });
   }
 
 }

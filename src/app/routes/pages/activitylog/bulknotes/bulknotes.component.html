@@ -106,16 +106,17 @@
     </div>-->
     <div class="card">
       <div class="card-body">
-        <div><button class="btn btn-outline-success btn-sm" (click)="downloadFile()">
+        <div>
+          <button class="btn btn-outline-success btn-sm" (click)="downloadFile()">
             <i class="fa fa-download"> template</i>
           </button>
         </div>
-        <hr />
-        
+        <hr/>
+
         Select xlsx file to upload
 
         <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
-          accept=".xlsx" />
+               accept=".xlsx"/>
 
         <div id="output"></div>
         <br>
@@ -127,7 +128,8 @@
         </div>
         <!-- Progress Bar -->
         <div class="progress form-group" *ngIf="fileUploadProgress > 0">
-          <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="fileUploadProgress">
+          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+               [style.width.%]="fileUploadProgress">
           </div>
         </div>
       </div>
