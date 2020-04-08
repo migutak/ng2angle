@@ -7,7 +7,7 @@ export const environment = {
   letters_path: '/app/demand_letters/',
   letters_api: '/docx/',
   uploadurl: '/upload',
-  demanddownload: '/demanddownload',
+  demanddownload: '/filesapi',
   valor: '/valor',
   applink: '',
   xlsuploadapi: '/xlsupload/',

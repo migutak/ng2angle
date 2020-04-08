@@ -549,6 +549,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.nodeapi + '/teles/all?custnumber=' + custnumber);
   }
 
+  buckets() {
+    return this.httpClient.get<any>(environment.nodeapi + '/loans/buckets');
+  }
+
   activeptps(accnumber) {
     return this.httpClient.get<any>(environment.nodeapi + '/activeptps/active?accnumber=' + accnumber);
   }
