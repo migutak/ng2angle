@@ -3,18 +3,14 @@
 # We label our stage as 'builder'
 FROM node:10-alpine as builder
 
+# Set to a non-root built-in user `node`
+USER node
 
-COPY package.json package-lock.json ./
+# Create app directory (with user `node`)
+RUN mkdir -p /home/node/app
 
+WORKDIR /home/node/app
 
-## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-#RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app/
-
-## Move to /ng-app (eq: cd /ng-app)
-WORKDIR /ng-app
-
-
-# Copy everything from host to /ng-app in the container
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
@@ -24,7 +20,7 @@ RUN npm run ng build -- --configuration=$NG_ENV
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /ng-app/ecollect /usr/share/nginx/html
+COPY --from=builder /home/node/app/ecollect /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
 

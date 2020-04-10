@@ -553,6 +553,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.nodeapi + '/loans/buckets');
   }
 
+  arocodes() {
+    return this.httpClient.get<any>(environment.nodeapi + '/loans/arocodes');
+  }
+
   activeptps(accnumber) {
     return this.httpClient.get<any>(environment.nodeapi + '/activeptps/active?accnumber=' + accnumber);
   }

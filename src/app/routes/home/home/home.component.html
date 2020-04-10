@@ -10,17 +10,17 @@
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-4">
-                        <ng-select [items]="branches" bindLabel="branchname" placeholder="Select Branch" (change)="onChange($event)"
-                           [(ngModel)]="selectedBranch">
+                        <ng-select [items]="branches" bindLabel="branchname" placeholder="Select Branch"
+                           (change)="onChange($event)" [(ngModel)]="selectedBranch">
                         </ng-select>
                      </div>
                      <div class="col-md-4">
-                        <ng-select [items]="arocode" bindLabel="arocode" placeholder="Select arocode"
+                        <ng-select [items]="arocodes" bindLabel="AROCODE" placeholder="Select arocode"
                            [(ngModel)]="selectedarocode">
                         </ng-select>
                      </div>
                      <div class="col-md-4">
-                        <ng-select [items]="product" bindLabel="product" placeholder="Select Product"
+                        <ng-select [items]="productcodes" bindLabel="PRODUCTCODE" placeholder="Select Product"
                            [(ngModel)]="selectedproduct">
                         </ng-select>
                      </div>
@@ -42,14 +42,9 @@
                      [legendPosition]="legendPosition" (select)="onSelect($event)">
                   </ngx-charts-gauge>
 
-                  <ngx-charts-advanced-pie-chart
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="single"
-  [gradient]="gradient"
-  (select)="onSelect($event)"
-  >
-</ngx-charts-advanced-pie-chart>
+                  <ngx-charts-advanced-pie-chart [view]="view" [scheme]="colorScheme" [results]="volume" [label]='label'
+                     [gradient]="gradient" (select)="onSelect($event)">
+                  </ngx-charts-advanced-pie-chart>
 
                </div>
             </div>
