@@ -1,26 +1,31 @@
 ### STAGE 1: Build ###
-# base image
-#FROM nginx:1.16.0-alpine
-#FROM nginxinc/nginx-unprivileged 
-FROM nginx:latest
+FROM node:10-alpine as builder
 
+# Set to a non-root built-in user `node`
+USER node
+
+# Create app directory (with user `node`)
+RUN mkdir -p /home/node/app
+
+WORKDIR /home/node/app
+COPY --chown=node package.json ./
+# RUN npm install --only=production
+COPY --chown=node . .
+
+
+
+## Build the angular app in production mode and store the artifacts in dist folder
+ARG NG_ENV=production
+RUN npm run ng build -- --configuration=$NG_ENV
+
+### STAGE 2: Run ###
+FROM nginx:1.17.1-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-
-# copy artifact build from the 'build environment'
-COPY ecollect /usr/share/nginx/html
-
-RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
-    chmod -R 770 /var/cache/nginx /var/run /var/log/nginx
+COPY --from=builder /home/node/app/ecollect /usr/share/nginx/html
 
 # expose port 8880
 EXPOSE 8880
 
-# run nginx
 CMD ["nginx", "-g", "daemon off;"]
-# ng build --configuration=uat
-# docker build -t 52.117.54.217:5000/ecollect:t.0.0 .
-# docker tag migutak/ecollect:uat 172.16.19.151:5000/ecollect:uat
-# docker push migutak/ecollect:1.0.0
-# docker push 172.16.19.151:5000/ecollect:uat
-# docker save -o migutak_ecollect.tar migutak/ecollect:1.0.0
-#
+
+# docker build -t migutak/ecollect:3.0.0 -f Dockerfile2 .

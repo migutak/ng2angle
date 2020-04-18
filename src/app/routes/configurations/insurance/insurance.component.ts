@@ -1,386 +1,175 @@
-import {Component, OnInit} from '@angular/core';
-import {environment} from '../../../../environments/environment';
-// import { HttpClient} from '@angular/common/http';
-import {AllModules} from '@ag-grid-enterprise/all-modules';
-import {NgxSmartModalService} from 'ngx-smart-modal';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
-import {EcolService} from '../../../services/ecol.service';
-import * as moment from 'moment';
-import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
 import {GridOptions} from '@ag-grid-community/all-modules';
+import {AllModules} from '@ag-grid-enterprise/all-modules';
+import { NgxSpinnerService } from 'ngx-spinner';
+import * as _ from 'lodash';
+import * as moment from 'moment';
+declare var $: any;
 
 @Component({
   selector: 'app-insurance',
   templateUrl: './insurance.component.html',
-  styleUrls: ['./insurance.component.scss']
+  styleUrls: ['./insurance.component.scss'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class InsuranceComponent implements OnInit {
 
-  public gridApi;
-  public gridColumnApi;
-  private statusBar;
-  public gridOptions: GridOptions;
-  public columnDefs;
-  public defaultColDef;
-  public rowModelType;
-  public cacheBlockSize;
-  public maxBlocksInCache;
-  public rowData: [];
-  public sortingOrder;
-  private str: string;
+  resizeEvent = 'resize.ag-grid';
+  $win = $(window);
+  new = true;
+  memos: any = [];
 
-  currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  username: string;
-  searchText: string;
-  model: any = {};
-  pivotPanelShow = true;
-  insuranceid: string;
-  insurancename: string;
-  physicaladdress: string;
-  postaladdress: string;
-  emailaddress: string;
-  contactperson: string;
-
-  editnoteForm: FormGroup;
-  editinsurancename: any;
-
+  gridOptions: GridOptions;
   modules = AllModules;
 
-  constructor(public ngxSmartModalService: NgxSmartModalService, private ecolService: EcolService, private rout: Router,
-              private formBuilder: FormBuilder, public http: HttpClient) {
+  // Basic example
+  columnDefs = [
+    {
+      headerName: 'insuranceName',
+      field: 'insuranceName',
+      width: 150
+    }, {
+      headerName: 'physicalAddress',
+      field: 'physicalAddress',
+      width: 120
+    }, {
+      headerName: 'postalAddress',
+      field: 'postalAddress',
+      width: 90
+    }, {
+      headerName: 'emailAddress',
+      field: 'emailAddress',
+      width: 90
+    }, {
+      headerName: 'telnumber',
+      field: 'telnumber',
+      width: 100
+    }];
+  rowData1: any;
+  // tslint:disable-next-line:max-line-length
+  username: string;
+  postModel: any = {};
+  postBody: any = [];
+  public singleData;
+  public items: Array<string> = [];
+  model: any = {};
+  dataList: any;
+
+  constructor(
+    private ecolService: EcolService,
+    private spinner: NgxSpinnerService,
+    private http: HttpClient
+  ) {
+    // Basic example
     this.gridOptions = <GridOptions>{
-
-
-      // suppressCellSelection: true,
-
-
-      // domLayout: 'autoHeight',
-      rowSelection: 'single',
-      rowModelType: 'normal',
-      // rowModelType: 'infinite',
-
-      pagination: true,
-      paginationPageSize: 20,
-
-      onGridReady: (params) => {
-
-        this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
-        // params.api.sizeColumnsToFit();
-        // this.gridApi.setDatasource(this.dataSource);
-        // environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username
-        this.http
-          .get(environment.api + '/api/tqall/insurance')
-          .subscribe(resp => {
-            console.log(typeof resp); // to check whether object or array
-            this.str = JSON.stringify(resp, null, 4);
-            const obj: any = JSON.parse(this.str);
-
-            params.api.setRowData(obj.rows);
-            // params.api.refreshCells({force : true});
-
-          });
-        // function change() {
-        //   params.api.setRowData(data);
-        //   gridOptions.api.refreshCells({force : true});
-        // }
-
-
-      }
-
+      headerHeight: 40,
+      columnDefs: this.columnDefs,
+      rowData: null,
+      enableFilter: true,
+      rowSelection: 'single'
     };
 
-
-    this.columnDefs = [
-      {
-        headerName: 'Edit',
-        cellRenderer: function (params) {
-          if (params.value === undefined) {
-            return '<i title="Edit Insurance" style="cursor: pointer" class="fas fa-edit fa-lg"></i>';
-          } else {
-            return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
-
-            // <a  href="#" target="_blank">' + params.value + '</a>
-          }
-        },
-      },
-      {
-        field: 'INSURANCENAME',
-        // cellRenderer: function (params) {
-        //   if (params.value !== undefined) {
-        //     return '<a  href="#" target="_blank">' + params.value + '</a>';
-        //   } else {
-        //     return ''; // <img src="assets/img/user/loading.gif" alt="Loading Icon">
-        //   }
-        // },
-        filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true
-      },
-      {field: 'PHYSICALADDRESS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
-      {field: 'POSTALADDRESS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
-      {field: 'EMAILADDRESS', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
-      {field: 'CONTACTPERSON', filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true},
-      // tslint:disable-next-line:max-line-length
-      {
-        field: 'DATEOFENTRY',
-        filter: 'agTextColumnFilter',
-        filterParams: {newRowsAction: 'keep'},
-        resizable: true,
-        valueFormatter: this.dateFormatter,
-      },
-
-      // tslint:disable-next-line:max-line-length
-      {
-        field: 'DATEOFLASTUPDATE',
-        filter: 'agTextColumnFilter',
-        filterParams: {newRowsAction: 'keep'},
-        resizable: true,
-        valueFormatter: this.dateFormatter,
-      },
-    ];
-    this.defaultColDef = {
-      width: 120,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-      unSortIcon: true,
-      suppressResize: false,
-      enableRowGroup: true,
-      enablePivot: true,
-      pivot: true
-    };
-    this.sortingOrder = ['desc', 'asc', null ];
-    this.defaultColDef = {
-      width: 120,
-      resizable: true,
-      sortable: true,
-      floatingFilter: true,
-      unSortIcon: true,
-      suppressResize: false,
-      enableRowGroup: true,
-      enablePivot: true,
-      pivot: true
-    };
-    this.statusBar = {
-      statusPanels: [
-        {
-          statusPanel: 'agTotalAndFilteredRowCountComponent',
-          align: 'left'
-        },
-        {
-          statusPanel: 'agTotalRowCountComponent',
-          align: 'center'
-        },
-        {statusPanel: 'agFilteredRowCountComponent'},
-        {statusPanel: 'agSelectedRowCountComponent'},
-        {statusPanel: 'agAggregationComponent'}
-      ]
-    };
+    http.get<any>(environment.api + '/api/insurance').subscribe(resp => {
+      this.rowData1 = resp;
+    });
   }
-// refresh() {
-//   // this.gridApi.redrawRows();
-//   gridOptions.api.setRowData(data);
-//   gridOptions.api.refreshCells({force : true});
-// }
 
+  onRowClicked(event: any) {
+    this.new = false;
+    this.model = event.node.data;
+    this.model.lastupdateby = this.username;
+    this.model.lastupdate = new Date();
+    // this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
+  }
 
+  onQuickFilterChanged($event) {
+    this.gridOptions.api.setQuickFilter($event.target.value);
+  }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
-    this.buildForm();
+
+    
   }
 
-  // formats the dates
-  dateFormatter(params) {
-    return moment(params.value).format('MM/DD/YYYY HH:mm');
+  gridReady(params) {
+    params.api.sizeColumnsToFit();
+    this.$win.on(this.resizeEvent, () => {
+      setTimeout(() => { params.api.sizeColumnsToFit(); });
+    });
   }
 
-  opennewInsuranceModal() {
-    this.ngxSmartModalService.getModal('newInsurance').open();
+  shownew() {
+    this.new = true;
+    this.model = {};
   }
 
-  openeditInsuranceModal() {
-    this.ngxSmartModalService.getModal('editInsurance').open();
-  }
-
-  closeeditInsuranceModal() {
-    this.ngxSmartModalService.getModal('editInsurance').close();
-  }
-
-  closenewInsuranceModal() {
-    this.ngxSmartModalService.getModal('newInsurance').close();
-  }
-
-  get f() {
-    return this.editnoteForm.controls;
-  }
-
-  onSubmit(form) {
-    // check if logged in
-    this.ecolService.ifLogged();
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
-
-    // Loading indictor
-    this.ecolService.loader();
-
-    //
-    const body = {
-      insurancename: form.value.insurancename,
-      physicaladdress: form.value.physicaladdress,
-      postaladdress: this.model.postaladdress,
-      emailaddress: this.model.emailaddress,
-      contactperson: form.value.contactperson,
-      dateofentry: new Date(),
-      dateoflastupdate: 'NEVER',
-    };
-    this.ecolService.postinsurance(body).subscribe(data => {
-      this.closenewInsuranceModal(); // will only close modal if success
-      this.refresh ();
-      form.reset();
-      swal('Success!', 'Insurance added successfully!', 'success');
+  fneditSubmit(body) {
+    this.spinner.show();
+    this.ecolService.putsptype(body).subscribe(resp => {
+      swal('Success!', 'Update successful!', 'success');
+      this.getData();
+      this.spinner.hide();
     }, error => {
       console.log(error);
-      console.log(body);
-      swal('Error!', 'Error occurred during processing!', 'error');
+      swal('Eror!', 'Update was not completed!', 'error');
+      this.spinner.hide();
     });
   }
 
-  onUpdate() {
-    // check if logged in
-    this.ecolService.ifLogged();
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser.username;
+  getData() {
+    this.http.get<any>(environment.api + '/api/insurance').subscribe(resp => {
+      this.rowData1 = resp;
+    });
+  }
 
-    // Loading indictor
-    this.ecolService.loader();
+  
 
-    //
+   editSubmit(form) {
     const body = {
-      editid: this.f.editid.value,
-      editinsurancename: this.f.editinsurancename.value,
-      editphysicaladdress: this.f.editphysicaladdress.value,
-      editpostaladdress: this.f.editpostaladdress.value,
-      editemailaddress: this.f.editemailaddress.value,
-      editcontactperson: this.f.editcontactperson.value,
+      //'id': this.model.SPTITLE,
+      'insuranceName': form.value.insuranceName,
+      'physicalAddress': form.value.physicalAddress,
+      'postalAddress': form.value.postalAddress,
+      'emailAddress': form.value.emailAddress,
+      'telnumber': form.value.telnumber,
+      'contactPerson': form.value.contactPerson,
+      'updateBy': form.value.updateBy
     };
-    console.log(body);
-    // this.newnotes = this.f.notemade.value;
-    this.editinsurancename = this.insurancename;
-    if (this.editinsurancename === this.model.INSURANCENAME) {
-      console.log('You havent changed a thing');
-      swal({
-        title: 'Hey, Kindly Edit to Submit',
-        imageUrl: 'assets/img/user/coop.jpg',
-        text: 'Update details to submit!',
-        // showCancelButton: true,
-        confirmButtonColor: '#7ac142',
-        cancelButtonColor: '#00543d',
-        confirmButtonText: 'Okay'
-      });
-
-    } else {
-      // this.nochange = false;
-      console.log('good,you\'ve changed ');
-      this.ecolService.updateinsurance(body).subscribe(data => {
-        console.log(data);
-        this.closeeditInsuranceModal();
-        this.refresh ();
-        swal('Successful!', 'Insurance updated!', 'success');
-        //
-      }, error => {
-        console.log(error);
-        console.log(body);
-        swal('Error!', 'Error occurred during processing!', 'error');
-      });
-    }
-
-
-
-  }
-
-  onRowDoubleClicked(event: any) {
-    this.model = event.node.data;
-    this.insuranceid = this.model.ID;
-    this.insurancename = this.model.INSURANCENAME;
-    this.physicaladdress = this.model.PHYSICALADDRESS;
-    this.postaladdress = this.model.POSTALADDRESS;
-    this.emailaddress = this.model.EMAILADDRESS;
-    this.contactperson = this.model.CONTACTPERSON;
-
-    console.log(this.insurancename);
-
-    // tslint:disable-next-line:max-line-length
-    // window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
-    this.openeditInsuranceModal();
-  }
-
-  buildForm() {
-    // get static data
-
-    this.editnoteForm = this.formBuilder.group({
-      editid: [{value: this.insuranceid, disabled: true}],
-      editinsurancename: [{value: this.insurancename, disabled: false}],
-      editphysicaladdress: [{value: this.physicaladdress, disabled: false}, [Validators.required]],
-      editpostaladdress: [{value: this.postaladdress, disabled: false}],
-      editemailaddress: [{value: this.emailaddress, disabled: false}, [Validators.email]],
-      editcontactperson: [{value: this.contactperson, disabled: false}]
-    });
-
-  }
-
-
-
-
-  deleteInsurance() {
     swal({
-      title: (this.insurancename).toUpperCase() + '  will be Deleted',
-      imageUrl: 'assets/img/user/coop.jpg',
-      text: 'Are you sure?!',
+      title: 'Are you sure?',
+      text: 'You want to Update!',
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#7ac142',
-      cancelButtonColor: '#00543d',
-      confirmButtonText: 'Yes, Delete!'
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Update!'
     }).then((result) => {
       if (result.value) {
-        const body = {
-          editid: this.f.editid.value,
-        };
-        this.ecolService.deleteinsurance(body).subscribe(data => {
-          console.log(body);
-          this.closeeditInsuranceModal();
-          this.refresh ();
-          swal('Successful!', 'Insurance deleted!', 'success');
-          //
-        }, error => {
-          console.log(error);
-          swal('Error!', 'Error occurred during processing!', 'error');
-        });
+        this.fneditSubmit(body);
       }
     });
   }
 
-  refresh () {
-    // this.gridApi = params.api;
-    // this.gridColumnApi = params.columnApi;
-    // params.api.sizeColumnsToFit();
-    // this.gridApi.setDatasource(this.dataSource);
-    // environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username
-    this.http
-      .get(environment.api + '/api/tqall/insurance')
-      .subscribe(resp => {
-        console.log(typeof resp); // to check whether object or array
-        this.str = JSON.stringify(resp, null, 4);
-        const obj: any = JSON.parse(this.str);
-
-        this.gridOptions.api.setRowData(obj.rows);
-        this.gridOptions.api.refreshCells({force: true});
-
-      });
-
+  delete() {
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to DELETE!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete!'
+    }).then((result) => {
+      if (result.value) {
+        //
+      }
+    });
   }
-
 }
-

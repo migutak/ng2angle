@@ -37,7 +37,6 @@
     "@ngx-translate/http-loader": "4.0.0",
     "@swimlane/ngx-charts": "^13.0.2",
     "@swimlane/ngx-datatable": "14.0.0",
-    "ag-grid": "18.1.2",
     "ag-grid-angular": "^22.0.0",
     "ag-grid-community": "^22.0.0",
     "ag-grid-enterprise": "^22.0.0",
