@@ -74,6 +74,9 @@ export class CustContactsComponent implements OnInit {
     this.addcontact.owner = this.username;
     this.addcontact.updatedby = this.username;
     this.addcontact.updatedlast = new Date();
+    this.addcontact.contacttype = form.contacttype;
+    this.addcontact.description = form.description;
+    this.addcontact.address = form.address;
     // save to db
     this.ecolService.postteles(this.addcontact).subscribe(response => {
       swal(
