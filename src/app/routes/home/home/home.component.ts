@@ -24,8 +24,10 @@ export class HomeComponent implements OnInit {
     volume: any[];
     arocodes: any[];
     productcodes: any[];
-
-
+    selectedBranch: string;
+    selectedarocode: string;
+    selectedproduct: string;
+    showLegend: boolean = true;
     // options
     showXAxis = true;
     showYAxis = true;

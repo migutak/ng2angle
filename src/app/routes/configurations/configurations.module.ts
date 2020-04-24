@@ -15,6 +15,7 @@ import {NgxSelectModule} from 'ngx-select-ex';
 import {AgGridModule} from '@ag-grid-community/angular';
 import {CustomFormsModule} from 'ng2-validation';
 import {InsuranceComponent} from './insurance/insurance.component';
+import {Insurance2Component} from './insurance/insurance2.component';
 import {NgxSmartModalModule} from 'ngx-smart-modal';
 
 const routes: Routes = [
@@ -47,7 +48,8 @@ const routes: Routes = [
     PlanactionsComponent,
     PlanmemosComponent,
     SpComponent,
-    InsuranceComponent
+    InsuranceComponent,
+    Insurance2Component
   ],
   exports: [
       RouterModule
