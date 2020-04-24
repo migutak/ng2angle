@@ -109,6 +109,9 @@ export class CustContactsComponent implements OnInit {
     this.model.email = contact.email;
     this.model.active = contact.active;
     this.model.owner = this.username;
+    this.model.description = contact.description;
+    this.model.address = contact.address;
+    this.model.contacttype = contact.contacttype;
     this.model.updatedby = this.username;
     this.model.updatedlast = new Date();
     //
@@ -129,6 +132,9 @@ export class CustContactsComponent implements OnInit {
     this.model.owner = this.username;
     this.model.updatedby = this.username;
     this.model.updatedlast = new Date();
+    this.addcontact.contacttype = form.contacttype;
+    this.addcontact.description = form.description;
+    this.addcontact.address = form.address;
     // save to db
     this.ecolService.putteles(this.model).subscribe(response => {
       swal(

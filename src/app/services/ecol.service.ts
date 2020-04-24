@@ -497,7 +497,7 @@ export class EcolService {
   }
 
   putteles(data) {
-    return this.httpClient.post<any>(environment.nodeapi + '/teles/update', data);
+    return this.httpClient.put<any>(environment.api + '/api/teles', data);
   }
 
   reviewptp(data) {
