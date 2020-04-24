@@ -3,8 +3,6 @@ import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import * as $ from 'jquery';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { EcolService } from '../../../services/ecol.service';
 
 @Component({
@@ -14,8 +12,6 @@ import { EcolService } from '../../../services/ecol.service';
 })
 export class ViewallComponent implements OnInit {
 
-  @ViewChild('myModal') myModal;
-  @ViewChild('myGrid') myGrid: jqxGridComponent;
   public radioModel: string;
 
   total:  any = {};
@@ -49,26 +45,10 @@ export class ViewallComponent implements OnInit {
       datatype: 'json'
     };
 
-  dataAdapter: any = new jqx.dataAdapter(this.source);
 
   columns: any[] =
     [
-      {
-        text: 'ACCNUMBER', datafield: 'accnumber', width: 150, filtertype: 'input',
-        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
-          const that = this;
-          const container = document.createElement('div');
-          htmlElement.appendChild(container);
-          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
-          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
-          // tslint:disable-next-line:no-shadowed-variable
-          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
-            that.onClickMe(clickEvent, rowdata);
-          });
-          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
-        },
-        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
-      },
+      
       { text: 'CUSTNUMBER', datafield: 'custnumber', width: 100, filtertype: 'input' },
       { text: 'CLIENT_NAME', datafield: 'client_name', width: 200, filtertype: 'input' },
       { text: 'OUSTBALANCE', datafield: 'oustbalance', filtertype: 'input', cellsformat: 'd' },
@@ -105,17 +85,6 @@ export class ViewallComponent implements OnInit {
 
   filterfunction (column, value) {
     console.log(column, value);
-  }
-
-  refreshgrid() {
-    // this.mygrid.setOptions({source:{}});
-  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=150',
-
-  // console.log(this.source.url, this.dataAdapter);
-  // tslint:disable-next-line:max-line-length
-  // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
-  //
-  this.myGrid.updatebounddata('cells');
   }
 
   gettotal (column, value, letter) {

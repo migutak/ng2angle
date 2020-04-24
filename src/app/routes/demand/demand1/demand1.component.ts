@@ -2,9 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import * as $ from 'jquery';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { EcolService } from '../../../services/ecol.service';
 
 @Component({
@@ -14,8 +11,7 @@ import { EcolService } from '../../../services/ecol.service';
 })
 export class Demand1Component implements OnInit {
 
-  @ViewChild('myModal') myModal;
-  @ViewChild('myGrid') myGrid: jqxGridComponent;
+  
   public radioModel: string;
 
   total:  any = {};
@@ -50,26 +46,9 @@ export class Demand1Component implements OnInit {
       datatype: 'json'
     };
 
-  dataAdapter: any = new jqx.dataAdapter(this.source);
-
   columns: any[] =
     [
-      {
-        text: 'ACCNUMBER', datafield: 'accnumber', width: 150, filtertype: 'input',
-        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
-          const that = this;
-          const container = document.createElement('div');
-          htmlElement.appendChild(container);
-          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
-          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
-          // tslint:disable-next-line:no-shadowed-variable
-          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
-            that.onClickMe(clickEvent, rowdata);
-          });
-          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
-        },
-        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
-      },
+      
       { text: 'CUSTNUMBER', datafield: 'custnumber', width: 100, filtertype: 'input' },
       { text: 'CLIENT_NAME', datafield: 'client_name', width: 200, filtertype: 'input' },
       { text: 'OUSTBALANCE', datafield: 'oustbalance', filtertype: 'input', cellsformat: 'd' },
@@ -99,19 +78,14 @@ export class Demand1Component implements OnInit {
   myGridOnRowSelect(event: any): void {
     const args = event.args;
     const selectedRowIndex = args.rowindex;
-    const value = this.myGrid.getrowdata(selectedRowIndex);
 
-    this.rowValue = value;
 
   }
 
   myGridOnCellSelect(event: any): void {
     const args = event.args;
     const selectedRowIndex = args.rowindex;
-    const value = this.myGrid.getrowdata(selectedRowIndex);
 
-    this.rowValue = value;
-    // console.log('myGridOnCellSelect', value);
   }
 
   ngOnInit() {
@@ -123,10 +97,7 @@ export class Demand1Component implements OnInit {
     console.log(column, value);
   }
 
-  refreshgrid() {
-  this.source.url = environment.api + '/api/demandsdue?filter[where][demandletter]=' + this.radioModel.toUpperCase() + '&filter[limit]=150',
-  this.myGrid.updatebounddata('cells');
-  }
+  
 
   gettotal (column, value, letter) {
     this.ecolService.gettotalletters(column, value, letter).subscribe(data => {

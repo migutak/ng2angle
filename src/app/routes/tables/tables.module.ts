@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+//import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -23,7 +23,7 @@ const routes: Routes = [
     imports: [
         SharedModule,
         RouterModule.forChild(routes),
-        Ng2TableModule,
+       // Ng2TableModule,
         AgGridModule.withComponents([AngulargridComponent]),
         NgxDatatableModule
     ],

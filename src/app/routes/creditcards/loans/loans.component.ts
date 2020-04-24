@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { JqxDomService } from '../../../shared/jqwidgets-dom.service';
 import { environment } from '../../../../environments/environment';
-import { jqxButtonComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
 import { EcolService } from '../../../services/ecol.service';
-import * as $ from 'jquery'
 
 @Component({
   selector: 'app-loans',
@@ -13,7 +10,6 @@ import * as $ from 'jquery'
 })
 export class LoansComponent implements OnInit {
 
-  @ViewChild('myGrid') myGrid: jqxGridComponent;
 
   total: any = {};
   // source: any = {};
@@ -62,16 +58,7 @@ export class LoansComponent implements OnInit {
           { name: 'SQNUMBER', type: 'string' }
         ],
     }
-  dataAdapter: any = new jqx.dataAdapter(this.source, {
-    downloadComplete: function (data, status, xhr) {
-      if (!this.totalrecords) {
-        this.totalrecords = data.length;
-      }
-    },
-    loadError: function (xhr, status, error) {
-      throw new Error(error);
-    }
-  });
+  
   rendergridrows = (params: any): any[] => {
     let data = params.data;
     return data;
@@ -82,22 +69,7 @@ export class LoansComponent implements OnInit {
   }
   columns: any[] =
     [
-      {
-        text: 'CARDACCT', datafield: 'CARDACCT', width: 150, filtertype: 'input',
-        createwidget: (row: number, column: any, value: string, htmlElement: HTMLElement, rowdata): void => {
-          const that = this;
-          const container = document.createElement('div');
-          htmlElement.appendChild(container);
-          const result = this.jqxDomService.loadComponent(jqxButtonComponent, container);
-          (<jqxButtonComponent>result.componentRef.instance).autoCreate = false;
-          // tslint:disable-next-line:no-shadowed-variable
-          (<jqxButtonComponent>result.componentRef.instance).onClick.subscribe((clickEvent, rowdata) => {
-            that.onClickMe(clickEvent, rowdata);
-          });
-          (<jqxButtonComponent>result.componentRef.instance).createComponent({ value: value, width: 150, height: 30 });
-        },
-        initwidget: (row: number, column: any, value: any, htmlElement: HTMLElement): void => { }
-      },
+      
       { text: 'CARDNUMBER', datafield: 'CARDNUMBER', width: 150, filtertype: 'input' },
       { text: 'CARDNAME', datafield: 'CARDNAME', width: 200, filtertype: 'input' },
       { text: 'OUTBALANCE', datafield: 'OUTBALANCE', filtertype: 'input', cellsformat: 'd', cellsrenderer: this.totalcolumnrenderer, cellsalign: 'right' },

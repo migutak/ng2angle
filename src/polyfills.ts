@@ -18,7 +18,7 @@
  * BROWSER POLYFILLS
  */
 import 'exceljs/dist/exceljs.min.js';
-/** IE9, IE10 and IE11 requires all of the following polyfills. **/
+/** IE9, IE10 and IE11 requires all of the following polyfills. 
 import 'core-js/es6/symbol';
 import 'core-js/es6/object';
 import 'core-js/es6/function';
@@ -32,7 +32,7 @@ import 'core-js/es6/array';
 import 'core-js/es6/regexp';
 import 'core-js/es6/map';
 import 'core-js/es6/weak-map';
-import 'core-js/es6/set';
+import 'core-js/es6/set';**/
 
 /**
  * If the application will be indexed by Google Search, the following is required.

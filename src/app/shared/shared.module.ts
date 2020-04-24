@@ -33,9 +33,6 @@ import { NowDirective } from './directives/now/now.directive';
 import { ScrollableDirective } from './directives/scrollable/scrollable.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 
-import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
-import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
-
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 // https://angular.io/styleguide#!#04-10
@@ -77,8 +74,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         NowDirective,
         ScrollableDirective,
         JqcloudDirective,
-        jqxGridComponent,
-        jqxButtonComponent
     ],
     exports: [
         CommonModule,
@@ -112,7 +107,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         NowDirective,
         ScrollableDirective,
         JqcloudDirective,
-        jqxGridComponent,
+        
         NgxSpinnerModule
     ]
 })

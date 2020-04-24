@@ -294,5 +294,8 @@
       }
     }
   },
-  "defaultProject": "ng2angle"
+  "defaultProject": "ng2angle",
+  "cli": {
+    "analytics": "f34de251-7940-41ca-a35d-b1c1f3ff8c9c"
+  }
 }
