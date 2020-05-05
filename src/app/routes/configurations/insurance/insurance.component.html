@@ -21,7 +21,7 @@
               <div class="col-xl-4">
                 <div class="card card-primary">
                   <div class="card-body">
-                    <form #insuranceForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(insuranceForm)" *ngIf="new">
+                    <form #insuranceForm="ngForm" class="form-horizontal" (ngSubmit)="Submit(insuranceForm)" *ngIf="new">
                         <div class="form-group row mb">
                           <div class="col-md-12">
                             <div class="form-group">
@@ -57,6 +57,11 @@
                         [(ngModel)]="model.telnumber" [disabled]="false" autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Contact Person</p>
+                        <input class="form-control" name="contactPerson" id="contactPerson" #contactPerson="ngModel"
+                        [(ngModel)]="model.contactPerson" [disabled]="false" autocomplete="off"/>
+                      </div>
                       
                       
                       <p class="lead mt-3"></p>
@@ -98,9 +103,15 @@
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
-                        <p>Telnumber</p>
-                        <input class="form-control" name="telnumber" id="telnumber" #telnumber="ngModel"
-                        [(ngModel)]="model.telnumber" [disabled]="false" autocomplete="off"/>
+                        <p>Telephone Number</p>
+                        <input class="form-control" name="telNumber" id="telNumber" #telNumber="ngModel"
+                        [(ngModel)]="model.telNumber" [disabled]="false" autocomplete="off"/>
+                      </div>
+                      <p class="my-2"></p>
+                      <div class="form-group">
+                        <p>Contact Person</p>
+                        <input class="form-control" name="contactPerson" id="contactPerson" #contactPerson="ngModel"
+                        [(ngModel)]="model.contactPerson" [disabled]="false" autocomplete="off"/>
                       </div>
   
                       <div class="float-left">
@@ -132,7 +143,7 @@
                         (keyup)="onQuickFilterChanged($event)" />
                     </div>
                   </div>
-                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 700px"
+                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 400px"
                     [gridOptions]="gridOptions"
                     (rowClicked) = 'onRowClicked($event)'
                     [modules]='modules'

@@ -1,9 +1,11 @@
+const OCPURL = '-alinma.myocp-580729-bef98cd54cd05ea40763fca46bf638de-0000.us-south.containers.appdomain.cloud'
+
 export const environment = {
   production: true,
   adlogin: false,
   sendsms: true,
-  api: 'http://ecollectapis-ecollectapis.159.122.130.146.nip.io',
-  nodeapi: 'http://nodeapi-nodeapi.159.122.130.146.nip.io/nodeapi',
+  api: 'https://ecollectapis-ecollectapis.159.122.130.146.nip.io',
+  nodeapi: 'https://nodeapi-nodeapi.159.122.130.146.nip.io/nodeapi',
   letters_path: '/home/ecollectadmin/demand_letters/',
   letters_api: 'http://docx-docx.159.122.130.146.nip.io/docx/',
   uploadurl: 'http://filesapi-filesapi.159.122.130.146.nip.io/filesapi',

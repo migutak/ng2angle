@@ -1,8 +1,6 @@
 ### STAGE 1: Build ###
 # base image
-#FROM nginx:1.16.0-alpine
-#FROM nginxinc/nginx-unprivileged 
-FROM nginx:latest
+FROM nginx:1.17.1-alpine
 
 COPY nginx.conf /etc/nginx/nginx.conf
 

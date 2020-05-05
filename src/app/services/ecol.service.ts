@@ -795,6 +795,22 @@ export class EcolService {
     return this.httpClient.post<any>(environment.nodeapi + '/insurance/insert', data);
   }
 
+  post_pmt_insurance(data) {
+    return this.httpClient.post<any>(environment.api + '/api/pmt_insurance', data);
+  }
+
+  post_insurance(data) {
+    return this.httpClient.post<any>(environment.api + '/api/insurance', data);
+  }
+
+  put_insurance(data) {
+    return this.httpClient.put<any>(environment.api + '/api/insurance', data);
+  }
+
+  put_pmt_insurance(data) {
+    return this.httpClient.put<any>(environment.api + '/api/pmt_insurance', data);
+  }
+
   updateinsurance(data) {
     return this.httpClient.post<any>(environment.nodeapi + '/insurance/update', data);
   }

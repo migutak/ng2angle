@@ -1,32 +1,45 @@
+var host = process.env.BACKEND_HOST || 'https://ecollectweb.co-opbank.co.ke';
+var manuals = process.env.MANUAL || '/app/manuals/';
+var path = process.env.BACKEND_PATH || '/home/ecollectadmin/demand_letters/';
+var accplanlink = process.env.ACCPLANLINK || 'http://172.16.204.71:3001';
+var kibanarpt = process.env.KIBANA || 'http://ecollectweb.co-opbank.co.ke:5601';
+var birt = process.env.BIRT || 'http://ecollectweb.co-opbank.co.ke:8787/birt';
+var ptpreport = process.env.PTPREPORT || '';
+var homedash = process.env.HOMEDASH || '';
+var workflow = process.env.WORKFLOW || '';
+var portfoliodash = process.env.PORTFOLIODASH || '';
+var accplanreport = process.env.ACCPLANREPORT || '';
+var xlstemplate = process.env.XLSTEMPLATE || '/home/ecollectadmin/templates/upload_notes.xlsx';
+var portal = process.env.PORTAL || '';
+var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
+
 export const environment = {
   production: true,
   adlogin: false,
   sendsms: false,
-  api: 'https://ecollectweb.co-opbank.co.ke',
-  nodeapi: 'https://ecollectweb.co-opbank.co.ke/nodeapi',
-  grids: 'https://ecollectweb.co-opbank.co.ke/grids',
-  letters_path: '/home/ecollectadmin/demand_letters/',
-  letters_api: 'https://ecollectweb.co-opbank.co.ke/docx/',
-  uploadurl: 'https://ecollectweb.co-opbank.co.ke/filesapi',
-  demanddownload: 'https://ecollectweb.co-opbank.co.ke/demanddownload',
-  valor: 'https://ecollectweb.co-opbank.co.ke/valor',
-  metrics: 'https://ecollectweb.co-opbank.co.ke/appmetrics-dash',
-  applink: 'https://ecollectweb.co-opbank.co.ke',
-  xlsuploadapi: 'https://ecollectweb.co-opbank.co.ke/xlsupload/',
-  xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
-  emailapi: 'https://ecollectweb.co-opbank.co.ke/demandemail/email',
-  demandsmsapi: "https://ecollectweb.co-opbank.co.ke/sms",
-  auth: 'https://ecollectweb.co-opbank.co.ke/adlogin',
-  filesapi: 'https://ecollectweb.co-opbank.co.ke/filesapi',
-  accplanlink: 'http://172.16.204.71:3001',
-  kibanarpt: 'http://ecollectweb.co-opbank.co.ke:5601',
-  manuals_path: '/app/manuals/',
-  birt: 'http://ecollectweb.co-opbank.co.ke:8787/birt',
-  kibana: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/dashboard?_g=0',
-  portfoliodash: 'https://ecollectweb.co-opbank.co.ke:4403/goto/bf80fe14782362d8f9307501e75bf055?embed=true',
-  portal: 'https://ecollectweb.co-opbank.co.ke/portal',
-  accplanreport: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()',
-  ptpreport: 'http://ecollectweb.co-opbank.co.ke:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-  ,homedash: 'http://172.16.19.151:5601/goto/f893ccd125308885e80090233919f80e?embed=true',
-  workflow: 'http://ecollectweb.co-opbank.co.ke:8089/sysworkflow/en/neoclassic/login/login'
+  api: host,
+  nodeapi: host + '/nodeapi',
+  letters_path: path,
+  letters_api: host + '/docx/',
+  uploadurl: host + '/filesapi',
+  demanddownload: host + '/demanddownload',
+  valor: host + '/valor',
+  applink: host,
+  xlsuploadapi: host + '/xlsupload/',
+  xlstemplate: xlstemplate,
+  emailapi: host + '/demandemail/email',
+  demandsmsapi: host + "/sms",
+  auth: auth,
+  filesapi: host + '/filesapi',
+  accplanlink: accplanlink,
+  kibanarpt: kibanarpt,
+  manuals_path: manuals,
+  birt: birt,
+  kibana: kibanarpt,
+  portfoliodash: portfoliodash,
+  portal: portal,
+  accplanreport: accplanreport,
+  ptpreport: ptpreport,
+  homedash: homedash,
+  workflow: workflow
 };
