@@ -122,7 +122,7 @@ export class ViewallComponent implements OnInit {
       getRows(params) {
         console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridcardsviewall/viewall', {
+        fetch(environment.api + '/api/tcards/gridviewall', {
         
           method: 'post',
           body: JSON.stringify(params.request),

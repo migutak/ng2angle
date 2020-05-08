@@ -20,7 +20,7 @@ export class DashboardsComponent implements OnInit {
     }
 
     openactivityrpt() {
-        window.open(environment.kibana, '_blank');
+        // window.open(environment.kibana, '_blank');
     }
 
 }

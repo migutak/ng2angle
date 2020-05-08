@@ -110,7 +110,7 @@ export class AllcardsComponent implements OnInit {
       getRows(params) {
         console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridcreditcardsviewallcards/viewall', {
+        fetch(environment.api + '/api/cards_watch_stage/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: {'Content-Type': 'application/json; charset=utf-8'}

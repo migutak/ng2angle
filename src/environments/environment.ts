@@ -24,7 +24,7 @@ export const environment = {
   nodeapi: host + '6001/nodeapi',
   letters_api: host + '8004/docx/',
   letters_path: path,
-  uploadurl: host + 4000,
+  uploadurl: host + '3000/filesapi',
   demanddownload: host + 3000,
   valor: host + '3000/api/',
   xlsuploadapi: host + '5001/xlsupload/',

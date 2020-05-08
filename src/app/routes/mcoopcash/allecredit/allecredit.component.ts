@@ -91,7 +91,7 @@ export class AllecreditComponent implements OnInit {
       getRows(params) {
         console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.nodeapi + '/gridmcoopcashviewall/viewall', {
+        fetch(environment.api + '/api/mcoopcash_stage/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }
