@@ -24,7 +24,7 @@
         <p *ngIf="searchText.errors?.minlength">minimum of four(4) search characters is required</p>
       </form>
     </div>-->
-    <ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham" style="width: 100%; height: 550px;"
+    <ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham" style="width: 100%; height: 700px;"
       [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [gridOptions]="gridOptions" [pagination]="true"
       [floatingFilter]="true" [rowData]="rowData" [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true"
       [animateRows]="true" (rowClicked)='onRowDoubleClicked($event)'>

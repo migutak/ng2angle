@@ -113,7 +113,7 @@ export class WithfundsComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
+        // console.log(JSON.stringify(params.request, null, 1));
 
         fetch(environment.nodeapi + '/gridtranscwithfunds/viewall', {
           method: 'post',

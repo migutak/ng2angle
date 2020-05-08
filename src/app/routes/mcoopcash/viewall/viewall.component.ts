@@ -91,7 +91,7 @@ export class ViewallComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
+        // console.log(JSON.stringify(params.request, null, 1));
 
         fetch(environment.api + '/api/mcoopcash_stage/gridviewall', { //environment.nodeapi + '/gridmcoopcashviewall/viewall', {
           method: 'post',

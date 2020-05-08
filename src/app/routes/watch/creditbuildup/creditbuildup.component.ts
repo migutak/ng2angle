@@ -107,7 +107,7 @@ export class CreditbuildupComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
+        //console.log(JSON.stringify(params.request, null, 1));
 
         fetch(environment.nodeapi + '/gridcreditbuild/viewall', {
           method: 'post',
