@@ -104,6 +104,7 @@ export class AllcardsComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
 
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable

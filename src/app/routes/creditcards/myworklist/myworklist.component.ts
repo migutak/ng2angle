@@ -56,6 +56,7 @@ export class MyworklistComponent implements OnInit {
 
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
+        this.gridApi.sizeColumnsToFit();
         // params.api.sizeColumnsToFit();
         // this.gridApi.setDatasource(this.dataSource);
         // environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username
