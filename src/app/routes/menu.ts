@@ -35,6 +35,36 @@ const Reports = {
     icon: 'icon-graph'
 };
 
+const Relegate = {
+    text: 'Due for Relegation',
+    link: '/relegate/accounts',
+    icon: 'icon-loop'
+};
+
+const Allocations = {
+    text: 'Account allocations',
+    link: '/allocations',
+    icon: 'icon-people',
+    submenu: [
+        {
+            text: 'Collection',
+            link: '/allocations/collections'
+        },
+        {
+            text: 'Remedial',
+            link: '/allocations/remedial'
+        },
+        {
+            text: 'Credit cards',
+            link: '/allocations/creditcards'
+        },
+        {
+            text: 'Pre Delq',
+            link: '/allocations/predelq'
+        }
+    ]
+};
+
 
 /*const Reports = {
     text: 'Reports',
@@ -241,7 +271,7 @@ const Work = {
 };
 
 const Work_cc = {
-    text: 'CreditCards Queue',
+    text: 'Credit Cards Queue',
     link: '/creditcards',
     icon: 'icon-credit-card',
     submenu: [
@@ -360,6 +390,26 @@ const mcoopcash = {
     ]
 };
 
+const assetfinance = {
+    text: 'Asset Finance & IPF',
+    link: '/assetfinance',
+    icon: 'icon-layers',
+    submenu: [
+        {
+            text: 'Asset Finance',
+            link: '/assetfinance/assetf'
+        },
+        {
+            text: 'IPF',
+            link: '/assetfinance/ipf'
+        },
+        {
+            text: 'Insurance Companies',
+            link: '/configurations/insurance'
+        }
+    ]
+};
+
 const Demandletters = {
     text: 'Demand Letters',
     link: '/letters',
@@ -376,30 +426,6 @@ const Demandletters = {
         {
             text: 'Customer suspensions',
             link: '/letters/customersuspensions'
-        }
-    ]
-};
-
-const Allocations = {
-    text: 'Account allocations',
-    link: '/allocations',
-    icon: 'icon-people',
-    submenu: [
-        {
-            text: 'Collection',
-            link: '/allocations/collections'
-        },
-        {
-            text: 'Remedial',
-            link: '/allocations/remedial'
-        },
-        {
-            text: 'Credit cards',
-            link: '/allocations/creditcards'
-        },
-        {
-            text: 'Pre Delq',
-            link: '/allocations/predelq'
         }
     ]
 };
@@ -435,7 +461,7 @@ const SP = {
 const INSURANCE = {
     text: 'Insurance Co',
     link: '/configurations/insurance',
-    icon: 'icon-docs'
+    icon: 'icon-grid'
 };
 
 const AccountPlans = {
@@ -487,6 +513,11 @@ const headingLetters = {
     heading: true
 };
 
+const headingRelegate = {
+    text: 'Team Leader',
+    heading: true
+};
+
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -508,6 +539,7 @@ const collection_menu = [
     Work_cc,
     // Predelq,
     mcoopcash,
+    assetfinance,
     serviceproviders,
     headingLetters,
     Letters,
@@ -544,6 +576,7 @@ const remedial_menu = [
     Work_cc,
     // Predelq,
     mcoopcash,
+    assetfinance,
     serviceproviders,
     headingLetters,
     Letters,
@@ -562,19 +595,21 @@ const teamleader_menu = [
     Work_cc,
     // Predelq,
     mcoopcash,
+    assetfinance,
     serviceproviders,
     headingLetters,
     Letters,
     headingReports,
     Dashboard,
     Reports,
+    headingRelegate,
+    Relegate,
+    Allocations,
     headingConfigurations,
     Demandletters,
-    Allocations,
     SMS,
     AccountPlans,
     SP,
-    INSURANCE,
     headingDocumentations,
     Manuals
 ];

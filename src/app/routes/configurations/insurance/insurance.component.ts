@@ -23,7 +23,8 @@ export class InsuranceComponent implements OnInit {
   $win = $(window);
   new = true;
   memos: any = [];
-
+  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  emailPattern = '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$';
   gridOptions: GridOptions;
   modules = AllModules;
 
@@ -74,7 +75,7 @@ export class InsuranceComponent implements OnInit {
       rowSelection: 'single'
     };
 
-    http.get<any>(environment.api + '/api/insurance').subscribe(resp => {
+    http.get<any>(environment.api + '/api/pmt_insurance').subscribe(resp => {
       this.rowData1 = resp;
     });
   }
@@ -118,7 +119,7 @@ export class InsuranceComponent implements OnInit {
       this.spinner.hide();
       //update to mysql
       this.ecolService.put_pmt_insurance(body).subscribe(mysqlresp => {
-        //
+        this.getData();
       }, error => {console.log(error);})
     }, error => {
       console.log(error);
@@ -128,7 +129,7 @@ export class InsuranceComponent implements OnInit {
   }
 
   getData() {
-    this.http.get<any>(environment.api + '/api/insurance').subscribe(resp => {
+    this.http.get<any>(environment.api + '/api/pmt_insurance').subscribe(resp => {
       this.rowData1 = resp;
     });
   }
@@ -155,13 +156,12 @@ export class InsuranceComponent implements OnInit {
       if (result.value) {
         this.spinner.show();
         this.ecolService.post_insurance(body).subscribe(resp => {
-          console.log(resp)
-          swal('Success!', 'Update successful!', 'success');
+          swal('Success!', 'Successfully added!', 'success');
           this.getData();
           this.spinner.hide();
           //add to mysql
           this.ecolService.post_pmt_insurance(resp).subscribe(mysqlresp => {
-            //
+            this.getData();
           }, error => {console.log(error);})
         }, error => {
           console.log(error);

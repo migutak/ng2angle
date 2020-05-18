@@ -58,6 +58,7 @@ export class ActivityActionComponent implements OnInit {
   p = 1;
   autodial_telnumber: string;
   ptpid: any = 0;
+  repo: boolean = false;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -71,7 +72,8 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'OA', collectoraction: 'ASSIGN OUTSIDE AGENCY' },
     { collectoractionid: 'RF', collectoraction: 'RECEIVED FILE' },
     { collectoractionid: 'FT', collectoraction: 'FUND TRANSFER' },
-    { collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION' }
+    { collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION' },
+    { collectoractionid: 'REPO', collectoraction: 'REQUEST FOR REPOSSESSION' }
   ];
 
   message: string;
@@ -111,7 +113,7 @@ export class ActivityActionComponent implements OnInit {
     // check if logged!
     this.ecolService.ifLogged();
     this.ecolService.ifclosed();
-    
+
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
@@ -158,7 +160,7 @@ export class ActivityActionComponent implements OnInit {
       this.getwatch(this.accnumber);
     } else {
       this.getaccount(this.accnumber);
-      
+
     }
 
   }
@@ -169,13 +171,13 @@ export class ActivityActionComponent implements OnInit {
       this.autodial_telnumber = this.account.cellnumber || this.account.mobile || this.account.phonenumber || this.account.telnumber || this.account.celnumber;
       this.model.emailaddress = data[0].emailaddress;
       this.getstatic(this.accnumber);
-      
+
     });
   }
 
   getstatic(accnumber) {
     this.ecolService.getStaticLoans(accnumber).subscribe(data => {
-    
+
       if (data && data.length > 0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
@@ -218,7 +220,7 @@ export class ActivityActionComponent implements OnInit {
 
   getwatchcardstatic(cardacct) {
     this.ecolService.getWatchcardStatic(cardacct).subscribe(data => {
-      
+
       if (data && data.length > 0) {
         this.account.reviewdate = data[0].reviewdate;
         this.account.excuse = data[0].excuse;
@@ -335,7 +337,7 @@ export class ActivityActionComponent implements OnInit {
     // check if logged in
     this.ecolService.ifLogged();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
+
     this.username = currentUser.USERNAME;
 
     // post data
@@ -351,7 +353,7 @@ export class ActivityActionComponent implements OnInit {
       ptpsms: this.f.ptpsms.value,
       ptpsmsnumber: this.f.ptpsmsnumber.value,
       // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value + '   Reason for default: ' + this.f.reason.value
-      collectornote: this.f.collectornote.value ,
+      collectornote: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
       cmdstatus: this.f.cmdstatus.value,
@@ -381,7 +383,7 @@ export class ActivityActionComponent implements OnInit {
       }
     }
 
-    
+
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
@@ -489,6 +491,12 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.party.disable();
       this.actionForm.controls.party.setValue(null);
     }
+
+    if(value === 'REPO') {
+      this.repo = true;
+    } else {
+      this.repo = false;
+    }
   }
 
   changeParty(form) {
@@ -512,13 +520,13 @@ export class ActivityActionComponent implements OnInit {
     if (value === 'Yes') {
       // check if ptp exists
       this.ecolService.activeptps(this.accnumber).subscribe(activedata => {
-        if(activedata && activedata.data.length > 0){
+        if (activedata && activedata.data.length > 0) {
           swal({
             type: 'error',
             title: 'Oops...',
             text: 'a/c already has a running promise to pay. Check under Promises to pay menu'
           }).then((result) => {
-              this.actionForm.controls.ptp.setValue('No');
+            this.actionForm.controls.ptp.setValue('No');
           });
         }
       });
@@ -575,10 +583,10 @@ export class ActivityActionComponent implements OnInit {
   deleteptp(form) {
     const index: number = this.ptps.indexOf(form);
     if (index !== -1) {
-        this.ptps.splice(index, 1);
-        if (this.ptps.length === 0) {
-          this.isptptosave = false;
-        }
+      this.ptps.splice(index, 1);
+      if (this.ptps.length === 0) {
+        this.isptptosave = false;
+      }
     }
   }
 
@@ -588,19 +596,23 @@ export class ActivityActionComponent implements OnInit {
     const owner = this.username;
     const accnumber = this.accnumber;
 
-    this.ptps.push({ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber});
+    this.ptps.push({ ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber });
     this.ptpmultiple = {};
     this.isptptosave = true;
   }
 
   saveallptps() {
     this.ecolService.postptps(this.ptps).subscribe(resp => {
-      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function() {
+      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function () {
         // this.ngxSmartModalService.getModal('myModal').close()
       });
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing!', 'error');
     });
+  }
+
+  repossess() {
+    window.open(environment.repossessLink);
   }
 }

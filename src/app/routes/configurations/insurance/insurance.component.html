@@ -47,14 +47,14 @@
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Email Address</p>
-                        <input class="form-control" name="emailAddress" id="emailAddress" #emailAddress="ngModel"
-                        [(ngModel)]="model.emailAddress" [disabled]="false" autocomplete="off"/>
+                        <input class="form-control" name="emailAddress" id="emailAddress" #emailAddress="ngModel" [pattern]="emailPattern"
+                        [(ngModel)]="model.emailAddress" [disabled]="false" [ngClass]="{ 'is-invalid': emailAddress.invalid }" autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
-                        <p>Telnumber</p>
-                        <input class="form-control" name="telnumber" id="telnumber" #telnumber="ngModel"
-                        [(ngModel)]="model.telnumber" [disabled]="false" autocomplete="off"/>
+                        <p>Telephone Number</p>
+                        <input class="form-control" name="telNumber" id="telNumber" #telNumber="ngModel" [pattern]="mobNumberPattern"
+                        [(ngModel)]="model.telNumber" [disabled]="false" [ngClass]="{ 'is-invalid': telNumber.invalid }" autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
@@ -98,14 +98,14 @@
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Email Address</p>
-                        <input class="form-control" name="emailAddress" id="emailAddress" #emailAddress="ngModel"
-                        [(ngModel)]="model.emailAddress" [disabled]="false" autocomplete="off"/>
+                        <input class="form-control" name="emailAddress" id="emailAddress" #emailAddress="ngModel" [pattern]="emailPattern"
+                        [(ngModel)]="model.emailAddress" [disabled]="false" [ngClass]="{ 'is-invalid': emailAddress.invalid }" autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">
                         <p>Telephone Number</p>
-                        <input class="form-control" name="telNumber" id="telNumber" #telNumber="ngModel"
-                        [(ngModel)]="model.telNumber" [disabled]="false" autocomplete="off"/>
+                        <input class="form-control" name="telNumber" id="telNumber" #telNumber="ngModel" [pattern]="mobNumberPattern"
+                        [(ngModel)]="model.telNumber" [disabled]="false" [ngClass]="{ 'is-invalid': telNumber.invalid }" autocomplete="off"/>
                       </div>
                       <p class="my-2"></p>
                       <div class="form-group">

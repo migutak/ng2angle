@@ -59,7 +59,9 @@ export const routes = [
             { path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule' },
             { path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule' },
             { path: 'spportal', loadChildren: './spportal/spportal.module#SpPortalModule' },
-            { path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule' }
+            { path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule' },
+            { path: 'assetfinance', loadChildren: './assetfinance/assetfinance.module#AssetfinanceModule' },
+            { path: 'teamleader', loadChildren: './teamleader/teamleader.module#TeamLeaderModule' },
         ],
         canActivate: [AuthGuard]
     },
