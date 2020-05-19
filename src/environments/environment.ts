@@ -12,6 +12,8 @@ var portfoliodash = process.env.PORTFOLIODASH || '';
 var accplanreport = process.env.ACCPLANREPORT || '';
 var xlstemplate = process.env.XLSTEMPLATE || 'C:\\templates\\upload_notes.xlsx';
 var repossessLink = process.env.REPOSSESSLINK || 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/2190778365e4dd6f76581e3091209039/8230823945e4e0887583399019026683.php';
+var woffLink = '';
+var calcelipfLink = '';
 
 export const environment = {
   production: false,
@@ -41,5 +43,7 @@ export const environment = {
   ptpreport: ptpreport,
   homedash: homedash,
   workflow: workflow,
-  repossessLink: repossessLink
+  repossessLink: repossessLink,
+  woffLink: woffLink,
+  calcelipfLink: calcelipfLink
 };

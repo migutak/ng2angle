@@ -1,4 +1,7 @@
 var host = process.env.BACKEND_HOST || 'http://172.16.19.151';
+var woffLink = '';
+var repossessLink = '';
+var calcelipfLink = '';
 
 export const environment = {
   production: true,
@@ -28,5 +31,8 @@ export const environment = {
   accplanreport: '',
   ptpreport: ''
   ,homedash: host + ':5601/goto/f893ccd125308885e80090233919f80e?embed=true',
-  workflow: host + ':8089/sysworkflow/en/neoclassic/login/login'
+  workflow: host + ':8089/sysworkflow/en/neoclassic/login/login',
+  repossessLink: repossessLink,
+  woffLink: woffLink,
+  calcelipfLink: calcelipfLink
 };

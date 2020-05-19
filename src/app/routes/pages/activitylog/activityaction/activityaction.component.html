@@ -29,7 +29,27 @@
           </div>
           <div class="col-xl-2 col-md-3">
             <a href="" (click)="repossess()">
-              <i class="fas fa-location-arrow"></i> Link to repossess</a>
+              <i class="fas fa-location-arrow"></i> Link to issue repossession order</a>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="ipf">
+          <div class="col-xl-2 col-md-3">
+
+          </div>
+          <div class="col-xl-2 col-md-3">
+            <a href="" (click)="cancelipf()">
+              <i class="fas fa-location-arrow"></i> Link to cancel ipf</a>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="woff">
+          <div class="col-xl-2 col-md-3">
+
+          </div>
+          <div class="col-xl-2 col-md-3">
+            <a href="" (click)="funcwoff()">
+              <i class="fas fa-location-arrow"></i> Link to request writeoff</a>
           </div>
         </div>
 

@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgOption } from '@ng-select/ng-select';
 import * as moment from 'moment';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+//import { NgxSmartModalService } from 'ngx-smart-modal';
 
 //const URL = environment.valor;
 
@@ -59,6 +59,8 @@ export class ActivityActionComponent implements OnInit {
   autodial_telnumber: string;
   ptpid: any = 0;
   repo: boolean = false;
+  ipf: boolean = false;
+  woff: boolean = false;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -73,7 +75,9 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'RF', collectoraction: 'RECEIVED FILE' },
     { collectoractionid: 'FT', collectoraction: 'FUND TRANSFER' },
     { collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION' },
-    { collectoractionid: 'REPO', collectoraction: 'REQUEST FOR REPOSSESSION' }
+    { collectoractionid: 'REPO', collectoraction: 'REQUEST FOR REPOSSESSION' },
+    { collectoractionid: 'IPF', collectoraction: 'CANCELLED IPF' },
+    { collectoractionid: 'WOFF', collectoraction: 'REQUEST FOR WRITEOFF' }
   ];
 
   message: string;
@@ -102,7 +106,7 @@ export class ActivityActionComponent implements OnInit {
     private ecolService: EcolService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
-    public ngxSmartModalService: NgxSmartModalService,
+    //public ngxSmartModalService: NgxSmartModalService,
   ) {
     this.minDate = { year: this.year, month: this.month, day: this.day };
     this.minxDate = new Date();
@@ -494,8 +498,21 @@ export class ActivityActionComponent implements OnInit {
 
     if(value === 'REPO') {
       this.repo = true;
-    } else {
+      this.ipf = false
+      this.woff = false
+    } if(value === 'IPF'){
+      this.repo = false
+      this.ipf = true
+      this.woff= false
+    } if(value === 'WOFF') {
+      this.woff = true
+      this.repo = false
+      this.ipf = false
+    }
+    else {
       this.repo = false;
+      this.woff = false
+      this.ipf = false
     }
   }
 
@@ -577,7 +594,7 @@ export class ActivityActionComponent implements OnInit {
 
   openptpModal() {
     // open modal
-    this.ngxSmartModalService.getModal('myModal').open()
+    //this.ngxSmartModalService.getModal('myModal').open()
   }
 
   deleteptp(form) {
@@ -614,5 +631,13 @@ export class ActivityActionComponent implements OnInit {
 
   repossess() {
     window.open(environment.repossessLink);
+  }
+
+  funcwoff() {
+    window.open(environment.woffLink);
+  }
+
+  cancelipf() {
+    window.open(environment.calcelipfLink);
   }
 }

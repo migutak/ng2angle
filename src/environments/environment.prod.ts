@@ -12,6 +12,9 @@ var accplanreport = process.env.ACCPLANREPORT || '';
 var xlstemplate = process.env.XLSTEMPLATE || '/home/ecollectadmin/templates/upload_notes.xlsx';
 var portal = process.env.PORTAL || '';
 var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
+var woffLink = '';
+var repossessLink = '';
+var calcelipfLink = '';
 
 export const environment = {
   production: true,
@@ -41,5 +44,8 @@ export const environment = {
   accplanreport: accplanreport,
   ptpreport: ptpreport,
   homedash: homedash,
-  workflow: workflow
+  workflow: workflow,
+  repossessLink: repossessLink,
+  woffLink: woffLink,
+  calcelipfLink: calcelipfLink
 };
