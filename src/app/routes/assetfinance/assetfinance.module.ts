@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TreeModule } from 'angular-tree-component';
 
 import { SharedModule } from '../../shared/shared.module';
 import { AssetfinanceComponent } from './assetf/assetf.component';
 import { IpfComponent } from './ipf/ipf.component';
+import { AgGridModule } from '@ag-grid-community/angular';
 
 const routes: Routes = [
     { path: '', redirectTo: 'asssetf' },
@@ -15,7 +15,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         SharedModule,
-        TreeModule.forRoot(),
+        AgGridModule.withComponents([]),
         RouterModule.forChild(routes)
     ],
     declarations: [

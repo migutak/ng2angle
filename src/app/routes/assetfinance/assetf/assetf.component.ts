@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-assetf',
   templateUrl: './assetf.component.html',
@@ -26,7 +26,7 @@ export class AssetfinanceComponent implements OnInit {
 
   modules = AllModules;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.columnDefs = [
       {
         field: 'ACCNUMBER',
@@ -34,12 +34,13 @@ export class AssetfinanceComponent implements OnInit {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
           } else {
-            return '<img src="assets/img/user/loading.gif">';
+            //return '<img src="assets/img/user/loading.gif">';
+            return 'no data'
           }
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      { field: 'CLIENTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'DAYSINARR', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
@@ -57,7 +58,7 @@ export class AssetfinanceComponent implements OnInit {
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
       },
       {
-        field: 'INSTALMENTAMOUNT',
+        field: 'SCHEDULEAMOUNT',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -68,6 +69,16 @@ export class AssetfinanceComponent implements OnInit {
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
       },
       { field: 'ORIGDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
+      ,
+      { field: 'SCHEDULEDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'ORIGDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'AROCODE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'STAGEDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'REPOSSESSIONORDERDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'AUCTIONEER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CASENUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
     ];
     this.defaultColDef = {
       width: 120,
@@ -87,7 +98,7 @@ export class AssetfinanceComponent implements OnInit {
     const datasource = {
       getRows(params) {
 
-        fetch(environment.api + '/api/assetfinance/gridviewall', {
+        fetch(environment.api + '/api/tbl_assetfinance/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

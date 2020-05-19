@@ -39,9 +39,9 @@ export class IpfComponent implements OnInit {
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      { field: 'CLIENTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DAYSINARR', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
@@ -57,7 +57,7 @@ export class IpfComponent implements OnInit {
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
       },
       {
-        field: 'INSTALMENTAMOUNT',
+        field: 'SCHEDULEAMOUNT',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -67,7 +67,16 @@ export class IpfComponent implements OnInit {
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
       },
-      { field: 'ORIGDATE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
+      { field: 'SCHEDULEDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'ORIGDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'SCHEDULEDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'INSURANCE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'STAGEDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CANCELLATIONDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'PAYMENTDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'REINSTATEMENTDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CASENUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
     ];
     this.defaultColDef = {
       width: 120,
@@ -87,7 +96,7 @@ export class IpfComponent implements OnInit {
     const datasource = {
       getRows(params) {
 
-        fetch(environment.api + '/api/ipf/gridviewall', {
+        fetch(environment.api + '/api/tbl_ipf/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }
