@@ -14,7 +14,6 @@ import {
   ActivatedRoute
 } from '@angular/router';
 import { EcolService } from './services/ecol.service';
-import swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../environments/environment';
 const ADLOGIN = environment.adlogin;

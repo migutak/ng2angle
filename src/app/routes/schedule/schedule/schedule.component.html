@@ -1,0 +1,265 @@
+<div class="content-heading">Reminders</div>
+<div class="row">
+    <div class="col-lg-4">
+        <!-- Aside card-->
+        <div class="card b">
+            
+            <div class="card-body">
+               <ngx-charts-advanced-pie-chart
+               [view]="view"
+               [scheme]="colorScheme"
+               [results]="single"
+               [gradient]="gradient"
+               (select)="onSelect($event)"
+               (activate)="onActivate($event)"
+               (deactivate)="onDeactivate($event)"
+               >
+             </ngx-charts-advanced-pie-chart>
+            </div>
+            
+        </div>
+        <!-- end Aside card-->
+    </div>
+    <div class="col-lg-8">
+        <div class="mb-3 d-flex">
+            <div>
+                <button class="btn btn-sm btn-info" type="button">New Reminder</button>
+                
+            </div>
+            <div class="ml-auto">
+                <p class="mb-0 mt-1">Total</p>
+            </div>
+        </div>
+        <div class="card b">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table w-100">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>#ID</th>
+                                <th>Description</th>
+                                <th>Created</th>
+                                <th>Priority</th>
+                                <th>Asigned</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">bug</div>
+                                </td>
+                                <td>BI:57978</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>01/11/2016</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Tracey Parker</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-warning">pending</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">bug</div>
+                                </td>
+                                <td>BI:1107</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>01/01/2015</td>
+                                <td>
+                                    <div class="circle circle-lg bg-danger" tooltip="high"></div>
+                                </td>
+                                <td>
+                                    <a>Warren Gray</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-danger">closed</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">issue</div>
+                                </td>
+                                <td>BI:1117</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>11/05/2013</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Jackson Ramos</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-success">open</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">issue</div>
+                                </td>
+                                <td>BI:10127</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>05/02/2014</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Ernest Berry</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-danger">closed</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">bug</div>
+                                </td>
+                                <td>BI:54678</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>01/01/2016</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Sylvia Daniels</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-success">open</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">issue</div>
+                                </td>
+                                <td>BI:55778</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>01/05/2016</td>
+                                <td>
+                                    <div class="circle circle-lg bg-gray" tooltip="low"></div>
+                                </td>
+                                <td>
+                                    <a>Sherry Carroll</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-success">open</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">issue</div>
+                                </td>
+                                <td>BI:56878</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>05/01/2016</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Mitchell Jones</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-warning">pending</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">issue</div>
+                                </td>
+                                <td>BI:57978</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>01/11/2016</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Tracey Parker</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-warning">pending</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">bug</div>
+                                </td>
+                                <td>BI:1107</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>01/01/2015</td>
+                                <td>
+                                    <div class="circle circle-lg bg-danger" tooltip="high"></div>
+                                </td>
+                                <td>
+                                    <a>Warren Gray</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-danger">closed</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">bug</div>
+                                </td>
+                                <td>BI:1117</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>11/05/2013</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Jackson Ramos</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-success">open</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="badge bg-gray-lighter">issue</div>
+                                </td>
+                                <td>BI:10127</td>
+                                <td class="text-nowrap">
+                                    <small>Maecenas mollis egestas convallis.</small>
+                                </td>
+                                <td>05/02/2014</td>
+                                <td>
+                                    <div class="circle circle-lg bg-warning" tooltip="normal"></div>
+                                </td>
+                                <td>
+                                    <a>Ernest Berry</a>
+                                </td>
+                                <td>
+                                    <div class="inline wd-xxs badge badge-danger">closed</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

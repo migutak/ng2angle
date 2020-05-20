@@ -38,6 +38,7 @@ export const routes = [
         children: [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
+            { path: 'reminders', loadChildren: './schedule/schedule.module#ScheduleModule' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
             { path: 'guarantors', loadChildren: './guarantors/guarantors.module#GuarantorsModule' },
             { path: 'letters', loadChildren: './letters/letters.module#LettersModule' },

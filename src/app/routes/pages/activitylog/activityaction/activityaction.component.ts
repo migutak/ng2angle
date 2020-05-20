@@ -704,8 +704,7 @@ export class ActivityActionComponent implements OnInit {
       window.open(environment.calcelipfLink);
     }, error => {
       alert('error !!!')
-    }
-    );
+    });
   }
 
   funcrelg() {

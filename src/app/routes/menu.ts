@@ -1,3 +1,4 @@
+const remindersno = JSON.parse(localStorage.getItem('remindersno')) || 0;
 
 const Home = {
     text: 'Home',
@@ -6,10 +7,10 @@ const Home = {
 };
 
 const Schedules = {
-    text: 'Schedules',
-    link: '/schedules',
+    text: 'Reminders',
+    link: '/reminders',
     icon: 'icon-clock',
-    alert: '23',
+    alert: remindersno,
     label: 'badge badge-warning'
 };
 
@@ -440,22 +441,6 @@ const Demandletters = {
         {
             text: 'Customer suspensions',
             link: '/letters/customersuspensions'
-        }
-    ]
-};
-
-const Predelq = {
-    text: 'Paying Watch',
-    link: '/payingwatch',
-    icon: 'icon-wallet',
-    submenu: [
-        {
-            text: 'No Credit buildup',
-            link: '/watch/nocredit'
-        },
-        {
-            text: 'Credit buildup',
-            link: '/watch/creditbuildup'
         }
     ]
 };
