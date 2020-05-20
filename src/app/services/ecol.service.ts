@@ -31,6 +31,10 @@ export class EcolService {
     return this.httpClient.post(environment.api + '/api/guarantordetails', body);
   }
 
+  relegate(body) {
+    return this.httpClient.put(environment.api + '/api/pmt_holder', body);
+  }
+
   newmarketer(body) {
     return this.httpClient.post(environment.api + '/api/marketor', body);
   }

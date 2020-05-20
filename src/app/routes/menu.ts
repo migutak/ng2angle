@@ -5,6 +5,14 @@ const Home = {
     icon: 'icon-home'
 };
 
+const Schedules = {
+    text: 'Schedules',
+    link: '/schedules',
+    icon: 'icon-clock',
+    alert: '23',
+    label: 'badge badge-warning'
+};
+
 const Guarantors = {
     text: 'Guarantors',
     link: '/guarantors/list',
@@ -17,7 +25,7 @@ const Manuals = {
     icon: 'icon-doc'
 };
 
-const Dashboard = {
+/*const Dashboard = {
     text: 'Dashboard',
     link: '/dashboard',
     icon: 'icon-speedometer',
@@ -27,6 +35,12 @@ const Dashboard = {
             link: '/reports/dashboards'
         }
     ]
+};*/
+
+const Dashboard = {
+    text: 'Dashboards',
+    link: '/reports/dashboards',
+    icon: 'icon-speedometer'
 };
 
 const Reports = {
@@ -37,7 +51,7 @@ const Reports = {
 
 const Relegate = {
     text: 'Due for Relegation',
-    link: '/relegate/accounts',
+    link: '/teamleader/accounts',
     icon: 'icon-loop'
 };
 
@@ -534,6 +548,7 @@ const user_mgmt_menu = [
 const collection_menu = [
     headingMain,
     Home,
+    Schedules,
     headingComponents,
     Work,
     Work_cc,
@@ -553,6 +568,7 @@ const collection_menu = [
 const creditcards_menu = [
     headingMain,
     Home,
+    Schedules,
     headingComponents,
     Work_cc,
     Work,
@@ -571,6 +587,7 @@ const creditcards_menu = [
 const remedial_menu = [
     headingMain,
     Home,
+    Schedules,
     headingComponents,
     Remedial,
     Work_cc,
@@ -590,6 +607,7 @@ const remedial_menu = [
 const teamleader_menu = [
     headingMain,
     Home,
+    Schedules,
     headingComponents,
     Work,
     Work_cc,

@@ -61,6 +61,7 @@ export class ActivityActionComponent implements OnInit {
   repo: boolean = false;
   ipf: boolean = false;
   woff: boolean = false;
+  relg: boolean = false;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -77,7 +78,8 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'NFA', collectoraction: 'NEW FILE ALLOCATION' },
     { collectoractionid: 'REPO', collectoraction: 'REQUEST FOR REPOSSESSION' },
     { collectoractionid: 'IPF', collectoraction: 'CANCELLED IPF' },
-    { collectoractionid: 'WOFF', collectoraction: 'REQUEST FOR WRITEOFF' }
+    { collectoractionid: 'WOFF', collectoraction: 'REQUEST FOR WRITEOFF' },
+    { collectoractionid: 'RELG', collectoraction: 'RELEGATE ACCOUNT' }
   ];
 
   message: string;
@@ -496,23 +498,32 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.party.setValue(null);
     }
 
-    if(value === 'REPO') {
+    if (value === 'REPO') {
       this.repo = true;
-      this.ipf = false
-      this.woff = false
-    } if(value === 'IPF'){
+      this.ipf = false;
+      this.woff = false;
+      this.relg = false;
+    } else if (value === 'IPF') {
       this.repo = false
       this.ipf = true
-      this.woff= false
-    } if(value === 'WOFF') {
-      this.woff = true
-      this.repo = false
-      this.ipf = false
+      this.woff = false;
+      this.relg = false;
+    } else if (value === 'WOFF') {
+      this.woff = true;
+      this.repo = false;
+      this.ipf = false;
+      this.relg = false;
+    } else if (value === 'RELG') {
+      this.woff = false;
+      this.repo = false;
+      this.ipf = false;
+      this.relg = true;
     }
     else {
       this.repo = false;
-      this.woff = false
-      this.ipf = false
+      this.woff = false;
+      this.ipf = false;
+      this.relg = false;
     }
   }
 
@@ -630,14 +641,87 @@ export class ActivityActionComponent implements OnInit {
   }
 
   repossess() {
-    window.open(environment.repossessLink);
+    // place temp data in bpms
+    var body = {
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
+      process: 'assetfinance',
+      username: 'admin'
+    }
+    this.ecolService.relegate(body).subscribe(dataresp => {
+      //
+      window.open(environment.repossessLink);
+    }, error => {
+      alert('error !!!')
+    }
+    );
+  }
+
+  funcinvestigate() {
+    // place temp data in bpms
+    var body = {
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
+      process: 'investigate',
+      username: 'admin'
+    }
+    this.ecolService.relegate(body).subscribe(dataresp => {
+      //
+      window.open(environment.investigateLink);
+    }, error => {
+      alert('error !!!')
+    }
+    );
   }
 
   funcwoff() {
-    window.open(environment.woffLink);
+    // place temp data in bpms
+    var body = {
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
+      process: 'woff',
+      username: 'admin'
+    }
+    this.ecolService.relegate(body).subscribe(dataresp => {
+      //
+      window.open(environment.woffLink);
+    }, error => {
+      alert('error !!!')
+    }
+    );
   }
 
   cancelipf() {
-    window.open(environment.calcelipfLink);
+    // place temp data in bpms
+    var body = {
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
+      process: 'ipf',
+      username: 'admin'
+    }
+    this.ecolService.relegate(body).subscribe(dataresp => {
+      //
+      window.open(environment.calcelipfLink);
+    }, error => {
+      alert('error !!!')
+    }
+    );
+  }
+
+  funcrelg() {
+    // place tem data in bpms
+    var body = {
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
+      process: 'relegation',
+      username: 'admin'
+    }
+    this.ecolService.relegate(body).subscribe(dataresp => {
+      //
+      window.open(environment.relegationLink + '?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber);
+    }, error => {
+      alert('error !!!')
+    }
+    );
   }
 }

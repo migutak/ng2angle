@@ -14,6 +14,8 @@ var xlstemplate = process.env.XLSTEMPLATE || 'C:\\templates\\upload_notes.xlsx';
 var repossessLink = process.env.REPOSSESSLINK || 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/2190778365e4dd6f76581e3091209039/8230823945e4e0887583399019026683.php';
 var woffLink = '';
 var calcelipfLink = '';
+var relegationLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/4349950325ec43f7b1adb75041979697/2352047595ec43f7b4874b7003538572.php';
+var investigateLink = '';
 
 export const environment = {
   production: false,
@@ -45,5 +47,7 @@ export const environment = {
   workflow: workflow,
   repossessLink: repossessLink,
   woffLink: woffLink,
-  calcelipfLink: calcelipfLink
+  calcelipfLink: calcelipfLink,
+  relegationLink: relegationLink,
+  investigateLink: investigateLink
 };

@@ -1,7 +1,9 @@
 var host = process.env.BACKEND_HOST || 'http://172.16.19.151';
 var woffLink = '';
-var repossessLink = '';
-var calcelipfLink = '';
+var repossessLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/5648407625ec5121f9f7710015775407/3075674825ec512c0466079089753457.php';
+var calcelipfLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
+var relegationLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/4349950325ec43f7b1adb75041979697/2352047595ec43f7b4874b7003538572.php';
+var investigateLink = '';
 
 export const environment = {
   production: true,
@@ -34,5 +36,7 @@ export const environment = {
   workflow: host + ':8089/sysworkflow/en/neoclassic/login/login',
   repossessLink: repossessLink,
   woffLink: woffLink,
-  calcelipfLink: calcelipfLink
+  calcelipfLink: calcelipfLink,
+  relegationLink: relegationLink,
+  investigateLink: investigateLink
 };
