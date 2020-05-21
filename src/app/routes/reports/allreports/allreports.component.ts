@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 declare var $: any;
 import { environment } from '../../../../environments/environment';
 import { ExportWoffStoryService } from '../../../services/exportwoffstory.service';
+import { ExportProductsService } from '../../../services/exportproductsstory.service';
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 
 const actionMapping: IActionMapping = {
@@ -59,7 +60,8 @@ export class AllReportsComponent implements OnInit {
     }
 
     constructor(
-        private exportWoffstoryservice: ExportWoffStoryService
+        private exportWoffstoryservice: ExportWoffStoryService,
+        private exportProductsService: ExportProductsService
     ) {
         setTimeout(() => {
             this.nodes = [
@@ -176,6 +178,10 @@ export class AllReportsComponent implements OnInit {
 
     exportwoffstory() {
         this.exportWoffstoryservice.generateWoffstory();
+    }
+
+    exportproducts() {
+        this.exportProductsService.generateWoffstory();
     }
 
 }

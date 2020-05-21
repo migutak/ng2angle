@@ -149,7 +149,13 @@
                 [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
                 class="  btn-sample btn-outline  btn btn-block">Write-off Story<span
           class="badge badge-danger float-right">{{totalwoffstory}}</span></button>
-        <!--<ul class="list-unstyled">
+        
+        <button [routerLink]="['./products']" [routerLinkActive]="['active']"
+                [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"
+                class="  btn-sample btn-outline  btn btn-block">Products Offered</button>
+        
+        
+         <!--<ul class="list-unstyled">
           <li>
             <a [routerLink]="['./activityhome']" [routerLinkActive]="['active']"
               [queryParams]="{accnumber: accnumber, custnumber: custnumber, username: username, sys: sys}"

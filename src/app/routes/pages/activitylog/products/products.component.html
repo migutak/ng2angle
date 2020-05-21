@@ -1,0 +1,100 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Provide product offered details </strong>
+    </div>
+    <hr>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <form class="form-horizontal" #productsForm="ngForm" (ngSubmit)="updatefunc(productsForm)" novalidate autocomplete="off">
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Customer Name</label>
+                            <div class="col-xl-10">
+                                <input class="form-control" type="text" id="custname" name="custname" #custname="ngModel" [(ngModel)]="data.custname"
+                                [ngClass]="{ 'is-invalid': custname.errors }" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Account Balance</label>
+                            <div class="col-xl-10">
+                                <input class="form-control" type="number" id="oustbalance" name="oustbalance" #oustbalance="ngModel" [(ngModel)]="data.oustbalance"
+                                [ngClass]="{ 'is-invalid': oustbalance.errors }" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">RRO Code</label>
+                            <div class="col-xl-10">
+                                <input class="form-control" type="text" id="rrocode" name="rrocode" #rrocode="ngModel" [(ngModel)]="data.rrocode"
+                                [ngClass]="{ 'is-invalid': rrocode.errors }" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Product Offering</label>
+                            <div class="col-xl-10">
+                                <select class="custom-select custom-select-sm" id="product" name="product" #product="ngModel" [(ngModel)]="data.product"
+                                [ngClass]="{ 'is-invalid': product.errors }" required>
+                                    <option selected="">Select a product</option>
+                                    <option>Private Treaty Sale</option>
+                                    <option>Debt discount/Full & Final Settlement</option>
+                                    <option>Rescheduling</option>
+                                    <option>Interest concessions</option>
+                                    <option>Insurance claims</option>
+                                    <option>Out of court settlements</option>
+                                    <option>Foreclosure</option>
+                                    <option>Lumpsum payment</option>
+                                    <option>Public sale below the reserve</option>
+                                    <option>Top Ups</option>
+                                    <option>Exit Relationship / take over</option>
+                                    <option>Write off</option>
+                                    <option>Restructure</option>
+                                    <option>Refinancing</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Settlement Amount</label>
+                            <div class="col-xl-10">
+                                <input class="form-control" type="number" id="settlementamount" name="settlementamount" #settlementamount="ngModel" [(ngModel)]="data.settlementamount"
+                                [ngClass]="{ 'is-invalid': settlementamount.errors }" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Date of offering</label>
+                            <div class="col-xl-10">
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="dateofoffering" name="dateofoffering" #dateofoffering="ngModel" [(ngModel)]="data.dateofoffering"
+                                [ngClass]="{ 'is-invalid': dateofoffering.errors }" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Expected due date</label>
+                            <div class="col-xl-10">
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="expecteddate" name="expecteddate" #expecteddate="ngModel" [(ngModel)]="data.expecteddate"
+                                [ngClass]="{ 'is-invalid': expecteddate.errors }" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label"></label>
+                            <div class="col-xl-10">
+                                <div class="checkbox c-checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="checked" id="confirm" name="confirm" #confirm="ngModel" [(ngModel)]="data.confirm"
+                                        [ngClass]="{ 'is-invalid': confirm.errors }" required/>
+                                        <span class="fa fa-check"></span>Confirm details provided</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label"></label>
+                            <div class="col-xl-10">
+                                <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!productsForm.valid">Submit to update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>

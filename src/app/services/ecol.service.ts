@@ -638,6 +638,14 @@ export class EcolService {
     return this.httpClient.put<any>(environment.api + '/api/writeoffstory', data);
   }
 
+  productofferings(data) {
+    return this.httpClient.put<any>(environment.api + '/api/tbl_productofferings', data);
+  }
+
+  getproductofferings(accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/tbl_productofferings/' + accnumber);
+  }
+
   searchwoffstory(accnumber) {
     return this.httpClient.get<any>(environment.api + '/api/writeoffstory?filter[where][accnumber]=' + accnumber);
   }

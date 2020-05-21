@@ -12,6 +12,13 @@ import { EcolService } from '../../../services/ecol.service';
 
 export class ScheduleComponent implements OnInit {
 
+    // Datepicker
+    bsValue = new Date();
+    maxDate = new Date();
+    bsConfig = {
+        containerClass: 'theme-angle'
+    }
+
     single: any[] = [
         {
           "name": "Critical",
@@ -42,7 +49,7 @@ export class ScheduleComponent implements OnInit {
           }
         }
       ];
-    //view: any[] = [700, 400];
+    view: any[] = [700, 200];
 
     // options
     gradient: boolean = true;
@@ -72,6 +79,10 @@ export class ScheduleComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    classicModal() {
+        console.log('modal form')
     }
 
 }

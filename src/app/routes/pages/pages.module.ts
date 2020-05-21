@@ -40,6 +40,7 @@ import { ActivitydashComponent } from '../pages/activitydash/activitydash.compon
 import { EditnoteComponent } from '../pages/activitylog/editnote/editnote.component';
 import { PtpsComponent } from './activitylog/ptps/ptps.component';
 import { WriteoffstoryComponent } from './activitylog/writeoffstory/writeoffstory.component';
+import { ProductsComponent } from './activitylog/products/products.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DatePipe } from '@angular/common';
 
@@ -98,7 +99,8 @@ import { DatePipe } from '@angular/common';
         EditnoteComponent,
         PtpsComponent,
         ExtloginComponent,
-        WriteoffstoryComponent
+        WriteoffstoryComponent,
+        ProductsComponent
     ],
     providers: [
         ToasterService,
@@ -130,7 +132,7 @@ import { DatePipe } from '@angular/common';
         PtpsComponent,
         ExtloginComponent,
         WriteoffstoryComponent,
-        
+        ProductsComponent
     ]
 })
 export class PagesModule { }

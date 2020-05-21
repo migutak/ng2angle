@@ -29,6 +29,7 @@ import { CollateralsComponent } from './pages/activitylog/collaterals/collateral
 import { ActivitydashComponent } from './pages/activitydash/activitydash.component';
 import { PtpsComponent } from './pages/activitylog/ptps/ptps.component';
 import { WriteoffstoryComponent } from './pages/activitylog/writeoffstory/writeoffstory.component';
+import { ProductsComponent } from './pages/activitylog/products/products.component';
 
 export const routes = [
 
@@ -98,6 +99,7 @@ export const routes = [
             { path: 'editnote', component: EditnoteComponent },
             { path: 'ptps', component: PtpsComponent },
             { path: 'writeoffstory', component: WriteoffstoryComponent },
+            { path: 'products', component: ProductsComponent },
             { path: '**', redirectTo: 'notes' }
           ],
           canActivate: [AuthGuard]

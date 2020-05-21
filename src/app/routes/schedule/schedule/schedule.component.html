@@ -1,30 +1,27 @@
 <div class="content-heading">Reminders</div>
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-12">
         <!-- Aside card-->
         <div class="card b">
-            
+
             <div class="card-body">
-               <ngx-charts-advanced-pie-chart
-               [view]="view"
-               [scheme]="colorScheme"
-               [results]="single"
-               [gradient]="gradient"
-               (select)="onSelect($event)"
-               (activate)="onActivate($event)"
-               (deactivate)="onDeactivate($event)"
-               >
-             </ngx-charts-advanced-pie-chart>
+                <ngx-charts-advanced-pie-chart [view]="view" [scheme]="colorScheme" [results]="single"
+                    [gradient]="gradient" (select)="onSelect($event)" (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)">
+                </ngx-charts-advanced-pie-chart>
             </div>
-            
+
         </div>
         <!-- end Aside card-->
     </div>
-    <div class="col-lg-8">
+</div>
+<div class="row">
+    <div class="col-lg-12">
         <div class="mb-3 d-flex">
             <div>
-                <button class="btn btn-sm btn-info" type="button">New Reminder</button>
-                
+                <button class="btn btn-sm btn-info" type="button" data-toggle="modal"
+                    data-target="#exampleModalLong">New Reminder</button>
+
             </div>
             <div class="ml-auto">
                 <p class="mb-0 mt-1">Total</p>
@@ -46,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             <tr>
                                 <td>
                                     <div class="badge bg-gray-lighter">bug</div>
@@ -261,5 +258,87 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Schedule reminder <i class="far fa-bell"></i></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card card-default">
+                    <div class="card-body">
+                        <form role="form" (submit)="classicModal()">
+                            <div class="form-group">
+                                <label>Accnumber</label>
+                                <input class="form-control" type="text" placeholder="accnumber" />
+                            </div>
+                            <div class="form-group">
+                                <label>Priority</label>
+                                <select class="custom-select custom-select-sm">
+                                    <option selected="">Select one</option>
+                                    <option value="Critical">Critical</option>
+                                    <option value="Hign">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Issue</label>
+                                <select class="custom-select custom-select-sm">
+                                    <option selected="">Select one</option>
+                                    <option value="Call">Follow-up call</option>
+                                    <option value="PTP">PTP Follow-up</option>
+                                    <option value="Action">Action reminder</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" placeholder="Enter a message" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Schedule Date and Time</label>
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                    [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig">
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="custom-select custom-select-sm">
+                                    <option selected="">Select one</option>
+                                    <option value="Open">Open</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Closed">Closed</option>
+                                </select>
+                            </div>
+
+                            <div class="checkbox c-checkbox mb-2">
+                                <label>
+                                    <input type="checkbox" checked="" />
+                                    <span class="fa fa-check"></span>Confirm</label>
+                            </div>
+                            <button class="btn btn-sm btn-secondary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
     </div>
 </div>
