@@ -371,21 +371,21 @@ const serviceproviders = {
             link: '/auctioneers/allcases'
         },
         {
-            text: 'Repossessors',
-            link: '/repossessors/allcases'
+            text: 'Writeoffs',
+            link: '/writeoffs/allcases'
         },
         {
             text: 'Investigators',
             link: '/investigators/allcases'
         },
         {
-            text: 'Valuers',
-            link: '/valuers/allcases'
-        },
-        {
+            text: 'Invoices',
+            link: '/invoices/allcases'
+        }
+        /*{
             text: 'Service Providers Portal',
             link: '/spportal/portal'
-        }
+        }*/
     ]
 };
 
@@ -540,7 +540,7 @@ const collection_menu = [
     // Predelq,
     mcoopcash,
     assetfinance,
-    //serviceproviders,
+    serviceproviders,
     headingLetters,
     Letters,
     headingReports,
@@ -559,7 +559,7 @@ const creditcards_menu = [
     Work,
     // Predelq,
     mcoopcash,
-    //serviceproviders,
+    serviceproviders,
     headingLetters,
     Letters,
     headingReports,
@@ -579,7 +579,7 @@ const remedial_menu = [
     // Predelq,
     mcoopcash,
     assetfinance,
-    //serviceproviders,
+    serviceproviders,
     headingLetters,
     Letters,
     headingReports,
@@ -599,7 +599,7 @@ const teamleader_menu = [
     // Predelq,
     mcoopcash,
     assetfinance,
-    //serviceproviders,
+    serviceproviders,
     headingLetters,
     Letters,
     headingReports,

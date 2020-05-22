@@ -58,6 +58,7 @@ export const routes = [
             { path: 'marketors', loadChildren: './marketors/marketors.module#MarketorsModule' },
             { path: 'auctioneers', loadChildren: './auctioneers/auctioneers.module#AuctioneersModule' },
             { path: 'repossessors', loadChildren: './repossessors/repossessors.module#RepossessorsModule' },
+            { path: 'writeoffs', loadChildren: './writeoffs/writeoffs.module#WriteoffsModule' },
             { path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule' },
             { path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule' },
             { path: 'spportal', loadChildren: './spportal/spportal.module#SpPortalModule' },

@@ -79,7 +79,7 @@ export class ExportProductsService {
         
       });
 
-      //worksheet.getColumn(4).width = 100;
+      worksheet.getColumn(6).width = 100;
       worksheet.addRow([]);
 
 
