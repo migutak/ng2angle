@@ -62,6 +62,26 @@
           </div>
         </div>
 
+        <div class="row" *ngIf="debtcollect">
+          <div class="col-xl-2 col-md-3">
+
+          </div>
+          <div class="col-xl-2 col-md-3">
+            <a href="" (click)="funcdebtcollectors()">
+              <i class="fas fa-location-arrow"></i> Send to External Debt Collector</a>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="investigate">
+          <div class="col-xl-2 col-md-3">
+
+          </div>
+          <div class="col-xl-2 col-md-3">
+            <a href="" (click)="funcinvestigate()">
+              <i class="fas fa-location-arrow"></i> Send for Investigation</a>
+          </div>
+        </div>
+
         <div class="row" style="padding-top: 20px">
           <div class="col-xl-2 col-md-3">
             Party contacted

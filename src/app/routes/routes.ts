@@ -61,6 +61,7 @@ export const routes = [
             { path: 'writeoffs', loadChildren: './writeoffs/writeoffs.module#WriteoffsModule' },
             { path: 'investigators', loadChildren: './investigators/investigators.module#InvestigatorsModule' },
             { path: 'valuers', loadChildren: './valuers/valuers.module#ValuersModule' },
+            { path: 'invoices', loadChildren: './invoices/invoices.module#InvoicesModule' },
             { path: 'spportal', loadChildren: './spportal/spportal.module#SpPortalModule' },
             { path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule' },
             { path: 'assetfinance', loadChildren: './assetfinance/assetfinance.module#AssetfinanceModule' },

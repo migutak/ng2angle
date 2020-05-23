@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
+import { AgGridAngular } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-allcases',
@@ -8,6 +9,7 @@ import { AllModules } from '@ag-grid-enterprise/all-modules';
   styleUrls: ['./allcases.component.scss']
 })
 export class AllCasesComponent implements OnInit {
+  @ViewChild('agGrid') agGrid: AgGridAngular;
   public gridApi;
   public gridColumnApi;
 
@@ -30,7 +32,7 @@ export class AllCasesComponent implements OnInit {
     this.columnDefs = [
       {
         field: 'ACCNUMBER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true, checkboxSelection: true
       },
       {
         field: 'APPLINK',
@@ -167,6 +169,12 @@ export class AllCasesComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
   }
+
+  getSelectedRows() {
+    const selectedNodes = this.agGrid.api.getSelectedNodes();
+    const selectedData = selectedNodes.map(node => node.data);
+    console.log(selectedData);
+}
 
 
 }

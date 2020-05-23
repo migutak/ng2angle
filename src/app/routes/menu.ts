@@ -381,11 +381,11 @@ const serviceproviders = {
         {
             text: 'Invoices',
             link: '/invoices/allcases'
+        },
+        {
+            text: 'Valuations',
+            link: '/valuers/allcases'
         }
-        /*{
-            text: 'Service Providers Portal',
-            link: '/spportal/portal'
-        }*/
     ]
 };
 

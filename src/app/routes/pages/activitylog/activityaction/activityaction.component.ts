@@ -62,6 +62,8 @@ export class ActivityActionComponent implements OnInit {
   ipf: boolean = false;
   woff: boolean = false;
   relg: boolean = false;
+  debtcollect: boolean = false;
+  investigate: boolean = false;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -79,7 +81,9 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'REPO', collectoraction: 'REQUEST FOR REPOSSESSION' },
     { collectoractionid: 'IPF', collectoraction: 'CANCELLED IPF' },
     { collectoractionid: 'WOFF', collectoraction: 'REQUEST FOR WRITEOFF' },
-    { collectoractionid: 'RELG', collectoraction: 'RELEGATE ACCOUNT' }
+    { collectoractionid: 'RELG', collectoraction: 'RELEGATE ACCOUNT' },
+    { collectoractionid: 'INVESTIGATE', collectoraction: 'SEND FOR INVESTIGATION' },
+    { collectoractionid: 'DEBTCOLLECT', collectoraction: 'SEND TO EXT. DEBT COLLECTOR' }
   ];
 
   message: string;
@@ -503,27 +507,51 @@ export class ActivityActionComponent implements OnInit {
       this.ipf = false;
       this.woff = false;
       this.relg = false;
+      this.debtcollect = false;
+      this.investigate = false;
     } else if (value === 'IPF') {
       this.repo = false
       this.ipf = true
       this.woff = false;
       this.relg = false;
+      this.debtcollect = false;
+      this.investigate = false;
     } else if (value === 'WOFF') {
       this.woff = true;
       this.repo = false;
       this.ipf = false;
       this.relg = false;
+      this.debtcollect = false;
+      this.investigate = false;
     } else if (value === 'RELG') {
       this.woff = false;
       this.repo = false;
       this.ipf = false;
       this.relg = true;
+      this.debtcollect = false;
+      this.investigate = false;
+    } else if (value === 'INVESTIGATE') {
+      this.woff = false;
+      this.repo = false;
+      this.ipf = false;
+      this.investigate = true;
+      this.relg = false;
+      this.debtcollect = false;
+    } else if (value === 'DEBTCOLLECT') {
+      this.woff = false;
+      this.repo = false;
+      this.ipf = false;
+      this.relg = false;
+      this.debtcollect = true;
+      this.investigate = false;
     }
     else {
       this.repo = false;
       this.woff = false;
       this.ipf = false;
       this.relg = false;
+      this.debtcollect = false;
+      this.investigate = false;
     }
   }
 
@@ -668,6 +696,23 @@ export class ActivityActionComponent implements OnInit {
     this.ecolService.relegate(body).subscribe(dataresp => {
       //
       window.open(environment.investigateLink);
+    }, error => {
+      alert('error !!!')
+    }
+    );
+  }
+
+  funcdebtcollectors() {
+    // place temp data in bpms
+    var body = {
+      accnumber: this.accnumber,
+      custnumber: this.custnumber,
+      process: 'debtcollector',
+      username: 'admin'
+    }
+    this.ecolService.relegate(body).subscribe(dataresp => {
+      //
+      window.open(environment.debtcollectorLink);
     }, error => {
       alert('error !!!')
     }

@@ -15,7 +15,8 @@ var repossessLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/4437708915e
 var woffLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
 var calcelipfLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
 var relegationLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/4349950325ec43f7b1adb75041979697/2352047595ec43f7b4874b7003538572.php';
-var investigateLink = '';
+var investigateLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/7939093745ebc5cfc32a607061999855/4148506665ebc5d89d4a4e5016911975.php';
+var debtcollectorLink = '';
 
 export const environment = {
   production: false,
@@ -49,5 +50,6 @@ export const environment = {
   woffLink: woffLink,
   calcelipfLink: calcelipfLink,
   relegationLink: relegationLink,
-  investigateLink: investigateLink
+  investigateLink: investigateLink,
+  debtcollectorLink:debtcollectorLink
 };

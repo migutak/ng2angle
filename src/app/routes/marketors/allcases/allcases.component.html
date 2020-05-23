@@ -3,16 +3,32 @@
     <small>ALL cases</small></div>
 </div>
 <div class="container-fluid">
-  <div class="card card-default">
-    <div class="col-xl-12">
-
-      <ag-grid-angular #agGrid id="myGrid" class="ag-theme-balham" style="width: 100%; height: 550px;"
-        [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [paginationAutoPageSize]="true"
-        [gridOptions]="gridOptions" [pagination]="true" [floatingFilter]="true"
-        [rowData]="rowData" [modules]="modules" [pivotPanelShow]="pivotPanelShow" [sideBar]="true" [animateRows]="true"
-        (rowClicked)='onRowDoubleClicked($event)'>
-
-      </ag-grid-angular>
-    </div>
-  </div>
+  <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()"><i class="fas fa-print"></i> Export Selected Rows</button>
+  <ag-grid-angular
+    #agGrid
+    style="width: 100%; height: 700px;"
+    id="myGrid"
+    class="ag-theme-balham"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [rowModelType]="rowModelType"
+    [maxBlocksInCache]="maxBlocksInCache"
+    [animateRows]="true"
+    [floatingFilter]="true"
+    [rowData]="rowData"
+    [pagination]="true"
+    [enableSorting]="true"
+    [enableFilter]="true"
+    [enableColResize]="true"
+    [paginationAutoPageSize]="true"
+    (cellDoubleClicked)='onRowDoubleClicked($event)'
+    [suppressRowClickSelection]="true"
+    (gridReady)="onGridReady($event)"
+    [pivotPanelShow]="pivotPanelShow"
+    [sideBar]="false"
+    [enableRangeSelection]="true"
+    [rowDragManaged]="true"
+    rowSelection="multiple"
+    [modules]="modules"
+  ></ag-grid-angular>
 </div>

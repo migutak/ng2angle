@@ -1,6 +1,6 @@
 <div class="content-heading">
-    <div>Write offs
-        <small>ALL cases</small></div>
+    <div>Invoices
+        <small>All cases</small></div>
 </div>
 <div class="container-fluid">
     <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()"><i class="fas fa-print"></i> Export Selected Rows</button>
@@ -28,7 +28,6 @@
         [sideBar]="false"
         [enableRangeSelection]="true"
         [rowDragManaged]="true"
-        rowSelection="multiple"
         [modules]="modules"
         ></ag-grid-angular>
     
