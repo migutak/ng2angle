@@ -36,7 +36,7 @@ export class EcolService {
   }
 
   newmarketer(body) {
-    return this.httpClient.post(environment.api + '/api/marketor', body);
+    return this.httpClient.post(environment.api + '/api/tblmarketor', body);
   }
 
   newauctioneer(body) {

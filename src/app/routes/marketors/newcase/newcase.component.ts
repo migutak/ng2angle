@@ -40,17 +40,23 @@ export class NewcaseComponent implements OnInit {
 
     onBlurAccount() {
         this.spinner.show();
-        this.ecolService.account(this.model.accnumber).subscribe(account => {
-            console.log(this.model.accnumber, account);
+        if(this.model.custnumber == '') {
+            return;
+        }
+        this.ecolService.accounts(this.model.custnumber).subscribe(account => {
             if (account) {
-                this.model.custname = account.custname;
-                this.model.arocode = account.arocode;
-                this.model.oustbalance = account.oustbalance;
+                this.model.custname = account[0].custname;
+                this.model.rrocode = account[0].rrocode;
+                this.model.oustbalance = account[0].oustbalance;
                 this.spinner.hide();
             } else {
                 alert('No accounts found!');
                 this.spinner.hide();
             }
+        }, error => {
+            console.log(error);
+            this.spinner.hide();
+            alert('Error!');
         })
     }
 

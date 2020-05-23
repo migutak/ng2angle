@@ -3,7 +3,7 @@
         <small>New entry for marketing</small></div>
 </div>
 <!-- START row-->
-<div class="container">
+<div>
     <div class="col-md-12">
 
         <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#00543d" type="square-spin">
@@ -21,7 +21,7 @@
                             <input class="form-control" type="text" name="custnumber" id="custnumber"
                                 #custnumber="ngModel" [(ngModel)]="model.custnumber" (blur)="onBlurMethod()"
                                 [ngClass]="{ 'is-invalid': custnumber.invalid }" required placeholder="custnumber" />
-                            <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">custnumber is
+                            <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">Custnumber is
                                 required</div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             <input class="form-control" type="text" name="custname" id="custname" #custname="ngModel"
                                 [(ngModel)]="model.custname" [ngClass]="{ 'is-invalid': custname.invalid }" required
                                 placeholder="name" />
-                            <div class="validation-error" *ngIf="custname.invalid && custname.touched">custname is
+                            <div class="validation-error" *ngIf="custname.invalid && custname.touched">Customer name is
                                 required</div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                     <div class="form-group row">
                         <label class="col-xl-4 col-form-label">Account balance</label>
                         <div class="col-xl-8">
-                            <input class="form-control" type="text" name="oustbalance" id="oustbalance"
+                            <input class="form-control" type="number" name="oustbalance" id="oustbalance"
                                 #oustbalance="ngModel" [(ngModel)]="model.oustbalance"
                                 [ngClass]="{ 'is-invalid': oustbalance.invalid }" required
                                 placeholder="account balance" />
@@ -96,7 +96,7 @@
                     <div class="form-group row">
                         <label class="col-xl-4 col-form-label" for="fsv">Forced Sale Value</label>
                         <div class="col-xl-8">
-                            <input type="text" class="form-control" id="fsv" name="fsv" [(ngModel)]="model.fsv"
+                            <input type="number" class="form-control" id="fsv" name="fsv" [(ngModel)]="model.fsv"
                                 #fsv="ngModel" [ngClass]="{ 'is-invalid': fsv.invalid }" required
                                 placeholder="forced sale value" />
                             <div *ngIf="fsv.invalid" class="validation-error">
@@ -128,7 +128,7 @@
                     <div class="form-group row">
                         <label class="col-xl-4 col-form-label">Open Market Value</label>
                         <div class="col-xl-8">
-                            <input class="form-control" type="text" name="omv" id="omv" #omv="ngModel"
+                            <input class="form-control" type="number" name="omv" id="omv" #omv="ngModel"
                                 [(ngModel)]="model.omv" [ngClass]="{ 'is-invalid': omv.invalid }" required
                                 placeholder="omv" />
                             <div class="validation-error" *ngIf="omv.invalid && omv.touched">omv is required
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                 </form>
-                <pre>{{model | json}}</pre>
+                <!--<pre>{{model | json}}</pre>-->
             </div>
         </div>
         <!-- END card-->

@@ -1,10 +1,10 @@
 <div class="content-heading">
-    <div>Invoices
+    <div>Fee Notes(Invoices)
         <small>All cases</small></div>
 </div>
 <div class="container-fluid">
     <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()"><i class="fas fa-print"></i> Export Selected Rows</button>
-    
+    <a [routerLink]="['../newcase']" [routerLinkActive]="['active']"><i class="far fa-file-alt"></i> Enter New Fee Note</a>
         <ag-grid-angular
         #agGrid
         style="width: 100%; height: 700px;"

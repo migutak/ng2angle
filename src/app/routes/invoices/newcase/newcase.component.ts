@@ -8,6 +8,9 @@ import * as _ from 'lodash';
     styleUrls: ['./newcase.component.scss']
 })
 export class NewcaseComponent implements OnInit {
+    data: any = {}
+
+    
     constructor() {
     }
 
