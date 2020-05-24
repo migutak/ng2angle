@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import * as _ from 'lodash';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 
 
@@ -27,6 +27,10 @@ export class NewcaseComponent implements OnInit {
 
     onBlurMethod() {
         this.spinner.show();
+        if(this.model.custnumber == '' || this.model.custnumber==undefined) {
+            this.spinner.hide();
+            return;
+        }
         this.ecolService.accounts(this.model.custnumber).subscribe(accounts => {
             if (accounts.length > 0) {
                 this.accounts = accounts;
@@ -35,19 +39,24 @@ export class NewcaseComponent implements OnInit {
                 alert('No accounts found!');
                 this.spinner.hide();
             }
+        }, error => {
+            console.log(error);
+            this.spinner.hide();
+            alert('Error!');
         })
     }
 
     onBlurAccount() {
         this.spinner.show();
-        if(this.model.custnumber == '') {
+        if(this.model.accnumber == '' || this.model.accnumber==undefined) {
+            this.spinner.hide();
             return;
         }
-        this.ecolService.accounts(this.model.custnumber).subscribe(account => {
+        this.ecolService.account(this.model.accnumber).subscribe(account => {
             if (account) {
-                this.model.custname = account[0].custname;
-                this.model.rrocode = account[0].rrocode;
-                this.model.oustbalance = account[0].oustbalance;
+                this.model.custname = account.custname;
+                this.model.rrocode = account.rrocode;
+                this.model.oustbalance = account.oustbalance;
                 this.spinner.hide();
             } else {
                 alert('No accounts found!');
@@ -66,22 +75,36 @@ export class NewcaseComponent implements OnInit {
         //
         const body = {
             propertyno: form.value.propertyno,
-            openmarketvalue: form.value.omv,
+            openmarketvalue: form.value.openmarketvalue,
             accnumber: form.value.accnumber,
             custnumber: form.value.custnumber,
             fileno: form.value.fileno,
-            forcedsalevalue: form.value.fsv,
+            arocode: form.value.arocode,
+            rrocode: form.value.rrocode,
+            forcedsalevalue: form.value.forcedsalevalue,
             dateinput: form.value.dateinput,
             owner: form.value.owner,
             custname: form.value.custname,
             ownership: form.value.ownership
         };
-        this.ecolService.newmarketer(body).subscribe(data => {
-            swal('Success!', 'saved successfully!', 'success');
+        // check if there exists a request
+        this.ecolService.checkinmarketer(body.accnumber).subscribe(resp => {
+            if (resp && resp.length>0) {
+                swal('Warning!', 'There exist a running Marketing request for this account ' + body.accnumber, 'warning');
+                return;
+            } else {
+                this.ecolService.newmarketer(body).subscribe(data => {
+                    swal('Success!', 'saved successfully!', 'success');
+                }, error => {
+                    console.log(error);
+                    swal('Error!', 'Error occurred during processing!', 'error');
+                });
+            }
         }, error => {
             console.log(error);
-            swal('Error!', 'Error occurred during processing!', 'error');
-        });
+            return;
+        })
+        
     }
 
     cancel() {

@@ -36,7 +36,15 @@ export class EcolService {
   }
 
   newmarketer(body) {
-    return this.httpClient.post(environment.api + '/api/tblmarketor', body);
+    return this.httpClient.post(environment.api + '/api/tblmarketors', body);
+  }
+
+  patchmarketer(body) {
+    return this.httpClient.patch(environment.api + '/api/tblmarketors/' + body.id, body);
+  }
+
+  checkinmarketer(accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/tblmarketors?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus]=unassigned');
   }
 
   newauctioneer(body) {
@@ -126,6 +134,11 @@ export class EcolService {
   bulktotblcardsstatic(body) {
     const url = environment.api + '/api/TBLCARD_STATIC/actiondate';
     return this.httpClient.post(url, body);
+  }
+
+  getsptype(type) {
+    const url = environment.api + '/api/sptypes?filter[where][spcode]=' + type;
+    return this.httpClient.get<any>(url);
   }
 
   sptype(body) {

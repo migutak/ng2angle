@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+
 import { SharedModule } from '../../shared/shared.module';
 import { NewcaseComponent } from './newcase/newcase.component';
 import { AllCasesComponent } from './allcases/allcases.component';
