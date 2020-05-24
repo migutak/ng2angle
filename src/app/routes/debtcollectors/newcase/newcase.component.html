@@ -1,113 +1,159 @@
 <div class="content-heading">
     <div>Debt Collectors
-        <small>New case</small></div>
+        <small>New entry for Debt collectors</small></div>
 </div>
-<div class="container-fluid">
-    <form class="form-horizontal" #newInvoiceForm="ngForm" (ngSubmit)="addinvocefunc(newInvoiceForm)" novalidate
-        autocomplete="off">
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Customer Number</label>
-            <div class="col-xl-9">
-                <input class="form-control" type="text" id="custnumber" name="custnumber" #custnumber="ngModel"
-                    [(ngModel)]="data.custnumber" [ngClass]="{ 'is-invalid': custnumber.errors }" required />
+<!-- START row-->
+<div>
+    <div class="col-md-12">
+
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+        <!-- START card--> 
+        <div class="card card-default">
+            <div class="card-header">Enter Case details</div>
+            <div class="card-body">
+                <form #newDebtcollectorForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(newDebtcollectorForm)"
+                    autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Customer Number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="custnumber" id="custnumber"
+                                #custnumber="ngModel" [(ngModel)]="model.custnumber" (blur)="onBlurMethod()"
+                                [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
+                            <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">Custnumber is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Select account number</label>
+                        <div class="col-xl-8">
+                            <ng-select id="accnumber" name="accnumber" #accnumber="ngModel"
+                                [(ngModel)]="model.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" (blur)="onBlurAccount()">
+                                <ng-option *ngFor="let a of accounts" [value]="a.accnumber">{{a.accnumber}}</ng-option>
+                            </ng-select>
+                            <div class="validation-error" *ngIf="accnumber.invalid && accnumber.touched">accnumber is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Name of customer</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="custname" id="custname" #custname="ngModel"
+                                [(ngModel)]="model.custname" [ngClass]="{ 'is-invalid': custname.invalid }" required
+                             />
+                            <div class="validation-error" *ngIf="custname.invalid && custname.touched">Customer name is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Region</label>
+                        <div class="col-xl-8">
+                            <ng-select id="region" name="region" [items]="selectedSimpleItem" #region="ngModel"
+                                [(ngModel)]="model.region" [ngClass]="{ 'is-invalid': region.errors }" required>
+                            </ng-select>
+                            <div class="validation-error" *ngIf="region.invalid && region.touched">Region is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Address</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="address" id="address"
+                                #address="ngModel" [(ngModel)]="model.address"
+                                [ngClass]="{ 'is-invalid': address.invalid }" 
+                                />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Town</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="town" id="town"
+                                #town="ngModel" [(ngModel)]="model.town"
+                                [ngClass]="{ 'is-invalid': town.invalid }"  />
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Date of input</label>
+                        <div class="col-xl-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="dateinput" [bsConfig]="bsConfig"
+                                  id="dateinput" #dateinput="ngModel" [(ngModel)]="model.dateinput">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
+                                    </span></button>
+                                </div>
+                              </div>
+                            <div class="validation-error" *ngIf="dateinput.invalid && dateinput.touched">Date of input
+                                is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">ARO Code</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="arocode" id="arocode" #arocode="ngModel"
+                                [(ngModel)]="model.arocode" [ngClass]="{ 'is-invalid': arocode.invalid }" required
+                                />
+                            <div class="validation-error" *ngIf="arocode.invalid && arocode.touched">arocode is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="rrocode">RRO Code</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="rrocode" id="rrocode" #rrocode="ngModel"
+                                [(ngModel)]="model.rrocode" [ngClass]="{ 'is-invalid': rrocode.invalid }" required
+                                />
+                            <div class="validation-error" *ngIf="rrocode.invalid && rrocode.touched">rrocode is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="loansettlementacc">Settlement a/c</label>
+                        <div class="col-xl-8">
+                            <input type="text" class="form-control" id="loansettlementacc" name="loansettlementacc" [(ngModel)]="model.forcedsalevalue"
+                                #loansettlementacc="ngModel" [ngClass]="{ 'is-invalid': loansettlementacc.invalid }" required
+                                 />
+                            <div *ngIf="loansettlementacc.invalid" class="validation-error">
+                                <div *ngIf="loansettlementacc.errors.required && loansettlementacc.touched">Settlement a/c is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="oustbalance">Account balance</label>
+                        <div class="col-xl-8">
+                            <input type="number" class="form-control" id="oustbalance" name="oustbalance" [(ngModel)]="model.openmarketvalue"
+                                #oustbalance="ngModel" [ngClass]="{ 'is-invalid': oustbalance.invalid }" required
+                                />
+                            <div *ngIf="oustbalance.invalid" class="validation-error">
+                                <div *ngIf="oustbalance.errors.required && oustbalance.touched">A/C Balance is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">File Number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="fileno" id="fileno" #fileno="ngModel"
+                                [(ngModel)]="model.fileno" [ngClass]="{ 'is-invalid': fileno.invalid }" required
+                                />
+                            <div class="validation-error" *ngIf="fileno.invalid && fileno.touched">fileno is required
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                            <button [disabled]="!newDebtcollectorForm.valid || !newDebtcollectorForm.dirty"
+                                class="btn btn-sm btn-outline-primary" type="submit">Submit</button>
+                            <button class="btn btn-sm btn-outline-danger" type="button"
+                                (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Account Number</label>
-            <div class="col-xl-9">
-                <select id="accnumber" name="accnumber" class="form-control"  #accnumber="ngModel" [(ngModel)]="data.accnumber"
-                [ngClass]="{ 'is-invalid': accnumber.errors }">
-                <option value="">Please select</option>
-                <option *ngFor="let acc of accounts" [value]="acc.accnumber">
-                  {{acc.accnumber}}</option>
-              </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Customer Name</label>
-            <div class="col-xl-9">
-                <input class="form-control" type="text" id="custname" name="custname" #custname="ngModel"
-                    [(ngModel)]="data.custname" [ngClass]="{ 'is-invalid': custname.errors }" required />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Payment method</label>
-            <div class="col-xl-9">
-                <select class="custom-select custom-select-sm" id="paymethod" name="paymethod" #paymethod="ngModel"
-                    [(ngModel)]="data.paymethod" [ngClass]="{ 'is-invalid': paymethod.errors }" required>
-                    <option selected="">Select One</option>
-                    <option>Cash</option>
-                    <option>Bank Transfer</option>
-                    <option>Other</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Service provider</label>
-            <div class="col-xl-9">
-                <select id="sptitle" name="sptitle" class="form-control" #sptitle="ngModel" [(ngModel)]="data.sptitle"
-                [ngClass]="{ 'is-invalid': sptitle.errors }"
-                (ngModelChange)="changeAction(actionForm.value.collectoraction)">
-                <option value="">Please select</option>
-                <option *ngFor="let action of sptypes" [value]="action.sptitle">
-                  {{action.sptitle}}</option>
-              </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label"> Service provider account</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" id="spaccount" name="spaccount" #spaccount="ngModel"
-                    [(ngModel)]="data.spaccount" [ngClass]="{ 'is-invalid': spaccount.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">RRO Code</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" name="rrocode" id="rrocode" name="rrocode" #rrocode="ngModel"
-                    [(ngModel)]="data.rrocode" [ngClass]="{ 'is-invalid': rrocode.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Invoice amount</label>
-            <div class="col-xl-9">
-                <input type="number" class="form-control" id="invoiceamount" name="invoiceamount" #invoiceamount="ngModel"
-                    [(ngModel)]="data.invoiceamount" [ngClass]="{ 'is-invalid': invoiceamount.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Fee Note Date</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                    name="dp-basic" [bsConfig]="bsConfig" id="feenotedate" name="feenotedate" #feenotedate="ngModel"
-                    [(ngModel)]="data.feenotedate" [ngClass]="{ 'is-invalid': feenotedate.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Date Received</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                    name="dp-basic" [bsConfig]="bsConfig" id="datereceived" name="datereceived" #datereceived="ngModel"
-                    [(ngModel)]="data.datereceived" [ngClass]="{ 'is-invalid': datereceived.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label"></label>
-            <div class="col-xl-10">
-                <div class="checkbox c-checkbox">
-                    <label>
-                        <input type="checkbox" checked="checked" id="confirm" name="confirm" #confirm="ngModel"
-                            [(ngModel)]="data.confirm" [ngClass]="{ 'is-invalid': confirm.errors }" required />
-                        <span class="fa fa-check"></span>Confirm details provided</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label"></label>
-            <div class="col-xl-8">
-                <a [routerLink]="['../allcases']" class="btn btn-sm btn-square btn-danger">Cancel</a>
-                <button type="submit" class="btn btn-sm btn-square btn-success" [disabled]="!newInvoiceForm.valid">Submit</button>
-            </div>
-        </div>
-    </form>
+        <!-- END card-->
+    </div>
 </div>
+<!-- END row-->

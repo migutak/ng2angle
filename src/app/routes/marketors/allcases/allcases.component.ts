@@ -5,6 +5,7 @@ import { AllModules } from '@ag-grid-enterprise/all-modules';
 import { AgGridAngular } from 'ag-grid-angular';
 import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { EcolService } from '../../../services/ecol.service';
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-allcases',
@@ -180,7 +181,9 @@ export class AllCasesComponent implements OnInit {
         this.modalService.open(content,  this.modalOptions).result.then((result) => {
           this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
-         
+         console.log(`closed ...${reason}`);
+         // refresh grid
+         window.location.reload();
         });
       }
 
@@ -192,7 +195,7 @@ export class AllCasesComponent implements OnInit {
         // get sptypes
         this.ecolService.getsptype('AUCTIONEERS-MARKETORS-REPOSSESSORS').subscribe(data => {
             this.sptypes = data;
-          });
+        });
     }
 
     getSelectedRows() {
@@ -231,11 +234,13 @@ export class AllCasesComponent implements OnInit {
         this.data.accnumber = form.value.accnumber;
         this.data.serviceprovider = form.value.serviceprovider;
         this.data.newstatus = form.value.newstatus;
-        this.data.dateassigned = moment(form.value.dateassigned).format('YYYY-MM-DD');
+        this.data.dateassigned = moment(form.value.dateassigned).add(1, 'days').format('YYYY-MM-DD');
         
         this.ecolService.patchmarketer(this.data).subscribe(resp => {
-            console.log(resp);
-            alert('update successfully');
+            swal('Success','Successfully updated!','success');
+        }, error => {
+            console.log(error);
+            swal('Error','Error occured!','error');
         })
     }
 

@@ -1,9 +1,178 @@
 <div class="content-heading">
-    <div>Debt Collectors
-        <small>New cases</small></div>
+    <div>Valuations
+        <small>New entry for Valuations</small></div>
 </div>
-<div class="container-fluid">
-    <div class="col-4 col-xl-12">
-        
+<!-- START row-->
+<div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Type of property </label>
+            <select class="custom-select custom-select-sm"  #propertytype="ngModel" [(ngModel)]="model.propertytype"
+              name="propertytype" (change)='onOptionsSelected(propertytype.value)'>
+              <option>VEHICLE</option>
+              <option>PROPERTY</option>
+            </select>
+          </div>
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+        <!-- START card--> 
+        <div class="card card-default">
+            <div class="card-header">Enter Case details</div>
+            <div class="card-body">
+                <form #newValuersForm="ngForm" class="form-horizontal" (ngSubmit)="onSubmit(newValuersForm)"
+                    autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Customer Number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="custnumber" id="custnumber"
+                                #custnumber="ngModel" [(ngModel)]="model.custnumber" (blur)="onBlurMethod()"
+                                [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
+                            <div class="validation-error" *ngIf="custnumber.invalid && custnumber.touched">Custnumber is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Select account number</label>
+                        <div class="col-xl-8">
+                            <ng-select id="accnumber" name="accnumber" #accnumber="ngModel"
+                                [(ngModel)]="model.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" (blur)="onBlurAccount()">
+                                <ng-option *ngFor="let a of accounts" [value]="a.accnumber">{{a.accnumber}}</ng-option>
+                            </ng-select>
+                            <div class="validation-error" *ngIf="accnumber.invalid && accnumber.touched">accnumber is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Name of customer</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="custname" id="custname" #custname="ngModel"
+                                [(ngModel)]="model.custname" [ngClass]="{ 'is-invalid': custname.invalid }" required
+                             />
+                            <div class="validation-error" *ngIf="custname.invalid && custname.touched">Customer name is
+                                required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Ownership</label>
+                        <div class="col-xl-8">
+                            <ng-select id="region" name="region" [items]="selectedSimpleItem" #region="ngModel"
+                                [(ngModel)]="model.region" [ngClass]="{ 'is-invalid': region.errors }" required>
+                            </ng-select>
+                            <div class="validation-error" *ngIf="region.invalid && region.touched">Region is
+                                required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Date of input</label>
+                        <div class="col-xl-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="dateinput" [bsConfig]="bsConfig"
+                                  id="dateinput" #dateinput="ngModel" [(ngModel)]="model.dateinput">
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
+                                    </span></button>
+                                </div>
+                              </div>
+                            <div class="validation-error" *ngIf="dateinput.invalid && dateinput.touched">Date of input
+                                is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">ARO Code</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="arocode" id="arocode" #arocode="ngModel"
+                                [(ngModel)]="model.arocode" [ngClass]="{ 'is-invalid': arocode.invalid }" required
+                                />
+                            <div class="validation-error" *ngIf="arocode.invalid && arocode.touched">arocode is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="rrocode">RRO Code</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="rrocode" id="rrocode" #rrocode="ngModel"
+                                [(ngModel)]="model.rrocode" [ngClass]="{ 'is-invalid': rrocode.invalid }" required
+                                />
+                            <div class="validation-error" *ngIf="rrocode.invalid && rrocode.touched">rrocode is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="showPropertyForm">
+                        <label class="col-xl-4 col-form-label" for="propertyno">Property L.R. No.</label>
+                        <div class="col-xl-8">
+                            <input type="text" class="form-control" id="propertyno" name="propertyno" [(ngModel)]="model.propertyno"
+                                #propertyno="ngModel" [ngClass]="{ 'is-invalid': propertyno.invalid }" required
+                                 />
+                            <div *ngIf="propertyno.invalid" class="validation-error">
+                                <div *ngIf="propertyno.errors.required && propertyno.touched">Property L.R. No. is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="!showPropertyForm">
+                        <label class="col-xl-4 col-form-label" for="vehiclemake">Vehicle make</label>
+                        <div class="col-xl-8">
+                            <input type="text" class="form-control" id="vehiclemake" name="vehiclemake" [(ngModel)]="model.vehiclemake"
+                                #vehiclemake="ngModel" [ngClass]="{ 'is-invalid': vehiclemake.invalid }"/>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="!showPropertyForm">
+                        <label class="col-xl-4 col-form-label" for="vehicleregno">Vehicle Regno</label>
+                        <div class="col-xl-8">
+                            <input type="text" class="form-control" id="vehicleregno" name="vehicleregno" [(ngModel)]="model.vehicleregno"
+                                #vehicleregno="ngModel" [ngClass]="{ 'is-invalid': vehicleregno.invalid }"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="regowner">Registered owner</label>
+                        <div class="col-xl-8">
+                            <input type="text" class="form-control" id="regowner" name="regowner" [(ngModel)]="model.regowner"
+                                #regowner="ngModel" [ngClass]="{ 'is-invalid': regowner.invalid }"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label" for="oustbalance">Account balance</label>
+                        <div class="col-xl-8">
+                            <input type="number" class="form-control" id="oustbalance" name="oustbalance" [(ngModel)]="model.openmarketvalue"
+                                #oustbalance="ngModel" [ngClass]="{ 'is-invalid': oustbalance.invalid }"
+                                />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">File Number</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" type="text" name="fileno" id="fileno" #fileno="ngModel"
+                                [(ngModel)]="model.fileno" [ngClass]="{ 'is-invalid': fileno.invalid }" required
+                                />
+                            <div class="validation-error" *ngIf="fileno.invalid && fileno.touched">fileno is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="!showPropertyForm">
+                        <label class="col-xl-4 col-form-label">Storage yard</label>
+                        <div class="col-xl-8">
+                                <select class="custom-select custom-select-sm" #yard="ngModel" [(ngModel)]="model.yard"
+                                    name="yard" id="yard">
+                                    <option selected="">Please Select Storage Yard</option>
+                                    <option *ngFor="let s of yards" [value]="s.SPTITLE">{{s.SPTITLE}}</option>
+                                </select>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                            <button [disabled]="!newValuersForm.valid || !newValuersForm.dirty"
+                                class="btn btn-sm btn-outline-primary" type="submit">Submit</button>
+                            <button class="btn btn-sm btn-outline-danger" type="button"
+                                (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+        <!-- END card-->
     </div>
 </div>
+<!-- END row-->

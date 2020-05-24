@@ -82,8 +82,7 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'IPF', collectoraction: 'CANCELLED IPF' },
     { collectoractionid: 'WOFF', collectoraction: 'REQUEST FOR WRITEOFF' },
     { collectoractionid: 'RELG', collectoraction: 'RELEGATE ACCOUNT' },
-    { collectoractionid: 'INVESTIGATE', collectoraction: 'SEND FOR INVESTIGATION' },
-    { collectoractionid: 'DEBTCOLLECT', collectoraction: 'SEND TO EXT. DEBT COLLECTOR' }
+    { collectoractionid: 'INVESTIGATE', collectoraction: 'SEND FOR INVESTIGATION' }
   ];
 
   message: string;

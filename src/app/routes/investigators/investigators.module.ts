@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { NgSelectModule } from '@ng-select/ng-select';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { SharedModule } from '../../shared/shared.module';
 import { NewcaseComponent } from './newcase/newcase.component';
@@ -15,6 +16,8 @@ const routes: Routes = [
 @NgModule({
     imports: [
         SharedModule,
+        NgSelectModule,
+        NgbModule,
         AgGridModule.withComponents([]),
         RouterModule.forChild(routes)
     ],

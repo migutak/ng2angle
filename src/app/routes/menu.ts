@@ -366,10 +366,10 @@ const serviceproviders = {
             text: 'Marketers',
             link: '/marketors/allcases'
         },
-        {
+        /*{
             text: 'Auctioneers',
             link: '/auctioneers/allcases'
-        },
+        },*/
         {
             text: 'Writeoffs',
             link: '/writeoffs/allcases'

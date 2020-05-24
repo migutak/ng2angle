@@ -4,7 +4,8 @@
     </div>
 </div>
 <div class="container-fluid">
-    <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()"><i class="fas fa-print"></i> Export Selected Rows</button>
+    <button class="btn mr-1 btn-link" type="button" (click)="getSelectedRows()" [disabled]="export"><i
+        class="fas fa-print"></i> Export Selected Rows</button>
     <ag-grid-angular
       #agGrid
       style="width: 100%; height: 700px;"

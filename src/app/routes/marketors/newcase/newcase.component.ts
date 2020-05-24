@@ -18,6 +18,12 @@ export class NewcaseComponent implements OnInit {
     selectedSimpleItem = ['OWNER', 'THIRD PARTY'];
     accounts: any = [];
 
+    bsConfig = { 
+        isAnimated: true,
+        adaptivePosition: true,
+        dateInputFormat: 'YYYY-MM-DD' 
+    }
+
     constructor(private ecolService: EcolService,
         private router: Router,
         private spinner: NgxSpinnerService, ) { }

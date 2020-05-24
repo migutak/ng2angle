@@ -39,12 +39,32 @@ export class EcolService {
     return this.httpClient.post(environment.api + '/api/tblmarketors', body);
   }
 
+  newvaluation(body) {
+    return this.httpClient.post(environment.api + '/api/tblvaluers', body);
+  }
+
+  patchvaluation(body) {
+    return this.httpClient.patch(environment.api + '/api/tblvaluers/' + body.id, body);
+  }
+
   patchmarketer(body) {
     return this.httpClient.patch(environment.api + '/api/tblmarketors/' + body.id, body);
   }
 
+  patchdebtcollectors(body) {
+    return this.httpClient.patch(environment.api + '/api/tbldebtcollectors/' + body.id, body);
+  }
+
   checkinmarketer(accnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/tblmarketors?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus]=unassigned');
+    return this.httpClient.get<any>(environment.api + '/api/tblmarketors?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus][nin]=unassigned&filter[where][newstatus][nin]=Completed');
+  }
+
+  checkindebtcollector(accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/tbldebtcollectors?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus][nin]=Cancelled&filter[where][newstatus][nin]=Completed');
+  }
+
+  checkinvaluation(accnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/tblvaluers?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus][nin]=Cancelled&filter[where][newstatus][nin]=Completed');
   }
 
   newauctioneer(body) {
@@ -52,7 +72,7 @@ export class EcolService {
   }
 
   newdebtcollector(body) {
-    return this.httpClient.post(environment.api + '/api/debtcollector', body);
+    return this.httpClient.post(environment.api + '/api/tbldebtcollectors', body);
   }
 
   newvaluer(body) {
