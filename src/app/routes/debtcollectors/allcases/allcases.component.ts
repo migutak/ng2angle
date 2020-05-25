@@ -147,7 +147,24 @@ export class AllCasesComponent implements OnInit {
           this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
          // refresh grid
-         window.location.reload();
+         const datasource = {
+            getRows(params) {
+                fetch(environment.api + '/api/tbldebtcollectors/gridviewall', {
+                    method: 'post',
+                    body: JSON.stringify(params.request),
+                    headers: { "Content-Type": "application/json; charset=utf-8" }
+                })
+                    .then(httpResponse => httpResponse.json())
+                    .then(response => {
+                        params.successCallback(response.rows, response.lastRow);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        params.failCallback();
+                    })
+            }
+        };
+         this.gridApi.api.setServerSideDatasource(datasource)
         });
       }
 
@@ -165,7 +182,7 @@ export class AllCasesComponent implements OnInit {
     getSelectedRows() {
         const selectedNodes = this.agGrid.api.getSelectedNodes();
         const selectedData = selectedNodes.map(node => node.data);
-        console.log(selectedData);
+        
     }
 
     onRowSelected(event) {

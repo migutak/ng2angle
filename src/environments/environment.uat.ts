@@ -4,6 +4,7 @@ var repossessLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/5648407
 var calcelipfLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
 var relegationLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/4349950325ec43f7b1adb75041979697/2352047595ec43f7b4874b7003538572.php';
 var investigateLink = '';
+var debtcollectorLink = '';
 
 export const environment = {
   production: true,
@@ -38,5 +39,6 @@ export const environment = {
   woffLink: woffLink,
   calcelipfLink: calcelipfLink,
   relegationLink: relegationLink,
-  investigateLink: investigateLink
+  investigateLink: investigateLink,
+  debtcollectorLink: debtcollectorLink
 };

@@ -20,11 +20,11 @@ export class AllCasesComponent implements OnInit {
     private gridColumnApi;
 
     public modules = [ClientSideRowModelModule];
-    private columnDefs;
-    private defaultColDef;
-    private rowSelection;
-    private rowData: any = [];
-    private isRowSelectable;
+    columnDefs;
+    defaultColDef;
+    rowSelection;
+    rowData: any = [];
+    isRowSelectable;
 
     currentUser = JSON.parse(localStorage.getItem('currentUser'));
     username: string;

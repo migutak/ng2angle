@@ -25,7 +25,7 @@ export class AllCasesComponent implements OnInit {
     searchText: string;
     model: any = {};
     pivotPanelShow = true;
-
+    export: boolean = true;
     modules = AllModules;
 
     constructor() {
