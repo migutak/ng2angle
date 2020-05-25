@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import swal from 'sweetalert2';
 import { EcolService } from '../../../services/ecol.service';
+import { ExportInvoiceService } from '../../../services/exportinvoices.service'
 
 @Component({
     selector: 'app-allcases',
@@ -35,7 +36,7 @@ export class AllCasesComponent implements OnInit {
     updateBtnTitle = 'Update Entry: '
     modalOptions: NgbModalOptions;
     minDate: Date;
-    bsConfig = { 
+    bsConfig = {
         isAnimated: true,
         adaptivePosition: true,
         dateInputFormat: 'YYYY-MM-DD',
@@ -45,7 +46,8 @@ export class AllCasesComponent implements OnInit {
     constructor(
         private modalService: NgbModal,
         private http: HttpClient,
-        private ecolService: EcolService
+        private ecolService: EcolService,
+        private exportInvoiceService: ExportInvoiceService,
     ) {
         this.minDate = new Date();
         this.minDate.setDate(this.minDate.getDate() - 1);
@@ -100,13 +102,7 @@ export class AllCasesComponent implements OnInit {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
 
-        this.http
-            .get(
-                environment.api + '/api/tblinvoices?filter[where][status][nin]=PAID&filter[where][status][nin]=PAID'
-            )
-            .subscribe(data => {
-                this.rowData = data;
-            });
+        this.refreshfunc();
     }
 
 
@@ -164,21 +160,51 @@ export class AllCasesComponent implements OnInit {
         }
     }
 
+    getSelectedRows() {
+        swal({
+            title: 'Confirm',
+            imageUrl: 'assets/img/user/coop.jpg',
+            text: 'Confirm Print to Finance',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Print!'
+        }).then((result) => {
+            if (result.value) {
+                // close tab
+                const selectedNodes = this.agGrid.api.getSelectedNodes();
+                const selectedData = selectedNodes.map(node => node.data);
+                console.log(selectedData.length)
+                this.exportInvoiceService.generateinvoice();
+                for (let i = 0; i < selectedData.length; i++) {
+                    const body = {
+                        id: 0,
+                        status: ''
+                    }
+                    body.id = selectedData[i].id
+                    body.status = 'PAID';
+                    console.log(body);
+
+                    this.http.patch(environment.api + '/api/tblinvoices', body).subscribe(resp =>{
+                        //
+                    })
+                }
+                // refresh grid
+                this.refreshfunc();
+            } else {
+                // reset
+                //
+            }
+        });
+
+    }
+
     open(content) {
-        this.modalService.open(content,  this.modalOptions).result.then((result) => {
-          
+        this.modalService.open(content, this.modalOptions).result.then((result) => {
+
         }, (reason) => {
-         // refresh grid
-         this.http
-            .get(
-                environment.api + '/api/tblinvoices?filter[where][status][nin]=PAID&filter[where][status][nin]=PAID'
-            )
-            .subscribe(data => {
-                this.gridApi.setRowData(data)
-            }, error => {
-                console.log(error)
-            });
-         
+            // refresh grid
+            this.refreshfunc();
         });
     }
 
@@ -186,17 +212,29 @@ export class AllCasesComponent implements OnInit {
         this.data.feenoteamnt = form.value.feenoteamnt;
         this.data.status = form.value.status;
         this.data.approvedamnt = form.value.approvedamnt;
-        
+
         this.data.feenotedate = moment(form.value.feenotedate).format('YYYY-MM-DD');
-        if(form.value.printdate){
+        if (form.value.printdate) {
             this.data.printdate = moment(form.value.printdate).add(1, 'days').format('YYYY-MM-DD');
         }
-        
+
         this.ecolService.patchinvoices(this.data).subscribe(resp => {
-            swal('Success','Successfully updated!','success');
+            swal('Success', 'Successfully updated!', 'success');
         }, error => {
             console.log(error);
-            swal('Error','Error occured!','error');
+            swal('Error', 'Error occured!', 'error');
         })
+    }
+
+    refreshfunc() {
+        this.http
+                .get(
+                    environment.api + '/api/tblinvoices?filter[where][status][nin]=PAID&filter[where][status][nin]=PAID'
+                )
+                .subscribe(data => {
+                    this.gridApi.setRowData(data)
+                }, error => {
+                    console.log(error)
+                });
     }
 }
