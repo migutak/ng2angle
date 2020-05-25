@@ -36,6 +36,7 @@ export class AllCasesComponent implements OnInit {
     updateBtnTitle = 'Update Entry: '
     modalOptions: NgbModalOptions;
     minDate: Date;
+    butDisabled: boolean = false;
     bsConfig = {
         isAnimated: true,
         adaptivePosition: true,
@@ -141,6 +142,12 @@ export class AllCasesComponent implements OnInit {
         this.data.feenotedate = this.model.feenotedate;
         this.data.feenoteamnt = this.model.feenoteamnt;
         this.data.approvedamnt = this.model.approvedamnt;
+
+        if(this.data.status === 'PAID') {
+            this.butDisabled = true;
+        } else {
+            this.butDisabled = false;
+        }
     }
 
     onRowSelected(event) {
@@ -174,7 +181,7 @@ export class AllCasesComponent implements OnInit {
                 // close tab
                 const selectedNodes = this.agGrid.api.getSelectedNodes();
                 const selectedData = selectedNodes.map(node => node.data);
-                console.log(selectedData.length)
+                
                 this.exportInvoiceService.generateinvoice();
                 for (let i = 0; i < selectedData.length; i++) {
                     const body = {
@@ -183,7 +190,6 @@ export class AllCasesComponent implements OnInit {
                     }
                     body.id = selectedData[i].id
                     body.status = 'PAID';
-                    console.log(body);
 
                     this.http.patch(environment.api + '/api/tblinvoices', body).subscribe(resp =>{
                         //
