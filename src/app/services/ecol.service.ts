@@ -55,20 +55,28 @@ export class EcolService {
     return this.httpClient.patch(environment.api + '/api/tbldebtcollectors/' + body.id, body);
   }
 
+  patchinvoices(body) {
+    return this.httpClient.patch(environment.api + '/api/tblinvoices/' + body.id, body);
+  }
+
   checkinmarketer(accnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/tblmarketors?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus][nin]=unassigned&filter[where][newstatus][nin]=Completed');
+    return this.httpClient.get<any>(environment.api + '/api/tblmarketors?filter[where][accnumber]='+accnumber+'&filter[where][newstatus][nin]=unassigned&filter[where][newstatus][nin]=Completed');
   }
 
   checkindebtcollector(accnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/tbldebtcollectors?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus][nin]=Cancelled&filter[where][newstatus][nin]=Completed');
+    return this.httpClient.get<any>(environment.api + '/api/tbldebtcollectors?filter[where][accnumber]='+accnumber+'&filter[where][newstatus][nin]=Cancelled&filter[where][newstatus][nin]=Completed');
   }
 
   checkinvaluation(accnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/tblvaluers?[filter][where][accnumber]='+accnumber+'&[filter][where][newstatus][nin]=Cancelled&filter[where][newstatus][nin]=Completed');
+    return this.httpClient.get<any>(environment.api + '/api/tblvaluers?filter[where][accnumber]='+accnumber+'&filter[where][newstatus][nin]=Cancelled&filter[where][newstatus][nin]=Completed');
   }
 
   newauctioneer(body) {
     return this.httpClient.post(environment.api + '/api/auctioneer', body);
+  }
+
+  newinvoice(body) {
+    return this.httpClient.post(environment.api + '/api/tblinvoices', body);
   }
 
   newdebtcollector(body) {
@@ -154,6 +162,11 @@ export class EcolService {
   bulktotblcardsstatic(body) {
     const url = environment.api + '/api/TBLCARD_STATIC/actiondate';
     return this.httpClient.post(url, body);
+  }
+
+  getallsptype() {
+    const url = environment.api + '/api/sptypes';
+    return this.httpClient.get<any>(url);
   }
 
   getsptype(type) {

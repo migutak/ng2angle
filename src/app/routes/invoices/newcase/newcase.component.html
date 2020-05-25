@@ -3,111 +3,143 @@
         <small>New entry</small></div>
 </div>
 <div class="container-fluid">
-    <form class="form-horizontal" #newInvoiceForm="ngForm" (ngSubmit)="addinvocefunc(newInvoiceForm)" novalidate
-        autocomplete="off">
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Customer Number</label>
-            <div class="col-xl-9">
-                <input class="form-control" type="text" id="custnumber" name="custnumber" #custnumber="ngModel"
-                    [(ngModel)]="data.custnumber" [ngClass]="{ 'is-invalid': custnumber.errors }" required />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Account Number</label>
-            <div class="col-xl-9">
-                <select id="accnumber" name="accnumber" class="form-control"  #accnumber="ngModel" [(ngModel)]="data.accnumber"
-                [ngClass]="{ 'is-invalid': accnumber.errors }">
-                <option value="">Please select</option>
-                <option *ngFor="let acc of accounts" [value]="acc.accnumber">
-                  {{acc.accnumber}}</option>
-              </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Customer Name</label>
-            <div class="col-xl-9">
-                <input class="form-control" type="text" id="custname" name="custname" #custname="ngModel"
-                    [(ngModel)]="data.custname" [ngClass]="{ 'is-invalid': custname.errors }" required />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Payment method</label>
-            <div class="col-xl-9">
-                <select class="custom-select custom-select-sm" id="paymethod" name="paymethod" #paymethod="ngModel"
-                    [(ngModel)]="data.paymethod" [ngClass]="{ 'is-invalid': paymethod.errors }" required>
-                    <option selected="">Select One</option>
-                    <option>Cash</option>
-                    <option>Bank Transfer</option>
-                    <option>Other</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Service provider</label>
-            <div class="col-xl-9">
-                <select id="sptitle" name="sptitle" class="form-control" #sptitle="ngModel" [(ngModel)]="data.sptitle"
-                [ngClass]="{ 'is-invalid': sptitle.errors }"
-                (ngModelChange)="changeAction(actionForm.value.collectoraction)">
-                <option value="">Please select</option>
-                <option *ngFor="let action of sptypes" [value]="action.sptitle">
-                  {{action.sptitle}}</option>
-              </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label"> Service provider account</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" id="spaccount" name="spaccount" #spaccount="ngModel"
-                    [(ngModel)]="data.spaccount" [ngClass]="{ 'is-invalid': spaccount.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">RRO Code</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" name="rrocode" id="rrocode" #rrocode="ngModel"
-                    [(ngModel)]="data.rrocode" [ngClass]="{ 'is-invalid': rrocode.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Invoice amount</label>
-            <div class="col-xl-9">
-                <input type="number" class="form-control" id="invoiceamount" name="invoiceamount" #invoiceamount="ngModel"
-                    [(ngModel)]="data.invoiceamount" [ngClass]="{ 'is-invalid': invoiceamount.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Fee Note Date</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                    name="dp-basic" [bsConfig]="bsConfig" id="feenotedate" name="feenotedate" #feenotedate="ngModel"
-                    [(ngModel)]="data.feenotedate" [ngClass]="{ 'is-invalid': feenotedate.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label">Date Received</label>
-            <div class="col-xl-9">
-                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"
-                    name="dp-basic" [bsConfig]="bsConfig" id="datereceived" name="datereceived" #datereceived="ngModel"
-                    [(ngModel)]="data.datereceived" [ngClass]="{ 'is-invalid': datereceived.errors }" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label"></label>
-            <div class="col-xl-10">
-                <div class="checkbox c-checkbox">
-                    <label>
-                        <input type="checkbox" checked="checked" id="confirm" name="confirm" #confirm="ngModel"
-                            [(ngModel)]="data.confirm" [ngClass]="{ 'is-invalid': confirm.errors }" required />
-                        <span class="fa fa-check"></span>Confirm details provided</label>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <!-- START card-->
+    <div class="card card-default">
+        <div class="card-header">Enter Invoice details</div>
+        <div class="card-body">
+            <form class="form-horizontal" #newInvoiceForm="ngForm" (ngSubmit)="addinvocefunc(newInvoiceForm)" novalidate
+                autocomplete="off">
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Customer Number</label>
+                    <div class="col-xl-9">
+                        <input class="form-control" type="text" id="custnumber" name="custnumber" #custnumber="ngModel"
+                            [(ngModel)]="data.custnumber" [ngClass]="{ 'is-invalid': custnumber.errors }"
+                            (blur)="onBlurMethod()" required />
+                    </div>
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Account Number</label>
+                    <div class="col-xl-9">
+                        <select id="accnumber" name="accnumber" class="form-control" #accnumber="ngModel"
+                            [(ngModel)]="data.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }"
+                            (blur)="onBlurAccount()">
+                            <option value="">Please select</option>
+                            <option *ngFor="let acc of accounts" [value]="acc.accnumber">
+                                {{acc.accnumber}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Customer Name</label>
+                    <div class="col-xl-9">
+                        <input class="form-control" type="text" id="custname" name="custname" #custname="ngModel"
+                            [(ngModel)]="data.custname" [ngClass]="{ 'is-invalid': custname.errors }" required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Payment method</label>
+                    <div class="col-xl-9">
+                        <select class="custom-select custom-select-sm" id="paymethod" name="paymethod"
+                            #paymethod="ngModel" [(ngModel)]="data.paymethod"
+                            [ngClass]="{ 'is-invalid': paymethod.errors }" required>
+                            <option selected="">Select One</option>
+                            <option>Cash</option>
+                            <option>Bank Transfer</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Service provider</label>
+                    <div class="col-xl-9">
+                        <select id="sptitle" name="sptitle" class="form-control" #sptitle="ngModel"
+                            [(ngModel)]="data.sptitle" [ngClass]="{ 'is-invalid': sptitle.errors }"
+                            (ngModelChange)="changeSptype(newInvoiceForm.value.sptitle)">
+                            <option value="">Please select</option>
+                            <option *ngFor="let action of sptypes" [value]="action.SPTITLE">
+                                {{action.SPTITLE}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label"> Service provider account</label>
+                    <div class="col-xl-9">
+                        <input type="text" class="form-control" id="spaccount" name="spaccount" #spaccount="ngModel"
+                            [(ngModel)]="data.spaccount" [ngClass]="{ 'is-invalid': spaccount.errors }" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">ARO Code</label>
+                    <div class="col-xl-9">
+                        <input type="text" class="form-control" name="arocode" id="arocode" #arocode="ngModel"
+                            [(ngModel)]="data.arocode" [ngClass]="{ 'is-invalid': arocode.errors }" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">RRO Code</label>
+                    <div class="col-xl-9">
+                        <input type="text" class="form-control" name="rrocode" id="rrocode" #rrocode="ngModel"
+                            [(ngModel)]="data.rrocode" [ngClass]="{ 'is-invalid': rrocode.errors }" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Fee Note amount</label>
+                    <div class="col-xl-9">
+                        <input type="number" class="form-control" id="feenoteamnt" name="feenoteamnt"
+                            #feenoteamnt="ngModel" [(ngModel)]="data.feenoteamnt"
+                            [ngClass]="{ 'is-invalid': feenoteamnt.errors }" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Fee Note Date</label>
+                    <div class="col-xl-9 input-group">
+                        <input type="text" class="form-control" #dp1="bsDatepicker" bsDatepicker
+                            [bsConfig]="bsConfig" id="feenotedate" name="feenotedate"
+                            #feenotedate="ngModel" [(ngModel)]="data.feenotedate" [maxDate]="minDate"
+                            [ngClass]="{ 'is-invalid': feenotedate.errors }" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" (click)="dp1.show()" [attr.aria-expanded]="dp1.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
+                                  </span></button>
+                              </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label">Date Received</label>
+                    <div class="col-xl-9 input-group">
+                        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                            [bsConfig]="bsConfig" id="dateinput" name="dateinput"
+                            #dateinput="ngModel" [(ngModel)]="data.dateinput" [maxDate]="minDate"
+                            [ngClass]="{ 'is-invalid': dateinput.errors }" required>
+                        
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
+                                  </span></button>
+                            </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label"></label>
+                    <div class="col-xl-10">
+                        <div class="checkbox c-checkbox">
+                            <label>
+                                <input type="checkbox" checked="checked" id="confirm" name="confirm" #confirm="ngModel"
+                                    [(ngModel)]="data.confirm" [ngClass]="{ 'is-invalid': confirm.errors }" required />
+                                <span class="fa fa-check"></span>Confirm details provided</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-2 col-form-label"></label>
+                    <div class="col-xl-8">
+                        <a [routerLink]="['../allcases']" class="btn btn-sm btn-square btn-danger">Cancel</a>
+                        <button type="submit" class="btn btn-sm btn-square btn-success"
+                            [disabled]="!newInvoiceForm.valid">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group row">
-            <label class="col-xl-2 col-form-label"></label>
-            <div class="col-xl-8">
-                <a [routerLink]="['../allcases']" class="btn btn-sm btn-square btn-danger">Cancel</a>
-                <button type="submit" class="btn btn-sm btn-square btn-success" [disabled]="!newInvoiceForm.valid">Submit</button>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>

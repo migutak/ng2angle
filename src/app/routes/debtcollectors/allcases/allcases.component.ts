@@ -184,7 +184,7 @@ export class AllCasesComponent implements OnInit {
             this.data.newstatus = selectedData[0].NEWSTATUS;
             this.data.dateassigned = selectedData[0].DATEASSIGNED;
             this.data.followupcomment = selectedData[0].FOLLOWUPCOMMENT;
-        } else if (selectedData.length > 1){
+        } else if (selectedData.length > 1) {
             this.export = false;
             this.updatecase = true;
             this.data = {};
