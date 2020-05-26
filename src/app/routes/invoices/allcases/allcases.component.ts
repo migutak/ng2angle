@@ -151,9 +151,6 @@ export class AllCasesComponent implements OnInit {
     }
 
     onRowSelected(event) {
-        /*window.alert(
-          'row ' + event.node.data.ACCNUMBER + ' selected = ' + event.node.selected
-        );*/
         const selectedNodes = this.agGrid.api.getSelectedNodes();
         const selectedData = selectedNodes.map(node => node.data);
 

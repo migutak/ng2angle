@@ -42,6 +42,7 @@
           [isRowSelectable]="isRowSelectable"
           (rowClicked)='onRowDoubleClicked($event)'
           (rowSelected)="onRowSelected($event)"
+          rowSelection="multiple"
           [rowData]="rowData"
           (gridReady)="onGridReady($event)"
         ></ag-grid-angular>
