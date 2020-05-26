@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
 import { AgGridAngular } from 'ag-grid-angular';
+import { ExportInvestigators } from '../../../services/exportinvestigators.service'
 
 @Component({
     selector: 'app-allcases',
@@ -28,7 +29,9 @@ export class AllCasesComponent implements OnInit {
     export: boolean = true;
     modules = AllModules;
 
-    constructor() {
+    constructor(
+        private exportInvestigators: ExportInvestigators,
+    ) {
         this.columnDefs = [
             {
                 field: 'ACCNUMBER',
@@ -149,7 +152,24 @@ export class AllCasesComponent implements OnInit {
     getSelectedRows() {
         const selectedNodes = this.agGrid.api.getSelectedNodes();
         const selectedData = selectedNodes.map(node => node.data);
-        console.log(selectedData);
+        this.exportInvestigators.generateinvoice();
+    }
+
+    onRowSelected(event) {
+        /*window.alert(
+          'row ' + event.node.data.ACCNUMBER + ' selected = ' + event.node.selected
+        );*/
+        const selectedNodes = this.agGrid.api.getSelectedNodes();
+        const selectedData = selectedNodes.map(node => node.data);
+
+        if (selectedData.length == 1) {
+            this.export = false;
+
+        } else if (selectedData.length > 1) {
+            this.export = false;
+        } else {
+            this.export = true;
+        }
     }
 
 

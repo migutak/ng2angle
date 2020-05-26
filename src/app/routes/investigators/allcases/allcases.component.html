@@ -29,6 +29,7 @@
       [pivotPanelShow]="pivotPanelShow"
       [sideBar]="false"
       [enableRangeSelection]="true"
+      (rowSelected)="onRowSelected($event)"
       [rowDragManaged]="true"
       rowSelection="multiple"
       [modules]="modules"
