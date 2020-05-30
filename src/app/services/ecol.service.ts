@@ -190,7 +190,8 @@ export class EcolService {
   }
 
   bulknotes(body) {
-    const url = environment.nodeapi + '/xlsuploads/uploadbulk-test';
+    //const url = environment.nodeapi + '/xlsuploads/uploadbulk-test';
+    const url = environment.api + '/api/notehis';
     return this.httpClient.post<any>(url, body, {
       reportProgress: true,
       observe: 'events' 

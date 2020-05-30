@@ -1,171 +1,180 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
-import * as $ from 'jquery';
-import { EcolService } from '../../../../services/ecol.service';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from '@ag-grid-community/all-modules';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-demandsdue',
   templateUrl: './demandsdue.component.html',
   styleUrls: ['./demandsdue.component.scss']
 })
-
-
 export class DemandsdueComponent implements OnInit {
 
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
-    };
-  }
+  public gridApi;
+  public gridColumnApi;
 
+  public columnDefs;
+  public defaultColDef;
+  public rowModelType;
+  public cacheBlockSize;
+  public maxBlocksInCache;
+  public rowData: [];
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-  resizeEvent = 'resize.ag-grid';
-  $win = $(window);
-  new = true;
   username: string;
-  searchText: string;
-  model: any = {};
-  noTotal: number;
+  model:any;
+  pivotPanelShow = true;
 
-  gridOptions: GridOptions;
-  gridApi: GridApi;
-  // private rowClassRules;
+  modules = AllModules;
 
-  columnDefs = [
-    {
-      headerName: 'CARDACCT',
-      field: 'cardacct',
-      cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+  constructor() {
+
+    this.columnDefs = [
+      {
+        headerName: 'CARDACCT',
+        field: 'CARDACCT',
+        cellRenderer: function (params) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        },
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'CARDNUMBER',
+        field: 'CARDNUMBER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'CARDNAME',
+        field: 'CARDNAME',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'DAYSINARREARS',
+        field: 'DAYSINARREARS',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'EXPPMNT',
+        field: 'EXPPMNT',
+        valueFormatter: this.currencyFormatter,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'OUTBALANCE',
+        field: 'OUTBALANCE',
+        valueFormatter: this.currencyFormatter,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'DEMANDLETTER',
+        field: 'DEMANDLETTER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'CYCLE',
+        field: 'CYCLE',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'STATUS',
+        field: 'STATUS',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'COLOFFICER',
+        field: 'COLOFFICER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
       }
-    },
-    {
-      headerName: 'CARDNUMBER',
-      field: 'cardnumber'
-    },
-    {
-      headerName: 'CARDNAME',
-      field: 'cardname'
-    },
-    {
-      headerName: 'DAYSINARREARS',
-      field: 'daysinarrears'
-    },
-    {
-      headerName: 'EXPPMNT',
-      field: 'exppmnt',
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'OUTBALANCE',
-      field: 'outbalance',
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'DEMANDLETTER',
-      field: 'demandletter'
-    },
-    {
-      headerName: 'CYCLE',
-      field: 'cycle'
-    },
-    {
-      headerName: 'STATUS',
-      field: 'status'
-    },
-    {
-      headerName: 'COLOFFICER',
-      field: 'colofficer'
-    }
-  ];
-  rowData1: any;
+    ];
 
-  dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
-      this.apiService(20, params.startRow).subscribe(response => {
-        params.successCallback(
-          response, this.noTotal
-        );
-      });
-    }
-  };
+    this.defaultColDef = {
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true,
+      unSortIcon: true,
+      suppressResize: false,
+      enableRowGroup: true,
+      enablePivot: false,
+      pivot: false
+    };
+    this.rowModelType = "serverSide";
+    this.cacheBlockSize = 50;
+    this.maxBlocksInCache = 0;
+  }
 
-currencyFormatter(params) {
-    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
 
-formatNumber(number) {
-    // this puts commas into the number eg 1000 goes to 1,000,
-    // i pulled this from stack overflow, i have no idea how it works
-    return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-}
+    const datasource = {
+      getRows(params) {
+          fetch(environment.nodeapi + '/demandsduecc/all', {
+          method: 'post',
+          body: JSON.stringify(params.request),
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+          .then(httpResponse => httpResponse.json())
+          .then(response => {
+            params.successCallback(response.rows, response.lastRow);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          })
+      }
+    };
 
-  onRowDoubleClicked(event: any) {
-    this.model = event.node.data;
+    params.api.setServerSideDatasource(datasource);
+  }
+
+  onCellClicked(event: any) {
+   this.model = event.node.data;
+   if(this.model.ACCNUMBER == event.value) {
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendlettercc?cardacct=' + this.model.cardacct + '&username=' + this.username + '&demand=' + this.model.demandletter + '&id=' + this.model.id, '_blank');
+   window.open(environment.applink + '/sendletter?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.username + '&demand=' + this.model.DEMANDLETTER + '&id=' + this.model.ID, '_blank');
+   }
   }
 
   onQuickFilterChanged($event) {
     // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
+   // this.searchText = $event.target.value;
   }
 
-  onSearch() {
-    if (this.model.searchText === undefined) {
-      return;
-    }
-    this.clear();
-    this.http.get<any>(environment.api + '/api/demandsduecc/search?searchtext=' + this.model.searchText).subscribe(resp => {
-      //
-      this.gridApi.updateRowData({ add: resp, addIndex: 0 });
-    });
+  currencyFormatter(params) {
+    return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
 
-  clear() {
-    const ds = {
-      getRows(params: any) {
-        params.successCallback([], 0);
+  ServerSideDatasource(server) {
+    return {
+      getRows(params) {
+        setTimeout(function () {
+          var response = server.getResponse(params.request);
+          if (response.success) {
+            params.successCallback(response.rows, response.lastRow);
+          } else {
+            params.failCallback();
+          }
+        }, 500);
       }
     };
-    this.gridOptions.api.setDatasource(ds);
-  }
-
-  reset() {
-    // location.reload();
-    this.clear();
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
   }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
-    this.ecolService.totalcardsdue().subscribe(cards => {
-      this.noTotal = cards[0].TOTALVIEWALL;
-    });
+    
   }
 
-  gridReady(params) {
-    this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-  }
-
-  apiService(perPage, currentPos) {
-    return this.http.get<any>(environment.api + '/api/demandsduecc?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-  }
 
 }
-
-

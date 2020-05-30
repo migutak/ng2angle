@@ -626,7 +626,7 @@ if (currentUser !== null) {
         menuitems = creditcards_menu;
     } else if (currentUser.ROLE === 'teamleader') {
         menuitems = teamleader_menu;
-    } else if (currentUser.ROLE === 'telecollector') {
+    } else if (currentUser.ROLE === 'internalaudit') {
         menuitems = collection_menu;
     } else {
         menuitems = collection_menu;

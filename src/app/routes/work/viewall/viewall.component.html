@@ -24,7 +24,8 @@
       [enableFilter]="true"
       [enableColResize]="true"
       [paginationAutoPageSize]="true"
-      (rowClicked)='onRowDoubleClicked($event)'
+      [suppressRowClickSelection]="true"
+      (cellClicked)='onCellClicked($event)'
       (gridReady)="onGridReady($event)"
       [pivotPanelShow]="pivotPanelShow"
       [sideBar]="true"

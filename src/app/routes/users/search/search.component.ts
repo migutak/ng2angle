@@ -16,9 +16,13 @@ export class SearchComponent implements OnInit {
   bsValue = new Date();
   bsRangeValue: Date[];
   maxDate = new Date();
-  bsConfig = {
-      containerClass: 'theme-angle'
-  };
+  minDate: Date;
+
+    bsConfig = { 
+        isAnimated: true,
+        adaptivePosition: true,
+        dateInputFormat: 'YYYY-MM-DD' 
+    }
 
   branches: Array<any>;
   buttonTitle = 'update user';
@@ -28,20 +32,21 @@ export class SearchComponent implements OnInit {
     this.valForm = fb.group({
       'username': [null, Validators.required],
       'firstname': [null, Validators.required],
-      'lastname': [''],
+      'lastname': ['', Validators.required],
       'surname': [''],
-      'division': [''],
-      'team': [''],
+      'division': ['', Validators.required],
+      'team': ['', Validators.required],
       'branch': [''],
       'manager': [''],
-      'email': [''],
-      'role': [''],
+      'email': ['', Validators.required],
+      'role': ['', Validators.required],
       'expirydate': [''],
-      'active': ['']
+      'createdate': [''],
+      'active': ['', Validators.required]
     });
     // Datepicker
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
-    this.bsRangeValue = [this.bsValue, this.maxDate];
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() + 1);
   }
 
   ngOnInit() {
@@ -54,9 +59,7 @@ export class SearchComponent implements OnInit {
     for (const c in this.valForm.controls) {
       this.valForm.controls[c].markAsTouched();
     }
-    if (this.valForm.valid) {
-      console.log('Valid!');
-    }
+    
     // console.log(value);
     this.putuser(value);
   }
@@ -91,14 +94,15 @@ export class SearchComponent implements OnInit {
             email: data[0].EMAIL,
             active: data[0].ACTIVE,
             expirydate: data[0].EXPIRYDATE,
+            createdate: data[0].CREATEDATE,
             role: data[0].ROLE
           });
           // success
         swal('Successful!', 'user details retrieved!', 'success');
-        this.buttonTitle = 'update user';
+        this.buttonTitle = 'Update User';
         } else {
           swal('Warning!', 'No user found!', 'warning');
-          this.buttonTitle = 'create user';
+          this.buttonTitle = 'Create User';
           this.valForm.patchValue({
             username: '',
             firstname: '',
@@ -116,14 +120,13 @@ export class SearchComponent implements OnInit {
       }, error => {
         console.log(error);
         swal('Error!', 'Error occurred during processing!', 'error');
-        this.buttonTitle = 'create user';
+        this.buttonTitle = 'Create User';
       });
     }
   }
 
   getbranches() {
     this.ecolService.getbranches().subscribe(data => {
-      // console.log(data);
       this.branches = data;
     });
   }

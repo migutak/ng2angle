@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EcolService } from '../../../services/ecol.service';
-import { GridOptions, IDatasource, IGetRowsParams, GridApi } from '@ag-grid-community/all-modules';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import * as $ from 'jquery';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
 
 @Component({
   selector: 'app-demandsdue',
@@ -12,195 +9,172 @@ import * as $ from 'jquery';
 })
 export class DemandsdueComponent implements OnInit {
 
-  model: any = {};
-  public radioModel: string;
-  total: any = {};
-  searchTotal: number;
-  constructor(private ecolService: EcolService, private http: HttpClient) {
-    this.gridOptions = <GridOptions>{
-      headerHeight: 40,
-      pagination: true,
-      rowSelection: 'single',
-      rowModelType: 'infinite',
-      cacheBlockSize: 20,
-      paginationPageSize: 20
+  public gridApi;
+  public gridColumnApi;
+
+  public columnDefs;
+  public defaultColDef;
+  public rowModelType;
+  public cacheBlockSize;
+  public maxBlocksInCache;
+  public rowData: [];
+
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  username: string;
+  model:any;
+  pivotPanelShow = true;
+
+  modules = AllModules;
+
+  constructor() {
+
+    this.columnDefs = [
+      {
+        headerName: 'ACCNUMBER',
+        field: 'ACCNUMBER',
+        cellRenderer: function (params) {
+          return '<a  href="#" target="_blank">' + params.value + '</a>';
+        },
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'CLIENTNAME',
+        field: 'CLIENT_NAME',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'OUSTBALANCE',
+        field: 'OUSTBALANCE',
+        valueFormatter: this.currencyFormatter,
+        filter: 'agnumberColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'TOTALARREARS',
+        field: 'TOTALARREARS',
+        valueFormatter: this.currencyFormatter,
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'DAYSINARR',
+        field: 'DAYSINARR',
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'EMAILADDRESS',
+        field: 'EMAILADDRESS',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'DATEDUE',
+        field: 'DATEDUE',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'DEMANDLETTER',
+        field: 'DEMANDLETTER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'COLOFFICER',
+        field: 'COLOFFICER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      },
+      {
+        headerName: 'STATUS',
+        field: 'STATUS',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' },
+        resizable: true
+      }
+    ];
+
+    this.defaultColDef = {
+      width: 120,
+      resizable: true,
+      sortable: true,
+      floatingFilter: true,
+      unSortIcon: true,
+      suppressResize: false,
+      enableRowGroup: true,
+      enablePivot: false,
+      pivot: false
     };
+    this.rowModelType = "serverSide";
+    this.cacheBlockSize = 50;
+    this.maxBlocksInCache = 0;
   }
 
-  user = JSON.parse(localStorage.getItem('currentUser'));
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
 
-  resizeEvent = 'resize.ag-grid';
-  $win = $(window);
-  new = true;
-  username: string;
-  searchText: string;
-  noTotal: number;
-
-  gridOptions: GridOptions;
-  gridApi: GridApi;
-
-  columnDefs = [
-    {
-      headerName: 'ACCNUMBER',
-      field: 'ACCNUMBER',
-      cellRenderer: function (params) {
-        return '<a  href="#" target="_blank">' + params.value + '</a>';
+    const datasource = {
+      getRows(params) {
+          fetch(environment.nodeapi + '/demandsdue/all', {
+          method: 'post',
+          body: JSON.stringify(params.request),
+          headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+          .then(httpResponse => httpResponse.json())
+          .then(response => {
+            params.successCallback(response.rows, response.lastRow);
+          })
+          .catch(error => {
+            console.error(error);
+            params.failCallback();
+          })
       }
-    },
-    {
-      headerName: 'CLIENTNAME',
-      field: 'CLIENT_NAME'
-    },
-    {
-      headerName: 'OUSTBALANCE',
-      field: 'OUSTBALANCE',
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'TOTALARREARS',
-      field: 'TOTALARREARS',
-      valueFormatter: this.currencyFormatter
-    },
-    {
-      headerName: 'DAYSINARR',
-      field: 'DAYSINARR'
-    },
-    {
-      headerName: 'EMAILADDRESS',
-      field: 'EMAILADDRESS'
-    },
-    {
-      headerName: 'DATEDUE',
-      field: 'DATEDUE'
-    },
-    {
-      headerName: 'DEMANDLETTER',
-      field: 'DEMANDLETTER'
-    },
-    {
-      headerName: 'COLOFFICER',
-      field: 'COLOFFICER'
-    },
-    {
-      headerName: 'STATUS',
-      field: 'STATUS'
-    }
-  ];
-  rowData1: any;
+    };
 
-  dataSource: IDatasource = {
-    getRows: (params: IGetRowsParams) => {
-      this.apiService(20, params.startRow).subscribe(response => {
-        params.successCallback(
-          response.data, response.totalRecords
-        );
-        if (response.data.length > 0) {
-          this.gridOptions.api.hideOverlay();
-        } else {
-          this.gridOptions.api.showNoRowsOverlay();
-        }
-      });
-    }
-  };
+    params.api.setServerSideDatasource(datasource);
+  }
 
-  onRowDoubleClicked(event: any) {
-    this.model = event.node.data;
+  onCellClicked(event: any) {
+   this.model = event.node.data;
+   if(this.model.ACCNUMBER == event.value) {
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/sendletter?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.username + '&demand=' + this.model.DEMANDLETTER + '&id=' + this.model.ID, '_blank');
+   window.open(environment.applink + '/sendletter?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.username + '&demand=' + this.model.DEMANDLETTER + '&id=' + this.model.ID, '_blank');
+   }
   }
 
   onQuickFilterChanged($event) {
     // this.gridOptions.api.setQuickFilter($event.target.value);
-    this.searchText = $event.target.value;
+   // this.searchText = $event.target.value;
   }
 
   currencyFormatter(params) {
     return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
   }
 
-  onSearch() {
-    if (this.model.searchText === undefined) {
-      return;
-    }
-    this.clear();
-    this.gridApi.showLoadingOverlay();
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        // Use startRow and endRow for sending pagination to Backend
-        // params.startRow : Start Page
-        // params.endRow : End Page
-        //
-        this.apiServiceSearch(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.data, response.totalRecords
-          );
-          if (response.data.length > 0) {
-            this.gridOptions.api.hideOverlay();
+  ServerSideDatasource(server) {
+    return {
+      getRows(params) {
+        setTimeout(function () {
+          var response = server.getResponse(params.request);
+          if (response.success) {
+            params.successCallback(response.rows, response.lastRow);
           } else {
-            this.gridOptions.api.showNoRowsOverlay();
+            params.failCallback();
           }
-        });
+        }, 500);
       }
     };
-
-    this.gridApi.setDatasource(this.dataSource);
-  }
-
-  clear() {
-    const ds = {
-      getRows(params: any) {
-        params.successCallback([], 0);
-      }
-    };
-    this.gridOptions.api.setDatasource(ds);
-  }
-
-  reset() {
-    this.gridApi.showLoadingOverlay();
-    this.clear();
-    this.dataSource = {
-      getRows: (params: IGetRowsParams) => {
-        this.apiService(20, params.startRow).subscribe(response => {
-          params.successCallback(
-            response.data, response.totalRecords
-          );
-          if (response.data.length > 0) {
-            this.gridOptions.api.hideOverlay();
-          } else {
-            this.gridOptions.api.showNoRowsOverlay();
-          }
-        });
-      }
-    };
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
   }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
-    this.ecolService.totaldemandsdue().subscribe(viewall => {
-      this.noTotal = viewall[0].TOTALVIEWALL;
-    });
+    
   }
 
-  gridReady(params) {
-    this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-    this.gridApi.setDatasource(this.dataSource);
-    this.gridOptions.api.showLoadingOverlay();
-  }
-
-  apiService(perPage, currentPos) {
-    // return this.http.get<any>(environment.api + '/api/qall?filter[limit]=' + perPage + '&filter[skip]=' + currentPos);
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.nodeapi + '/demandsdue/all?offset=' + currentPos + '&rows=' + perPage );
-  }
-
-  apiServiceSearch(perPage, currentPos) {
-    // tslint:disable-next-line:max-line-length
-    return this.http.get<any>(environment.nodeapi + '/demandsdue/all_search?searchtext=' + this.model.searchText + '&rows=' + perPage + '&offset=' + currentPos);
-  }
 
 }

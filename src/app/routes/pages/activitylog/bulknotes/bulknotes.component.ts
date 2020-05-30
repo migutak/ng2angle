@@ -228,7 +228,18 @@ export class BulknotesComponent implements OnInit {
 
       const dataString = JSON.stringify(jsonData);
       document.getElementById('output').innerHTML = dataString.slice(0, 500).concat('...');
-      // this.setDownload(dataString);
+      
+      // check total rows
+      if (this.outdata.length > 2000) {
+        swal({
+          type: 'error',
+          title: 'Limit Exceeded!',
+          text: 'Total rows of '+this.outdata.length+' exceeds 1,000 max limit',
+        });
+        this.myInputVariable.nativeElement.value = '';
+        document.getElementById('output').innerHTML = '';
+        return;
+      }
 
       // post
 
@@ -242,45 +253,45 @@ export class BulknotesComponent implements OnInit {
         confirmButtonText: 'Yes, Upload'
       }).then((result) => {
         if (result.value) {
-          // proceeed to post
-          console.log(this.outdata);
           this.ecolService.loader();
           this.ecolService.bulknotes(this.outdata).subscribe(events => {
-            if (events.type === HttpEventType.UploadProgress) {
+            /*if (events.type === HttpEventType.UploadProgress) {
               this.fileUploadProgress = Math.round(events.loaded / events.total * 100);
-              console.log(events.loaded);
+              console.log(events);
               //console.log(this.fileUploadProgress);
-            } else if (events.type === HttpEventType.Response) {
-              if (this.sys === 'cc' || this.sys === 'watchcc') {
+            } else if (events.type === HttpEventType.Response) {}*/
+              /*if (this.sys === 'cc' || this.sys === 'watchcc') {
                 //
                 this.ecolService.bulktotblcardsstatic(this.outdata).subscribe(result => {
-                  console.log(result);
+                  //console.log(result);
                   this.sendNotesData(this.custnumber); // updates the notes counter on view
                   swal({
                     type: 'success',
                     title: 'ALL Good',
-                    text: events.body.rowsAffected + ' rows has been processed!',
+                    text: this.outdata.length + ' rows has been processed!',
                   });
                 }, error => {
                   console.log('bulknotes error', error);
                 });
               } else {
-                //
+                console.log(this.sys);
                 this.ecolService.bulktotblportfolio(this.outdata).subscribe(result => {
-                  console.log(result);
                   this.sendNotesData(this.custnumber); // updates the notes counter on view
                   swal({
                     type: 'success',
                     title: 'ALL Good',
-                    text: events.body.rowsAffected + ' rows has been processed!',
+                    text: this.outdata.length + ' rows has been processed!',
                   });
                 }, error => {
                   console.log('bulknotes error', error);
                 });
-              }
-
-            }
-
+              }*/
+              swal({
+                type: 'success',
+                title: 'ALL Good',
+                text: this.outdata.length + ' rows has been processed!',
+              });
+            
           }, error => {
             console.log(error);
             swal({

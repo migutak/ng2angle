@@ -122,7 +122,7 @@ export class HeaderComponent implements OnInit {
           this.str = JSON.stringify(data, null, 4);
           
           let obj: any= JSON.parse(this.str);
-          this.totalBrokenPtps = obj.data[0].TOTAL;
+          this.totalBrokenPtps = obj[0].TOTAL;
           // console.log(typeof obj.data[0].TOTAL);
           
         }, error => {
@@ -135,7 +135,7 @@ export class HeaderComponent implements OnInit {
           this.str2 = JSON.stringify(data, null, 4);
           
           let obj1: any= JSON.parse(this.str2);
-          this.nu_of_demandsdue = obj1.data[0].TOTALVIEWALL;
+          this.nu_of_demandsdue = obj1[0].TOTALVIEWALL;
           
         }, error => {
           console.log(error);
@@ -148,7 +148,7 @@ export class HeaderComponent implements OnInit {
           this.str1 = JSON.stringify(data, null, 4);
           
           let obj1: any= JSON.parse(this.str1);
-          this.nu_of_cc_demands = obj1.data[0].TOTALVIEWALL;
+          this.nu_of_cc_demands = obj1[0].TOTALVIEWALL;
           
         }, error => {
           console.log(error);

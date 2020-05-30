@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
-import { environment } from '../../../../../environments/environment';
 import { NgbActiveModal, NgbModal, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import * as moment from 'moment';
@@ -26,7 +25,7 @@ export class PtpsComponent implements OnInit {
   iscard: Boolean = false;
   p = 1;
   currentDate: any = new Date();
-  public minDate: NgbDateStruct;
+  /*public minDate: NgbDateStruct;
   public maxDate: NgbDateStruct;
 
 
@@ -38,8 +37,16 @@ export class PtpsComponent implements OnInit {
   minmonth = parseInt(moment().subtract(5, 'days').format('MM'));
   day = parseInt(moment().format('DD'));
   maxday = parseInt(moment().add(5, 'days').format('DD'));
-  minday = parseInt(moment().subtract(5, 'days').format('DD'));
+  minday = parseInt(moment().subtract(5, 'days').format('DD'));*/
   //
+
+  minDate: Date;
+
+    bsConfig = { 
+        isAnimated: true,
+        adaptivePosition: true,
+        dateInputFormat: 'DD-MMM-YY' 
+    }
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -86,6 +93,8 @@ export class PtpsComponent implements OnInit {
 
         if (this.ptps[i].ammended === 'y') {
           this.ptps[i].showedit = false;
+        } else if(moment().isAfter(this.ptps[i].ptpdate, 'day')) {
+          this.ptps[i].showedit = false;
         } else {
           this.ptps[i].showedit = true;
         }
@@ -109,7 +118,7 @@ export class PtpsComponent implements OnInit {
       this.ngxSmartModalService.getModal('myModal').open()
 
       // console.log('diff', moment().diff(this.ammendptp.ptpdate, 'days') + 5)
-
+/*
       this.year = parseInt(moment(this.ammendptp.ptpdate).format('YYYY'));
       this.maxyear = parseInt(moment(this.ammendptp.ptpdate).add(5, 'days').format('YYYY'));
       this.minyear = parseInt(moment(this.ammendptp.ptpdate).subtract(5, 'days').format('YYYY'));
@@ -120,17 +129,17 @@ export class PtpsComponent implements OnInit {
       this.maxday = parseInt(moment(this.ammendptp.ptpdate).add(5, 'days').format('DD'));
       this.minday = parseInt(moment(this.ammendptp.ptpdate).subtract(5, 'days').format('DD'));
 
-      this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };
+      this.maxDate = { year: this.maxyear, month: this.maxmonth, day: this.maxday };*/
 
       // min should not be less than today
       if (moment().diff(this.ammendptp.ptpdate, 'days') + 5 >= 0) {
         // console.log(true);
-        this.year = parseInt(moment().format('YYYY'));
+        /*this.year = parseInt(moment().format('YYYY'));
         this.month = parseInt(moment().format('MM'));
         this.day = parseInt(moment().format('DD'));
-        this.minDate = { year: this.year, month: this.month, day: this.day };
+        this.minDate = { year: this.year, month: this.month, day: this.day };*/
       } else {
-        this.minDate = { year: this.minyear, month: this.minmonth, day: this.minday };
+        //this.minDate = { year: this.minyear, month: this.minmonth, day: this.minday };
       }
 
     }, error => {

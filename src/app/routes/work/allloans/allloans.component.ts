@@ -55,11 +55,6 @@ export class AllloansComponent implements OnInit {
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
       },
       {
-        headerName: 'BRANCHNAME',
-        field: 'BRANCHNAME',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
-      },
-      {
         headerName: 'BRANCHCODE',
         field: 'BRANCHCODE',
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
@@ -138,11 +133,12 @@ export class AllloansComponent implements OnInit {
     }
   }
 
-  onRowDoubleClicked(event: any) {
+  onCellClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
+    if(this.model.ACCNUMBER == event.value){
     // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=watch', '_blank');
+    }
   }
 
 

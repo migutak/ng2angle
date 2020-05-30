@@ -62,17 +62,27 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Date of offering</label>
-                            <div class="col-xl-10">
+                            <div class="col-xl-10 input-group">
                                 <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="dateofoffering" name="dateofoffering" #dateofoffering="ngModel" [(ngModel)]="data.dateofoffering"
                                 [ngClass]="{ 'is-invalid': dateofoffering.errors }" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
+                                      </span></button>
+                                </div>
                             </div>
+                            
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Expected due date</label>
-                            <div class="col-xl-10">
+                            <div class="col-xl-10 input-group">
                                 <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="expecteddate" name="expecteddate" #expecteddate="ngModel" [(ngModel)]="data.expecteddate"
                                 [ngClass]="{ 'is-invalid': expecteddate.errors }" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
+                                      </span></button>
+                                </div>
                             </div>
+                            
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label"></label>

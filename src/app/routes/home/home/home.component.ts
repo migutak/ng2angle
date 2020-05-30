@@ -105,38 +105,38 @@ export class HomeComponent implements OnInit {
             this.single = [
                 {
                     "name": "01 - 30 Days",
-                    "value": data.data[0].VALUE
+                    "value": data[0].VALUE
                 },
                 {
                     "name": "31 - 60 Days",
-                    "value": data.data[1].VALUE
+                    "value": data[1].VALUE
                 },
                 {
                     "name": "61 - 90 Days",
-                    "value": data.data[2].VALUE
+                    "value": data[2].VALUE
                 },
                 {
                     "name": "Over 90 Days",
-                    "value": data.data[3].VALUE
+                    "value": data[3].VALUE
                 }
             ];
 
             this.volume = [
                 {
                     "name": "01 - 30 Days",
-                    "value": data.data[0].VOLUME
+                    "value": data[0].VOLUME
                 },
                 {
                     "name": "31 - 60 Days",
-                    "value": data.data[1].VOLUME
+                    "value": data[1].VOLUME
                 },
                 {
                     "name": "61 - 90 Days",
-                    "value": data.data[2].VOLUME
+                    "value": data[2].VOLUME
                 },
                 {
                     "name": "Over 90 Days",
-                    "value": data.data[3].VOLUME
+                    "value": data[3].VOLUME
                 }
             ];
         }, error => {
