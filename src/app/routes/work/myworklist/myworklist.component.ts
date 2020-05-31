@@ -39,7 +39,7 @@ export class MyworklistComponent implements OnInit {
         this.http
           .get(environment.api + '/api/tqall/paged/myallocation?colofficer=' + this.username)
           .subscribe(resp => {
-            console.log(typeof resp); // to check whether object or array
+            //console.log(typeof resp); // to check whether object or array
             this.str = JSON.stringify(resp, null, 4);
             const obj: any = JSON.parse(this.str);
 

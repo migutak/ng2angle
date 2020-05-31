@@ -1,3 +1,4 @@
+
 const remindersno = JSON.parse(localStorage.getItem('remindersno')) || 0;
 
 const Home = {
@@ -7,7 +8,7 @@ const Home = {
 };
 
 const Schedules = {
-    text: 'Reminders',
+    text: 'To Do List',
     link: '/reminders',
     icon: 'icon-clock',
     alert: remindersno,

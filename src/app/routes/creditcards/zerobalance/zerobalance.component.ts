@@ -97,11 +97,10 @@ export class ZerobalanceComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
-
+    
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
 
         fetch(environment.nodeapi + '/gridcreditcardszerobal/viewall', {
           method: 'post',

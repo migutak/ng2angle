@@ -758,11 +758,12 @@ export class ActivityActionComponent implements OnInit {
       custnumber: this.custnumber,
       process: 'relegation',
       username: 'admin'
-    }
+    };
     this.ecolService.relegate(body).subscribe(dataresp => {
-      //
+      //console.log(dataresp)
       window.open(environment.relegationLink + '?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber);
     }, error => {
+      console.log(error)
       alert('error !!!')
     }
     );

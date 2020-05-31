@@ -48,13 +48,13 @@ export class ViewallComponent implements OnInit {
       {
         headerName: 'CARDNUMBER',
         field: 'CARDNUMBER',
-        width: 90,
+        width: 120,
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'CARDNAME',
         field: 'CARDNAME',
-        width: 90,
+        width: 200,
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
@@ -67,18 +67,39 @@ export class ViewallComponent implements OnInit {
         headerName: 'EXPPMNT',
         field: 'EXPPMNT',
         width: 90,
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
+        },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'OUTSTANDING BALANCE',
         field: 'OUTBALANCE',
         width: 90,
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
+        },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
         headerName: 'LIMIT',
         field: 'LIMIT',
         width: 90,
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
+        },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
       {
@@ -96,7 +117,7 @@ export class ViewallComponent implements OnInit {
 
     ];
     this.defaultColDef = {
-      width: 120,
+      width: 200,
       resizable: true,
       sortable: true,
       floatingFilter: true
@@ -120,7 +141,7 @@ export class ViewallComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-        console.log(JSON.stringify(params.request, null, 1));
+        //console.log(JSON.stringify(params.request, null, 1));
 
         fetch(environment.api + '/api/tcards/gridviewall', {
         
