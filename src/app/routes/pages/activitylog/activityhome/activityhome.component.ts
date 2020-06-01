@@ -168,7 +168,7 @@ export class ActivityHomeComponent implements OnInit {
   loadcollateral(accnumber) {
     this.loader = true;
     this.ecolService.collaterals(accnumber).subscribe(data => {
-      this.collaterals = data;
+      this.collaterals = data.data;
       this.loader = false;
     }, error => {
       console.log('collaterals error ==>', error);

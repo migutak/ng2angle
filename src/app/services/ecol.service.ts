@@ -513,7 +513,7 @@ export class EcolService {
 
   collaterals(accnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/collaterals?filter[where][accnumber]=' + accnumber);
+    return this.httpClient.get<any>(environment.nodeapi + '/collaterals?accnumber=' + accnumber);
   }
 
   directors(accnumber) {

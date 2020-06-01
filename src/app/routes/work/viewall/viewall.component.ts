@@ -122,7 +122,7 @@ export class ViewallComponent implements OnInit {
         //console.log(JSON.stringify(params.request, null, 1));
 
         //fetch(environment.nodeapi + '/gridviewall/viewall', {
-          fetch(environment.api + '/api/tqall/gridviewall', {
+        fetch(environment.api + '/api/tqall/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

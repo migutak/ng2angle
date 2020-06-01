@@ -282,9 +282,14 @@ const Work = {
         {
             text: 'Credit buildup',
             link: '/watch/creditbuildup'
+        },
+        {
+            text: 'Due for Relegation',
+            link: '/work/relegate'
         }
     ]
 };
+
 
 const Work_cc = {
     text: 'Credit Cards Queue',

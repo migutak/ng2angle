@@ -11,7 +11,7 @@ import { AllloansComponent } from './allloans/allloans.component';
 import { PredelqComponent } from './predelq/predelq.component';
 import { PtpsComponent } from './ptps/ptps.component';
 import { WithfundsComponent } from './withfunds/withfunds.component';
-
+import { RelegateComponent } from './relegate/relegate.component';
 import { JqxDomService } from '../../shared/jqwidgets-dom.service';
 //import { AgGridModule } from 'ag-grid-angular';
 import { AgGridModule } from '@ag-grid-community/angular';
@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'allloans', component: AllloansComponent },
   { path: 'predelq', component: PredelqComponent },
   { path: 'ptps', component: PtpsComponent },
-  { path: 'withfunds', component: WithfundsComponent }
+  { path: 'withfunds', component: WithfundsComponent },
+  { path: 'relegate', component: RelegateComponent }
 ];
 
 @NgModule({
@@ -35,7 +36,8 @@ const routes: Routes = [
     AllloansComponent,
     PredelqComponent,
     PtpsComponent,
-    WithfundsComponent
+    WithfundsComponent,
+    RelegateComponent
   ],
   imports: [
     SharedModule,
@@ -46,7 +48,7 @@ const routes: Routes = [
   ],
   entryComponents: [],
   providers: [
-    JqxDomService
+    //JqxDomService
   ],
   exports: [
     RouterModule

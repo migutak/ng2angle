@@ -761,7 +761,7 @@ export class ActivityActionComponent implements OnInit {
     };
     this.ecolService.relegate(body).subscribe(dataresp => {
       //console.log(dataresp)
-      window.open(environment.relegationLink + '?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber);
+      window.open(environment.relegationLink);
     }, error => {
       console.log(error)
       alert('error !!!')
