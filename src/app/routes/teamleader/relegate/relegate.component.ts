@@ -29,7 +29,7 @@ export class RelegateComponent implements OnInit {
   constructor() {
     this.columnDefs = [
       {
-        field: 'ACCNUMBER',
+        field: 'APPLINK',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
@@ -40,9 +40,11 @@ export class RelegateComponent implements OnInit {
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      { field: 'CLIENT_NAME', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'ACCNUMBER', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
       { field: 'SECTION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
@@ -56,31 +58,7 @@ export class RelegateComponent implements OnInit {
           }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
-      },
-      {
-        field: 'PRINCARREARS',
-        cellRenderer: function (params) {
-          if (params.value !== undefined) {
-            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-          } else {
-            return ''
-          }
-        },
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
-      },
-      {
-        field: 'INSTAMOUNT',
-        cellRenderer: function (params) {
-          if (params.value !== undefined) {
-            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-          } else {
-            return ''
-          }
-        },
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
-      },
-      { field: 'LIMITAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      {
+      },{
         field: 'TOTALARREARS',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
@@ -95,7 +73,8 @@ export class RelegateComponent implements OnInit {
       { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BRANCHCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BRANCHNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'COLOFFICER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'REQUESTBY', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'REQUESTDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
     ];
     this.defaultColDef = {
       width: 120,
@@ -119,10 +98,7 @@ export class RelegateComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-        //console.log(JSON.stringify(params.request, null, 1));
-
-        //fetch(environment.nodeapi + '/gridviewall/viewall', {
-          fetch(environment.api + '/api/tqall/gridviewall', {
+          fetch(environment.nodeapi + '/relegationapprovals/all', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

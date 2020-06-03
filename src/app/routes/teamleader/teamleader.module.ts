@@ -5,8 +5,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { RelegateComponent } from './relegate/relegate.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'accounts' },
-    { path: 'accounts', component: RelegateComponent }
+    { path: '', redirectTo: 'relegationapprovals' },
+    { path: 'relegationapprovals', component: RelegateComponent }
 ];
 
 @NgModule({

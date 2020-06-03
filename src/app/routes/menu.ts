@@ -52,8 +52,8 @@ const Reports = {
 };
 
 const Relegate = {
-    text: 'Due for Relegation',
-    link: '/teamleader/accounts',
+    text: 'Relegation Approvals',
+    link: '/teamleader/relegationapprovals',
     icon: 'icon-loop'
 };
 
