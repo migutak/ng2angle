@@ -13,7 +13,7 @@
                       <div class="card-body">
                         <form class="form-horizontal" autocomplete="off">
                           <div class="form-group row">
-                            <label class="col-xl-4 col-form-label">Demand</label>
+                            <label class="col-xl-2 col-form-label">Demand</label>
                             <div class="col-xl-8">
                               <select class="form-control" name="demand" id="demand" [(ngModel)]="model.demand" #demand="ngModel"
                                 [ngClass]="{ 'is-invalid': demand.invalid }" required>
@@ -22,21 +22,21 @@
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label class="col-xl-4 col-form-label">accnumber</label>
+                            <label class="col-xl-2 col-form-label">accnumber</label>
                             <div class="col-xl-8">
                               <input class="form-control" type="text" name="accnumber" id="accnumber" [(ngModel)]="model.accnumber"
                                 #accnumber="ngModel" [ngClass]="{ 'is-invalid': accnumber.invalid }" required />
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label class="col-xl-4 col-form-label">custnumber</label>
+                            <label class="col-xl-2 col-form-label">custnumber</label>
                             <div class="col-xl-8">
                               <input class="form-control" type="text" name="custnumber" id="custnumber" [(ngModel)]="model.custnumber"
                                 #custnumber="ngModel" [ngClass]="{ 'is-invalid': custnumber.invalid }" required />
                             </div>
                           </div>
                           <div class="form-group row">
-                              <label class="col-xl-4 col-form-label">address</label>
+                              <label class="col-xl-2 col-form-label">address</label>
                               <div class="col-xl-8">
                                 <input class="form-control" type="text" name="addressline1" id="addressline1" [(ngModel)]="model.addressline1"
                                   #addressline1="ngModel" [ngClass]="{ 'is-invalid': addressline1.invalid }" list="daddress" required />
@@ -48,7 +48,7 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label class="col-xl-4 col-form-label">postcode</label>
+                              <label class="col-xl-2 col-form-label">postcode</label>
                               <div class="col-xl-8">
                                 <input class="form-control" type="text" name="postcode" id="postcode" [(ngModel)]="model.postcode"
                                   #postcode="ngModel" [ngClass]="{ 'is-invalid': postcode.invalid }" list="dpostcode" required />
@@ -60,7 +60,7 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label class="col-xl-4 col-form-label">email address</label>
+                              <label class="col-xl-2 col-form-label">email address</label>
                               <div class="col-xl-8">
                                 <input class="form-control" type="email" name="emailaddress" id="emailaddress" [(ngModel)]="model.emailaddress"
                                   #emailaddress="ngModel" [ngClass]="{ 'is-invalid': emailaddress.invalid }" list="browsers" required email />
@@ -72,7 +72,7 @@
                               </div>
                             </div>
                           <div class="form-group row">
-                              <label class="col-xl-4 col-form-label">cellnumber</label>
+                              <label class="col-xl-2 col-form-label">cellnumber</label>
                               <div class="col-xl-8">
                                 <input class="form-control" type="text" name="celnumber" id="celnumber" [(ngModel)]="model.celnumber"
                                   #celnumber="ngModel" [ngClass]="{ 'is-invalid': celnumber.invalid }" list="cellnumber" required />
@@ -83,7 +83,7 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-xl-4 col-form-label">Save to contacts</label>
+                                <label class="col-xl-2 col-form-label">Save to contacts</label>
                                 <div class="col-xl-8">
                                     <button [disabled]="emailaddress.invalid || celnumber.invalid" class="mb-1 mr-1 btn btn-sm btn-link  col-form-label" type="button" (click)="savecontacts(model)">
                                         <span class="btn-label"><i class="fas fa-exclamation-triangle"></i>
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                           <div class="form-group row">
-                            <label class="col-xl-4 col-form-label">Preview</label>
+                            <label class="col-xl-2 col-form-label"></label>
                             <div class="col-xl-8">
                               <div class="form-check form-check-inline">
                                 <input class="form-check-input" id="inlineCheckbox1" type="checkbox" [(ngModel)]="model.showlogo"
@@ -111,48 +111,55 @@
                             </div>
                           </div>
                           <div class="form-group row">
-                            <label class="col-xl-4 col-form-label"></label>
-                            <div class="col-xl-4">
-                              <input id="previewtosend" type="checkbox" name="previewtosend" id="previewtosend"
+                            <label class="col-xl-2 col-form-label"></label>
+                            <div class="col-xl-8">
+                              
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="previewtosend" type="checkbox" name="previewtosend" id="previewtosend"
                                 [(ngModel)]="model.previewtosend" #previewtosend="ngModel" />
-                              <label for="previewtosend"> Preview and send physically</label>
+                              <label for="previewtosend">Preview and send physically</label>
+                              </div>
+                              
                             </div>
-                            <div class="col-xl-4">
+                            
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-xl-2 col-form-label"></label>
+                            <div class="col-md-8">
                               <button [disabled]="demand.invalid" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label"
-                                type="button" (click)="openletter_choose(model)">Preview letter</button>
+                              type="button" (click)="openletter_choose(model)">Preview letter</button>
                             </div>
                           </div>
                         </form>
+                          <div class="form-group row">
+                            <label class="col-xl-2 col-form-label"></label>
+                            <div class="col-md-8">
+                              <label class="checkbox c-checkbox c-checkbox-rounded">
+                                <input id="sendemailinput" type="checkbox" [disabled]="!emailaddress.valid || demand.invalid" name="sendemail" id="sendemail"
+                                  [(ngModel)]="model.sendemail" #sendemail="ngModel" />
+                                <span class="fa fa-check"></span>Send to email</label>
+                              <label class="checkbox c-checkbox c-checkbox-rounded">
+                                <input type="checkbox" [disabled]="!addressline1.valid || demand.invalid" name="sendpostal" id="sendpostal"
+                                  [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
+                                <span class="fa fa-check"></span>Send to post address</label>
+                              <label class="checkbox c-checkbox c-checkbox-rounded">
+                                <input type="checkbox" [disabled]="!celnumber.valid || demand.invalid" name="sendbysms" id="sendbysms"
+                                  [(ngModel)]="model.sendbysms" #sendbysms="ngModel" />
+                                <span class="fa fa-check"></span>SMS delivery</label>
+                            </div>
+                          </div>
+                        <div class="form-group row">
+                          <label class="col-xl-2 col-form-label"></label>
+                          <div class="col-xl-8">
+                            <button [disabled]="!model.sendemail && !model.sendbysms" class="mb-1 mr-1 btn btn-sm btn-outline-info  col-form-label" type="button" (click)="generate_choose()">Generate
+                              & Send</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                <fieldset>
-                    <div class="form-group row">
-                      <label class="col-md-0 col-form-label"></label>
-                      <div class="col-md-12">
-                        <label class="checkbox c-checkbox c-checkbox-rounded">
-                          <input id="sendemailinput" type="checkbox" [disabled]="!emailaddress.valid || demand.invalid" name="sendemail" id="sendemail"
-                            [(ngModel)]="model.sendemail" #sendemail="ngModel" />
-                          <span class="fa fa-check"></span>Send to email</label>
-                        <label class="checkbox c-checkbox c-checkbox-rounded">
-                          <input type="checkbox" [disabled]="!addressline1.valid || demand.invalid" name="sendpostal" id="sendpostal"
-                            [(ngModel)]="model.sendpostal" #sendpostal="ngModel" />
-                          <span class="fa fa-check"></span>Send to post address</label>
-                        <label class="checkbox c-checkbox c-checkbox-rounded">
-                          <input type="checkbox" [disabled]="!celnumber.valid || demand.invalid" name="sendbysms" id="sendbysms"
-                            [(ngModel)]="model.sendbysms" #sendbysms="ngModel" />
-                          <span class="fa fa-check"></span>SMS delivery</label>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <div class="form-group row">
-                    <label class="col-xl-4 col-form-label"></label>
-                    <div class="col-xl-8">
-                      <button [disabled]="!model.sendemail && !model.sendbysms" class="btn btn-sm btn-secondary" type="button" (click)="generate_choose()">Generate
-                        & Send</button>
-                    </div>
-                  </div>
+                
             </ng-template>
           </ngb-tab>
           <ngb-tab title="Upload a demand letter">

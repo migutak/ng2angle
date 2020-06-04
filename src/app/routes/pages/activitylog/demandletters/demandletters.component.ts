@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 
 const URL = environment.filesapi;
 const apiUrl = environment.letters_api;
+const envsms = environment.sendsms;
 
 @Component({
   selector: 'app-demandletters',
@@ -573,8 +574,8 @@ export class DemandLettersComponent implements OnInit {
         }); // end
       } // end send demandbyemail
 
-      // send demandbysms
-      if (this.model.sendbysms) {
+      // send demandbysms live env
+      if (this.model.sendbysms && !envsms) {
         const smsbody = {
           "accountSid": license.accountSid,
           "authToken": license.authToken,
@@ -583,7 +584,6 @@ export class DemandLettersComponent implements OnInit {
           "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
         }
         this.ecolService.sendDemandsms(smsbody).subscribe(response => {
-          console.log(response);
           if (response.result === 'OK') {
             // add to history
             this.demandshistory(this.demandhisdetails);
@@ -596,108 +596,38 @@ export class DemandLettersComponent implements OnInit {
             this.poperrorToast(response.response.message);
           }
         });
-      } // end demandbysms
-    }
+      } // end demandbysms live env
 
-    /*this.ecolService.generateLetter(letter).subscribe(uploaddata => {
-      if (uploaddata.result === 'success') {
-        
-        this.popsuccessToast('Letter generated ...');
-        // save to history
-        this.demandhisdetails = {
-          'accnumber': this.model.accnumber,
-          'custnumber': this.model.custnumber,
-          'address': this.model.addressline1,
-          'email': this.model.emailaddress,
-          'telnumber': this.model.telnumber,
-          'filepath': uploaddata.message,
-          'filename': uploaddata.filename,
-          'datesent': new Date(),
-          'owner': this.username,
-          'byemail': this.model.sendemail,
-          'byphysical': this.model.sendphysical,
-          'bypost': this.model.sendpostal,
-          'demand': letter.demand,
-          'customeremail': this.model.emailaddress,
-          'status': 'queued',
-          'reissued': 'N',
-          'guarantorsno': this.guarantors.length || [],
-          'guarantorsemail': this.guarantoremails,
-          'sendemail': letter.branchemail || 'Customer Service <Customerservice@co-opbank.co.ke>'
+      // send demandbysms home env
+      if (this.model.sendbysms && envsms) {
+        // upload letter to s3
+        const letterpath = {
+          filepath: uploaddata.message,
+          filename: uploaddata.filename,
         };
-        //
-        this.emaildata.file = uploaddata.message;
-        // use uploaded fie on email
-        if (this.model.uploadedfile) {
-          this.emaildata.file = this.uploadedfilepath;
-        }
-
-        // send demandbyemail
-        if (this.model.sendemail) {
-          this.ecolService.sendDemandEmail(this.emaildata).subscribe(response => {
-            if (response.result === 'fail') {
-              swal.close();
-              this.poperrorToast('Letter not sent on email!');
-            } else {
-              // add to history
-              // console.log('to history ', this.demandhisdetails)
-              this.demandshistory(this.demandhisdetails);
-              this.getdemandshistory(this.accnumber);
-              // send sms
-              this.ecolService.getsmsmessage(letter.demand).subscribe(respo => {
-                const sms = respo.smstemplate;
-                this.smsMessage = sms.replace('[emailaddressxxx]', 'email address ' + this.model.emailaddress);
-                const smsdata = {
-                  'demand': letter.demand,
-                  'custnumber': this.model.custnumber,
-                  'accnumber': this.model.accnumber,
-                  'telnumber': this.model.celnumber,
-                  'owner': this.username,
-                  'message': this.smsMessage,
-                };
-                this.sendsms(smsdata);
-              }, error => {
-                console.log(error);
-              });
-
-              swal.close();
-              this.popsuccessToast('Letter sent on email!');
-            }
-          }); // end
-        }
-
-        // send demandbysms
-        if (this.model.sendbysms) {
-          const smsbody = {
-            "accountSid": license.accountSid,
-            "authToken": license.authToken,
-            "to": this.model.celnumber,
-            "from": license.from,
-            "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
-          }
-          this.ecolService.sendDemandsms(smsbody).subscribe(response => {
-            console.log(response);
-            if (response.result === 'OK') {
-              // add to history
-              this.demandshistory(this.demandhisdetails);
-              this.getdemandshistory(this.accnumber);
-
-              swal.close();
-              this.popsuccessToast('Letter sent on sms!');
-            } else {
-              swal.close();
-              this.poperrorToast(response.response.message);
-            }
-          });
-        }
-      } else {
-        // error in letter generation
-        swal('Error!', 'Error generating letter!', 'error');
-      }
-    }, error => {
-      console.log(error);
-      swal('Error!', 'Cannot generate letter!', 'error');
-    });*/
+        this.httpClient.post<any>(environment.s3link, letterpath).subscribe(ddresp => {
+          // add to history
+          this.demandshistory(this.demandhisdetails);
+          this.getdemandshistory(this.accnumber);
+          // send sms
+          const smsdata = {
+            'demand': letter.demand,
+            'custnumber': this.model.custnumber,
+            'accnumber': this.model.accnumber,
+            'telnumber': this.model.celnumber,
+            'owner': this.username,
+            "message": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: "+ ddresp.message + "\n\nCo-op Bank\nRemedial Credit Department "
+          };
+          this.sendsms(smsdata);
+          swal('Successful!', 'Demand letter sent!', 'success');
+        }, error => {
+          console.log(error);
+          swal('Error!', 'Error occurred during sending email!', 'error');
+          
+        })
+        
+      } // end demandbysms home env
+    }
   }  // end generateletter
 
   processlettercc(demand, cardacct, emailaddress) {

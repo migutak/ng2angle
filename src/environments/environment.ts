@@ -2,15 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-var host = process.env.BACKEND_HOST || 'http://localhost:';
-var manuals = process.env.MANUAL || 'C:\\ecol_manuals\\';
-var path = process.env.BACKEND_PATH || 'd:\\demands\\';
-var ptpreport = process.env.PTPREPORT || '';
-var homedash = process.env.HOMEDASH || '';
-var workflow = process.env.WORKFLOW || host + '8088/sysworkflow/en/neoclassic/login/login';
-var portfoliodash = process.env.PORTFOLIODASH || '';
-var accplanreport = process.env.ACCPLANREPORT || '';
-var xlstemplate = process.env.XLSTEMPLATE || 'C:\\templates\\upload_notes.xlsx';
+var host = 'http://localhost:';
+var manuals = 'C:\\ecol_manuals\\';
+var path = 'd:\\demands\\';
+var ptpreport = '';
+var homedash = '';
+var workflow = host + '8088/sysworkflow/en/neoclassic/login/login';
+var portfoliodash = '';
+var accplanreport = '';
+var xlstemplate = 'C:\\templates\\upload_notes.xlsx';
 var repossessLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/4437708915ec5876a680fe5036008759/4164212795ec587e2d73467086569707.php';
 var woffLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
 var calcelipfLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
@@ -34,6 +34,7 @@ export const environment = {
   applink: host + 4500,
   emailapi: host + '8005/demandemail/email',
   demandsmsapi: host + 7000,
+  s3link: host + '8010/app/files-to-s3',
   auth: host + '/adlogin',
   filesapi: host + '3000/filesapi', // activityupload
   accplanlink: host + 3001,
