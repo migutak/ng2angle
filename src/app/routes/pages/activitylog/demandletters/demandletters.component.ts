@@ -576,26 +576,7 @@ export class DemandLettersComponent implements OnInit {
 
       // send demandbysms live env
       if (this.model.sendbysms && !envsms) {
-        const smsbody = {
-          "accountSid": license.accountSid,
-          "authToken": license.authToken,
-          "to": this.model.celnumber,
-          "from": license.from,
-          "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: https://bit.ly/2OfHuEh\n\nCo-op Bank\nCredit Department "
-        }
-        this.ecolService.sendDemandsms(smsbody).subscribe(response => {
-          if (response.result === 'OK') {
-            // add to history
-            this.demandshistory(this.demandhisdetails);
-            this.getdemandshistory(this.accnumber);
 
-            swal.close();
-            this.popsuccessToast('Letter sent on sms!');
-          } else {
-            swal.close();
-            this.poperrorToast(response.response.message);
-          }
-        });
       } // end demandbysms live env
 
       // send demandbysms home env
@@ -616,16 +597,29 @@ export class DemandLettersComponent implements OnInit {
             'accnumber': this.model.accnumber,
             'telnumber': this.model.celnumber,
             'owner': this.username,
-            "message": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: "+ ddresp.message + "\n\nCo-op Bank\nRemedial Credit Department "
+            "message": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: " + ddresp.message + "\n\nCo-op Bank\nRemedial Credit Department "
           };
           this.sendsms(smsdata);
+          // twilio
+          const smsbody = {
+            "accountSid": license.accountSid,
+            "authToken": license.authToken,
+            "to": this.model.celnumber,
+            "from": license.from,
+            "body": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: " + ddresp.message + "\n\nCo-op Bank\nRemedial Credit Department "
+          }
+          this.ecolService.sendDemandsms(smsbody).subscribe(response => {
+
+          }, error => {
+            console.log(error)
+          });
           swal('Successful!', 'Demand letter sent!', 'success');
         }, error => {
           console.log(error);
           swal('Error!', 'Error occurred during sending email!', 'error');
-          
+
         })
-        
+
       } // end demandbysms home env
     }
   }  // end generateletter

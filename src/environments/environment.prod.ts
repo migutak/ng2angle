@@ -34,6 +34,7 @@ export const environment = {
   demandsmsapi: host + "/sms",
   auth: auth,
   filesapi: host + '/filesapi',
+  s3link: host + '8010/app/files-to-s3',
   accplanlink: accplanlink,
   kibanarpt: kibanarpt,
   manuals_path: manuals,
