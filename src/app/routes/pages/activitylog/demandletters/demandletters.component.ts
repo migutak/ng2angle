@@ -576,7 +576,18 @@ export class DemandLettersComponent implements OnInit {
 
       // send demandbysms live env
       if (this.model.sendbysms && !envsms) {
-
+        const smsdata = {
+          'demand': letter.demand,
+          'custnumber': this.model.custnumber,
+          'accnumber': this.model.accnumber,
+          'telnumber': this.model.celnumber,
+          'owner': this.username,
+          "message": "Dear Customer,\nPlease download your " + this.model.demand + " from this link: " + uploaddata.message + "\n\nCo-op Bank\nRemedial Credit Department "
+        };
+        this.sendsms(smsdata);
+        // demandhistory
+        this.demandshistory(this.demandhisdetails);
+        this.getdemandshistory(this.accnumber);
       } // end demandbysms live env
 
       // send demandbysms home env

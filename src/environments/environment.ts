@@ -39,7 +39,7 @@ export const environment = {
   filesapi: host + '3000/filesapi', // activityupload
   accplanlink: host + 3001,
   kibanarpt: host + 5601,
-  birt: host + ':8787/birt',
+  birt: host + '8787/birt',
   manuals_path: manuals,
   portfoliodash: portfoliodash,
   portal: host + 4300,

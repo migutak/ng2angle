@@ -234,7 +234,7 @@ export class BulknotesComponent implements OnInit {
         swal({
           type: 'error',
           title: 'Limit Exceeded!',
-          text: 'Total rows of '+this.outdata.length+' exceeds 1,000 max limit',
+          text: 'Total rows of '+this.outdata.length+' exceeds 2,000 max limit',
         });
         this.myInputVariable.nativeElement.value = '';
         document.getElementById('output').innerHTML = '';
