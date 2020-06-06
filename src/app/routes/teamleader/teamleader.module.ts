@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { SharedModule } from '../../shared/shared.module';
 import { RelegateComponent } from './relegate/relegate.component';
+import { WriteoffapprovalsComponent } from './writeoffapprovals/writeoffapprovals.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'relegationapprovals' },
-    { path: 'relegationapprovals', component: RelegateComponent }
+    { path: 'relegationapprovals', component: RelegateComponent },
+    { path: 'writeoffapprovals', component: WriteoffapprovalsComponent }
 ];
 
 @NgModule({
@@ -16,7 +18,8 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     declarations: [
-        RelegateComponent
+        RelegateComponent,
+        WriteoffapprovalsComponent
     ],
     exports: [
         RouterModule

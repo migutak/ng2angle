@@ -47,7 +47,8 @@ export class ActivityActionComponent implements OnInit {
   party: any = [];
   cure: any = [];
   excuse: any = [];
-  capture = true;
+  capture:boolean= true;
+  ptpcaptured:boolean = true;
   ptps: any = [];
   static: any = [];
   ptp_m: any = {};
@@ -57,6 +58,7 @@ export class ActivityActionComponent implements OnInit {
   isptptosave = false;
   p = 1;
   autodial_telnumber: string;
+  emailaddress: string;
   ptpid: any = 0;
   repo: boolean = false;
   ipf: boolean = false;
@@ -86,7 +88,7 @@ export class ActivityActionComponent implements OnInit {
   ];
 
   message: string;
-
+  ptpamount: number =0;
   reviewers: any = [];
   account: any = [];
   sys = 'collections';
@@ -179,6 +181,7 @@ export class ActivityActionComponent implements OnInit {
       this.account = data[0];
       this.autodial_telnumber = this.account.cellnumber || this.account.mobile || this.account.phonenumber || this.account.telnumber || this.account.celnumber;
       this.model.emailaddress = data[0].emailaddress;
+      this.emailaddress = data[0].emailaddress;
       this.getstatic(this.accnumber);
 
     });
@@ -302,14 +305,13 @@ export class ActivityActionComponent implements OnInit {
   get f() { return this.actionForm.controls; }
 
   buildForm() {
-    // get static data
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
       party: [{ value: '', disabled: true }],
       ptpamount: [{ value: 0, disabled: true }],
-      ptpemail: [{ value: '', disabled: true }],
-      toemail: [{ value: this.model.emailaddress, disabled: true }],
-      ptpsms: [{ value: '', disabled: true }],
+      toemail: [{ value: '', disabled: false }],
+      toemailaddress: [{ value: this.emailaddress, disabled: false  }],
+      ptpsms: [{ value: '', disabled: false }],
       ptpsmsnumber: [{ value: this.autodial_telnumber, disabled: true }],
       ptp: [{ value: 'No', disabled: true }],
       ptptype: [{ value: '', disabled: true }],
@@ -325,21 +327,26 @@ export class ActivityActionComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onactivitySubmit() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.actionForm.invalid) {
-      alert('Please fill all required fields');
+      //alert('Please fill all required fields');
       return;
     }
 
-    /*if (this.f.ptpemail.value && this.f.toemail.value == '') {
-      alert('Please fill Customer email');
+    if (this.f.ptp.value == 'Yes' && this.ptps.length == 0) {
+     swal('Alert','Please Capture Promises ','warning');
       return;
-    }*/
+    }
+
+    if (this.f.toemail.value && this.f.toemailaddress.value == '') {
+      swal('Alert','Please fill Customer email','warning');
+      return;
+    }
 
     if (this.f.ptpsms.value && this.f.ptpsmsnumber.value == '') {
-      alert('Please fill Customer Mobile number');
+      swal('Alert','Please fill Customer Mobile number','warning');
       return;
     }
 
@@ -354,14 +361,13 @@ export class ActivityActionComponent implements OnInit {
     this.savebody = {
       collectoraction: this.f.collectoraction.value,
       party: this.f.party.value,
-      ptpamount: this.f.ptpamount.value,
+      ptpamount: this.ptpamount,
       ptp: this.f.ptp.value,
       ptpdate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
-      ptpemail: this.f.ptpemail.value,
+      toemailaddress: this.f.toemailaddress.value,
       toemail: this.f.toemail.value,
       ptpsms: this.f.ptpsms.value,
       ptpsmsnumber: this.f.ptpsmsnumber.value,
-      // tslint:disable-next-line:max-line-length + '   Reason details: ' + this.f.rfdother.value + '   Reason for default: ' + this.f.reason.value
       collectornote: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
@@ -382,21 +388,28 @@ export class ActivityActionComponent implements OnInit {
       this.savebody.noteimp = 'Y';
     }
 
-    if (this.f.ptpemail.value) {
+    if (this.f.toemail.value) {
       // send ptp reminder email
       const ptpemailbody = {
-        toemail: '',
-        ccemail: this.username,
-        ptpamount: 0,
-        ptpdate: 0
+        toemail: this.f.toemailaddress.value,
+        ccemail: this.username+'@co-opbank.co.ke',
+        ptpamount: this.ptps
       }
+
+      console.log(ptpemailbody)
     }
 
 
     // add action
     this.ecolService.postactivitylogs(this.savebody).subscribe(data => {
       this.sendNotesData(this.custnumber);
-      this.sendPtpsData(this.accnumber);
+
+      // save ptps
+      if (this.f.ptp.value == 'Yes') {
+        this.saveallptps();
+        this.sendPtpsData(this.accnumber);
+      }
+      
       // watch stream put watch_static
       if (this.sys === 'watchcc') {
         const watchccbody = {
@@ -579,33 +592,30 @@ export class ActivityActionComponent implements OnInit {
           swal({
             type: 'error',
             title: 'Oops...',
-            text: 'a/c already has a running promise to pay. Check under Promises to pay menu'
+            text: 'This a/c already has a running promise to pay. Check under Promises to pay'
           }).then((result) => {
             this.actionForm.controls.ptp.setValue('No');
           });
         }
       });
 
-      this.actionForm.controls.ptptype.enable();
-      this.actionForm.controls.ptpemail.enable();
-      this.actionForm.controls.toemail.enable();
-      this.actionForm.controls.ptpsms.enable();
+      //this.actionForm.controls.ptptype.enable();
       this.actionForm.controls.ptpsmsnumber.enable();
+      this.actionForm.controls.ptpsms.setValue(false);
+      this.actionForm.controls.toemail.setValue(false);
+      this.capture = false;
     } else {
-      this.actionForm.controls.ptpamount.disable();
-      this.actionForm.controls.ptpdate.disable();
-      this.actionForm.controls.ptptype.disable();
-      this.actionForm.controls.ptpamount.setValue(0);
-      this.actionForm.controls.ptpdate.setValue(Date());
-      this.actionForm.controls.ptptype.setValue('');
-      this.actionForm.controls.ptpemail.setValue('');
-      this.actionForm.controls.ptpemail.disable();
-      // this.actionForm.controls.ptpsmsnumber.setValue('');
-      this.actionForm.controls.ptpsmsnumber.disable();
-      this.actionForm.controls.ptpsms.setValue('');
-      this.actionForm.controls.ptpsms.disable();
-      // this.actionForm.controls.toemail.setValue('');
-      this.actionForm.controls.toemail.disable();
+      //this.actionForm.controls.ptpamount.disable();
+      //this.actionForm.controls.ptpdate.disable();
+      //this.actionForm.controls.ptptype.disable();
+      //this.actionForm.controls.ptpamount.setValue(0);
+      //this.actionForm.controls.ptpdate.setValue(Date());
+      //this.actionForm.controls.ptptype.setValue('');
+      this.actionForm.controls.ptpsms.setValue(false);
+      this.actionForm.controls.toemail.setValue(false);
+      this.capture = true;
+      this.ptpcaptured = true;
+      this.ptps = [];
     }
   }
 
@@ -615,13 +625,12 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.ptpamount.enable();
       this.actionForm.controls.ptpdate.enable();
     } else {
-      // this.capture = false;
+      this.capture = false;
       this.actionForm.controls.ptpamount.disable();
       this.actionForm.controls.ptpdate.disable();
       this.actionForm.controls.ptpamount.setValue(0);
       this.actionForm.controls.ptpdate.setValue(Date());
 
-      this.openptpModal();
     }
   }
 
@@ -630,19 +639,25 @@ export class ActivityActionComponent implements OnInit {
     window.open(environment.applink + '/multipleptp?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=collections', '_blank');
   }
 
-  openptpModal() {
-    // open modal
-    //this.ngxSmartModalService.getModal('myModal').open()
+  showptpcaptured() {
+    if(this.ptps.length > 0) {
+      this.ptpcaptured = false;
+    } else {
+      this.ptpcaptured = true;
+    }
   }
 
   deleteptp(form) {
     const index: number = this.ptps.indexOf(form);
     if (index !== -1) {
       this.ptps.splice(index, 1);
+      this.ptpamount = this.ptpamount - parseInt(form.ptpamount);
       if (this.ptps.length === 0) {
         this.isptptosave = false;
       }
     }
+
+    this.showptpcaptured();
   }
 
   ptpfunc(form) {
@@ -650,20 +665,22 @@ export class ActivityActionComponent implements OnInit {
     const ptpdate = (moment(form.value.ptpdate).format('DD-MMM-YYYY')).toUpperCase();
     const owner = this.username;
     const accnumber = this.accnumber;
+    const paymode = form.value.paymode;
 
-    this.ptps.push({ ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber });
-    this.ptpmultiple = {};
+    this.ptps.push({ promisedate: ptpdate, ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber, paymode:paymode, arramount: this.account.totalarrears});
     this.isptptosave = true;
+    this.ptpamount = this.ptpamount + parseInt(ptpamount);
+
+    this.showptpcaptured();
+    
   }
 
   saveallptps() {
     this.ecolService.postptps(this.ptps).subscribe(resp => {
-      swal('Successful!', 'Mupltiple ptp saved!', 'success').then(function () {
-        // this.ngxSmartModalService.getModal('myModal').close()
-      });
+      
     }, error => {
       console.log(error);
-      swal('Error!', 'Error occurred during processing!', 'error');
+      swal('Error!', 'Error occurred during processing - ptps!', 'error');
     });
   }
 

@@ -27,18 +27,6 @@ const Manuals = {
     icon: 'icon-doc'
 };
 
-/*const Dashboard = {
-    text: 'Dashboard',
-    link: '/dashboard',
-    icon: 'icon-speedometer',
-    submenu: [
-        {
-            text: 'Dashboards',
-            link: '/reports/dashboards'
-        }
-    ]
-};*/
-
 const Dashboard = {
     text: 'Dashboards',
     link: '/reports/dashboards',
@@ -55,6 +43,12 @@ const Relegate = {
     text: 'Relegation Approvals',
     link: '/teamleader/relegationapprovals',
     icon: 'icon-loop'
+};
+
+const Writeoffapprovals = {
+    text: 'Writeoff Approvals',
+    link: '/teamleader/writeoffapprovals',
+    icon: 'icon-list'
 };
 
 const Allocations = {
@@ -602,7 +596,6 @@ const teamleader_menu = [
     headingComponents,
     Work,
     Work_cc,
-    // Predelq,
     mcoopcash,
     assetfinance,
     serviceproviders,
@@ -613,6 +606,7 @@ const teamleader_menu = [
     Reports,
     headingRelegate,
     Relegate,
+    Writeoffapprovals,
     Allocations,
     headingConfigurations,
     Demandletters,
