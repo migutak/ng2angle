@@ -168,7 +168,7 @@ export class ViewallComponent implements OnInit {
     this.model = event.node.data;
     if(this.model.ACCNUMBER == event.value) {
     // tslint:disable-next-line:max-line-length
-     window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
+     window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections&nationid=' + this.model.NATIONID, '_blank');
     }
   }
 

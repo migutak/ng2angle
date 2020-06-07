@@ -162,14 +162,13 @@ export class AccPlanComponent implements OnInit {
           }
           this.update_s_accounts(acc);
           this.changeAction(this.currentplan[0].planid);
-          alert('plan updated!');
+          swal('OK','A/C Plan updated!','success');
         } else {
           // adding new
           // console.log('this.currentplan', this.currentplan);
           // console.log(acc);
           this.ecolService.saveaccountplan(this.currentplan).subscribe(data => {
-            alert('plan saved');
-            // console.log(data);
+            swal('OK','A/C Plan saved','success');
             this.changeAction(this.currentplan[0].planid);
             //
             const acc = {

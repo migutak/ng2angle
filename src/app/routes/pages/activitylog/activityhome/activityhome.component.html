@@ -1,6 +1,11 @@
-<div class="content-heading">Account information</div>
+<div class="content-heading"></div>
 <div class="card">
 <ngb-tabset (tabChange)="beforeChange($event)">
+    <ngb-tab title="Customer Profile">
+        <ng-template ngbTabContent>
+            profile
+        </ng-template>
+    </ngb-tab>
     <ngb-tab title="Account info">
         <ng-template ngbTabContent>
             <div>
@@ -82,22 +87,18 @@
     </ngb-tab>
     <ngb-tab title="Other accounts">
         <ng-template ngbTabContent>
-            <!--<form>
-                <div class="form-group form-inline">
-                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-                </div> ; index as i  <th scope="row">{{ i + 1 }}</th> <th scope="col">#</th>
-            </form>-->
             <div class="loader" *ngIf="loader"></div>
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         
-                        <th scope="col">accnumber</th>
-                        <th scope="col">productcode</th>
-                        <th scope="col">oustbalance</th>
+                        <th scope="col">Accnumber</th>
+                        <th scope="col">Productcode</th>
+                        <th scope="col">Oustbalance</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <pre *ngIf="withotheraccs">No data</pre>
                     <tr *ngFor="let other of otheraccs | paginate: { itemsPerPage: 5, currentPage: p }">
                        
                         <td>
@@ -116,15 +117,16 @@
         <ng-template ngbTabContent>
                 <div class="loader" *ngIf="loader"></div>
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">description</th>
-                        <th scope="col">forced sale value</th>
-                        <th scope="col">market value</th>
+                        <th scope="col">Collateral Description</th>
+                        <th scope="col">Forced sale value</th>
+                        <th scope="col">Market value</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <pre *ngIf="withcollateral">No data</pre>
                     <tr *ngFor="let c of collaterals; index as i">
                         <th scope="row">{{ i + 1 }}</th>
                         <td>
@@ -142,7 +144,7 @@
         <ng-template ngbTabContent>
                 <div class="loader" *ngIf="loader"></div>
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
@@ -152,6 +154,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <pre *ngIf="withdirectors">No data</pre>
                     <tr *ngFor="let director of directors; index as i">
                         <th scope="row">{{ i + 1 }}</th>
                         <td>
@@ -168,14 +171,9 @@
     </ngb-tab>
     <ngb-tab title="Credit card">
         <ng-template ngbTabContent>
-            <!--<form>
-                            <div class="form-group form-inline">
-                                Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-                            </div>
-                        </form>-->
             <div class="loader" *ngIf="loader"></div>
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">CardNumber</th>
@@ -186,6 +184,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <pre *ngIf="withcreditcards">No data</pre>
                     <tr *ngFor="let card of cards; index as i">
                         <th scope="row">{{ i + 1 }}</th>
                         <td>
@@ -205,23 +204,19 @@
             .
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="with same idNumber">
+    <ngb-tab title="A/Cs With same NationID">
         <ng-template ngbTabContent>
-            <!--<form>
-                                <div class="form-group form-inline">
-                                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-                                </div>
-                            </form>-->
             <table class="table table-striped">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">accnumber</th>
-                        <th scope="col">arocode</th>
-                        <th scope="col">oustbalance</th>
+                        <th scope="col">Accnumber</th>
+                        <th scope="col">Arocode</th>
+                        <th scope="col">Oustbalance</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <pre *ngIf="withsameid">No data</pre>
                     <tr *ngFor="let d of accwithid; index as i">
                         <th scope="row">{{ i + 1 }}</th>
                         <td>
@@ -235,10 +230,6 @@
             .
         </ng-template>
     </ngb-tab>
-    <!--<ngb-tab title="CRB Balances" [disabled]="true">
-        <ng-template ngbTabContent>
-        </ng-template>
-    </ngb-tab>-->
 </ngb-tabset>
 </div>
 <!---<form class="card">

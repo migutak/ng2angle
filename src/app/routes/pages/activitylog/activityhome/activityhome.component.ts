@@ -3,6 +3,7 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { EcolService } from '../../../../services/ecol.service';
 import { environment } from '../../../../../environments/environment';
+import swal from 'sweetalert2';
 
 const URL = environment.valor;
 
@@ -29,6 +30,11 @@ export class ActivityHomeComponent implements OnInit {
   collaterals: any = [];
   directors: any = [];
   accwithid: any = [];
+  withotheraccs: boolean = true;
+  withcreditcards: boolean = true;
+  withdirectors: boolean = true;
+  withcollateral: boolean = true;
+  withsameid: boolean = true;
 
   constructor(public settings: SettingsService,
     private route: ActivatedRoute,
@@ -117,7 +123,7 @@ export class ActivityHomeComponent implements OnInit {
   }
 
   beforeChange(active) {
-    // console.log(active.nextId);
+    console.log(active.nextId);
     const tab: string = active.nextId;
     switch (tab) {
       case 'ngb-tab-0': {
@@ -125,23 +131,26 @@ export class ActivityHomeComponent implements OnInit {
         break;
       }
       case 'ngb-tab-1': {
-        console.log('other a/cs tab ...');
-        this.loadother(this.custnumber);
+        // data loaded already on this.account
         break;
       }
       case 'ngb-tab-2': {
-        this.loadcollateral(this.accnumber);
+        this.loadother(this.custnumber);
         break;
       }
       case 'ngb-tab-3': {
-        this.loaddirectors(this.accnumber);
+        this.loadcollateral(this.accnumber);
         break;
       }
       case 'ngb-tab-4': {
-        this.loadcards(this.nationid);
+        this.loaddirectors(this.accnumber);
         break;
       }
       case 'ngb-tab-5': {
+        this.loadcards(this.nationid);
+        break;
+      }
+      case 'ngb-tab-6': {
         this.loadaccwithid(this.nationid);
         break;
       }
@@ -155,12 +164,14 @@ export class ActivityHomeComponent implements OnInit {
   loadother(custnumber) {
     this.loader = true;
     this.ecolService.otheraccs(custnumber).subscribe(data => {
-      // console.log(data.data);
+      if(data && data.data.length>0){
+        this.withotheraccs = false;
+      };
       this.otheraccs = data.data;
       this.loader = false;
     }, error => {
       console.log('loadother error ==>', error);
-      alert('unable to retrieve otheraccs');
+      swal('Error','Unable to retrieve otheraccs','error');
       this.loader = false;
     });
   }
@@ -168,11 +179,14 @@ export class ActivityHomeComponent implements OnInit {
   loadcollateral(accnumber) {
     this.loader = true;
     this.ecolService.collaterals(accnumber).subscribe(data => {
+      if(data && data.length){
+        this.withcollateral = false;
+      }
       this.collaterals = data.data;
       this.loader = false;
     }, error => {
       console.log('collaterals error ==>', error);
-      alert('unable to retrieve collaterals');
+      swal('Error','Unable to retrieve collaterals','error');
       this.loader = false;
     });
   }
@@ -180,11 +194,14 @@ export class ActivityHomeComponent implements OnInit {
   loaddirectors(accnumber) {
     this.loader = true;
     this.ecolService.directors(accnumber).subscribe(data => {
+      if(data && data.length){
+        this.withdirectors = false;
+      }
       this.directors = data;
       this.loader = false;
     }, error => {
       console.log('directors error ==>', error);
-      alert('unable to retrieve directors');
+      swal('Error','Unable to retrieve directors','error');
       this.loader = false;
     });
   }
@@ -192,25 +209,26 @@ export class ActivityHomeComponent implements OnInit {
   loadaccwithid(nationid) {
     this.loader = true;
     this.ecolService.accwithid(nationid).subscribe(data => {
+      if(data && data.length){
+        this.withsameid = false;
+      }
       this.accwithid = data;
       this.loader = false;
     }, error => {
       console.log('loadaccwithid error ==>', error);
-      alert('unable to retrieve accwithid');
+      swal('Error','Unable to retrieve accwithid','error');
       this.loader = false;
     });
   }
 
   loadptps(accnumber) {
-    console.log(accnumber);
     this.loader = true;
     this.ecolService.ptps(accnumber).subscribe(data => {
-      console.log('ptp', data);
       this.ptps = data;
       this.loader = false;
     }, error => {
       console.log('loadptps error ==>', error);
-      alert('unable to retrieve ptps');
+      swal('Error','Unable to retrieve ptps','error');
       this.loader = false;
     });
   }
@@ -218,6 +236,9 @@ export class ActivityHomeComponent implements OnInit {
   loadcards(nationid) {
     this.loader = true;
     this.ecolService.getcardwithid(nationid).subscribe(data => {
+      if(data && data.length){
+        this.withcreditcards = false;
+      }
       this.cards = data;
       this.loader = false;
     }, error => {

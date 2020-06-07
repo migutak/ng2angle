@@ -76,11 +76,12 @@
       </div>
     </div>
   </div>
-  <div [ngStyle]="{backgroundColor: getColor()}" class="row" [ngClass]="{NONE: plan === 'NONE'}">
+  <!--<div [ngStyle]="{backgroundColor: getColor()}" class="row" [ngClass]="{NONE: plan === 'NONE'}">
     <div style="padding-left: 10px; color: white">
       <p style="margin-left: 10px">Current Account Plan: {{plan}}</p>
     </div>
-  </div>
+  </div>-->
+  <pre [ngClass]="preclass">Current Account Plan: {{plan}}</pre>
   <div class="row">
     <div class="hidden-xs col-sm-2">
       <div class="fading-side-menu" data-spy="affix" data-offset-top="350" style="padding-left: 10px">

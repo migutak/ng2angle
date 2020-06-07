@@ -16,7 +16,7 @@ export class ScheduleComponent implements OnInit {
     bsValue = new Date();
     maxDate = new Date();
     bsConfig = {
-        containerClass: 'theme-angle'
+        //containerClass: 'theme-angle'
     }
 
     single: any[] = [

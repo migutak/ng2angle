@@ -126,7 +126,10 @@ export class AllCasesComponent implements OnInit {
     this.refreshfunc();
 }
 
-  
+onQuickFilterChanged() {
+  var inputValue = (<HTMLInputElement>document.getElementById('quickFilter')).value;
+  this.gridApi.setQuickFilter(inputValue);
+} 
 
   currencyFormatter(params) {
     if (params.value !== undefined) {
@@ -217,7 +220,7 @@ export class AllCasesComponent implements OnInit {
   refreshData(status) {
     this.http
       .get(
-        environment.nodeapi + '/tbl_writeoffs?filter[where][status]=' + status
+        environment.api + '/api/tbl_writeoffs?filter[where][status]=' + status
       )
       .subscribe(data => {
         this.gridApi.setRowData(data)

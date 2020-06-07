@@ -5,6 +5,7 @@ import { EcolService } from '../../../services/ecol.service';
 import { DataService } from '../../../services/data.service';
 import { environment } from '../../../../environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
+import swal from 'sweetalert2';
 
 const URL = environment.valor;
 
@@ -22,6 +23,7 @@ export class ActivityLogComponent implements OnInit {
   totalguarantors: number;
   totalfiles: number;
   totalwoffstory: number;
+  preclass = 'alert alert-danger';
 
   constructor(
     public settings: SettingsService,
@@ -174,8 +176,9 @@ export class ActivityLogComponent implements OnInit {
 
   planexists(accnumber) {
     this.ecolService.s_check_account_plans(accnumber).subscribe(data => {
-      // check if there if a plan
+      // check if there is a plan
       if (data && data.length) {
+        this.preclass = 'alert alert-success'
         this.ecolService.single_s_plans(data[0].planid).subscribe(plandata => {
           this.plan = plandata.plantitle;
         })
@@ -315,7 +318,7 @@ export class ActivityLogComponent implements OnInit {
   }
 
   dialAvaya() {
-    alert('avaya integration in progress!!!');
+    swal('info','avaya integration in progress!!!','warning')
   }
 
   // Changes colour of Account Plan Background, if None, will be red, if not none, will be Green
