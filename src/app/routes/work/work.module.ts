@@ -12,7 +12,8 @@ import { PredelqComponent } from './predelq/predelq.component';
 import { PtpsComponent } from './ptps/ptps.component';
 import { WithfundsComponent } from './withfunds/withfunds.component';
 import { RelegateComponent } from './relegate/relegate.component';
-import { JqxDomService } from '../../shared/jqwidgets-dom.service';
+import { PotentialwriteoffsComponent } from './potentialwriteoffs/potentialwriteoffs.component';
+
 //import { AgGridModule } from 'ag-grid-angular';
 import { AgGridModule } from '@ag-grid-community/angular';
 
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'predelq', component: PredelqComponent },
   { path: 'ptps', component: PtpsComponent },
   { path: 'withfunds', component: WithfundsComponent },
-  { path: 'relegate', component: RelegateComponent }
+  { path: 'relegate', component: RelegateComponent },
+  { path: 'potentialwriteoffs', component: PotentialwriteoffsComponent }
 ];
 
 @NgModule({
@@ -37,7 +39,8 @@ const routes: Routes = [
     PredelqComponent,
     PtpsComponent,
     WithfundsComponent,
-    RelegateComponent
+    RelegateComponent,
+    PotentialwriteoffsComponent
   ],
   imports: [
     SharedModule,

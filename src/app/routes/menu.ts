@@ -280,6 +280,10 @@ const Work = {
         {
             text: 'Due for Relegation',
             link: '/work/relegate'
+        },
+        {
+            text: 'Potential Writeoffs',
+            link: '/work/potentialwriteoffs'
         }
     ]
 };

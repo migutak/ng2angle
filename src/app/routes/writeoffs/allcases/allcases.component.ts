@@ -2,6 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
 import { AgGridAngular } from 'ag-grid-angular';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
+import swal from 'sweetalert2';
+import { EcolService } from '../../../services/ecol.service';
+import { ExportInvoiceService } from '../../../services/exportinvoices.service'
 
 @Component({
   selector: 'app-allcases',
@@ -18,7 +23,10 @@ export class AllCasesComponent implements OnInit {
   public rowModelType;
   public cacheBlockSize;
   public maxBlocksInCache;
+  export: boolean = true;
   public rowData: [];
+  isRowSelectable;
+  rowSelection;
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
@@ -28,14 +36,21 @@ export class AllCasesComponent implements OnInit {
 
   modules = AllModules;
 
-  constructor() {
+  constructor(
+    private http: HttpClient,
+    private ecolService: EcolService,
+    private exportInvoiceService: ExportInvoiceService,
+  ) {
     this.columnDefs = [
       {
-        field: 'ACCNUMBER',
-        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true, checkboxSelection: true
+        field: 'accnumber',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true,
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true
       },
       {
-        field: 'APPLINK',
+        field: 'applink',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
@@ -46,14 +61,14 @@ export class AllCasesComponent implements OnInit {
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      { field: 'CUSTNAME', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'RROCODE', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'WRITEOFFAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'SETTLEMENTAMOUNT', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
-      { field: 'SECTION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'custname', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'rrocode', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'custnumber', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'writeoffamount', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'settlementamount', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'section', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       {
-        field: 'OUSTBALANCE',
+        field: 'oustbalance',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -64,7 +79,7 @@ export class AllCasesComponent implements OnInit {
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
       },
       {
-        field: 'PROVISIONAMOUNT',
+        field: 'provisionamount',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -75,7 +90,7 @@ export class AllCasesComponent implements OnInit {
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
       {
-        field: 'RESULTANTBALANCE',
+        field: 'resultantbalance',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -85,69 +100,33 @@ export class AllCasesComponent implements OnInit {
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      { field: 'LIMITAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      
-      { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'APPROVED', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEREQUESTED', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DATEAPPROVED', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+
+      { field: 'arocode', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'approved', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'status', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'daterequested', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'dateapproved', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     ];
     this.defaultColDef = {
-      width: 120,
+      flex: 1,
+      minWidth: 100,
       resizable: true,
-      sortable: true,
-      floatingFilter: true,
-      unSortIcon: true,
-      suppressResize: false,
-      enableRowGroup: true,
-      enablePivot: true,
-      pivot: true
     };
-    this.rowModelType = "serverSide";
-    this.cacheBlockSize = 50;
-    this.maxBlocksInCache = 0;
+
+    this.rowSelection = 'multiple';
+    this.isRowSelectable = function (rowNode) {
+      return rowNode.data ? rowNode.data.status == 'print-to-finance' : false;
+    };
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    const datasource = {
-      getRows(params) {
-          fetch(environment.api + '/api/tbl_writeoffs/gridviewall', {
-          method: 'post',
-          body: JSON.stringify(params.request),
-          headers: { "Content-Type": "application/json; charset=utf-8" }
-        })
-          .then(httpResponse => httpResponse.json())
-          .then(response => {
-            params.successCallback(response.rows, response.lastRow);
-          })
-          .catch(error => {
-            console.error(error);
-            params.failCallback();
-          })
-      }
-    };
+    this.refreshfunc();
+}
 
-    params.api.setServerSideDatasource(datasource);
-  }
-
-  ServerSideDatasource(server) {
-    return {
-      getRows(params) {
-        setTimeout(function () {
-          var response = server.getResponse(params.request);
-          if (response.success) {
-            params.successCallback(response.rows, response.lastRow);
-          } else {
-            params.failCallback();
-          }
-        }, 500);
-      }
-    };
-  }
+  
 
   currencyFormatter(params) {
     if (params.value !== undefined) {
@@ -159,9 +138,9 @@ export class AllCasesComponent implements OnInit {
 
   onCellDoubleClicked(event: any) {
     this.model = event.node.data;
-    //console.log(this.model);
-    // tslint:disable-next-line:max-line-length
-    window.open(this.model.APPLINK, '_blank');
+    if (this.model.applink == event.value) {
+      window.open(this.model.applink, '_blank');
+    }
   }
 
 
@@ -171,10 +150,79 @@ export class AllCasesComponent implements OnInit {
   }
 
   getSelectedRows() {
+    swal({
+      title: 'Confirm',
+      imageUrl: 'assets/img/user/coop.jpg',
+      text: 'Confirm Print to Finance',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Print!'
+    }).then((result) => {
+      if (result.value) {
+        // close tab
+        const selectedNodes = this.agGrid.api.getSelectedNodes();
+        const selectedData = selectedNodes.map(node => node.data);
+
+        this.exportInvoiceService.generateinvoice();
+        for (let i = 0; i < selectedData.length; i++) {
+          const body = {
+            id: 0,
+            status: ''
+          }
+          body.id = selectedData[i].id
+          body.status = 'complete';
+
+          this.http.patch(environment.api + '/api/tbl_writeoffs', body).subscribe(resp => {
+            //
+          })
+        }
+        // refresh grid
+        this.refreshfunc();
+      } else {
+        // reset
+        //
+      }
+    });
+
+  }
+
+  refreshfunc() {
+    this.http
+      .get(
+        environment.api + '/api/tbl_writeoffs?filter[where][status][nin]=pending-approval&filter[where][status][nin]=complete'
+      )
+      .subscribe(data => {
+        this.gridApi.setRowData(data)
+      }, error => {
+        console.log(error)
+      });
+  }
+
+
+  onRowSelected(event) {
     const selectedNodes = this.agGrid.api.getSelectedNodes();
     const selectedData = selectedNodes.map(node => node.data);
-    console.log(selectedData);
-}
+
+    if (selectedData.length == 1) {
+      this.export = false;
+
+    } else if (selectedData.length > 1) {
+      this.export = false;
+    } else {
+      this.export = true;
+    }
+  }
+
+  refreshData(status) {
+    this.http
+      .get(
+        environment.nodeapi + '/tbl_writeoffs?filter[where][status]=' + status
+      )
+      .subscribe(data => {
+        this.gridApi.setRowData(data)
+      });
+  }
 
 
 }

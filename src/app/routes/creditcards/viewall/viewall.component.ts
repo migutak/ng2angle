@@ -186,11 +186,12 @@ export class ViewallComponent implements OnInit {
     }
   }
 
-  onRowDoubleClicked(event: any) {
+  onCellClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
+    if(this.model.ACCNUMBER == event.value) {
     // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
+    }
   }
 
 

@@ -3,8 +3,28 @@
         <small>ALL cases</small></div>
 </div>
 <div class="container-fluid">
-    <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()"><i class="fas fa-print"></i> Export Selected Rows</button>
+    <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()" [disabled]="export"><i class="fas fa-print"></i> Export Selected Rows</button>
     
+    <div style="margin-bottom: 5px;">
+        <input
+          type="text"
+          (input)="onQuickFilterChanged()"
+          id="quickFilter"
+          placeholder="quick filter..."
+        />
+        <div class="btn-group mb-1 mr-1" dropdown>
+            <button class="btn dropdown-toggle btn-secondary" type="button" dropdownToggle>Refresh Grid
+                <span class="caret"></span>
+            </button>
+            <div *dropdownMenu class="dropdown-menu" role="menu">
+                <a class="dropdown-item" href="#" (click)="refreshData('pending-approval')">Pending approval</a>
+                <a class="dropdown-item" href="#" (click)="refreshData('print-to-finance')">Print to Finance</a>
+                <a class="dropdown-item" href="#" (click)="refreshData('decline')">Declined</a>
+                <a class="dropdown-item" href="#" (click)="refreshData('complete')">Complete</a>
+            </div>
+        </div>
+      </div>
+
         <ag-grid-angular
         #agGrid
         style="width: 100%; height: 700px;"
@@ -25,10 +45,12 @@
         (gridReady)="onGridReady($event)"
         [suppressRowClickSelection]="true"
         (cellDoubleClicked)='onCellDoubleClicked($event)'
+        [rowSelection]="rowSelection"
+        [isRowSelectable]="isRowSelectable"
+        (rowSelected)="onRowSelected($event)"
         [sideBar]="false"
         [enableRangeSelection]="true"
         [rowDragManaged]="true"
-        rowSelection="multiple"
         [modules]="modules"
         ></ag-grid-angular>
     

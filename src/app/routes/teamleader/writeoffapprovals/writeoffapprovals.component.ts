@@ -29,24 +29,31 @@ export class WriteoffapprovalsComponent implements OnInit {
   constructor() {
     this.columnDefs = [
       {
+        field: 'ACCNUMBER',
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true, checkboxSelection: true,
+        cellRenderer: function (params) {
+          if (params.value == undefined) {
+            return 'No Data Found';
+          }
+        }
+      },
+      {
         field: 'APPLINK',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return '<a  href="#" target="_blank">' + params.value + '</a>';
           } else {
-            return 'No Data Found';
+            
             // return '<img src="assets/img/user/loading.gif">';
           }
         },
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
-      { field: 'ACCNUMBER', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'CUSTNAME', filter: 'agTextColumnFilter', width: 200, filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'CUSTNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
+      { field: 'WRITEOFFAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'SETTLEMENTAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
       { field: 'SECTION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       {
         field: 'OUSTBALANCE',
@@ -58,8 +65,9 @@ export class WriteoffapprovalsComponent implements OnInit {
           }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
-      },{
-        field: 'TOTALARREARS',
+      },
+      {
+        field: 'PROVISIONAMOUNT',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
             return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -67,14 +75,26 @@ export class WriteoffapprovalsComponent implements OnInit {
             return ''
           }
         },
-        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
       },
+      {
+        field: 'RESULTANTBALANCE',
+        cellRenderer: function (params) {
+          if (params.value !== undefined) {
+            return (Math.floor(params.value * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+          } else {
+            return ''
+          }
+        },
+        filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true
+      },
+      { field: 'LIMITAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      
       { field: 'RROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'AROCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'BRANCHCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'BRANCHNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REQUESTBY', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'REQUESTDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
+      { field: 'APPROVED', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DATEREQUESTED', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DATEAPPROVED', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     ];
     this.defaultColDef = {
       width: 120,
@@ -140,11 +160,11 @@ export class WriteoffapprovalsComponent implements OnInit {
     }
   }
 
-  onRowDoubleClicked(event: any) {
+  onCellClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
-    // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
+    if (this.model.APPLINK == event.value) {
+    window.open(this.model.APPLINK, '_blank');
+    }
   }
 
 

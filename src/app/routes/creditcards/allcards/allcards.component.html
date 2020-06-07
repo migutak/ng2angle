@@ -26,7 +26,10 @@
     
     </ag-grid-angular>-->
 
-<ag-grid-angular #agGrid (gridReady)="onGridReady($event)" (rowClicked)='onRowDoubleClicked($event)'
+<ag-grid-angular 
+#agGrid (gridReady)="onGridReady($event)" 
+[suppressRowClickSelection]="true"
+(cellClicked)='onCellClicked($event)'
   [animateRows]="true" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [enableRangeSelection]="true"
   [floatingFilter]="true" [maxBlocksInCache]="maxBlocksInCache" [modules]="modules" [paginationAutoPageSize]="true"
   [pagination]="true" [pivotPanelShow]="pivotPanelShow" [rowData]="rowData" [rowDragManaged]="true"

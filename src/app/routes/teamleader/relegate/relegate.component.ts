@@ -46,7 +46,7 @@ export class RelegateComponent implements OnInit {
       { field: 'STATUS', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
+      { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'SECTION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       {
         field: 'OUSTBALANCE',
@@ -58,7 +58,7 @@ export class RelegateComponent implements OnInit {
           }
         },
         filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, aggFunc: 'sum', resizable: true
-      },{
+      }, {
         field: 'TOTALARREARS',
         cellRenderer: function (params) {
           if (params.value !== undefined) {
@@ -98,7 +98,7 @@ export class RelegateComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-          fetch(environment.nodeapi + '/relegationapprovals/all', {
+        fetch(environment.nodeapi + '/relegationapprovals/all', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }
@@ -140,11 +140,11 @@ export class RelegateComponent implements OnInit {
     }
   }
 
-  onRowDoubleClicked(event: any) {
+  onCellClicked(event: any) {
     this.model = event.node.data;
-    // console.log(this.model);
-    // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections', '_blank');
+    if (this.model.APPLINK == event.value) {
+      window.open(this.model.APPLINK, '_blank');
+    }
   }
 
 
