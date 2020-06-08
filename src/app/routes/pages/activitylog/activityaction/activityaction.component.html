@@ -352,7 +352,7 @@
                 <div class="form-group row">
                   <label class="col-xl-6 col-form-label">Promise Amount:</label>
                   <div class="col-xl-6">
-                    <input class="form-control" #ptpamount="ngModel" [(ngModel)]="ptp.ptpamount" name="ptpamount"
+                    <input class="form-control" #ptpamount="ngModel" [(ngModel)]="ptp_m.ptpamount" name="ptpamount"
                       type="number" [ngClass]="{ 'is-invalid': ptpamount.errors }" required />
                   </div>
                 </div>
@@ -361,8 +361,8 @@
                   <label class="col-xl-6 col-form-label">Promise Date:</label>
                   <div class="col-xl-6">
                     <div class="input-group">
-                      <input class="form-control" placeholder="yyyy-mm-dd" name="ptpdate" [(ngModel)]="ptp.ptpdate"
-                        ngbDatepicker #d="ngbDatepicker" [ngClass]="{ 'is-invalid': ptp.errors }" required>
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="ptpdate" [(ngModel)]="ptp_m.ptpdate"
+                        ngbDatepicker #d="ngbDatepicker" required>
                       <div class="input-group-append">
                         <div class="input-group-append">
                           <button class="btn btn-outline-primary" (click)="d.toggle()" type="button"><span><i

@@ -52,6 +52,7 @@ export class ActivityActionComponent implements OnInit {
   ptps: any = [];
   static: any = [];
   ptp_m: any = {};
+
   ptpmultiple: any = {};
   en_ptp: any = {};
   edit = false;
@@ -492,6 +493,7 @@ export class ActivityActionComponent implements OnInit {
 
   reset() {
     this.spinner.show();
+    this.ptps = [];
     if (this.sys === 'cc') {
       this.getcard(this.accnumber);
     } else if (this.sys === 'watchcc') {
