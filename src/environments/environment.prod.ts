@@ -15,6 +15,10 @@ var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
 var woffLink = '';
 var repossessLink = '';
 var calcelipfLink = '';
+var investigateLink= '';
+var debtcollectorLink= '';
+var relegationLink= '';
+
 
 export const environment = {
   production: true,
@@ -48,5 +52,8 @@ export const environment = {
   workflow: workflow,
   repossessLink: repossessLink,
   woffLink: woffLink,
-  calcelipfLink: calcelipfLink
+  calcelipfLink: calcelipfLink,
+  investigateLink: investigateLink,
+  debtcollectorLink: debtcollectorLink,
+  relegationLink: relegationLink
 };

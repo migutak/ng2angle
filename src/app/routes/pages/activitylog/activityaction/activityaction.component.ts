@@ -369,6 +369,7 @@ export class ActivityActionComponent implements OnInit {
       toemail: this.f.toemail.value,
       ptpsms: this.f.ptpsms.value,
       ptpsmsnumber: this.f.ptpsmsnumber.value,
+      ptpemailaddress: this.f.toemailaddress.value,
       collectornote: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
@@ -397,7 +398,7 @@ export class ActivityActionComponent implements OnInit {
         ptpamount: this.ptps
       }
 
-      console.log(ptpemailbody)
+      //console.log(ptpemailbody)
     }
 
 
@@ -407,6 +408,13 @@ export class ActivityActionComponent implements OnInit {
 
       // save ptps
       if (this.f.ptp.value == 'Yes') {
+        // add ptpsmsnumber and ptpemailadress to ptps[]
+        for(let x=0; x<this.ptps.length; x++) {
+          this.ptps[x].ptpsms = this.savebody.ptpsms;
+          this.ptps[x].ptpemail = this.savebody.toemail;
+          this.ptps[x].ptpsmsnumber = this.savebody.ptpsmsnumber;
+          this.ptps[x].ptpemailaddress = this.savebody.ptpemailaddress;
+        }
         this.saveallptps();
         this.sendPtpsData(this.accnumber);
       }
@@ -665,11 +673,12 @@ export class ActivityActionComponent implements OnInit {
   ptpfunc(form) {
     const ptpamount = form.value.ptpamount;
     const ptpdate = (moment(form.value.ptpdate).format('DD-MMM-YYYY')).toUpperCase();
+    const promisedate = (moment(form.value.ptpdate).add(1, 'd').format('DD-MMM-YYYY')).toUpperCase();
     const owner = this.username;
     const accnumber = this.accnumber;
     const paymode = form.value.paymode;
 
-    this.ptps.push({ promisedate: ptpdate, ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber, paymode:paymode, arramount: this.account.totalarrears});
+    this.ptps.push({ promisedate: promisedate, ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber, paymode:paymode, arramount: this.account.totalarrears});
     this.isptptosave = true;
     this.ptpamount = this.ptpamount + parseInt(ptpamount);
 
@@ -679,7 +688,7 @@ export class ActivityActionComponent implements OnInit {
 
   saveallptps() {
     this.ecolService.postptps(this.ptps).subscribe(resp => {
-      
+      // console.log('ptp post resp', resp)
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing - ptps!', 'error');

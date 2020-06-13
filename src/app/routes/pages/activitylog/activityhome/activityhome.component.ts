@@ -123,7 +123,6 @@ export class ActivityHomeComponent implements OnInit {
   }
 
   beforeChange(active) {
-    console.log(active.nextId);
     const tab: string = active.nextId;
     switch (tab) {
       case 'ngb-tab-0': {

@@ -25,6 +25,7 @@ export class PtpsComponent implements OnInit {
   iscard: Boolean = false;
   p = 1;
   currentDate: any = new Date();
+  withptps: boolean = true;
   /*public minDate: NgbDateStruct;
   public maxDate: NgbDateStruct;
 
@@ -87,6 +88,9 @@ export class PtpsComponent implements OnInit {
 
   getptps() {
     this.ecolService.getptps(this.accnumber).subscribe(data => {
+      if(data && data.length>0){
+        this.withptps = false;
+      };
       this.ptps = data;
       for (let i = 0; i < data.length; i++) {
         // if ((this.datePipe.transform(this.currentDate, 'dd-MMM-yy')).toUpperCase() <= (this.ptps[i].PTPDATE).toUpperCase()) {

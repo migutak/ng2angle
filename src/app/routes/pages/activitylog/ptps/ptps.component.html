@@ -1,11 +1,11 @@
 <div>
     <div class="table-responsive">
         <table class="table table-hover table-bordered table-striped">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
-                    <th>action date</th>
+                    <th>Action date</th>
                     <th>Account Number</th>
-                    <th>PTP Amount</th>
+                    <th>Promised Amount</th>
                     <th>Promise Date</th>
                     <th>Owner</th>
                     <th class="text-center">Met?</th>
@@ -14,6 +14,7 @@
                 </tr>
             </thead>
             <tbody>
+                <pre *ngIf="withptps">No data</pre>
                 <tr *ngFor="let p of ptps | paginate: { itemsPerPage: 10, currentPage: p }">
                     <td>{{p.actiondate}}</td>
                     <td>{{p.accnumber}}</td>

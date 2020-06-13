@@ -188,7 +188,7 @@ export class ViewallComponent implements OnInit {
 
   onCellClicked(event: any) {
     this.model = event.node.data;
-    if(this.model.ACCNUMBER == event.value) {
+    if(this.model.CARDACCT == event.value) {
     // tslint:disable-next-line:max-line-length
     window.open(environment.applink + '/activitylog?accnumber=' + this.model.CARDACCT + '&custnumber=' + this.model.CARDACCT + '&username=' + this.username + '&sys=cc', '_blank');
     }

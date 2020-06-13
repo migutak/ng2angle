@@ -193,9 +193,6 @@
         <div class="row" style="padding-top: 20px">
           <div class="col-md-3"></div>
           <div class="col-md-3" [hidden]="capture">
-
-
-
           </div>
 
         </div>
@@ -318,6 +315,23 @@
                 Flag this note <span class="fa fa-check"></span></label>
             </div>
           </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3 col-form-label">
+            <div class="checkbox c-checkbox form-check-inline">
+              <label>
+                <input type="checkbox" [checked]="false" name="flag" id="flag" name="flag" formControlName="flag" />
+                <span class="fa fa-check"></span> Schedule Call back reminder</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <input type="text" name="callbacktime" id="callbacktime" name="callbacktime" class="form-control"
+              formControlName="callbacktime" />
+
+              
+          </div>
+
         </div>
 
       </div>

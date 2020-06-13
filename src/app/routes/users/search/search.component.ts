@@ -41,12 +41,12 @@ export class SearchComponent implements OnInit {
       'email': ['', Validators.required],
       'role': ['', Validators.required],
       'expirydate': [''],
-      'createdate': [''],
+      'createdate': [{ value: new Date(), disabled: false }],
       'active': ['', Validators.required]
     });
     // Datepicker
     this.minDate = new Date();
-    this.minDate.setDate(this.minDate.getDate() + 1);
+    //this.minDate.setDate(this.minDate.getDate() + 1);
   }
 
   ngOnInit() {
@@ -113,6 +113,7 @@ export class SearchComponent implements OnInit {
             branch: '',
             email: '',
             active: '',
+            createdate: new Date(),
             expirydate: '',
             role: ''
           });

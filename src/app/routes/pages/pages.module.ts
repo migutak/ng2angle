@@ -10,6 +10,8 @@ import { DataService } from '../../services/data.service';
 import { CustomFormsModule } from 'ng2-validation';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NgBootstrapDatetimeAngularModule } from "ng-bootstrap-datetime-angular";
+import { CommonModule } from "@angular/common";
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -71,6 +73,8 @@ import { DatePipe } from '@angular/common';
         BsDatepickerModule.forRoot(),
         NgxSmartModalModule.forRoot(),
         NgxPaginationModule,
+        CommonModule,
+        NgBootstrapDatetimeAngularModule,
         // RouterModule.forChild(routes)
     ],
     declarations: [
