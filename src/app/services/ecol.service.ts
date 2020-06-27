@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -33,6 +33,18 @@ export class EcolService {
 
   relegate(body) {
     return this.httpClient.put(environment.api + '/api/pmt_holder', body);
+  }
+
+  relegationbyid(id) {
+    return this.httpClient.get(environment.nodeapi + '/tbl-relegations/' + id);
+  }
+
+  approverelegate(body){
+    return this.httpClient.patch(environment.nodeapi + '/tbl-relegations/' + body.casenumber, body);
+  }
+
+  relegation(body) {
+    return this.httpClient.post(environment.nodeapi + '/tbl-relegations', body);
   }
 
   newmarketer(body) {

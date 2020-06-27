@@ -186,6 +186,12 @@
                   </div>
                   <div class="c-radio">
                     <label>
+                      <input type="radio" name="role" value="remedialadmin" formControlName="role"
+                        [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Remedial Admin</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
                       <input type="radio" name="role" value="branchuser" formControlName="role"
                         [formControl]="valForm.controls['role']" />
                       <span class="fa fa-circle"></span>Branch User</label>

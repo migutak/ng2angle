@@ -3,15 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSelectModule } from 'ngx-select-ex';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { DataService } from '../../services/data.service';
 import { CustomFormsModule } from 'ng2-validation';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { NgBootstrapDatetimeAngularModule } from "ng-bootstrap-datetime-angular";
 import { CommonModule } from "@angular/common";
+
 
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -43,6 +43,7 @@ import { EditnoteComponent } from '../pages/activitylog/editnote/editnote.compon
 import { PtpsComponent } from './activitylog/ptps/ptps.component';
 import { WriteoffstoryComponent } from './activitylog/writeoffstory/writeoffstory.component';
 import { ProductsComponent } from './activitylog/products/products.component';
+import { RelegationapprovalComponent } from './activitylog/relegation/approval.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { DatePipe } from '@angular/common';
 
@@ -67,6 +68,7 @@ import { DatePipe } from '@angular/common';
         //NgxSpinnerModule,
         NgxSelectModule,
         FormsModule,
+        ReactiveFormsModule,
         NgSelectModule,
         ToasterModule.forRoot(),
         // CustomFormsModule,
@@ -74,7 +76,6 @@ import { DatePipe } from '@angular/common';
         NgxSmartModalModule.forRoot(),
         NgxPaginationModule,
         CommonModule,
-        NgBootstrapDatetimeAngularModule,
         // RouterModule.forChild(routes)
     ],
     declarations: [
@@ -104,7 +105,8 @@ import { DatePipe } from '@angular/common';
         PtpsComponent,
         ExtloginComponent,
         WriteoffstoryComponent,
-        ProductsComponent
+        ProductsComponent,
+        RelegationapprovalComponent
     ],
     providers: [
         ToasterService,

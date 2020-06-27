@@ -9,9 +9,10 @@ import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgOption } from '@ng-select/ng-select';
+import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 //import { NgxSmartModalService } from 'ngx-smart-modal';
-
+import { v4 as uuidv4 } from 'uuid';
 //const URL = environment.valor;
 
 @Component({
@@ -114,7 +115,7 @@ export class ActivityActionComponent implements OnInit {
     private ecolService: EcolService,
     private dataService: DataService,
     private spinner: NgxSpinnerService,
-    //public ngxSmartModalService: NgxSmartModalService,
+    private httpClient: HttpClient,
   ) {
     this.minDate = { year: this.year, month: this.month, day: this.day };
     this.minxDate = new Date();
@@ -324,6 +325,7 @@ export class ActivityActionComponent implements OnInit {
       flag: [false],
       route: [this.account.routetostate],
       paymode: [''],
+      callbacktime: [''],
       rfdother: [{ value: this.account.excuse_other, disabled: true }]
     });
   }
@@ -347,7 +349,7 @@ export class ActivityActionComponent implements OnInit {
     }
 
     if (this.f.ptpsms.value && this.f.ptpsmsnumber.value == '') {
-      swal('Alert','Please fill Customer Mobile number','warning');
+      swal('Alert','Please provide PTP SMS reminder Mobile number','warning');
       return;
     }
 
@@ -463,6 +465,38 @@ export class ActivityActionComponent implements OnInit {
         }, error => { console.log(error); });
       }
 
+      if (this.savebody.collectoraction === 'RELG') {
+        const relegateBody = {
+          casenumber: uuidv4(),
+          accnumber :  this.accnumber,
+          custnumber : this.custnumber,
+          custname : this.account.client_name,
+          oustbalance : this.account.oustbalance,
+          section : this.account.section,
+          daysinarr : this.account.daysinarr,
+          totalarrears : this.account.totalarrears,
+          bucket : this.account.bucket,
+          productcode : this.account.productcode,
+          arocode : this.account.arocode,
+          rrocode : this.account.rrocode,
+          branchcode : this.account.branchcode,
+          branchname : this.account.branchname,
+          applink : environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=relegation&nationid=' + this.account.nationid + '&relg=' + this.username,
+          requestby : this.username,
+          status : 'pending',
+          approved : '0',
+          requestdate: new Date()
+        };
+
+        // set applink with casenumber
+        relegateBody.applink = environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=relegation&nationid=' + this.account.nationid + '&relg=' + relegateBody.casenumber,
+        this.ecolService.relegation(relegateBody).subscribe(resp => {
+          console.log(resp)
+        }, error => { 
+          console.log(error); 
+        });
+      }
+
       // close windows
       swal({
         title: 'Activity successfully saved',
@@ -549,7 +583,7 @@ export class ActivityActionComponent implements OnInit {
       this.woff = false;
       this.repo = false;
       this.ipf = false;
-      this.relg = true;
+      this.relg = true; // form for relegation added
       this.debtcollect = false;
       this.investigate = false;
     } else if (value === 'INVESTIGATE') {

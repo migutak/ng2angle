@@ -71,7 +71,6 @@
     "lodash": "4.17.11",
     "modernizr": "3.6.0",
     "moment": "^2.26.0",
-    "ng-bootstrap-datetime-angular": "^0.1.27",
     "ng-http-loader": "^5.1.0",
     "ng2-charts": "1.6.0",
     "ng2-dnd": "5.0.2",

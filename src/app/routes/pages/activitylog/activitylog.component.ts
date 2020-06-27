@@ -79,6 +79,8 @@ export class ActivityLogComponent implements OnInit {
   username: string;
   date = new Date();
   sys: string;
+  relg: string;
+  nationid: string;
   collateralmenu = true;
   guarantorsmenu = true;
   demandlettersmenu = true;
@@ -115,6 +117,13 @@ export class ActivityLogComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       this.sys = queryParams.get('sys');
     });
+
+    this.relg = this.route.snapshot.queryParamMap.get('relg');
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.relg = queryParams.get('relg');
+    });
+
+    this.nationid = this.route.snapshot.queryParamMap.get('nationid');
 
     // this.data.currentMessage.subscribe(message => this.message = message)
 

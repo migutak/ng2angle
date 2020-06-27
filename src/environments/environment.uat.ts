@@ -2,7 +2,7 @@ var host = process.env.BACKEND_HOST || 'http://172.16.19.151:';
 var woffLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
 var repossessLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/5648407625ec5121f9f7710015775407/3075674825ec512c0466079089753457.php';
 var calcelipfLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
-var relegationLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/4349950325ec43f7b1adb75041979697/2352047595ec43f7b4874b7003538572.php';
+var relegationLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/8205775405e4a5988583577039544223/9240230545e4a59d9288998029903648.php';
 var investigateLink = 'http://172.16.19.151:8089/sysworkflow/en/neoclassic/7939093745ebc5cfc32a607061999855/4148506665ebc5d89d4a4e5016911975.php';
 var debtcollectorLink = '';
 

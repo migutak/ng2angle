@@ -14,7 +14,7 @@ var xlstemplate = 'C:\\templates\\upload_notes.xlsx';
 var repossessLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/4437708915ec5876a680fe5036008759/4164212795ec587e2d73467086569707.php';
 var woffLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
 var calcelipfLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
-var relegationLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/8205775405e4a5988583577039544223/9240230545e4a59d9288998029903648.php';
+var relegationLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/7424622735ef34e4a15a489065096514/4363139305ef34e4a43b934042572210.php';
 var investigateLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/7939093745ebc5cfc32a607061999855/4148506665ebc5d89d4a4e5016911975.php';
 var debtcollectorLink = '';
 

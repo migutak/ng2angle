@@ -105,18 +105,6 @@ const Letters = {
     link: '/letters',
     icon: 'icon-note',
     submenu: [
-        /*{
-            text: 'Letters Due',
-            link: '/demand/demands',
-            alert: '0',
-            label: 'badge badge-danger'
-        },
-        {
-            text: 'Sent History',
-            link: '/demand/demandhistory',
-            alert: '0',
-            label: 'badge badge-danger'
-        }*/
         {
             text: 'Guarantors',
             link: '/guarantors',
@@ -353,6 +341,22 @@ const Remedial = {
         {
             text: 'View all Loans',
             link: '/work/allloans'
+        },
+        {
+            text: 'No Credit buildup',
+            link: '/watch/nocredit'
+        },
+        {
+            text: 'Credit buildup',
+            link: '/watch/creditbuildup'
+        },
+        {
+            text: 'Due for Relegation',
+            link: '/work/relegate'
+        },
+        {
+            text: 'Potential Writeoffs',
+            link: '/work/potentialwriteoffs'
         }
     ]
 };
@@ -405,6 +409,24 @@ const mcoopcash = {
         {
             text: 'E-Credit All',
             link: '/mcoopcash/allecredit'
+        }
+    ]
+};
+
+const RelegationsAdmin = {
+    text: 'Relegations',
+    link: '/admin-relegations',
+    icon: 'icon-layers',
+    alert: '2',
+    label: 'badge badge-warning',
+    submenu: [
+        {
+            text: 'Change RRO Code',
+            link: '/admin-relegations/changerrocode'
+        },
+        {
+            text: 'Relegation Files',
+            link: '/admin-relegations/relegatedfiles'
         }
     ]
 };
@@ -521,6 +543,11 @@ const headingRelegate = {
     heading: true
 };
 
+const headingAdmin = {
+    text: 'Admin Officer',
+    heading: true
+};
+
 // user permissions
 const userperm = JSON.parse(localStorage.getItem('userpermission'));
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -573,14 +600,12 @@ const creditcards_menu = [
     Manuals
 ];
 
-const remedial_menu = [
+const admin_officer_menu = [
     headingMain,
     Home,
-    Schedules,
     headingComponents,
-    Remedial,
+    Work,
     Work_cc,
-    // Predelq,
     mcoopcash,
     assetfinance,
     serviceproviders,
@@ -589,6 +614,8 @@ const remedial_menu = [
     headingReports,
     Dashboard,
     Reports,
+    headingAdmin,
+    RelegationsAdmin,
     headingDocumentations,
     Manuals
 ];
@@ -596,7 +623,7 @@ const remedial_menu = [
 const teamleader_menu = [
     headingMain,
     Home,
-    Schedules,
+    // Schedules,
     headingComponents,
     Work,
     Work_cc,
@@ -620,18 +647,20 @@ const teamleader_menu = [
     headingDocumentations,
     Manuals
 ];
-// console.log('menu role==>', currentUser.role);
+// console.log('menu role==>', currentUser.role); admin_officer_menu
 if (currentUser !== null) {
     if (currentUser.ROLE === 'admin' ) {
         menuitems = user_mgmt_menu;
     } else if (currentUser.ROLE === 'remedial') {
-        menuitems = remedial_menu;
+        menuitems = teamleader_menu;
     } else if (currentUser.ROLE === 'creditcards') {
         menuitems = creditcards_menu;
-    } else if (currentUser.ROLE === 'teamleader') {
+    } else if (currentUser.ROLE === 'teamleader' || currentUser.ROLE === 'branchmanager') {
         menuitems = teamleader_menu;
     } else if (currentUser.ROLE === 'internalaudit') {
         menuitems = collection_menu;
+    } else if (currentUser.ROLE === 'remedialadmin') {
+        menuitems = admin_officer_menu;
     } else {
         menuitems = collection_menu;
     }

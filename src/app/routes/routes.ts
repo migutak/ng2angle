@@ -30,6 +30,7 @@ import { ActivitydashComponent } from './pages/activitydash/activitydash.compone
 import { PtpsComponent } from './pages/activitylog/ptps/ptps.component';
 import { WriteoffstoryComponent } from './pages/activitylog/writeoffstory/writeoffstory.component';
 import { ProductsComponent } from './pages/activitylog/products/products.component';
+import { RelegationapprovalComponent } from './pages/activitylog/relegation/approval.component'; './pages/activitylog/relegration/approval.component';
 
 export const routes = [
 
@@ -66,6 +67,7 @@ export const routes = [
             { path: 'configurations', loadChildren: './configurations/configurations.module#ConfigurationsModule' },
             { path: 'assetfinance', loadChildren: './assetfinance/assetfinance.module#AssetfinanceModule' },
             { path: 'teamleader', loadChildren: './teamleader/teamleader.module#TeamLeaderModule' },
+            { path: 'admin-relegations', loadChildren: './admin-relegations/admin-relegations.module#AdminrelegationsModule' },
         ],
         canActivate: [AuthGuard]
     },
@@ -102,6 +104,7 @@ export const routes = [
             { path: 'ptps', component: PtpsComponent },
             { path: 'writeoffstory', component: WriteoffstoryComponent },
             { path: 'products', component: ProductsComponent },
+            { path: 'relegationapproval', component: RelegationapprovalComponent },
             { path: '**', redirectTo: 'notes' }
           ],
           canActivate: [AuthGuard]

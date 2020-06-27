@@ -1,0 +1,268 @@
+<div class="content-heading">
+    <div>Relegation
+        <small> approval</small></div>
+</div>
+<div class="card">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- START card-->
+            <div class="card card-default">
+                <form [formGroup]="approvalForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+                    <div class="card-body">
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Customer Name
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="custname" name="custname"
+                                        id="custname" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Account Number
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="accnumber" name="accnumber"
+                                        id="accnumber" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Customer Number
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="custnumber"
+                                        name="custnumber" id="custnumber" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Request by
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="requestby" name="requestby"
+                                        id="requestby" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Product Code
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="productcode"
+                                        name="productcode" id="productcode" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                AROCODE
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="arocode" name="arocode"
+                                        id="arocode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                RROCODE
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="rrocode" name="rrocode"
+                                        id="rrocode" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                ARO Name
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="aroname" name="aroname"
+                                        id="aroname" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                ARO Email
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="aroemail" name="aroemail"
+                                        id="aroemail" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Branch Code
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="branchcode"
+                                        name="branchcode" id="branchcode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Branch Name
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="branchname"
+                                        name="branchname" id="branchname" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Days In Arrears
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="daysinarr" name="daysinarr"
+                                        id="daysinarr" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Bucket
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="bucket" name="bucket"
+                                        id="bucket" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Oustbalance
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="oustbalance"
+                                        name="oustbalance" id="oustbalance" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Total arrears amount
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="totalarrears"
+                                        name="totalarrears" id="totalarrears" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Employer
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="employer" name="employer"
+                                        id="employer" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Amount Disbursed
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="amountdisbursed"
+                                        name="amountdisbursed" id="amountdisbursed" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <h2>Manager's Approval</h2>
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Approval
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <select id="approval" name="approval" formControlName="approval"
+                                        class="form-control"
+                                        (ngModelChange)="changeAction(approvalForm.value.approval)">
+                                        <option value="">Please select</option>
+                                        <option>APPROVED</option>
+                                        <option>DECLINED</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                New RRO Code
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="newrrocode"
+                                        name="newrrocode" id="newrrocode" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-xl-2 col-md-3">
+                                Date Approved
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" formControlName="approvaldate"
+                                        name="approvaldate" id="approvaldate" #dp="bsDatepicker" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" (click)="dp.toggle()"
+                                            type="button"><span><i class="fa fa-calendar"></i>
+                                            </span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                Approved by
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" formControlName="approvedby"
+                                        name="approvedby" id="approvedby" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-md-12">
+                                <label for="nodemade">Approval Note</label>
+                                <textarea class="form-control" rows="3" id="approvalnote" name="approvalnote"
+                                    name="approvalnote" class="form-control" formControlName="approvalnote"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top: 20px" *ngIf="approvalrights">
+                            <div class="col-md-12">
+                                <button type="submit" [disabled]="approvalForm.invalid"
+                                    class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- END card-->
+        </div>
+    </div>
+</div>
