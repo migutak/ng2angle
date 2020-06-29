@@ -164,7 +164,7 @@ export class ActivityLogComponent implements OnInit {
     this.getTeles(this.custnumber);
     this.getptps(this.accnumber);
     this.planexists(this.accnumber);
-    this.getwoffstory(this.accnumber);
+    //this.getwoffstory(this.accnumber);
   }
 
   getptps(accnumber) {

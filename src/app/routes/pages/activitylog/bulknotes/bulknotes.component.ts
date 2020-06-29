@@ -6,7 +6,7 @@ import swal from 'sweetalert2';
 import {saveAs} from 'file-saver';
 import {environment} from '../../../../../environments/environment';
 import {FileUploader, FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {HttpClient, HttpEventType} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import {ViewChild} from '@angular/core';
 import {DataService} from '../../../../services/data.service';
@@ -45,6 +45,7 @@ export class BulknotesComponent implements OnInit {
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
               public dataService: DataService,
+              private httpClient: HttpClient,
               private ecolService: EcolService) {
     //
     //
@@ -132,12 +133,6 @@ export class BulknotesComponent implements OnInit {
       swal('Error!', ' Cannot download template  file!', 'error');
     });
   }
-
-
-
-
-
-
 
   // xls to json
   onFileChange(ev) {
@@ -254,38 +249,10 @@ export class BulknotesComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.ecolService.loader();
+          /*this.httpClient.post('http://127.0.0.1:1020/send-to-que', this.outdata).subscribe(events => {
+            console.log(events)
+          })*/
           this.ecolService.bulknotes(this.outdata).subscribe(events => {
-            /*if (events.type === HttpEventType.UploadProgress) {
-              this.fileUploadProgress = Math.round(events.loaded / events.total * 100);
-              console.log(events);
-              //console.log(this.fileUploadProgress);
-            } else if (events.type === HttpEventType.Response) {}*/
-              /*if (this.sys === 'cc' || this.sys === 'watchcc') {
-                //
-                this.ecolService.bulktotblcardsstatic(this.outdata).subscribe(result => {
-                  //console.log(result);
-                  this.sendNotesData(this.custnumber); // updates the notes counter on view
-                  swal({
-                    type: 'success',
-                    title: 'ALL Good',
-                    text: this.outdata.length + ' rows has been processed!',
-                  });
-                }, error => {
-                  console.log('bulknotes error', error);
-                });
-              } else {
-                console.log(this.sys);
-                this.ecolService.bulktotblportfolio(this.outdata).subscribe(result => {
-                  this.sendNotesData(this.custnumber); // updates the notes counter on view
-                  swal({
-                    type: 'success',
-                    title: 'ALL Good',
-                    text: this.outdata.length + ' rows has been processed!',
-                  });
-                }, error => {
-                  console.log('bulknotes error', error);
-                });
-              }*/
               swal({
                 type: 'success',
                 title: 'ALL Good',

@@ -478,7 +478,7 @@ const SMS = {
 };
 
 const SP = {
-    text: 'Service Providers',
+    text: 'S.Provider Setup',
     link: '/configurations/sp',
     icon: 'icon-docs'
 };

@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { EcolService } from '../../../services/ecol.service';
 import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
-import { NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import {GridOptions} from '@ag-grid-community/all-modules';
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as XLSX from 'xlsx';
+import {saveAs} from 'file-saver';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 declare var $: any;
@@ -24,6 +26,7 @@ export class SpComponent implements OnInit {
   $win = $(window);
   new = true;
   memos: any = [];
+  outdata = [];
 
   gridOptions: GridOptions;
   modules = AllModules;
@@ -64,6 +67,9 @@ export class SpComponent implements OnInit {
   public items: Array<string> = [];
   model: any = {};
   dataList: any;
+
+  @ViewChild('myInput')
+  myInputVariable: ElementRef;
 
   constructor(
     private ecolService: EcolService,
@@ -181,4 +187,89 @@ export class SpComponent implements OnInit {
       }
     });
   }
+
+  onFileChange(ev) {
+    const xfile = ev.target.files[0];
+    let workBook = null;
+    let jsonData = null;
+    const reader = new FileReader();
+    const file = ev.target.files[0];
+    reader.onload = (event) => {
+      const data = reader.result;
+      workBook = XLSX.read(data, {type: 'binary'});
+      jsonData = workBook.SheetNames.reduce((initial, name) => {
+        const sheet = workBook.Sheets[name];
+        initial[name] = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+      if (!jsonData.Sheet1) {
+        swal({
+          type: 'error',
+          title: 'Empty Values',
+          text: 'Wrong sheet name',
+        });
+        this.myInputVariable.nativeElement.value = '';
+        document.getElementById('output').innerHTML = '';
+        return;
+      }
+      this.outdata = jsonData.Sheet1;
+      if (!this.outdata[0].accnumber || !this.outdata[0].notemade) {
+        swal({
+          type: 'error',
+          title: 'Empty Values',
+          text: 'Wrong field name',
+        });
+        this.myInputVariable.nativeElement.value = '';
+        document.getElementById('output').innerHTML = '';
+        return;
+      }
+      
+      swal({
+        title: 'Confirmation',
+        imageUrl: 'assets/img/user/coop.jpg',
+        text: 'Confirm you want to upload Service Provider(s)',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Upload'
+      }).then((result) => {
+        if (result.value) {
+          this.ecolService.loader();
+          this.ecolService.bulknotes(this.outdata).subscribe(events => {
+              swal({
+                type: 'success',
+                title: 'ALL Good',
+                text: 'S.P successfully added!',
+              });
+            
+          }, error => {
+            console.log(error);
+            swal({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong with s.p upload!',
+            });
+          });
+        } else {
+          this.myInputVariable.nativeElement.value = '';
+          document.getElementById('output').innerHTML = '';
+          return;
+          swal.close();
+        }
+      });
+
+    };
+    reader.readAsBinaryString(file);
+  }
+
+  downloadFile() {
+    const template = environment.xlstemplate;
+    this.ecolService.downloadFile(template).subscribe(data => {
+      saveAs(data, 'ECollect_service_provider_upload_template.xlsx');
+    }, error => {
+      console.log(error);
+      swal('Error!', ' Cannot download template  file!', 'error');
+    });
+  }
+
 }

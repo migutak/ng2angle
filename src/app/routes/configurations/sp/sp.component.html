@@ -1,255 +1,311 @@
 <div class="content-heading">
-    <div>
-      Service Providers
-      <small>S-P Configurations</small>
-    </div>
+  <div>
+    Service Providers
+    <small>S-P Configurations</small>
   </div>
-  <div class="container-fluid">
-      <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
-          <p style="font-size: 20px; color: white">Processing ...</p>
-        </ngx-spinner>
-    <div id="accordion">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link" data-toggle="collapse" href="#collapseOne">
-            Service Providers
-          </a>
-        </div>
-        <div id="collapseOne" class="collapse show" data-parent="#accordion">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-xl-4">
-                <div class="card card-primary">
-                  <div class="card-body">
-                    <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(settingsForm)" *ngIf="new">
-                        <div class="form-group row mb">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <p>Service Provider</p>
-                              <input class="form-control" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
-                                [(ngModel)]="model.SPTITLE" [disabled]="false" required autocomplete="off"/>
-                            </div>
-  
-                            <p class="my-2"></p>
-                            <div class="form-group">
-                              <p>Contact Person</p>
-                              <input class="form-control" name="CONTACTPERSON" id="CONTACTPERSON" #CONTACTPERSON="ngModel"
-                                [(ngModel)]="model.CONTACTPERSON" [disabled]="false" required autocomplete="off"/>
-                            </div>
-                          </div>
-                        </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Telephone</p>
+</div>
+<div class="container-fluid">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+    <p style="font-size: 20px; color: white">Processing ...</p>
+  </ngx-spinner>
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          Service Providers
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4">
+              <div class="card card-primary">
+                <div class="card-body">
+                  <div>
+                    <div>
+                      <button class="btn btn-outline-success btn-sm" (click)="downloadFile()">
+                        <i class="fa fa-download"> upload template</i>
+                      </button>
+                    </div>
+
+                    Select Service provide xls file to upload
+
+                    <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
+                      accept=".xlsx" />
+                    <hr />
+                  </div>
+                  <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(settingsForm)" *ngIf="new"
+                    autocomplete="off">
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Service Provider</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
+                          [(ngModel)]="model.SPTITLE" [ngClass]="{ 'is-invalid': SPTITLE.invalid }" required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Contact Person</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="CONTACTPERSON" id="CONTACTPERSON"
+                          #CONTACTPERSON="ngModel" [(ngModel)]="model.CONTACTPERSON"
+                          [ngClass]="{ 'is-invalid': CONTACTPERSON.invalid }" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Telephone</label>
+                      <div class="col-xl-8">
                         <input class="form-control" name="TELEPHONE" id="TELEPHONE" #TELEPHONE="ngModel"
-                          [(ngModel)]="model.TELEPHONE" [disabled]="false" required autocomplete="off"/>
+                          [(ngModel)]="model.TELEPHONE" [ngClass]="{ 'is-invalid': CONTACTPERSON.invalid }" required />
                       </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>SPCode</p>
-                          <select class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
-                          [(ngModel)]="model.SPCODE" [disabled]="false" required autocomplete="off">
-                            <option value="" selected>Choose...</option>
-                            <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
-                            <option>DEBT COLLECTORS</option>
-                            <option>INVESTIGATORS</option>
-                            <option>STORAGE YARDS</option>
-                            <option>VALUERS</option>
-                          </select>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Start Date</p>
+                    </div>
 
-                          <div class="input-group">
-                            <input type="text" placeholder="Start Date" class="form-control" name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
-                            [(ngModel)]="model.STARTDATE" [disabled]="false" required
-                              #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" >
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
-                                    class="fa fa-calendar"></i>
-                                </span></button>
-                            </div>
-                          </div>
-
-
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Account Number</p>
-                        <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
-                          [(ngModel)]="model.ACCNUMBER" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Coverage</p>
-                        <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
-                          [(ngModel)]="model.COVERAGE" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Address</p>
-                        <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
-                          [(ngModel)]="model.ADDRESS" [disabled]="false" autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>End of Indemnity</p>
-                        <input class="form-control" name="ENDOFINDEMNITY" id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
-                          [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Email</p>
-                        <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
-                          [(ngModel)]="model.EMAIL" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <fieldset>
-                          <div class="form-group row">
-                            <div class="col-md-10">
-                              <label class="checkbox c-checkbox">
-                                <input type="checkbox" name="active" id="active" #active="ngModel"
-                                  [(ngModel)]="model.active" [checked]="model.active" />
-                                <span class="fa fa-check"></span> Active</label>
-                            </div>
-                          </div>
-                        </fieldset>
-                      <p class="lead mt-3"></p>
-                      <div>
-                        <div class="clearfix">
-                          <div class="float-left">
-                            <button [disabled]="!settingsForm.valid || !settingsForm.dirty"
-                              class="btn btn-outline-primary" type="submit">
-                              <em class="fa fa-check fa-fw"></em>Add New</button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                    <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editForm)" *ngIf="!new">
-                      <p class="lead mt-3"></p>
-                      <div class="form-group">
-                        <p>Service Provider</p>
-                        <input class="form-control" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
-                          [(ngModel)]="model.SPTITLE" [disabled]="true" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Contact Person</p>
-                        <input class="form-control" name="CONTACTPERSON" id="CONTACTPERSON" #CONTACTPERSON="ngModel"
-                          [(ngModel)]="model.CONTACTPERSON" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Telephone</p>
-                        <input class="form-control" name="TELEPHONE" id="TELEPHONE" #TELEPHONE="ngModel"
-                          [(ngModel)]="model.TELEPHONE" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>SPCode</p>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">SPCode</label>
+                      <div class="col-xl-8">
                         <select class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
-                          [(ngModel)]="model.SPCODE" [disabled]="false" required autocomplete="off">
-                            <option value="" selected>Choose...</option>
-                            <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
-                            <option>DEBT COLLECTORS</option>
-                            <option>INVESTIGATORS</option>
-                            <option>STORAGE YARDS</option>
-                            <option>VALUERS</option>
-                          </select>
+                          [(ngModel)]="model.SPCODE" [ngClass]="{ 'is-invalid': CONTACTPERSON.invalid }" required>
+                          <option value="" selected>Choose...</option>
+                          <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
+                          <option>DEBT COLLECTORS</option>
+                          <option>INVESTIGATORS</option>
+                          <option>STORAGE YARDS</option>
+                          <option>VALUERS</option>
+                        </select>
                       </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Start Date</p>
+                    </div>
 
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Start Date</label>
+                      <div class="col-xl-8">
                         <div class="input-group">
-                          <input type="text" placeholder="Start Date" class="form-control" name="STARTDATE" id="STARTDATE" #STARTDATE="ngModel"
-                          [(ngModel)]="model.STARTDATE" [disabled]="false" required
-                            #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" >
+                          <input type="text" class="form-control" name="STARTDATE"
+                            id="STARTDATE" #STARTDATE="ngModel" [(ngModel)]="model.STARTDATE" [disabled]="false"
+                            required #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
                           <div class="input-group-append">
                             <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
                                   class="fa fa-calendar"></i>
                               </span></button>
                           </div>
                         </div>
+                      </div>
 
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Account Number</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
+                        [(ngModel)]="model.ACCNUMBER" [ngClass]="{ 'is-invalid': ACCNUMBER.invalid }" required />
                       </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Account Number</p>
-                        <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
-                          [(ngModel)]="model.ACCNUMBER" [disabled]="false" required autocomplete="off"/>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Coverage</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
+                        [(ngModel)]="model.COVERAGE" [ngClass]="{ 'is-invalid': COVERAGE.invalid }" required />
                       </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Coverage</p>
-                        <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
-                          [(ngModel)]="model.COVERAGE" [disabled]="false" required autocomplete="off"/>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Address</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
+                        [(ngModel)]="model.ADDRESS" [ngClass]="{ 'is-invalid': ADDRESS.invalid }" required />
                       </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Address</p>
-                        <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
-                          [(ngModel)]="model.ADDRESS" [disabled]="false" autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>End of Indemnity</p>
-                        <input class="form-control" name="ENDOFINDEMNITY" id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel"
-                          [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <p class="my-2"></p>
-                      <div class="form-group">
-                        <p>Email</p>
-                        <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel"
-                          [(ngModel)]="model.EMAIL" [disabled]="false" required autocomplete="off"/>
-                      </div>
-                      <fieldset>
-                          <div class="form-group row">
-                            <div class="col-md-10">
-                              <label for="active" class="checkbox c-checkbox">
-                                <input type="checkbox" name="ACTIVE" id="ACTIVE" #ACTIVE="ngModel"
-                                  [(ngModel)]="model.ACTIVE" [checked]="model.ACTIVE" />
-                                <span class="fa fa-check"></span> Active</label>
-                            </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">End of Indemnity</label>
+                      <div class="col-xl-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="ENDOFINDEMNITY"
+                            id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel" [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false"
+                            required #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
+                                  class="fa fa-calendar"></i>
+                              </span></button>
                           </div>
-                        </fieldset>
-  
-                      <div class="float-left">
-                        <button type="submit" class="btn btn-outline-primary" type="submit">
-                          <em class="fa fa-pencil fa-fw"></em>Update</button>
+                        </div>
                       </div>
-                      <div class="float-left">
-                        <button class="btn btn-outline-warning" (click)="shownew()">
-                          <em class="fa fa-check fa-fw"></em>Cancel</button>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Email</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel" [(ngModel)]="model.EMAIL"
+                      [ngClass]="{ 'is-invalid': EMAIL.invalid }" required />
                       </div>
-  
-                      <!--<div class="float-right">
+                    </div>
+                    <fieldset>
+                      <div class="form-group row">
+                        <div class="col-md-10">
+                          <label class="checkbox c-checkbox">
+                            <input type="checkbox" name="active" id="active" #active="ngModel"
+                              [(ngModel)]="model.active" [checked]="model.active" />
+                            <span class="fa fa-check"></span> Active</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                    
+                    <div>
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <button [disabled]="!settingsForm.valid || !settingsForm.dirty"
+                            class="btn btn-outline-primary" type="submit">
+                            <em class="fa fa-check fa-fw"></em>Add New</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editForm)" *ngIf="!new">
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Service Provider</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="SPTITLE" id="SPTITLE" #SPTITLE="ngModel"
+                          [(ngModel)]="model.SPTITLE" [ngClass]="{ 'is-invalid': SPTITLE.invalid }" required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Contact Person</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="CONTACTPERSON" id="CONTACTPERSON"
+                          #CONTACTPERSON="ngModel" [(ngModel)]="model.CONTACTPERSON"
+                          [ngClass]="{ 'is-invalid': CONTACTPERSON.invalid }" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Telephone</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" name="TELEPHONE" id="TELEPHONE" #TELEPHONE="ngModel"
+                          [(ngModel)]="model.TELEPHONE" [ngClass]="{ 'is-invalid': CONTACTPERSON.invalid }" required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">SPCode</label>
+                      <div class="col-xl-8">
+                        <select class="form-control" name="SPCODE" id="SPCODE" #SPCODE="ngModel"
+                          [(ngModel)]="model.SPCODE" [ngClass]="{ 'is-invalid': CONTACTPERSON.invalid }" required>
+                          <option value="" selected>Choose...</option>
+                          <option>AUCTIONEERS-MARKETORS-REPOSSESSORS</option>
+                          <option>DEBT COLLECTORS</option>
+                          <option>INVESTIGATORS</option>
+                          <option>STORAGE YARDS</option>
+                          <option>VALUERS</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Start Date</label>
+                      <div class="col-xl-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="STARTDATE"
+                            id="STARTDATE" #STARTDATE="ngModel" [(ngModel)]="model.STARTDATE" [disabled]="false"
+                            required #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary" (click)="dp.toggle()" type="button"><span><i
+                                  class="fa fa-calendar"></i>
+                              </span></button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Account Number</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="ACCNUMBER" id="ACCNUMBER" #ACCNUMBER="ngModel"
+                        [(ngModel)]="model.ACCNUMBER" [ngClass]="{ 'is-invalid': ACCNUMBER.invalid }" required />
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Coverage</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="COVERAGE" id="COVERAGE" #COVERAGE="ngModel"
+                        [(ngModel)]="model.COVERAGE" [ngClass]="{ 'is-invalid': COVERAGE.invalid }" required />
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Address</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="ADDRESS" id="ADDRESS" #ADDRESS="ngModel"
+                        [(ngModel)]="model.ADDRESS" [ngClass]="{ 'is-invalid': ADDRESS.invalid }" required />
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">End of Indemnity</label>
+                      <div class="col-xl-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="ENDOFINDEMNITY"
+                            id="ENDOFINDEMNITY" #ENDOFINDEMNITY="ngModel" [(ngModel)]="model.ENDOFINDEMNITY" [disabled]="false"
+                            required #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
+                                  class="fa fa-calendar"></i>
+                              </span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Email</label>
+                      <div class="col-xl-8">
+                      <input class="form-control" name="EMAIL" id="EMAIL" #EMAIL="ngModel" [(ngModel)]="model.EMAIL"
+                      [ngClass]="{ 'is-invalid': EMAIL.invalid }" required />
+                      </div>
+                    </div>
+
+                    <fieldset>
+                      <div class="form-group row">
+                        <div class="col-md-10">
+                          <label for="active" class="checkbox c-checkbox">
+                            <input type="checkbox" name="ACTIVE" id="ACTIVE" #ACTIVE="ngModel"
+                              [(ngModel)]="model.ACTIVE" [checked]="model.ACTIVE" />
+                            <span class="fa fa-check"></span> Active</label>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <div class="float-left">
+                      <button type="submit" class="btn btn-outline-primary" type="submit">
+                        <em class="fa fa-pencil fa-fw"></em>Update</button>
+                    </div>
+                    <div class="float-left">
+                      <button class="btn btn-outline-warning" (click)="shownew()">
+                        <em class="fa fa-check fa-fw"></em>Cancel</button>
+                    </div>
+
+                    <div class="float-right">
                         <button class="btn btn-danger" type="button" (click)="delete()">
                           <em class="fas fa-trash-alt fa-fw"></em>Delete</button>
-                      </div>-->
-  
-                    </form>
-                  </div>
+                      </div>
+
+                  </form>
                 </div>
               </div>
-              <div class="col-xl-8">
-                <div class="col-xl-12">
-                  <h4 class="page-header">
-                    <small>search, sorting, filter ...</small>
-                  </h4>
-                  <div class="row">
-                    <div class="col-xl-4 col-lg-6">
-                      <input class="mb form-control" placeholder="Filter..." type="text"
-                        (keyup)="onQuickFilterChanged($event)" />
-                    </div>
+            </div>
+            <div class="col-xl-8">
+              <div class="col-xl-12">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-6">
+                    <input class="mb form-control" placeholder="Filter..." type="text"
+                      (keyup)="onQuickFilterChanged($event)" />
                   </div>
-                  <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 700px"
-                    [gridOptions]="gridOptions"
-                    (rowClicked) = 'onRowClicked($event)'
-                    [modules]='modules'
-                    (gridReady)="gridReady($event)">
-                  </ag-grid-angular>
                 </div>
+                <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 600px"
+                  [gridOptions]="gridOptions" (rowClicked)='onRowClicked($event)' [modules]='modules'
+                  (gridReady)="gridReady($event)">
+                </ag-grid-angular>
               </div>
             </div>
           </div>
@@ -257,3 +313,4 @@
       </div>
     </div>
   </div>
+</div>
