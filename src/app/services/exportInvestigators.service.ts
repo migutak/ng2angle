@@ -20,7 +20,7 @@ export class ExportInvestigators {
   async generateinvoice() {
     // Excel Title, Header, Data
     const title = 'Investigators Report';
-    const header = ['accnumber', 'custnumber', 'sptitle', 'custname', 'spaccount', 'feenotedate', 'feenoteamnt', 'approvedamnt', 'dateinput', 'status'];
+    const header = ['accnumber', 'custnumber', 'reasonforinvestigation', 'custname', 'oustbalance', 'arocode', 'region', 'requestdate', 'instructiondate','duedate', 'duedateafterext', 'reportreceived', 'datereceived'];
 
 
     // Create workbook and worksheet
@@ -93,12 +93,12 @@ export class ExportInvestigators {
       footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
 
       // Merge Cells
-      worksheet.mergeCells(`A${footerRow.number}:I${footerRow.number}`);
+      worksheet.mergeCells(`A${footerRow.number}:N${footerRow.number}`);
 
       // Generate Excel File with given name
       workbook.xlsx.writeBuffer().then((data: any) => {
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        fs.saveAs(blob, 'Invoices Report.xlsx');
+        fs.saveAs(blob, 'Invertigators Report.xlsx');
       });
     }, error => {
       //

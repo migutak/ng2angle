@@ -210,7 +210,7 @@ export class BulknotesComponent implements OnInit {
             text: 'data in row no: ' + i + ' is empty and will be omitted',
           });
 
-        } else if (this.sys === 'cc') {
+        } else if (this.sys === 'cc' || this.sys === 'watchcc') {
           this.outdata[i].owner = this.username;
           this.outdata[i].custnumber = this.outdata[i].accnumber;
           this.outdata[i].notesrc = 'uploaded a note';

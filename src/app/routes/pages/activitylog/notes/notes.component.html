@@ -28,14 +28,54 @@
 </div>
 
 <div class="form-group row">
-  <button type="button" (click)="download()" class="btn btn-outline-info" [disabled]="download_disabled"><span
-    class="glyphicon glyphicon-save"></span> Download {{cust}} Notes
+  <button type="button" (click)="download()" class="btn btn-link btn-outline-info" [disabled]="download_disabled">
+    <em class="fa fa-chart-bar fa-fw"></em> Download {{cust}} Notes
   </button>
 
 </div>
 
 <div *ngIf="isSelected('collector')">
-  <ul class="timeline">
+  <div class="row" *ngFor="let note of noteData; let i = index"> 
+    <div class="col-auto text-center flex-column d-none d-sm-flex">
+        <div class="row h-50">
+            <div class="col border-right">&nbsp;</div>
+            <div class="col">&nbsp;</div>
+        </div>
+        <h5 class="m-2">
+            <span class="badge badge-pill bg-success">&nbsp;</span>
+        </h5>
+        <div class="row h-50">
+            <div class="col border-right">&nbsp;</div>
+            <div class="col">&nbsp;</div>
+        </div>
+    </div>
+    <div class="col py-2">
+        <div class="card border-success shadow">
+            <div class="card-body">
+                <div class="float-right text-success">{{note.NOTEDATE}}</div>
+                <h4 class="card-title text-success">{{note.OWNER}} {{note.NOTESRC}} on Account {{note.ACCNUMBER}}</h4>
+                <p class="card-text">
+                  {{note.NOTEMADE}}
+                </p>
+                <small><a (click)="editnote(note)" *ngIf="note.showedit" class="mr-1 mb-1 btn-sm btn btn-outline-success">
+                  <span class="far fa-edit" aria-hidden="true"></span>
+                  <span style="color: red;"><strong>Edit</strong></span>
+                </a></small>
+                <button class="btn btn-sm btn-outline-secondary" type="button" data-target="#note" data-toggle="collapse">More Details ▼</button>
+                <div class="collapse border" id="note">
+                    <div class="p-2 text-monospace">
+                        <div>Action taken:        null</div>
+                        <div>Reason for default:  null</div>
+                        <div>Next action date:    null</div>
+                        <hr>
+                        <div>---</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!--<ul class="timeline">
     <li *ngFor="let note of noteData">
       <a href="#"><small>{{note.OWNER}} {{note.NOTESRC}} on Account {{note.ACCNUMBER}}</small></a>
       <a href="#" class="float-right">{{note.NOTEDATE}}</a>
@@ -48,7 +88,7 @@
       </p>
       <p>Reason for default: {{note.REASON || 'null'}}</p>
     </li>
-  </ul>
+  </ul>-->
 
   <button *ngIf="!pager.reachedend" class="mr-1 btn btn-primary btn-xs" (click)="loadmore($event)">load more
     notes...

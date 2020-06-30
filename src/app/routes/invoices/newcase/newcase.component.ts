@@ -59,7 +59,7 @@ export class NewcaseComponent implements OnInit {
             this.spinner.hide();
             return;
         }
-        this.ecolService.accounts(this.data.custnumber).subscribe(accounts => {
+        this.ecolService.custview_stage(this.data.custnumber).subscribe(accounts => {
             if (accounts.length > 0) {
                 this.accounts = accounts;
                 this.spinner.hide();
@@ -80,11 +80,11 @@ export class NewcaseComponent implements OnInit {
             this.spinner.hide();
             return;
         }
-        this.ecolService.account(this.data.accnumber).subscribe(account => {
+        this.ecolService.customer_stage(this.data.custnumber).subscribe(account => {
             if (account) {
-                this.data.custname = account.custname;
-                this.data.rrocode = account.rrocode;
-                this.data.arocode = account.arocode;
+                this.data.custname = account.firstname;
+                //this.data.rrocode = account.rrocode;
+                //this.data.arocode = account.arocode;
                 this.spinner.hide();
             } else {
                 swal('Warning!', 'A/C Details not found for  ' + this.data.accnumber, 'success');

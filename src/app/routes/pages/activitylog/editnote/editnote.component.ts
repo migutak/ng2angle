@@ -113,7 +113,7 @@ export class EditnoteComponent implements OnInit {
       id: [{ value: this.note.id, disabled: true }],
       accnumber: [{ value: this.note.accnumber, disabled: true }],
       custnumber: [{ value: this.note.custnumber, disabled: true }],
-      notemade: [{ value: this.note.notemade, disabled: false }],
+      notemade: [{ value: this.note.notemade, disabled: false}, Validators.required ],
       notedate: [{ value: this.note.notedate, disabled: true }],
       owner: [{ value: this.note.owner, disabled: true }]
     });

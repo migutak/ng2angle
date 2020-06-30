@@ -27,8 +27,8 @@
                             [(ngModel)]="data.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }"
                             (blur)="onBlurAccount()">
                             <option value="">Please select</option>
-                            <option *ngFor="let acc of accounts" [value]="acc.accnumber">
-                                {{acc.accnumber}}</option>
+                            <option *ngFor="let acc of accounts" [value]="acc.ACCNUMBER">
+                                {{acc.ACCNUMBER}}</option>
                         </select>
                     </div>
                 </div>

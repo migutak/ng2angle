@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
     this.valForm = fb.group({
       'username': [null, Validators.required],
       'firstname': [null, Validators.required],
-      'lastname': ['', Validators.required],
+      'lastname': [''],
       'surname': [''],
       'division': ['', Validators.required],
       'team': ['', Validators.required],
@@ -65,15 +65,17 @@ export class SearchComponent implements OnInit {
   }
 
   putuser(body) {
-   // console.log(body);
+   if(body.active == true) {
+     body.active = 'Y'
+   } else {
+     body.active = 'N'
+   }
    this.ecolService.loader();
    this.ecolService.putuser(body).subscribe(data => {
      // console.log(data);
       swal('Successful!', 'user updated!', 'success');
 
     }, error => {
-     // console.log(error);
-    // this.buttonTitle = 'update user';
       swal('Error!', 'Error occurred during processing!', 'error');
     });
   }
@@ -83,6 +85,10 @@ export class SearchComponent implements OnInit {
     if (username) {
       this.ecolService.getuser(username).subscribe(data => {
         if (data.length > 0) {
+          var active = true;
+          if(data[0].ACTIVE == 'N') {
+            active = false;
+          }
           this.valForm.patchValue({
             username: data[0].USERNAME,
             firstname: data[0].FIRSTNAME,
@@ -92,7 +98,7 @@ export class SearchComponent implements OnInit {
             team: data[0].TEAM,
             branch: data[0].BRANCH,
             email: data[0].EMAIL,
-            active: data[0].ACTIVE,
+            active: active,
             expirydate: data[0].EXPIRYDATE,
             createdate: data[0].CREATEDATE,
             role: data[0].ROLE

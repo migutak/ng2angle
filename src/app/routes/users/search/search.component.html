@@ -11,7 +11,7 @@
         <div class="card card-default">
           <div class="card-body">
             <div class="form-group row">
-              <label class="col-xl-2 col-form-label"></label>
+              <label class="col-xl-2 col-form-label">Username</label>
               <div class="col-xl-10 form-inline">
                 <input class="form-control" type="text" formControlName="username" placeholder="username"
                   [formControl]="valForm.controls['username']" [ngClass]="{ 'is-invalid': valForm.controls['username'].hasError('required') && (valForm.controls['username'].dirty || valForm.controls['username'].touched) }" />
@@ -31,13 +31,11 @@
               </div>
            </div>
            <div class="form-group row">
-                <label class="col-xl-2 col-form-label">Last Name</label>
+                <label class="col-xl-2 col-form-label">Middle Name</label>
                 <div class="col-xl-10">
                   <input class="form-control" type="text" formControlName="lastname"
                   [formControl]="valForm.controls['lastname']" [ngClass]="{ 'is-invalid': valForm.controls['lastname'].hasError('required') }"/>
-                <span class="text-danger"
-                  *ngIf="valForm.controls['lastname'].hasError('required') && (valForm.controls['lastname'].dirty || valForm.controls['lastname'].touched)">Last Name
-                  is required</span>
+                
                 </div>
             </div>
             <div class="form-group row">
@@ -131,9 +129,6 @@
                   is required</span>
               </div>
            </div>
-           
-            
-            
             
             <fieldset class="b0">
               <div class="form-group row">

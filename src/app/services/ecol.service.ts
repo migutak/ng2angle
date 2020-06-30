@@ -39,6 +39,14 @@ export class EcolService {
     return this.httpClient.get(environment.nodeapi + '/tbl-relegations/' + id);
   }
 
+  custview_stage(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/custview_stage?filter[where][custnumber]=' + custnumber);
+  }
+
+  customer_stage(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/customer_stage/' + custnumber);
+  }
+
   approverelegate(body){
     return this.httpClient.patch(environment.nodeapi + '/tbl-relegations/' + body.casenumber, body);
   }
