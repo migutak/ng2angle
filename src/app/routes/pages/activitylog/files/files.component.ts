@@ -63,7 +63,6 @@ export class FilesComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item: FileItem, response: any, status: number, headers: ParsedResponseHeaders): any => {
       // success
-      console.log(item);
       const obj = JSON.parse(response);
       //console.log(obj)
       //console.log(this.model)
@@ -141,8 +140,6 @@ export class FilesComponent implements OnInit {
   }
 
   changeCity(e) {
-    console.log(e.target);
     this.model.userdesctype == e.target.value;
-    console.log(this.model.userdesctype);
   }
 }

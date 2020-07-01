@@ -1,124 +1,129 @@
 <div class="content-heading">
-    <div>Fee Notes(Invoices)
-        <small>All cases</small></div>
+  <div>Fee Notes(Invoices)
+    <small>All cases</small></div>
 </div>
 <div class="container-fluid">
-    <a [routerLink]="['../newcase']" [routerLinkActive]="['active']"><i class="far fa-file-alt"></i> Enter New Fee Note</a>
+  <a [routerLink]="['../newcase']" [routerLinkActive]="['active']"><i class="far fa-file-alt"></i> Enter New Fee
+    Note</a>
   <button class="btn mr-1 btn-link" type="button" (click)="getSelectedRows()" [disabled]="export"><i
       class="fas fa-print"></i> Export Selected Rows</button>
-  <button class="btn mr-1 btn-outline-primary" type="button" (click)="open(content)" [disabled]="updatecase">{{updateBtnTitle}}</button>
-    
+  <button class="btn mr-1 btn-outline-primary" type="button" (click)="open(content)"
+    [disabled]="updatecase">{{updateBtnTitle}}</button>
 
-    <div style="margin-bottom: 5px;">
-        <input
-          type="text"
-          (input)="onQuickFilterChanged()"
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-        <div class="btn-group mb-1 mr-1" dropdown>
-            <button class="btn dropdown-toggle btn-secondary" type="button" dropdownToggle>Refresh Grid
-                <span class="caret"></span>
-            </button>
-            <div *dropdownMenu class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="#" (click)="refreshData('In Process')">In Process</a>
-                <a class="dropdown-item" href="#" (click)="refreshData('Print to Finance')">Print to Finance</a>
-                <a class="dropdown-item" href="#" (click)="refreshData('Decline')">Decline</a>
-                <a class="dropdown-item" href="#" (click)="refreshData('PAID')">PAID</a>
-            </div>
-        </div>
+
+  <div style="margin-bottom: 5px;">
+    <input type="text" (input)="onQuickFilterChanged()" id="quickFilter" placeholder="quick filter..." />
+    <div class="btn-group mb-1 mr-1" dropdown>
+      <button class="btn dropdown-toggle btn-secondary" type="button" dropdownToggle>Refresh Grid
+        <span class="caret"></span>
+      </button>
+      <div *dropdownMenu class="dropdown-menu" role="menu">
+        <a class="dropdown-item" href="#" (click)="refreshData('In Process')">In Process</a>
+        <a class="dropdown-item" href="#" (click)="refreshData('Print to Finance')">Print to Finance</a>
+        <a class="dropdown-item" href="#" (click)="refreshData('Decline')">Decline</a>
+        <a class="dropdown-item" href="#" (click)="refreshData('PAID')">PAID</a>
       </div>
-      <div>
-        <ag-grid-angular
-          #agGrid
-          style="width: 100%; height: 700px;"
-          id="myGrid"
-          class="ag-theme-balham"
-          [modules]="modules"
-          [columnDefs]="columnDefs"
-          [defaultColDef]="defaultColDef"
-          [suppressRowClickSelection]="false"
-          [rowSelection]="rowSelection"
-          [isRowSelectable]="isRowSelectable"
-          (rowClicked)='onRowDoubleClicked($event)'
-          (rowSelected)="onRowSelected($event)"
-          rowSelection="multiple"
-          [rowData]="rowData"
-          (gridReady)="onGridReady($event)"
-        ></ag-grid-angular>
-      </div>
-    
+    </div>
+  </div>
+  <div>
+    <ag-grid-angular #agGrid style="width: 100%; height: 700px;" id="myGrid" class="ag-theme-balham" [modules]="modules"
+      [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [suppressRowClickSelection]="false"
+      [rowSelection]="rowSelection" [isRowSelectable]="isRowSelectable" (rowClicked)='onRowDoubleClicked($event)'
+      (rowSelected)="onRowSelected($event)" rowSelection="multiple" [rowData]="rowData"
+      (gridReady)="onGridReady($event)"></ag-grid-angular>
+  </div>
+
 </div>
 <!-- Modal -->
 <ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Case update</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form role="form" #updateInvoiceForm="ngForm" (ngSubmit)="updateInvoice(updateInvoiceForm)" novalidate
-        autocomplete="off">
-        <div class="form-group">
-          <label>Account Number</label>
-          <input class="form-control" type="text" placeholder="accnumber" name="accnumber" id="accnumber"
-            #accnumber="ngModel" [(ngModel)]="data.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" readonly/>
-        </div>
-        <div class="form-group">
-          <label>Service Provider</label>
-          
-          <input class="form-control" type="text" name="sptitle" id="sptitle"
-            #sptitle="ngModel" [(ngModel)]="data.sptitle"/>
-        </div>
-        <div class="form-group">
-            <label>Fee Note Amount</label>
-            
-            <input class="form-control" type="number" name="feenoteamnt" id="feenoteamnt"
-              #feenoteamnt="ngModel" [(ngModel)]="data.feenoteamnt"/>
-        </div>
-        <div class="form-group">
-            <label>Approved Amount</label>
-            
-            <input class="form-control" type="number" name="approvedamnt" id="approvedamnt"
-              #approvedamnt="ngModel" [(ngModel)]="data.approvedamnt"/>
-        </div>
-        <div class="form-group">
-          <label for="feenotedate">Fee Note Date</label>
-          <div class="input-group">
-            <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig"
-              id="feenotedate" #feenotedate="ngModel" [(ngModel)]="data.feenotedate" name="feenotedate" required>
-            <div class="input-group-append">
-              <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
-                </span></button>
-            </div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Case update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form role="form" #updateInvoiceForm="ngForm" (ngSubmit)="updateInvoice(updateInvoiceForm)" novalidate
+      autocomplete="off">
+      <div class="form-group">
+        <label>Account Number</label>
+        <input class="form-control" type="text" placeholder="accnumber" name="accnumber" id="accnumber"
+          #accnumber="ngModel" [(ngModel)]="data.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" readonly />
+      </div>
+      <div class="form-group">
+        <label>Service Provider</label>
+
+        <input class="form-control" type="text" name="sptitle" id="sptitle" #sptitle="ngModel"
+          [(ngModel)]="data.sptitle" />
+      </div>
+      <div class="form-group">
+        <label>Fee Note Amount</label>
+
+        <input class="form-control" type="number" name="feenoteamnt" id="feenoteamnt" #feenoteamnt="ngModel"
+          [(ngModel)]="data.feenoteamnt" />
+      </div>
+      <div class="form-group">
+        <label>Approved Amount</label>
+
+        <input class="form-control" type="number" name="approvedamnt" id="approvedamnt" #approvedamnt="ngModel"
+          [(ngModel)]="data.approvedamnt" />
+      </div>
+      <div class="form-group">
+        <label for="feenotedate">Fee Note Date</label>
+        <div class="input-group">
+          <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" id="feenotedate"
+            #feenotedate="ngModel" [(ngModel)]="data.feenotedate" name="feenotedate" required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen"
+              type="button"><span><i class="far fa-calendar-alt"></i>
+              </span></button>
           </div>
         </div>
-        <div class="form-group">
-            <label for="printdate">Print Date</label>
-            <div class="input-group">
-              <input type="text" class="form-control" #dp1="bsDatepicker" bsDatepicker [bsConfig]="bsConfig"
-                id="printdate" #printdate="ngModel" [(ngModel)]="data.printdate" name="printdate" [minDate]="minDate" [maxDate]="minDate">
-              <div class="input-group-append">
-                <button class="btn btn-outline-primary" (click)="dp1.show()" [attr.aria-expanded]="dp1.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
-                  </span></button>
-              </div>
-            </div>
+      </div>
+      <div class="form-group">
+        <label for="printdate">Print Date</label>
+        <div class="input-group">
+          <input type="text" class="form-control" #dp1="bsDatepicker" bsDatepicker [bsConfig]="bsConfig" id="printdate"
+            #printdate="ngModel" [(ngModel)]="data.printdate" name="printdate" [minDate]="minDate" [maxDate]="minDate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" (click)="dp1.show()" [attr.aria-expanded]="dp1.isOpen"
+              type="button"><span><i class="far fa-calendar-alt"></i>
+              </span></button>
           </div>
-        <div class="form-group">
-          <label>Status</label>
-          <select class="custom-select custom-select-sm" #status="ngModel" [(ngModel)]="data.status" name="status" [disabled]="butDisabled">
-            <option selected="">Select one</option>
-            <option>In Process</option>
-            <option>Print to Finance</option>
-            <option>Declined</option>
-            <option>PAID</option>
-          </select>
         </div>
-        <button type="submit" class="btn btn-outline-dark" [disabled]="!updateInvoiceForm.valid || butDisabled">Submit</button>
-      </form>
-    </div>
-    <div class="modal-footer">
-  
-    </div>
-  </ng-template>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select class="custom-select custom-select-sm" #status="ngModel" [(ngModel)]="data.status" name="status"
+          [disabled]="butDisabled">
+          <option selected="">Select one</option>
+          <option>In Process</option>
+          <option>Print to Finance</option>
+          <option>Declined</option>
+          <option>PAID</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fee note image</label>
+        <div class="col-xl-8">
+          <input type="file" name="file" ng2FileSelect [uploader]="uploader" />
+          <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+            [disabled]="!uploader.getNotUploadedItems().length">
+            Upload
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-outline-success btn-sm" (click)="downloadFile()" [disabled]="fileexit">
+          <i class="fa fa-download"></i> Invoice Image
+        </button>
+      </div>
+
+      <button type="submit" class="btn btn-outline-dark"
+        [disabled]="!updateInvoiceForm.valid || butDisabled">Submit</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</ng-template>

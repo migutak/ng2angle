@@ -21,6 +21,19 @@
               <div class="col-xl-4">
                 <div class="card card-primary">
                   <div class="card-body">
+                    <div>
+                      <div>
+                        <button class="btn btn-outline-success btn-sm" (click)="downloadFile()">
+                          <i class="fa fa-download"> Download the template</i>
+                        </button>
+                      </div>
+  
+                      Select Insurance xls file to upload
+  
+                      <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
+                        accept=".xlsx" />
+                      <hr />
+                    </div>
                     <form #insuranceForm="ngForm" class="form-horizontal" (ngSubmit)="Submit(insuranceForm)" *ngIf="new">
                         <div class="form-group row mb">
                           <div class="col-md-12">

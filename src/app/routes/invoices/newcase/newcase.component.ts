@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../environments/environment';
 
+import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+
+const uploadAPI = environment.filesapi;
 
 @Component({
     selector: 'app-newcase',
@@ -19,22 +22,41 @@ export class NewcaseComponent implements OnInit {
     sptypes = [];
     data: any = {};
     minDate: Date;
+    invoiceimage: string;
+    invoicename: string;
+    public uploader: FileUploader = new FileUploader({ url: uploadAPI, itemAlias: 'file' });
 
-    bsConfig = { 
+    bsConfig = {
         isAnimated: true,
         adaptivePosition: true,
-        dateInputFormat: 'YYYY-MM-DD' 
+        dateInputFormat: 'YYYY-MM-DD'
     }
 
     constructor(
         private ecolService: EcolService,
         private router: Router,
-        private spinner: NgxSpinnerService, 
+        private spinner: NgxSpinnerService,
         private http: HttpClient,
-        ) {
-            this.minDate = new Date();
-            this.minDate.setDate(this.minDate.getDate() - 1);
+    ) {
+        this.minDate = new Date();
+        this.minDate.setDate(this.minDate.getDate() - 1);
+
+        this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+            
+        };
+        this.uploader.onErrorItem = (item: any, response: string, status: number, headers: any): any => {
+            swal('Oooops!', 'unable to upload file!', 'error');
+        };
+
+        this.uploader.onSuccessItem = (item: any, response: any, status: number, headers: any): any => {
+            //console.log('FileUpload:uploaded successfully:', item, status, response);
+            swal('OK','Your file has been uploaded successfully','success');
+            var resp = JSON.parse(response);
+            this.invoiceimage = resp.files[0].path;
+            this.invoicename = resp.files[0].filename;
         }
+    }
 
     ngOnInit() {
         // get sptypes
@@ -49,13 +71,13 @@ export class NewcaseComponent implements OnInit {
                 environment.api + '/api/sptypes?filter[where][SPTITLE]=' + type
             )
             .subscribe(data => {
-               this.data.spaccount = data[0].ACCNUMBER
+                this.data.spaccount = data[0].ACCNUMBER
             });
     }
 
     onBlurMethod() {
         this.spinner.show();
-        if(this.data.custnumber == '' || this.data.custnumber==undefined) {
+        if (this.data.custnumber == '' || this.data.custnumber == undefined) {
             this.spinner.hide();
             return;
         }
@@ -76,7 +98,7 @@ export class NewcaseComponent implements OnInit {
 
     onBlurAccount() {
         this.spinner.show();
-        if(this.data.accnumber == '' || this.data.accnumber==undefined) {
+        if (this.data.accnumber == '' || this.data.accnumber == undefined) {
             this.spinner.hide();
             return;
         }
@@ -112,7 +134,11 @@ export class NewcaseComponent implements OnInit {
             feenotedate: form.value.feenotedate,
             dateinput: form.value.dateinput,
             feenoteamnt: form.value.feenoteamnt,
-            method: form.value.method
+            wht: form.value.wht,
+            vat: form.value.vat,
+            method: form.value.method,
+            invoiceimage: this.invoiceimage,
+            invoicename: this.invoicename
         };
         this.ecolService.newinvoice(body).subscribe(data => {
             swal('Success!', 'saved successfully!', 'success');
@@ -121,7 +147,7 @@ export class NewcaseComponent implements OnInit {
             console.log(error);
             swal('Error!', 'Error occurred during processing!', 'error');
         });
-        
+
     }
 
     cancel() {

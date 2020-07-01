@@ -6,8 +6,12 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import swal from 'sweetalert2';
+import { saveAs } from 'file-saver';
 import { EcolService } from '../../../services/ecol.service';
 import { ExportInvoiceService } from '../../../services/exportinvoices.service'
+import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+
+const uploadAPI = environment.filesapi;
 
 @Component({
     selector: 'app-allcases',
@@ -18,6 +22,10 @@ export class AllCasesComponent implements OnInit {
     @ViewChild('agGrid') agGrid: AgGridAngular;
     private gridApi;
     private gridColumnApi;
+
+    public uploader: FileUploader = new FileUploader({ url: uploadAPI, itemAlias: 'file' });
+    invoiceimage: string;
+    invoicename: string;
 
     public modules = [ClientSideRowModelModule];
     columnDefs;
@@ -30,6 +38,7 @@ export class AllCasesComponent implements OnInit {
     username: string;
     searchText: string;
     model: any = {};
+    fileexit: boolean = true;
     export: boolean = true;
     updatecase: boolean = true;
     data: any = {};
@@ -92,6 +101,22 @@ export class AllCasesComponent implements OnInit {
         this.isRowSelectable = function (rowNode) {
             return rowNode.data ? rowNode.data.status == 'Print to Finance' : false;
         };
+
+        this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+            
+        };
+        this.uploader.onErrorItem = (item: any, response: string, status: number, headers: any): any => {
+            swal('Oooops!', 'unable to upload file!', 'error');
+        };
+
+        this.uploader.onSuccessItem = (item: any, response: any, status: number, headers: any): any => {
+            //console.log('FileUpload:uploaded successfully:', item, status, response);
+            swal('OK','Your file has been uploaded successfully','success');
+            var resp = JSON.parse(response);
+            this.invoiceimage = resp.files[0].path;
+            this.invoicename = resp.files[0].filename;
+        }
     }
 
     onQuickFilterChanged() {
@@ -142,6 +167,12 @@ export class AllCasesComponent implements OnInit {
         this.data.feenotedate = this.model.feenotedate;
         this.data.feenoteamnt = this.model.feenoteamnt;
         this.data.approvedamnt = this.model.approvedamnt;
+        this.data.invoiceimage = this.model.invoiceimage;
+        this.data.invoicename = this.model.invoicename;
+
+        if(this.data.invoiceimage) {
+            this.fileexit = false;
+        }
 
         if(this.data.status === 'PAID') {
             this.butDisabled = true;
@@ -215,10 +246,16 @@ export class AllCasesComponent implements OnInit {
         this.data.feenoteamnt = form.value.feenoteamnt;
         this.data.status = form.value.status;
         this.data.approvedamnt = form.value.approvedamnt;
+        
 
         this.data.feenotedate = moment(form.value.feenotedate).format('YYYY-MM-DD');
         if (form.value.printdate) {
             this.data.printdate = moment(form.value.printdate).add(1, 'days').format('YYYY-MM-DD');
+        }
+
+        if(this.invoiceimage) {
+            this.data.invoiceimage = this.invoiceimage;
+            this.data.invoicename = this.invoicename;
         }
 
         this.ecolService.patchinvoices(this.data).subscribe(resp => {
@@ -240,4 +277,13 @@ export class AllCasesComponent implements OnInit {
                     console.log(error)
                 });
     }
+
+    downloadFile() {
+        this.ecolService.downloadFile(this.model.invoiceimage).subscribe(data => {
+          saveAs(data, this.model.invoicename);
+        }, error => {
+          console.log(error.error);
+          swal('Error!', ' Cannot download  file!', 'error');
+        });
+      }
 }

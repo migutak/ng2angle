@@ -34,6 +34,7 @@ export const environment = {
   applink: host,
   xlsuploadapi: host + '/xlsupload/',
   xlstemplate: xlstemplate,
+  insurance: '/app/templates/insurance.xlsx',
   emailapi: host + '/demandemail/email',
   demandsmsapi: host + "/sms",
   auth: auth,

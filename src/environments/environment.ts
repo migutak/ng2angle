@@ -11,6 +11,8 @@ var workflow = host + '8088/sysworkflow/en/neoclassic/login/login';
 var portfoliodash = '';
 var accplanreport = '';
 var xlstemplate = 'C:\\templates\\upload_notes.xlsx';
+var sptemplate = 'C:\\templates\\sptemplate.xlsx';
+var insurancetemplate = 'C:\\templates\\insurance.xlsx';
 var repossessLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/4437708915ec5876a680fe5036008759/4164212795ec587e2d73467086569707.php';
 var woffLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
 var calcelipfLink = 'http://127.0.0.1:8088/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
@@ -31,6 +33,8 @@ export const environment = {
   valor: host + '3000/api/',
   xlsuploadapi: host + '5001/xlsupload/',
   xlstemplate: xlstemplate,
+  sptemplate: sptemplate,
+  insurancetemplate:insurancetemplate,
   applink: host + 4500,
   emailapi: host + '8005/demandemail/email',
   demandsmsapi: host + 7000,

@@ -4,11 +4,11 @@ import swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import {GridOptions} from '@ag-grid-community/all-modules';
-import {AllModules} from '@ag-grid-enterprise/all-modules';
+import { GridOptions } from '@ag-grid-community/all-modules';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as XLSX from 'xlsx';
-import {saveAs} from 'file-saver';
+import { saveAs } from 'file-saver';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 declare var $: any;
@@ -107,7 +107,7 @@ export class SpComponent implements OnInit {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
 
-    
+
   }
 
   gridReady(params) {
@@ -141,9 +141,9 @@ export class SpComponent implements OnInit {
     });
   }
 
-  
 
-   editSubmit(form) {
+
+  editSubmit(form) {
     const body = {
       'SPTITLE': this.model.SPTITLE,
       'CONTACTPERSON': form.value.CONTACTPERSON,
@@ -196,7 +196,7 @@ export class SpComponent implements OnInit {
     const file = ev.target.files[0];
     reader.onload = (event) => {
       const data = reader.result;
-      workBook = XLSX.read(data, {type: 'binary'});
+      workBook = XLSX.read(data, { type: 'binary' });
       jsonData = workBook.SheetNames.reduce((initial, name) => {
         const sheet = workBook.Sheets[name];
         initial[name] = XLSX.utils.sheet_to_json(sheet);
@@ -208,22 +208,18 @@ export class SpComponent implements OnInit {
           title: 'Empty Values',
           text: 'Wrong sheet name',
         });
-        this.myInputVariable.nativeElement.value = '';
-        document.getElementById('output').innerHTML = '';
         return;
       }
       this.outdata = jsonData.Sheet1;
-      if (!this.outdata[0].accnumber || !this.outdata[0].notemade) {
+      if (!this.outdata[0].SPCODE || !this.outdata[0].SPTITLE || !this.outdata[0].TELEPHONE || !this.outdata[0].STARTDATE || !this.outdata[0].ENDOFINDEMNITY) {
         swal({
           type: 'error',
           title: 'Empty Values',
           text: 'Wrong field name',
         });
-        this.myInputVariable.nativeElement.value = '';
-        document.getElementById('output').innerHTML = '';
         return;
       }
-      
+
       swal({
         title: 'Confirmation',
         imageUrl: 'assets/img/user/coop.jpg',
@@ -235,13 +231,17 @@ export class SpComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.ecolService.loader();
-          this.ecolService.bulknotes(this.outdata).subscribe(events => {
-              swal({
-                type: 'success',
-                title: 'ALL Good',
-                text: 'S.P successfully added!',
-              });
-            
+
+          this.ecolService.sptypes(this.outdata).subscribe(events => {
+            swal({
+              type: 'success',
+              title: 'ALL Good',
+              text: 'S.P successfully added!',
+            });
+
+            // refresh list
+            this.getData();
+
           }, error => {
             console.log(error);
             swal({
@@ -263,7 +263,7 @@ export class SpComponent implements OnInit {
   }
 
   downloadFile() {
-    const template = environment.xlstemplate;
+    const template = environment.sptemplate;
     this.ecolService.downloadFile(template).subscribe(data => {
       saveAs(data, 'ECollect_service_provider_upload_template.xlsx');
     }, error => {
