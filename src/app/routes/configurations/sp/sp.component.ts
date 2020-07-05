@@ -211,7 +211,7 @@ export class SpComponent implements OnInit {
         return;
       }
       this.outdata = jsonData.Sheet1;
-      if (!this.outdata[0].SPCODE || !this.outdata[0].SPTITLE || !this.outdata[0].TELEPHONE || !this.outdata[0].STARTDATE || !this.outdata[0].ENDOFINDEMNITY) {
+      if (!this.outdata[0].SPCODE || !this.outdata[0].SPTITLE || !this.outdata[0].TELEPHONE) {
         swal({
           type: 'error',
           title: 'Empty Values',
@@ -270,6 +270,18 @@ export class SpComponent implements OnInit {
       console.log(error);
       swal('Error!', ' Cannot download template  file!', 'error');
     });
+  }
+
+  eventCheck(event) {
+    if(event.target.checked) {
+      this.http.get<any>(environment.api + '/api/sptypes/expired').subscribe(resp => {
+        this.rowData1 = resp;
+      });
+    } else {
+      this.http.get<any>(environment.api + '/api/sptypes').subscribe(resp => {
+        this.rowData1 = resp;
+      });
+    }
   }
 
 }

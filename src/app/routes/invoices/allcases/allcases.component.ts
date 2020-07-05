@@ -86,6 +86,8 @@ export class AllCasesComponent implements OnInit {
                 field: 'status',
                 minWidth: 150,
             },
+            { field: 'wht' },
+            { field: 'vat' },
             { field: 'owner' },
             { field: 'arocode' },
             { field: 'dateinput' },
@@ -169,6 +171,8 @@ export class AllCasesComponent implements OnInit {
         this.data.approvedamnt = this.model.approvedamnt;
         this.data.invoiceimage = this.model.invoiceimage;
         this.data.invoicename = this.model.invoicename;
+        this.data.vat = this.model.vat;
+        this.data.wht = this.model.wht;
 
         if(this.data.invoiceimage) {
             this.fileexit = false;

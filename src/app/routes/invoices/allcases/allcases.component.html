@@ -63,6 +63,18 @@
           [(ngModel)]="data.feenoteamnt" />
       </div>
       <div class="form-group">
+        <label>WHT</label>
+
+        <input class="form-control" type="number" name="wht" id="wht" #wht="ngModel"
+          [(ngModel)]="data.wht" />
+      </div>
+      <div class="form-group">
+        <label>VAT</label>
+
+        <input class="form-control" type="number" name="vat" id="vat" #vat="ngModel"
+          [(ngModel)]="data.vat" />
+      </div>
+      <div class="form-group">
         <label>Approved Amount</label>
 
         <input class="form-control" type="number" name="approvedamnt" id="approvedamnt" #approvedamnt="ngModel"

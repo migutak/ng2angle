@@ -33,24 +33,24 @@ export class InsuranceComponent implements OnInit {
   // Basic example
   columnDefs = [
     {
-      headerName: 'insuranceName',
-      field: 'insuranceName',
+      headerName: 'insurancename',
+      field: 'insurancename',
       width: 150
     }, {
-      headerName: 'physicalAddress',
-      field: 'physicalAddress',
+      headerName: 'physicaladdress',
+      field: 'physicaladdress',
       width: 120
     }, {
-      headerName: 'postalAddress',
-      field: 'postalAddress',
+      headerName: 'postaladdress',
+      field: 'postaladdress',
       width: 90
     }, {
-      headerName: 'emailAddress',
-      field: 'emailAddress',
+      headerName: 'emailaddress',
+      field: 'emailaddress',
       width: 90
     }, {
       headerName: 'telnumber',
-      field: 'telNumber',
+      field: 'telnumber',
       width: 100
     }];
   rowData1: any;
@@ -240,7 +240,6 @@ export class InsuranceComponent implements OnInit {
         return;
       }
       this.outdata = jsonData.Sheet1;
-      console.log(this.outdata)
       if(this.outdata.length==0){
         swal({
           type: 'error',

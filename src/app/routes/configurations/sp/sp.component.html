@@ -301,9 +301,26 @@
                     <input class="mb form-control" placeholder="Filter..." type="text"
                       (keyup)="onQuickFilterChanged($event)" />
                   </div>
+                  <div class="col-xl-4 col-lg-6">
+                    <div class="form-group row">
+                      <label class="col-md-6 col-form-label">With Expired Indemnity</label>
+                      <div class="col-md-6">
+                        <div class="ml-auto">
+                          <label class="switch switch-lg m-0">
+                            <input type="checkbox" checked="checked" name="expiredindemnity" id="expiredindemnity"
+                            [(ngModel)]="model.expiredindemnity" #expiredindemnity="ngModel" (change)="eventCheck($event)"/>
+                            <span></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 600px"
-                  [gridOptions]="gridOptions" (rowClicked)='onRowClicked($event)' [modules]='modules'
+                  [gridOptions]="gridOptions" 
+                  (rowClicked)='onRowClicked($event)' 
+                  [modules]='modules'
+                  class="ag-theme-balham"
                   (gridReady)="gridReady($event)">
                 </ag-grid-angular>
               </div>
