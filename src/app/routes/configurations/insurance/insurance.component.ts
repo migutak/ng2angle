@@ -116,14 +116,14 @@ export class InsuranceComponent implements OnInit {
 
   fneditSubmit(body) {
     this.spinner.show();
-    this.ecolService.put_insurance(body).subscribe(resp => {
+    this.ecolService.patch_pmt_insurance(body).subscribe(resp => {
       swal('Success!', 'Update successful!', 'success');
       this.getData();
       this.spinner.hide();
-      //update to mysql
-      this.ecolService.put_pmt_insurance(body).subscribe(mysqlresp => {
+      //update to oracle
+      /*this.ecolService.patch_insurance(body).subscribe(mysqlresp => {
         this.getData();
-      }, error => {console.log(error);})
+      }, error => {console.log(error);})*/
     }, error => {
       console.log(error);
       swal('Eror!', 'Update was not completed!', 'error');
@@ -178,13 +178,13 @@ export class InsuranceComponent implements OnInit {
   editSubmit(form) {
     const body = {
       'id': this.model.id,
-      'insuranceName': form.value.insuranceName,
-      'physicalAddress': form.value.physicalAddress,
-      'postalAddress': form.value.postalAddress,
-      'emailAddress': form.value.emailAddress,
-      'telNumber': form.value.telNumber,
-      'contactPerson': form.value.contactPerson,
-      'updateBy': form.value.updateBy
+      'insurancename': form.value.insurancename,
+      'physicaladdress': form.value.physicaladdress,
+      'postaladdress': form.value.postaladdress,
+      'emailaddress': form.value.emailaddress,
+      'telnumber': form.value.telnumber,
+      'contactperson': form.value.contactperson,
+      'updateby': form.value.updateby
     };
     swal({
       title: 'Are you sure?',

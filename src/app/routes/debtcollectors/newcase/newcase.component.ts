@@ -69,6 +69,7 @@ export class NewcaseComponent implements OnInit {
                 this.model.address = account.addressline1;
                 this.model.arocode = account.arocode;
                 this.model.loansettlementacc = account.settleaccno;
+                this.model.nationid = account.nationid;
                 this.spinner.hide();
             } else {
                 alert('No accounts found!');
@@ -97,7 +98,8 @@ export class NewcaseComponent implements OnInit {
             dateinput: form.value.dateinput,
             owner: form.value.owner,
             custname: form.value.custname,
-            address: form.value.address
+            address: form.value.address,
+            nationid: form.value.nationid
         };
         // check if there exists a request
         this.ecolService.checkindebtcollector(body.accnumber).subscribe(resp => {
