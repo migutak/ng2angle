@@ -75,27 +75,18 @@ const Allocations = {
     ]
 };
 
-
-/*const Reports = {
-    text: 'Reports',
-    link: '/dashboard',
-    icon: 'icon-speedometer',
-    submenu: [
-        {
-            text: 'Reports',
-            link: '/reports/allreports'
-        }
-    ]
-};*/
-
 const DashboardAdmin = {
     text: 'Dashboard',
     link: '/dashboard',
     icon: 'icon-speedometer',
     submenu: [
         {
-            text: 'Performance Metrics',
-            link: '/dashboard/v3'
+            text: 'Platform Metrics',
+            link: '/dashboard/metrics'
+        },
+        {
+            text: 'Application logs',
+            link: '/dashboard/logs'
         }
     ]
 };

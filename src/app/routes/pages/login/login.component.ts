@@ -109,6 +109,10 @@ export class LoginComponent implements OnInit {
                     sessionStorage.setItem('profile', '1');
                     // this.router.navigate([this.returnUrl]);
                     this.router.navigate(['/home']);
+                }, error => {
+                    console.log(error)
+                    this.error = 'Error during login';
+                    this.loading = false;
                 });
                 //
             } else {

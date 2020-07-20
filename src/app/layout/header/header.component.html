@@ -8,7 +8,7 @@
         -webkit-animation: badge 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) infinite alternate-reverse both;
         animation: badge 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) infinite alternate-reverse both;
     }
-    
+
     @-webkit-keyframes badge {
         0% {
             -webkit-transform: scale(0.5);
@@ -99,18 +99,51 @@
     </ul>
     <!-- END Left navbar-->
     <!-- START Right Navbar-->
+
     <ul class="navbar-nav flex-row">
 
-        <!-- Fullscreen (only desktops)
+        <!-- START How to menu-->
+        <li class="nav-item dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><i
+                    class="far fa-file-video"></i>
+                How to videos <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> How to
+                        action</a></li>
+                <li><a href="#" (click)="videos('ptp')" class="dropdown-item"><i class="fas fa-file-video"></i> Add a
+                        contact</a></li>
+                <li><a href="#" (click)="videos('ptp')" class="dropdown-item"><i class="fas fa-video"></i> Capture
+                        PTP</a></li>
+                <li><a href="#" (click)="videos('demand')" class="dropdown-item"><i class="fas fa-file-video"></i> Send
+                        demand letter</a></li>
+                <li><a href="#" (click)="videos('bulk')" class="dropdown-item"><i class="fas fa-play"></i> Bulk
+                        notes</a></li>
+                <li><a href="#" (click)="videos('upload')" class="dropdown-item"><i class="fas fa-video"></i> Upload
+                        file</a></li>
+                <li class="divider dropdown-divider"></li>
+                <li><a href="#" (click)="videos('ipf')" class="dropdown-item"><i class="fas fa-video"></i> How to
+                        Cancel IPF</a></li>
+                <li><a href="#" (click)="videos('repo')" class="dropdown-item"><i class="fas fa-file-video"></i> Request repossession</a></li>
+                <li><a href="#" (click)="videos('investigate')" class="dropdown-item"><i class="fas fa-video"></i> Request Investigation</a></li>
+                <li><a href="#" (click)="videos('edc')" class="dropdown-item"><i class="fas fa-file-video"></i> Send to EDC</a></li>
+                <li><a href="#" (click)="videos('writeoff')" class="dropdown-item"><i class="fas fa-play"></i> Writeoff</a></li>
+                <li><a href="#" (click)="videos('relegate')" class="dropdown-item"><i class="fas fa-video"></i> Relegate account</a></li>
+            </ul>
+        </li>
+
+
+        <!-- END Howto menu-->
+
+        <!-- Fullscreen (only desktops)-->
         <li class="nav-item d-none d-md-block">
             <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)" title="Go Fullscreen">
                 <em class="fa fa-expand"></em>
             </a>
-        </li>-->
-<!-- lock -->
+        </li>
+        <!-- lock -->
         <li class="nav-item d-none d-md-block">
             <a class="nav-link" (click)="opentimeoutModal()" title="Lock Your screen">
-            <em class="fa fa-user-lock"></em>
+                <em class="fa fa-user-lock"></em>
             </a>
         </li>
 
@@ -119,7 +152,7 @@
             <a class="nav-link" (click)="openworkflows()" title="Remedial Workflows">
                 Workflows <em class="fa fa-external-link-alt"></em>
 
-                <span   class="badge badge-danger">{{totalCases}}</span>
+                <span class="badge badge-danger">{{totalCases}}</span>
             </a>
         </li>
 
@@ -128,7 +161,7 @@
         <li class="nav-item dropdown dropdown-list" dropdown>
             <a title="Overdue" class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
                 <em class="icon-bell"></em>
-                <span   class="badge badge-danger">{{totalBrokenPtps*1  +nu_of_cc_demands*1 + nu_of_demandsdue*1}}</span>
+                <span class="badge badge-danger">{{totalBrokenPtps*1  +nu_of_cc_demands*1 + nu_of_demandsdue*1}}</span>
                 <!-- {{ num1*1   +num2*1 }} -->
             </a>
             <!-- START Dropdown menu-->
@@ -211,7 +244,7 @@
 
         <li class="nav-item dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><em class="icon-user"></em>
-               {{time2}}, {{user.firstname}} {{user.surname}} | {{user.role}} <b class="caret"></b></a>
+                {{time2}}, {{user.firstname}} {{user.surname}} | {{user.role}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="#" class="dropdown-item"><i class="fa fas-user-o"></i> Profile</a></li>
                 <li><a href="#" class="dropdown-item"><i class="fa fas-calendar-o"></i> Calendar</a></li>
@@ -228,3 +261,19 @@
 
 </nav>
 <!-- END Top Navbar-->
+
+<!-- Video Modal -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">How to Video</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <video width="450" height="300" controls>
+            <source src="../../../assets/videos/movie.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+</ng-template>

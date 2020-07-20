@@ -56,5 +56,6 @@ export const environment = {
   calcelipfLink: calcelipfLink,
   relegationLink: relegationLink,
   investigateLink: investigateLink,
-  debtcollectorLink:debtcollectorLink
+  debtcollectorLink:debtcollectorLink,
+  platformDash: "http://52.117.93.88.nip.io:30041/goto/abafb13b1352b327883879c096c8d60d"
 };

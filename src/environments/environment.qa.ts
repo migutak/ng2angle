@@ -1,33 +1,63 @@
+var host = process.env.BACKEND_HOST || 'https://ecollectweb.co-opbank.co.ke';
+var manuals = process.env.MANUAL || '/app/manuals/';
+var path = process.env.BACKEND_PATH || '/home/ecollectadmin/demand_letters/';
+var accplanlink = process.env.ACCPLANLINK || 'http://172.16.204.71:3001';
+var kibanarpt = process.env.KIBANA || 'http://ecollectweb.co-opbank.co.ke:5601';
+var birt = process.env.BIRT || 'http://ecollectweb.co-opbank.co.ke:8787/birt';
+var ptpreport = process.env.PTPREPORT || '';
+var homedash = process.env.HOMEDASH || '';
+var workflow = process.env.WORKFLOW || '';
+var portfoliodash = process.env.PORTFOLIODASH || '';
+var accplanreport = process.env.ACCPLANREPORT || '';
+var xlstemplate = process.env.XLSTEMPLATE || '/home/ecollectadmin/templates/upload_notes.xlsx';
+var portal = process.env.PORTAL || '';
+var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
+var woffLink = '';
+var repossessLink = '';
+var calcelipfLink = '';
+var investigateLink= '';
+var debtcollectorLink= '';
+var relegationLink= '';
+
+
 export const environment = {
   production: true,
   adlogin: false,
-  sendsms: true,
-  api: 'https://52.117.54.217',
-  nodeapi: 'https://52.117.54.217/nodeapi',
-  grids: 'https://52.117.54.217/grids',
-  letters_path: '/home/ecollectadmin/demand_letters/',
-  letters_api: 'https://52.117.54.217/docx/',
-  uploadurl: 'https://52.117.54.217/filesapi',
-  demanddownload: 'https://52.117.54.217/demanddownload',
-  valor: 'https://52.117.54.217/valor',
-  metrics: 'https://52.117.54.217/appmetrics-dash',
-  applink: 'https://52.117.54.217',
-  xlsuploadapi: 'https://52.117.54.217/xlsupload/',
-  xlstemplate: '/home/ecollectadmin/templates/upload_notes.xlsx',
-  emailapi: 'https://52.117.54.217/demandemail/email',
-  demandsmsapi: "https://52.117.54.217/sms",
-  auth: 'https://52.117.54.217/adlogin',
-  filesapi: 'https://52.117.54.217/filesapi',
-  accplanlink: 'http://ecollectapp.co-opbank.co.ke:3001',
-  kibanarpt: 'http://52.117.54.217:5601',
-  manuals_path: '/app/manuals/',
-  birt: 'http://52.117.54.217:8787/birt',
-  kibana: 'http://52.117.54.217:5601/app/kibana#/dashboard?_g=0',
-  portfoliodash: 'https://52.117.54.217:4403/goto/bf80fe14782362d8f9307501e75bf055?embed=true',
-  portal: 'https://52.117.54.217/portal',
-  accplanreport: 'http://52.117.54.217:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()',
-  ptpreport: 'http://52.117.54.217:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-  ,homedash: 'http://172.16.19.151:5601/goto/f893ccd125308885e80090233919f80e?embed=true',
-  workflow: 'http://52.117.54.217:8089/sysworkflow/en/neoclassic/login/login'
-};
+  sendsms: false,
+  api: '',
+  nodeapi: '/nodeapi',
+  letters_path: path,
+  letters_api: '/docx/',
+  uploadurl: '/filesapi',
+  demanddownload: '/demanddownload',
+  valor: '/valor',
+  applink: host,
+  xlsuploadapi: '/xlsupload/',
+  xlstemplate: xlstemplate,
+  sptemplate: '/app/templates/sptemplate.xlsx',
+  insurancetemplate: '/app/templates/insurance.xlsx',
+  emailapi: '/demandemail/email',
+  demandsmsapi: "/sms",
+  auth: auth,
+  filesapi: '/filesapi',
+  s3link: '/files-to-s3',
+  accplanlink: accplanlink,
+  kibanarpt: kibanarpt,
+  manuals_path: manuals,
+  birt: birt,
+  kibana: kibanarpt,
+  portfoliodash: portfoliodash,
+  portal: portal,
+  accplanreport: accplanreport,
+  ptpreport: ptpreport,
+  homedash: homedash,
+  workflow: workflow,
+  repossessLink: repossessLink,
+  woffLink: woffLink,
+  calcelipfLink: calcelipfLink,
+  investigateLink: investigateLink,
+  debtcollectorLink: debtcollectorLink,
+  relegationLink: relegationLink,
+  platformDash: "http://52.117.93.88.nip.io:30041/goto/abafb13b1352b327883879c096c8d60d"
 
+};

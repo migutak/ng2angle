@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import {NgxSmartModalService} from 'ngx-smart-modal';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-header',
@@ -34,6 +35,8 @@ export class HeaderComponent implements OnInit {
     str2: string;
     time: any;
     time2: any;
+    video: any;
+    modalOptions: NgbModalOptions;
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
@@ -44,6 +47,7 @@ export class HeaderComponent implements OnInit {
         public settings: SettingsService,
         public ecolService: EcolService,
         public ngxsmartModalService: NgxSmartModalService,
+        private modalService: NgbModal,
         public router: Router) {
 
         // show only a few items on demo
@@ -205,6 +209,15 @@ export class HeaderComponent implements OnInit {
                 this.ecolService.logout();
                 this.router.navigate(['/login']);
             }
+        });
+    }
+
+    
+
+    videos(content) {
+        this.modalService.open(content, this.modalOptions).result.then((result) => {
+
+        }, (reason) => {
         });
     }
 }
