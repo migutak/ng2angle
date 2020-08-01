@@ -30,7 +30,7 @@ import { ActivitydashComponent } from './pages/activitydash/activitydash.compone
 import { PtpsComponent } from './pages/activitylog/ptps/ptps.component';
 import { WriteoffstoryComponent } from './pages/activitylog/writeoffstory/writeoffstory.component';
 import { ProductsComponent } from './pages/activitylog/products/products.component';
-import { RelegationapprovalComponent } from './pages/activitylog/relegation/approval.component'; './pages/activitylog/relegration/approval.component';
+import { RelegationapprovalComponent } from './pages/activitylog/relegation/approval.component';
 
 export const routes = [
 
@@ -68,6 +68,7 @@ export const routes = [
             { path: 'assetfinance', loadChildren: './assetfinance/assetfinance.module#AssetfinanceModule' },
             { path: 'teamleader', loadChildren: './teamleader/teamleader.module#TeamLeaderModule' },
             { path: 'admin-relegations', loadChildren: './admin-relegations/admin-relegations.module#AdminrelegationsModule' },
+            { path: 'allocations', loadChildren: './allocations/allocations.module#AllocationsModule' },
         ],
         canActivate: [AuthGuard]
     },

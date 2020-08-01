@@ -83,6 +83,14 @@ export class EcolService {
     return this.httpClient.patch(environment.api + '/api/tblinvoices/' + body.id, body);
   }
 
+  post_tbl_allocations_memogroups(body) {
+    return this.httpClient.post(environment.nodeapi + '/tbl_allocations_memogroups', body);
+  }
+
+  patch_tbl_allocations_memogroups(body) {
+    return this.httpClient.patch(environment.nodeapi + '/tbl_allocations_memogroups/' + body.memogroup, body);
+  }
+
   checkinmarketer(accnumber) {
     return this.httpClient.get<any>(environment.api + '/api/tblmarketors?filter[where][accnumber]='+accnumber+'&filter[where][newstatus][nin]=unassigned&filter[where][newstatus][nin]=Completed');
   }

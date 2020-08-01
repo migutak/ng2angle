@@ -43,5 +43,6 @@ export const environment = {
   calcelipfLink: calcelipfLink,
   relegationLink: relegationLink,
   investigateLink: investigateLink,
-  debtcollectorLink: debtcollectorLink
+  debtcollectorLink: debtcollectorLink,
+  platformDash: "http://ecollecttst.co-opbank.co.ke:3030/d/hb7fSE0Zz/1-node-exporter-for-prometheus-dashboard-en-v20191102?orgId=1"
 };

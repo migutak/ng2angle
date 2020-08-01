@@ -509,8 +509,6 @@ export class DemandLettersComponent implements OnInit {
     this.popinfoToast('Letter in queue');
     // await letter generation
     const uploaddata = await this.httpClient.post<any>(apiUrl + letter.demand + '/download', letter).toPromise();
-    // console.log("Data: " + JSON.stringify(uploaddata)); 
-    // console.log("Data: ", uploaddata.result); 
     if (uploaddata.result === 'success') {
       this.popsuccessToast('Letter generated ...');
       // save to history

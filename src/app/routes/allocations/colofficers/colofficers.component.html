@@ -1,0 +1,300 @@
+<div class="content-heading">
+    <div>Collection officer
+        <small>Allocation setup</small></div>
+</div>
+<div class="container-fluid">
+    <ngb-tabset [destroyOnHide]="false">
+
+        <ngb-tab title="Regional Allocation">
+            <ng-template ngbTabContent>
+                <p>---Allocations by Branch/Region---</p>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search with Branchcode"
+                            (keydown.enter)="search($event.target.value)">
+                    </div>
+                    <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="updateBranch(editForm.value)">
+                        <p class="lead mt-3"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">Branch Code</label>
+                            <div class="col-xl-8">
+                                <input class="form-control" name="branchcode" id="branchcode" #branchcode="ngModel"
+                                    [(ngModel)]="model.branchcode" required autocomplete="off" readonly />
+                            </div>
+
+                        </div>
+
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">Branch Name</label>
+                            <div class="col-xl-8">
+                                <input class="form-control" name="branchname" id="branchname" #branchname="ngModel"
+                                    [(ngModel)]="model.branchname" autocomplete="off" readonly />
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">Region</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="region" id="region" #region="ngModel"
+                                    [(ngModel)]="model.region">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let r of regions; let i = index" [value]="r.region">{{r.region}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME Asset Finance</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_af" id="msme_af" #msme_af="ngModel"
+                                    [(ngModel)]="model.msme_af">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME IPF</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_ipf" id="msme_ipf" #msme_ipf="ngModel"
+                                    [(ngModel)]="model.msme_ipf">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME SME</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_sme" id="msme_sme" #msme_sme="ngModel"
+                                    [(ngModel)]="model.msme_sme">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME Staff</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_staff" id="msme_staff" #msme_staff="ngModel"
+                                    [(ngModel)]="model.msme_staff">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME MCU</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_mcu" id="msme_mcu" #msme_mcu="ngModel"
+                                    [(ngModel)]="model.msme_mcu">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME Business Banking</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_bb" id="msme_bb" #msme_bb="ngModel"
+                                    [(ngModel)]="model.msme_bb">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME SACCO</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_sacco" id="msme_sacco" #msme_sacco="ngModel"
+                                    [(ngModel)]="model.msme_sacco">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME Agri Business</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_agrib" id="msme_agrib" #msme_agrib="ngModel"
+                                    [(ngModel)]="model.msme_agrib">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME Mortgage</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_mortgage" id="msme_mortgage"
+                                    #msme_mortgage="ngModel" [(ngModel)]="model.msme_mortgage">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label">MSME Personal</label>
+                            <div class="col-xl-8">
+                                <select class="form-control" name="msme_personal" id="msme_personal"
+                                    #msme_personal="ngModel" [(ngModel)]="model.msme_personal">
+                                    <option value="">--None--</option>
+                                    <option *ngFor="let u of users; let i = index" [value]="u.username">{{u.username}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="my-2"></p>
+                        <div class="form-group row">
+                            <label class="col-xl-4 col-form-label"></label>
+                            <div class="col-xl-8">
+                                <button type="submit" class="btn btn-outline-success" type="submit"
+                                    [disabled]="!editForm.valid || !editForm.dirty">
+                                    <i class="fas fa-pen-square"></i> Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+            <ng-template ngbTabTitle>Employer Allocations</ng-template>
+            <ng-template ngbTabContent>
+                <p>---Allocation By Employer---</p>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search with Deptcode"
+                            (keydown.enter)="search($event.target.value)">
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+            <ng-template ngbTabTitle>Arocode/Rrocode allocations</ng-template>
+            <ng-template ngbTabContent>
+                <p>---Allocation By AROCODE/RROCOde---</p>
+                <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip"
+                    (click)="open(content)" data-placement="top" title="Add"><i class="fa fa-plus"></i> New
+                    Arocode</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search arocode/rrocode here "
+                        [(ngModel)]="term">
+                </div>
+                <div style="height: 500px; overflow: auto">
+                    <table id="myTable" >
+                        <tr class="header">
+                            <th style="width:50%;">AROCODE/RROCODE</th>
+                            <th style="width:40%;">COLOFFICER</th>
+                            <th style="width:10%;"></th>
+                        </tr>
+                        <tr *ngFor="let r of arocodeData | filter:term">
+                            <td>{{r.arocode}}</td>
+                            <td contenteditable>{{r.colofficer}}</td>
+                            <td>
+                                <!-- Call to action buttons -->
+                                <ul class="list-inline m-0">
+                                    <li class="list-inline-item">
+                                        <button class="btn btn-success btn-sm rounded-0" type="button"
+                                            data-toggle="tooltip" (click)="openModal(editProfileModal, r)"
+                                            data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <button class="btn btn-danger btn-sm rounded-0" type="button"
+                                            data-toggle="tooltip" (click)="deletearocode(r)" data-placement="top"
+                                            title="Delete"><i class="fa fa-trash"></i></button>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab title="Staff Allocations" [disabled]="true">
+            <ng-template ngbTabContent>
+                <p>This is Disabled</p>
+            </ng-template>
+        </ngb-tab>
+
+    </ngb-tabset>
+
+    <!-- Modal -->
+    <ng-template #editProfileModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Update arocode</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" #updatearocodeForm="ngForm" (ngSubmit)="updateArocode(updatearocodeForm.value)" novalidate
+                autocomplete="off">
+                <div class="form-group">
+                    <label>arocode</label>
+                    <input class="form-control" type="text" placeholder="arocode" name="arocode" id="arocode"
+                        #arocode="ngModel" [(ngModel)]="data.arocode" [ngClass]="{ 'is-invalid': arocode.errors }"
+                        [disabled]="true" required />
+                </div>
+                <div class="form-group">
+                    <label>Collection officer</label>
+
+                    <input class="form-control" type="text" name="colofficer" id="colofficer" #colofficer="ngModel"
+                        [(ngModel)]="data.colofficer" />
+                </div>
+                <button type="submit" class="btn btn-outline-dark"
+                    [disabled]="!updatearocodeForm.valid || butDisabled">Update</button>
+            </form>
+        </div>
+    </ng-template>
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">New arocode</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" #newarocodeForm="ngForm" (ngSubmit)="newarocode(newarocodeForm.value)" novalidate
+                autocomplete="off">
+                <div class="form-group">
+                    <label>arocode</label>
+                    <input class="form-control" type="text" placeholder="arocode" name="arocode" id="arocode"
+                        #arocode="ngModel" [(ngModel)]="data.arocode" [ngClass]="{ 'is-invalid': arocode.errors }"
+                        required />
+                </div>
+                <div class="form-group">
+                    <label>Collection officer</label>
+
+                    <input class="form-control" type="text" name="colofficer" id="colofficer" #colofficer="ngModel"
+                        [(ngModel)]="data.colofficer" />
+                </div>
+                <button type="submit" class="btn btn-outline-dark"
+                    [disabled]="!newarocodeForm.valid || butDisabled">Submit</button>
+            </form>
+        </div>
+    </ng-template>
+</div>

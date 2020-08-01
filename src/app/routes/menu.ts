@@ -52,25 +52,25 @@ const Writeoffapprovals = {
 };
 
 const Allocations = {
-    text: 'Account allocations',
+    text: 'Allocation setup',
     link: '/allocations',
     icon: 'icon-people',
     submenu: [
         {
-            text: 'Collection',
-            link: '/allocations/collections'
+            text: 'Memo Groups',
+            link: '/allocations/memogroups'
         },
         {
-            text: 'Remedial',
-            link: '/allocations/remedial'
+            text: 'Collection Officers',
+            link: '/allocations/colofficer'
         },
         {
             text: 'Credit cards',
             link: '/allocations/creditcards'
         },
         {
-            text: 'Pre Delq',
-            link: '/allocations/predelq'
+            text: 'E-Credit',
+            link: '/allocations/ecredit'
         }
     ]
 };
