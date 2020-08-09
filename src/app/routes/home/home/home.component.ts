@@ -54,10 +54,10 @@ export class HomeComponent implements OnInit {
     constructor(public http: HttpClient, private ecolService: EcolService, ) {
         //this.homedash = environment.homedash;
 
-        this.getbranches();
-        this.getbucket();
-        this.getarocode();
-        this.getproductcode();
+        //this.getbranches();
+        //this.getbucket();
+        //this.getarocode();
+        //this.getproductcode();
     }
 
     ngOnInit() {
@@ -74,6 +74,11 @@ export class HomeComponent implements OnInit {
 
     onChange($event) {
         console.log($event);
+    }
+
+    opendash(){
+        window.open("http://172.16.19.151:5601/app/kibana#/dashboard/8eaf9600-d70d-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))"
+        ,"_blank")
     }
 
     getarocode() {

@@ -29,8 +29,22 @@ const Manuals = {
 
 const Dashboard = {
     text: 'Dashboards',
-    link: '/reports/dashboards',
-    icon: 'icon-speedometer'
+    link: '/reports',
+    icon: 'icon-speedometer',
+    submenu: [
+        {
+            text: 'Rollrates',
+            link: '/reports/rollrates'
+        },
+        {
+            text: 'User Bucket Summary',
+            link: '/reports/bucketsummary'
+        },
+        {
+            text: 'More ...',
+            link: '/reports/dashboards'
+        }
+    ]
 };
 
 const Reports = {

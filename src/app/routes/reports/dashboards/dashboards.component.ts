@@ -15,12 +15,24 @@ export class DashboardsComponent implements OnInit {
     public ngOnInit(): void {
     }
 
-    onNavigate(reportname) {
-        window.open('activitydash?report=' + reportname, '_blank');
+    openplatformdash() {
+        window.open(environment.platformDash, '_blank');
     }
 
     openactivityrpt() {
         // window.open(environment.kibana, '_blank');
+    }
+
+    openrollrates() {
+        window.open(environment.rollratesdash, '_blank');
+    }
+
+    openportfoliodash() {
+        window.open(environment.portfoliodash, '_blank');
+    }
+
+    openuserbuckets() {
+        window.open(environment.userbucketdash, '_blank');
     }
 
 }

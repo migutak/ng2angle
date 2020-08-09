@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
+import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
+
 
 @Component({
   selector: 'app-viewall',
@@ -17,6 +19,7 @@ export class ViewallComponent implements OnInit {
   public cacheBlockSize;
   public maxBlocksInCache;
   public rowData: [];
+  public sideBar;
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
@@ -25,6 +28,7 @@ export class ViewallComponent implements OnInit {
   pivotPanelShow = true;
 
   modules = AllModules;
+  
 
   constructor() {
     this.columnDefs = [
@@ -96,6 +100,8 @@ export class ViewallComponent implements OnInit {
       { field: 'BRANCHCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BRANCHNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'COLOFFICER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'DEPTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'EMPLOYERNAME', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
     ];
     this.defaultColDef = {
       width: 120,
@@ -106,11 +112,15 @@ export class ViewallComponent implements OnInit {
       suppressResize: false,
       enableRowGroup: true,
       enablePivot: true,
-      pivot: true
+      pivot: true,
+      flex: 1,
+      enableValue: true,
+      filter: true,
     };
     this.rowModelType = "serverSide";
     this.cacheBlockSize = 50;
     this.maxBlocksInCache = 0;
+    this.sideBar = 'columns';
   }
 
   onGridReady(params) {
@@ -119,9 +129,6 @@ export class ViewallComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-        //console.log(JSON.stringify(params.request, null, 1));
-
-        //fetch(environment.nodeapi + '/gridviewall/viewall', {
         fetch(environment.api + '/api/tqall/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),

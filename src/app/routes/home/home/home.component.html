@@ -8,7 +8,8 @@
             </div>
             <div class="card-wrapper">
                <div class="card-body">
-                  <div class="row">
+                  <button class="btn btn-link" (click)="opendash()"><i class="fas fa-external-link-alt"></i> Open Dashboard </button>
+                  <!--<div class="row">
                      <div class="col-md-4">
                         <ng-select [items]="branches" bindLabel="branchname" placeholder="Select Branch"
                            (change)="onChange($event)" [(ngModel)]="selectedBranch">
@@ -24,10 +25,13 @@
                            [(ngModel)]="selectedproduct">
                         </ng-select>
                      </div>
-                  </div>
-
-                  <hr />
-                  <!--<iframe src="https://ecollecttst.co-opbank.co.ke:4403/goto/c1984e27ec55535256062a2aec357159" height="800" width="100%" frameborder="0"></iframe>-->
+                  </div>-->
+               <!--
+                  <iframe src="http://localhost:5601/goto/6322dd9538854cb2192f6f105c4aed44" height="900" width="100%" frameborder="0"></iframe>
+               -->
+                  <iframe src="http://172.16.19.151:5601/app/kibana#/dashboard/8eaf9600-d70d-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))" height="900" width="100%" frameborder="0"></iframe>
+                                   
+                  <!--
                   <ngx-charts-pie-grid [view]="view" [scheme]="colorScheme" [results]="single"
                      (select)="onSelect($event)">
                   </ngx-charts-pie-grid>
@@ -45,7 +49,7 @@
                   <ngx-charts-advanced-pie-chart [view]="view" [scheme]="colorScheme" [results]="volume" [label]='label'
                      [gradient]="gradient" (select)="onSelect($event)">
                   </ngx-charts-advanced-pie-chart>
-
+               -->
                </div>
             </div>
          </div>

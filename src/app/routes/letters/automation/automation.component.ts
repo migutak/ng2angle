@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { GridOptions } from '@ag-grid-community/all-modules';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
 declare var $: any;
@@ -21,7 +22,7 @@ export class AutomationComponent implements OnInit {
   $win = $(window);
   new = true;
   memos: any = [];
-
+  modules = AllModules;
   gridOptions: GridOptions;
 
   // Basic example
@@ -143,10 +144,11 @@ export class AutomationComponent implements OnInit {
 
   getMemos() {
     this.ecolService.getmemo().subscribe(res => {
-      for (let i = 0; i < res.data.length; i ++) {
-        this.items.push(res.data[i].MEMO) ;
+      if (res.data && res.data.length > 0) {
+        for (let i = 0; i < res.data.length; i++) {
+          this.items.push(res.data[i].MEMO);
+        }
       }
-      console.log('Array==>', this.items);
     });
   }
 
@@ -182,7 +184,7 @@ export class AutomationComponent implements OnInit {
         swal({
           type: 'error',
           title: 'Duplicates detected...',
-          text:   JSON.stringify(rejectModel),
+          text: JSON.stringify(rejectModel),
           footer: '<a href>Find help on this issue?</a>'
         });
       } else {

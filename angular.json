@@ -28,7 +28,8 @@
             ],
             "styles": [
               "src/app/core/preloader/preloader.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/flexmonster/flexmonster.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -40,7 +41,8 @@
               "node_modules/bootstrap/js/dist/modal.js",
               "node_modules/bootstrap/js/dist/dropdown.js",
               "node_modules/bootstrap/js/dist/tooltip.js",
-              "node_modules/moment/min/moment.min.js"
+              "node_modules/moment/min/moment.min.js",
+              "node_modules/flexmonster/flexmonster.full.js"
             ]
           },
           "configurations": {

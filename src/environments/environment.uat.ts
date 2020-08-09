@@ -32,7 +32,7 @@ export const environment = {
   manuals_path: '/app/manuals/',
   birt: host + '8080/birt',
   kibana: host +  '5601/app/kibana#/dashboard?_g=0',
-  portfoliodash: '',
+  portfoliodash: 'http://172.16.19.151:5601/app/kibana#/dashboard/8eaf9600-d70d-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
   portal: host + '4300',
   accplanreport: '',
   ptpreport: '',
@@ -44,5 +44,7 @@ export const environment = {
   relegationLink: relegationLink,
   investigateLink: investigateLink,
   debtcollectorLink: debtcollectorLink,
-  platformDash: "http://ecollecttst.co-opbank.co.ke:3030/d/hb7fSE0Zz/1-node-exporter-for-prometheus-dashboard-en-v20191102?orgId=1"
+  platformDash: "http://ecollecttst.co-opbank.co.ke:3030/d/hb7fSE0Zz/1-node-exporter-for-prometheus-dashboard-en-v20191102?orgId=1",
+  rollratesdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/2635e190-d89a-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
+  userbucketdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/6d2971d0-d899-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))'
 };
