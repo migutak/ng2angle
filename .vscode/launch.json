@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "type": "node",
+            "name": "Debug my-appsody",
+            "request": "attach",
+            "address": "127.0.0.1",
+            "localRoot": "d:\\angularprojects\\my-appsody",
+            "remoteRoot": "/app",
+            "restart": true
+        }
+    ]
+}

@@ -22,6 +22,8 @@ export const environment = {
   xlstemplate: '/app/templates/upload_notes.xlsx',
   sptemplate: '/app/templates/sptemplate.xlsx',
   insurancetemplate: '/app/templates/insurance.xlsx',
+  accountallocationtemplate: '/app/templates/account.xlsx',
+  employerallocationtemplate: '/app/templates/employer.xlsx',
   emailapi: host + '8005/demandemail/email',
   demandsmsapi: host + "/sms",
   auth: host + '/adlogin',

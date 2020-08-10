@@ -35,6 +35,8 @@ export const environment = {
   xlstemplate: xlstemplate,
   sptemplate: sptemplate,
   insurancetemplate:insurancetemplate,
+  accountallocationtemplate: 'C:\\templates\\account.xlsx',
+  employerallocationtemplate: 'C:\\templates\\employer.xlsx',
   applink: host + 4500,
   emailapi: host + '8005/demandemail/email',
   demandsmsapi: host + 7000,

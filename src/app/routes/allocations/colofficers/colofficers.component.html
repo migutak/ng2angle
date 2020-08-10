@@ -21,7 +21,6 @@
                                 <input class="form-control" name="branchcode" id="branchcode" #branchcode="ngModel"
                                     [(ngModel)]="model.branchcode" required autocomplete="off" readonly />
                             </div>
-
                         </div>
 
                         <p class="my-2"></p>
@@ -182,6 +181,19 @@
             <ng-template ngbTabTitle>Employer Allocations</ng-template>
             <ng-template ngbTabContent>
                 <p>Allocation By Employer</p>
+                <div>
+                    <div>
+                      <button class="btn btn-outline-success btn-sm" (click)="downloadFile('employer')">
+                        <i class="fa fa-download"> Download the template</i>
+                      </button>
+                    </div>
+
+                    Employer allocation xls file
+
+                    <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
+                      accept=".xlsx" />
+                    <hr />
+                  </div>
                 <div class="card-body">
                     <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip"
                         (click)="open(content)" data-placement="top" title="Add"><i class="fa fa-plus"></i> New
@@ -273,6 +285,19 @@
         <ngb-tab title="Allocation by a/c" [disabled]="false">
             <ng-template ngbTabContent>
                 <p>Allocation per a/c</p>
+                <div>
+                    <div>
+                      <button class="btn btn-outline-success btn-sm" (click)="downloadFile('account')">
+                        <i class="fa fa-download"> Download the template</i>
+                      </button>
+                    </div>
+
+                    Allocation by a/c xls file
+
+                    <input #myInput type="file" placeholder="File Name" name="myInput" (change)="onFileChange($event)"
+                      accept=".xlsx" />
+                    <hr />
+                  </div>
                 <div class="form-group row">
                     <input type="text" class="form-control" placeholder="Search a/c"
                         (keydown.enter)="searchbyacc($event.target.value)">

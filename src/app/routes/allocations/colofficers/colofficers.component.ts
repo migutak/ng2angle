@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import * as moment from 'moment';
+import { saveAs } from 'file-saver';
 import swal from 'sweetalert2';
 import { EcolService } from '../../../services/ecol.service';
 import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +19,7 @@ export class ColofficerComponent implements OnInit {
   model: any = {};
   modalOptions: NgbModalOptions;
   deptcodes: any = [];
+  template: string;
 
   constructor(
     private http: HttpClient,
@@ -198,6 +199,20 @@ export class ColofficerComponent implements OnInit {
     });
 
     this.data = r;
+  }
+
+  downloadFile(file) {
+    if(file == 'account') {
+      this.template = environment.accountallocationtemplate;
+    } else {
+      this.template = environment.employerallocationtemplate;
+    }
+    this.ecolService.downloadFile(this.template).subscribe(data => {
+      saveAs(data, file + '.xlsx');
+    }, error => {
+      console.log(error);
+      swal('Error!', ' Cannot download template  file!', 'error');
+    });
   }
 
 
