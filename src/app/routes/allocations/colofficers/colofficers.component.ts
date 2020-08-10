@@ -18,6 +18,8 @@ export class ColofficerComponent implements OnInit {
   data: any = {};
   model: any = {};
   modalOptions: NgbModalOptions;
+  deptcodes: any = [];
+
   constructor(
     private http: HttpClient,
     private ecolService: EcolService,
@@ -102,6 +104,20 @@ export class ColofficerComponent implements OnInit {
     });
   }
 
+  searchEmployer(entry) {
+    if (entry != null && entry != "") {
+      this.http.get(
+        environment.nodeapi + '/tbl-allocations-deptcodes?filter[where][deptcode]=' + entry
+      ).subscribe(data => {
+        this.deptcodes = data;
+        swal('Success', 'Successfully retrieved!', 'success');
+      }, error => {
+        console.log(error);
+        swal('Warning', entry + '[employer] was not found', 'warning');
+      });
+    }
+  }
+
   updateArocode(r) {
     swal({
       title: 'Confirm',
@@ -177,12 +193,12 @@ export class ColofficerComponent implements OnInit {
 
   openModal(targetModal, r) {
     this.modalService.open(targetModal, {
-     centered: true,
-     backdrop: 'static'
+      centered: true,
+      backdrop: 'static'
     });
-   
+
     this.data = r;
-   }
+  }
 
 
 }

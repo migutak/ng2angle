@@ -181,20 +181,57 @@
         <ngb-tab>
             <ng-template ngbTabTitle>Employer Allocations</ng-template>
             <ng-template ngbTabContent>
-                <p>---Allocation By Employer---</p>
+                <p>Allocation By Employer</p>
                 <div class="card-body">
+                    <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip"
+                        (click)="open(content)" data-placement="top" title="Add"><i class="fa fa-plus"></i> New
+                        employer</button>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search with Deptcode"
-                            (keydown.enter)="search($event.target.value)">
+                        <input type="text" class="form-control" placeholder="Search employer"
+                            (keydown.enter)="searchEmployer($event.target.value)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search branch " [(ngModel)]="searchterm">
+                    </div>
+                    <div style="height: 500px; overflow: auto">
+                        <table id="myTable">
+                            <tr class="header">
+                                <th>ID</th>
+                                <th>Deptcode</th>
+                                <th>Employer Name</th>
+                                <th>Branch code</th>
+                                <th>Branch name</th>
+                                <th>Collection officer</th>
+                                <th></th>
+                            </tr>
+                            <tr *ngFor="let d of deptcodes | filter:searchterm">
+                                <td>{{d.id}}</td>
+                                <td>{{d.deptcode}}</td>
+                                <td>{{d.employername}}</td>
+                                <td>{{d.branchcode}}</td>
+                                <td>{{d.branchname}}</td>
+                                <td>{{d.colofficer}}</td>
+                                <td>
+                                    <!-- Call to action buttons -->
+                                    <ul class="list-inline m-0">
+                                        <li class="list-inline-item">
+                                            <button class="btn btn-success btn-sm rounded-0" type="button"
+                                                data-toggle="tooltip" (click)="openModal(editDeptcodeModal, d)"
+                                                data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </ng-template>
         </ngb-tab>
 
         <ngb-tab>
-            <ng-template ngbTabTitle>Arocode/Rrocode allocations</ng-template>
+            <ng-template ngbTabTitle>Arocode/rrocode allocations</ng-template>
             <ng-template ngbTabContent>
-                <p>---Allocation By AROCODE/RROCOde---</p>
+                <p>Allocation By AROCODE/RROCode</p>
                 <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip"
                     (click)="open(content)" data-placement="top" title="Add"><i class="fa fa-plus"></i> New
                     Arocode</button>
@@ -203,7 +240,7 @@
                         [(ngModel)]="term">
                 </div>
                 <div style="height: 500px; overflow: auto">
-                    <table id="myTable" >
+                    <table id="myTable">
                         <tr class="header">
                             <th style="width:50%;">AROCODE/RROCODE</th>
                             <th style="width:40%;">COLOFFICER</th>
@@ -233,6 +270,97 @@
             </ng-template>
         </ngb-tab>
 
+        <ngb-tab title="Allocation by a/c" [disabled]="false">
+            <ng-template ngbTabContent>
+                <p>Allocation per a/c</p>
+                <div class="form-group row">
+                    <input type="text" class="form-control" placeholder="Search a/c"
+                        (keydown.enter)="searchbyacc($event.target.value)">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+                <form #accountForm="ngForm" class="form-horizontal" (ngSubmit)="updateAccount(accountForm.value)">
+                    <p class="lead mt-3"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Memo Group</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" name="memogroup" id="memogroup" #memogroup="ngModel"
+                                [(ngModel)]="model.memogroup" required autocomplete="off" readonly />
+                        </div>
+                    </div>
+                    <p class="lead mt-3"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Product code</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" name="productcode" id="productcode" #productcode="ngModel"
+                                [(ngModel)]="model.productcode" required autocomplete="off" readonly />
+                        </div>
+
+                    </div>
+
+                    <p class="my-2"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Business unit</label>
+                        <div class="col-xl-8">
+                            <select class="form-control" name="businessunit" id="businessunit" #businessunit="ngModel"
+                                [(ngModel)]="model.businessunit">
+                                <option value="">--None--</option>
+                                <option>Agri Business</option>
+                                <option>Asset Finance</option>
+                                <option>BUSINESS BANKING</option>
+                                <option>Corporate</option>
+                                <option>Current Account</option>
+                                <option>Flexi Loan</option>
+                                <option>Loan Interest Accounts</option>
+                                <option>Loan OD</option>
+                                <option>MCU</option>
+                                <option>Mortgage</option>
+                                <option>Personal Loan</option>
+                                <option>SACCO</option>
+                                <option>SME</option>
+                                <option>Staff</option>
+                                <option>Unknown</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="my-2"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Remedial Unit</label>
+                        <div class="col-xl-8">
+                            <select class="form-control" name="remedialunit" id="remedialunit" #remedialunit="ngModel"
+                                [(ngModel)]="model.remedialunit">
+                                <option value="">--None--</option>
+                                <option>Corporate</option>
+                                <option>MSME</option>
+                                <option>Retail</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="my-2"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Collection officer</label>
+                        <div class="col-xl-8">
+                            <select class="form-control" name="colofficer" id="colofficer" #colofficer="ngModel"
+                                [(ngModel)]="model.colofficer">
+                                <option value="">--None--</option>
+                                <option *ngFor="let r of users; let i = index" [value]="r.username">{{r.username}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="my-2"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                            <button type="submit" class="btn btn-outline-success" type="submit"
+                                [disabled]="!accountForm.valid || !accountForm.dirty">
+                                <i class="fas fa-pen-square"></i> Update</button>
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+
+        </ngb-tab>
+
         <ngb-tab title="Staff Allocations" [disabled]="true">
             <ng-template ngbTabContent>
                 <p>This is Disabled</p>
@@ -242,6 +370,45 @@
     </ngb-tabset>
 
     <!-- Modal -->
+    <ng-template #editDeptcodeModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Update Employer allocation</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" #updatedeptcodeForm="ngForm" (ngSubmit)="updatedeptcode(updatedeptcodeForm.value)"
+                novalidate autocomplete="off">
+                <div class="form-group">
+                    <label>id</label>
+                    <input class="form-control" type="text" placeholder="id" name="id" id="id" #arocode="ngModel"
+                        [(ngModel)]="data.id" [disabled]="true" required />
+                </div>
+                <div class="form-group">
+                    <label>Employer Name</label>
+
+                    <input class="form-control" type="text" name="employername" id="employername"
+                        #employername="ngModel" [(ngModel)]="data.employername" />
+                </div>
+                <div class="form-group">
+                    <label>Branch Name</label>
+
+                    <input class="form-control" type="text" name="branchname" id="branchname" #branchname="ngModel"
+                        [(ngModel)]="data.branchname" />
+                </div>
+                <div class="form-group">
+                    <label>Colofficer</label>
+
+                    <input class="form-control" type="text" name="colofficer" id="colofficer" #colofficer="ngModel"
+                        [(ngModel)]="data.colofficer" />
+                </div>
+                <button type="submit" class="btn btn-outline-dark"
+                    [disabled]="!updatedeptcodeForm.valid || butDisabled">Update</button>
+            </form>
+        </div>
+    </ng-template>
+
     <ng-template #editProfileModal let-modal>
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Update arocode</h4>

@@ -71,7 +71,7 @@ const Allocations = {
     icon: 'icon-people',
     submenu: [
         {
-            text: 'Memo Groups',
+            text: 'Remedial Unit',
             link: '/allocations/memogroups'
         },
         {

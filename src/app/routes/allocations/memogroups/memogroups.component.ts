@@ -28,6 +28,10 @@ export class MemogroupsComponent implements OnInit {
   memos: any = [];
   gridOptions: GridOptions;
   modules = AllModules;
+  additionalcriteriatrue: boolean = true;
+  coopflagtrue: boolean = true;
+  facilityamounttrue: boolean = true;
+  primaryremedialunittrue: boolean = true;
 
   // Basic example
   columnDefs = [
@@ -37,20 +41,28 @@ export class MemogroupsComponent implements OnInit {
       width: 150
     }, {
       headerName: 'productcode',
-      field: 'productcode',
-      width: 120
+      field: 'productcode'
     }, {
       headerName: 'businessunit',
-      field: 'businessunit',
-      width: 90
+      field: 'businessunit'
     }, {
       headerName: 'remedialunit',
-      field: 'remedialunit',
-      width: 90
+      field: 'remedialunit'
     }, {
       headerName: 'shared',
-      field: 'vshared',
-      width: 100
+      field: 'vshared'
+    }, {
+      headerName: 'additionalcriteria',
+      field: 'additionalcriteria'
+    }, {
+      headerName: 'coopflag',
+      field: 'coopflag'
+    }, {
+      headerName: 'facilityamount',
+      field: 'facilityamount'
+    }, {
+      headerName: 'primaryremedialunit',
+      field: 'primaryremedialunit'
     }];
   rowData1: any;
   // tslint:disable-next-line:max-line-length
@@ -97,8 +109,6 @@ export class MemogroupsComponent implements OnInit {
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
-
-
   }
 
   gridReady(params) {
@@ -172,7 +182,11 @@ export class MemogroupsComponent implements OnInit {
       'businessunit': form.value.businessunit,
       'remedialunit': form.value.remedialunit,
       'vshared': form.value.vshared,
-      'lastupdateby': form.value.updateby
+      'lastupdateby': form.value.updateby,
+      'additionalcriteria': form.value.additionalcriteria,
+      'coopflag': form.value.coopflag,
+      'facilityamount': form.value.facilityamount,
+      'primaryremedialunit': form.value.primaryremedialunit
     };
     swal({
       title: 'Are you sure?',
@@ -203,6 +217,42 @@ export class MemogroupsComponent implements OnInit {
         //
       }
     });
+  }
+
+
+  onSharedSelected(value: string) {
+    if (value === 'y') {
+      this.additionalcriteriatrue = false;
+    } else {
+      this.additionalcriteriatrue = true;
+      this.model.additionalcriteria = 'none'
+    }
+  }
+
+
+  additionalcriteriaSelected(value: string) {
+    if (value === 'coopflag') {
+      this.coopflagtrue = false;
+      this.facilityamounttrue = true;
+      this.primaryremedialunittrue = false;
+      this.model.facilityamount = 0;
+      this.model.primaryremedialunit = '';
+      this.model.coopflag = '';
+    } else if (value === 'none') {
+      this.coopflagtrue = true;
+      this.facilityamounttrue = true;
+      this.primaryremedialunittrue = true;
+      this.model.facilityamount = 0;
+      this.model.primaryremedialunit = '';
+      this.model.coopflag = '';
+    } else {
+      this.coopflagtrue = true;
+      this.facilityamounttrue = false;
+      this.primaryremedialunittrue = false;
+      this.model.facilityamount = 0;
+      this.model.primaryremedialunit = '';
+      this.model.coopflag = '';
+    }
   }
 
 }
