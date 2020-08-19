@@ -196,7 +196,7 @@
                   </div>
                 <div class="card-body">
                     <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip"
-                        (click)="open(content)" data-placement="top" title="Add"><i class="fa fa-plus"></i> New
+                        (click)="open(employer)" data-placement="top" title="Add"><i class="fa fa-plus"></i> New
                         employer</button>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search employer"
@@ -386,6 +386,57 @@
 
         </ngb-tab>
 
+        <ngb-tab title="Allocation by Memo group" [disabled]="false">
+            <ng-template ngbTabContent>
+                <p>Allocation per memo group</p>
+                <form #memoForm="ngForm" class="form-horizontal" (ngSubmit)="updatememo(memoForm.value)">
+                    <p class="lead mt-3"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Memo Group</label>
+                        <div class="col-xl-8">
+                            <input class="form-control" name="mmemogroup" id="mmemogroup" #mmemogroup="ngModel"
+                                [(ngModel)]="model.mmemogroup" required autocomplete="off" />
+                        </div>
+                    </div>
+                    <p class="my-2"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label">Collection officer</label>
+                        <div class="col-xl-8">
+                            <select class="form-control" name="mcolofficer" id="mcolofficer" #mcolofficer="ngModel"
+                                [(ngModel)]="model.mcolofficer">
+                                <option value="">--None--</option>
+                                <option *ngFor="let r of users; let i = index" [value]="r.username">{{r.username}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="my-2"></p>
+                    <div class="form-group row">
+                        <label class="col-xl-4 col-form-label"></label>
+                        <div class="col-xl-8">
+                            <button type="submit" class="btn btn-outline-success" type="submit"
+                                [disabled]="!memoForm.valid || !memoForm.dirty">
+                                <i class="fas fa-pen-square"></i> Update</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-6">
+                            <input class="mb form-control" placeholder="Search..." type="text"
+                                (keyup)="onQuickFilterChanged($event)" />
+                        </div>
+                    </div>
+                    <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle"
+                        style="width: 100%; height: 600px" [gridOptions]="gridOptions"
+                        (rowClicked)='onRowClicked($event)' class="ag-theme-balham" [modules]='modules'
+                        (gridReady)="gridReady($event)">
+                    </ag-grid-angular>
+                </div>
+            </ng-template>
+
+        </ngb-tab>
+
         <ngb-tab title="Staff Allocations" [disabled]="true">
             <ng-template ngbTabContent>
                 <p>This is Disabled</p>
@@ -486,6 +537,34 @@
                 </div>
                 <button type="submit" class="btn btn-outline-dark"
                     [disabled]="!newarocodeForm.valid || butDisabled">Submit</button>
+            </form>
+        </div>
+    </ng-template>
+
+    <ng-template #employer let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">New Employer</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" #newemployerForm="ngForm" (ngSubmit)="newemployer(newemployerForm.value)" novalidate
+                autocomplete="off">
+                <div class="form-group">
+                    <label>Deptcode</label>
+                    <input class="form-control" type="text" placeholder="deptcode" name="deptcode" id="deptcode"
+                        #deptcode="ngModel" [(ngModel)]="data.deptcode" [ngClass]="{ 'is-invalid': deptcode.errors }"
+                        required />
+                </div>
+                <div class="form-group">
+                    <label>Employer Name</label>
+
+                    <input class="form-control" type="text" name="employername" id="employername" #employername="ngModel"
+                        [(ngModel)]="data.employername" />
+                </div>
+                <button type="submit" class="btn btn-outline-dark"
+                    [disabled]="!newemployerForm.valid || butDisabled">Submit</button>
             </form>
         </div>
     </ng-template>

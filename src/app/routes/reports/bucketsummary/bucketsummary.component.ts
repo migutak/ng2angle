@@ -91,7 +91,7 @@ export class BucketsummaryComponent implements OnInit {
         this.pivot.flexmonster.setReport({
             dataSource: {
                 dataSourceType: 'json',
-                filename: 'http://127.0.0.1:8000/api/rollrates'
+                filename: 'http://172.16.19.151:8000/api/rollrates'
             }
         });
     }

@@ -136,8 +136,8 @@ export class SmsComponent implements OnInit {
 
   getMemos() {
     this.ecolService.getmemo().subscribe(res => {
-      for (let i = 0; i < res.data.length; i ++) {
-        this.items.push(res.data[i].MEMO) ;
+      for (let i = 0; i < res.length; i ++) {
+        this.items.push(res[i].MEMO) ;
       }
       
     });

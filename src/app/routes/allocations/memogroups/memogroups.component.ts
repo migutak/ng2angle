@@ -12,7 +12,6 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { saveAs } from 'file-saver';
 declare var $: any;
-import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-memogroups',
@@ -32,6 +31,8 @@ export class MemogroupsComponent implements OnInit {
   coopflagtrue: boolean = true;
   facilityamounttrue: boolean = true;
   primaryremedialunittrue: boolean = true;
+  corpflags = ['AGRI','CGB','CHUR','CORP','GOV','IB','INT','MCUGRP','MCUIND','PBDIA','PBHNW','PBORD','PBSAL','SACB','SME',
+  'THIH','THIS','THIT']
 
   // Basic example
   columnDefs = [
@@ -55,7 +56,7 @@ export class MemogroupsComponent implements OnInit {
       headerName: 'additionalcriteria',
       field: 'additionalcriteria'
     }, {
-      headerName: 'coopflag',
+      headerName: 'corpflag',
       field: 'coopflag'
     }, {
       headerName: 'facilityamount',
@@ -231,7 +232,7 @@ export class MemogroupsComponent implements OnInit {
 
 
   additionalcriteriaSelected(value: string) {
-    if (value === 'coopflag') {
+    if (value === 'corpflag') {
       this.coopflagtrue = false;
       this.facilityamounttrue = true;
       this.primaryremedialunittrue = false;

@@ -7,7 +7,7 @@ import { MemogroupsComponent } from './memogroups/memogroups.component';
 import { ColofficerComponent } from './colofficers/colofficers.component';
 import { CreditcardsComponent } from './creditcards/creditcards.component';
 import { EcreditComponent } from './ecredit/ecredit.component';
-
+import {NgxSelectModule} from 'ngx-select-ex';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -25,6 +25,7 @@ const routes: Routes = [
         AgGridModule.withComponents([]),
         RouterModule.forChild(routes),
         Ng2SearchPipeModule,
+        NgxSelectModule,
         NgbModule
     ],
     declarations: [

@@ -47,9 +47,15 @@
                                         <p class="my-2"></p>
                                         <div class="form-group">
                                             <p>Remedial Unit</p>
-                                            <input class="form-control" name="remedialunit" id="remedialunit"
-                                                #emailAddress="ngModel" [(ngModel)]="model.remedialunit"
-                                                [disabled]="false" autocomplete="off" />
+
+                                            <select class="form-control" name="remedialunit" id="remedialunit"
+                                                #remedialunit="ngModel" [(ngModel)]="model.remedialunit">
+                                                <option value="">none</option>
+                                                <option>Corporate</option>
+                                                <option>MSME</option>
+                                                <option>Retail</option>
+                                                <option>DIGITAL</option>
+                                            </select>
                                         </div>
                                         <p class="my-2"></p>
                                         <div class="form-group">
@@ -65,19 +71,24 @@
                                             <p>Additional Criteria</p>
                                             <select class="form-control" name="additionalcriteria"
                                                 id="additionalcriteria" #additionalcriteria="ngModel"
-                                                [(ngModel)]="model.additionalcriteria" [disabled]="additionalcriteriatrue"
-                                                (change)='additionalcriteriaSelected(additionalcriteria.value)' >
+                                                [(ngModel)]="model.additionalcriteria"
+                                                [disabled]="additionalcriteriatrue"
+                                                (change)='additionalcriteriaSelected(additionalcriteria.value)'>
                                                 <option>none</option>
-                                                <option>coopflag</option>
+                                                <option>corpflag</option>
                                                 <option>facility amount</option>
                                             </select>
                                         </div>
                                         <p class="my-2"></p>
                                         <div class="form-group">
-                                            <p>Coop flag</p>
+                                            <p>Corp flag</p>
                                             <input class="form-control" name="coopflag" id="coopflag"
-                                                #coopflag="ngModel" [(ngModel)]="model.coopflag" [disabled]="coopflagtrue"
-                                                autocomplete="off" />
+                                                #coopflag="ngModel" [(ngModel)]="model.coopflag"
+                                                [disabled]="coopflagtrue" autocomplete="off" />
+                                            <ngx-select (data)="value" [multiple]="true" [items]="corpflags" name="coopflag" id="coopflag"
+                                                #coopflag="ngModel" [(ngModel)]="model.coopflag" [disabled]="disabled"
+                                                (data)="refreshValue($event)" placeholder="No Corpflag selected">
+                                            </ngx-select>
                                         </div>
                                         <p class="my-2"></p>
                                         <div class="form-group">
@@ -91,10 +102,16 @@
                                         <p class="my-2"></p>
                                         <div class="form-group">
                                             <p>Primary Remedial Unit</p>
-                                            <input class="form-control" name="primaryremedialunit"
+                                            <select class="form-control" name="primaryremedialunit"
                                                 id="primaryremedialunit" #primaryremedialunit="ngModel"
-                                                [(ngModel)]="model.primaryremedialunit" [disabled]="primaryremedialunittrue"
-                                                autocomplete="off"/>
+                                                [(ngModel)]="model.primaryremedialunit"
+                                                [disabled]="primaryremedialunittrue" autocomplete="off">
+                                                <option value="">none</option>
+                                                <option>Corporate</option>
+                                                <option>MSME</option>
+                                                <option>Retail</option>
+                                                <option>DIGITAL</option>
+                                            </select>
                                         </div>
                                         <p class="lead mt-3"></p>
                                         <div>
@@ -153,8 +170,9 @@
                                             <p>Additional Criteria</p>
                                             <select class="form-control" name="additionalcriteria"
                                                 id="additionalcriteria" #additionalcriteria="ngModel"
-                                                [(ngModel)]="model.additionalcriteria" [disabled]="additionalcriteriatrue"
-                                                (change)='additionalcriteriaSelected(additionalcriteria.value)' >
+                                                [(ngModel)]="model.additionalcriteria"
+                                                [disabled]="additionalcriteriatrue"
+                                                (change)='additionalcriteriaSelected(additionalcriteria.value)'>
                                                 <option>none</option>
                                                 <option>coopflag</option>
                                                 <option>facility amount</option>
@@ -164,8 +182,8 @@
                                         <div class="form-group">
                                             <p>Coop flag</p>
                                             <input class="form-control" name="coopflag" id="coopflag"
-                                                #coopflag="ngModel" [(ngModel)]="model.coopflag" [disabled]="coopflagtrue"
-                                                autocomplete="off" />
+                                                #coopflag="ngModel" [(ngModel)]="model.coopflag"
+                                                [disabled]="coopflagtrue" autocomplete="off" />
                                         </div>
                                         <p class="my-2"></p>
                                         <div class="form-group">
@@ -181,8 +199,8 @@
                                             <p>Primary Remedial Unit</p>
                                             <input class="form-control" name="primaryremedialunit"
                                                 id="primaryremedialunit" #primaryremedialunit="ngModel"
-                                                [(ngModel)]="model.primaryremedialunit" [disabled]="primaryremedialunittrue"
-                                                autocomplete="off"/>
+                                                [(ngModel)]="model.primaryremedialunit"
+                                                [disabled]="primaryremedialunittrue" autocomplete="off" />
                                         </div>
                                         <p class="my-2"></p>
                                         <div class="float-left">

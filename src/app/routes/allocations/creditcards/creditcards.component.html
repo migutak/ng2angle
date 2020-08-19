@@ -1,57 +1,106 @@
 <div class="content-heading">
-    <div>Write offs
-        <small>ALL cases</small></div>
+    <div>
+        Credit cards
+        <small>Allocation setup using cycle</small>
+    </div>
 </div>
 <div class="container-fluid">
-    <button class="mr-1 mb-1 btn btn-outline-success" type="button" (click)="getSelectedRows()" [disabled]="export"><i class="fas fa-print"></i> Export Selected Rows</button>
-    
-    <div style="margin-bottom: 5px;">
-        <input
-          type="text"
-          (input)="onQuickFilterChanged()"
-          id="quickFilter"
-          placeholder="quick filter..."
-        />
-        <div class="btn-group mb-1 mr-1" dropdown>
-            <button class="btn dropdown-toggle btn-secondary" type="button" dropdownToggle>Refresh Grid
-                <span class="caret"></span>
-            </button>
-            <div *dropdownMenu class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="#" (click)="refreshData('pending-approval')">Pending approval</a>
-                <a class="dropdown-item" href="#" (click)="refreshData('print-to-finance')">Print to Finance</a>
-                <a class="dropdown-item" href="#" (click)="refreshData('decline')">Declined</a>
-                <a class="dropdown-item" href="#" (click)="refreshData('complete')">Complete</a>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+        <p style="font-size: 20px; color: white">Processing ...</p>
+    </ngx-spinner>
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                    Cycles
+                </a>
+            </div>
+            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="card card-primary">
+                                <div class="card-body">
+                                    <form #cycleForm="ngForm" class="form-horizontal"
+                                        (ngSubmit)="Submit(cycleForm)" *ngIf="new">
+                                        <div class="form-group">
+                                            <p>Cycle</p>
+                                            <input type="number" class="form-control" name="cycle" id="cycle"
+                                                #cycle="ngModel" [(ngModel)]="model.cycle" [disabled]="false"
+                                                required autocomplete="off" />
+                                        </div>
+
+                                        <p class="my-2"></p>
+                                        <div class="form-group">
+                                            <p>Collection officer</p>
+                                            <select class="form-control" name="colofficer" id="colofficer"
+                                                #colofficer="ngModel" [(ngModel)]="model.colofficer">
+                                                <option value="">none</option>
+                                                <option *ngFor="let s of users">{{s.username}}</option>
+                                            </select>
+                                        </div>
+                                        <p class="lead mt-3"></p>
+                                        <div>
+                                            <div class="clearfix">
+                                                <div class="float-left">
+                                                    <button [disabled]="!cycleForm.valid || !cycleForm.dirty"
+                                                        class="btn btn-outline-primary" type="submit">
+                                                        <em class="fa fa-check fa-fw"></em>Add New</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form #editcycleForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editcycleForm)"
+                                        *ngIf="!new">
+                                        <p class="lead mt-3"></p>
+                                        <div class="form-group">
+                                            <p>Cycle</p>
+                                            <input class="form-control" name="cycle" id="cycle"
+                                                #cycle="ngModel" [(ngModel)]="model.cycle" [disabled]="false"
+                                                required autocomplete="off" />
+                                        </div>
+
+                                        <p class="my-2"></p>
+                                        <div class="form-group">
+                                            <p>Collection officer</p>
+                                            <select class="form-control" name="colofficer" id="colofficer"
+                                                #colofficer="ngModel" [(ngModel)]="model.colofficer">
+                                                <option value="">none</option>
+                                                <option *ngFor="let s of users">{{s.username}}</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <p class="my-2"></p>
+                                        <div class="float-left">
+                                            <button type="submit" class="btn btn-outline-primary" type="submit">
+                                                <em class="fa fa-pencil fa-fw"></em>Update</button>
+                                        </div>
+                                        <div class="float-left">
+                                            <button class="btn btn-outline-warning" (click)="shownew()">
+                                                <em class="fa fa-check fa-fw"></em>Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6">
+                                        <input class="mb form-control" placeholder="Search..." type="text"
+                                            (keyup)="onQuickFilterChanged($event)" />
+                                    </div>
+                                </div>
+                                <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle"
+                                    style="width: 100%; height: 600px" [gridOptions]="gridOptions"
+                                    (rowClicked)='onRowClicked($event)' class="ag-theme-balham" [modules]='modules'
+                                    (gridReady)="gridReady($event)">
+                                </ag-grid-angular>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
-
-        <ag-grid-angular
-        #agGrid
-        style="width: 100%; height: 700px;"
-        id="myGrid"
-        class="ag-theme-balham"
-        [columnDefs]="columnDefs"
-        [defaultColDef]="defaultColDef"
-        [rowModelType]="rowModelType"
-        [maxBlocksInCache]="maxBlocksInCache"
-        [animateRows]="true"
-        [floatingFilter]="true"
-        [rowData]="rowData"
-        [pagination]="true"
-        [enableSorting]="true"
-        [enableFilter]="true"
-        [enableColResize]="true"
-        [paginationAutoPageSize]="true"
-        (gridReady)="onGridReady($event)"
-        [suppressRowClickSelection]="true"
-        (cellDoubleClicked)='onCellDoubleClicked($event)'
-        [rowSelection]="rowSelection"
-        [isRowSelectable]="isRowSelectable"
-        (rowSelected)="onRowSelected($event)"
-        [sideBar]="false"
-        [enableRangeSelection]="true"
-        [rowDragManaged]="true"
-        [modules]="modules"
-        ></ag-grid-angular>
-    
+    </div>
 </div>

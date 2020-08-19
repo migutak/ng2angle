@@ -5,6 +5,10 @@ import { saveAs } from 'file-saver';
 import swal from 'sweetalert2';
 import { EcolService } from '../../../services/ecol.service';
 import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GridOptions } from '@ag-grid-community/all-modules';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
+import { NgxSpinnerService } from 'ngx-spinner';
+declare var $: any;
 
 @Component({
   selector: 'app-colofficer',
@@ -13,6 +17,9 @@ import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ColofficerComponent implements OnInit {
 
+  resizeEvent = 'resize.ag-grid';
+  $win = $(window);
+
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
   data: any = {};
@@ -20,19 +27,55 @@ export class ColofficerComponent implements OnInit {
   modalOptions: NgbModalOptions;
   deptcodes: any = [];
   template: string;
+  gridOptions: GridOptions;
+  modules = AllModules;
+
+  columnDefs = [
+    {
+      headerName: 'memogroup',
+      field: 'memogroup',
+      width: 150
+    }, {
+      headerName: 'colofficer',
+      field: 'colofficer'
+    }];
+  rowData1: any;
+  new = true;
 
   constructor(
     private http: HttpClient,
     private ecolService: EcolService,
+    private spinner: NgxSpinnerService,
     private modalService: NgbModal,
   ) {
 
+  // Basic example
+  this.gridOptions = <GridOptions>{
+    headerHeight: 40,
+    columnDefs: this.columnDefs,
+    rowData: null,
+    enableFilter: true,
+    rowSelection: 'single'
+  };
 
+  this.getData();
   }
 
   term: string;
   users: any = [];
   arocodeData: any = [];
+
+  onRowClicked(event: any) {
+    this.new = false;
+    this.model = event.node.data;
+    this.model.lastupdateby = this.username;
+    this.model.lastupdate = new Date();
+    // this.model.active = (event.node.data.active).toLowerCase() === 'true' ? true : false;
+  }
+
+  onQuickFilterChanged($event) {
+    this.gridOptions.api.setQuickFilter($event.target.value);
+  }
 
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -41,6 +84,18 @@ export class ColofficerComponent implements OnInit {
     this.getusers();
     this.getarocodes();
 
+  }
+
+  gridReady(params) {
+    params.api.sizeColumnsToFit();
+    this.$win.on(this.resizeEvent, () => {
+      setTimeout(() => { params.api.sizeColumnsToFit(); });
+    });
+  }
+
+  shownew() {
+    this.new = true;
+    this.model = {};
   }
 
   updateBranch(branch) {
@@ -66,13 +121,12 @@ export class ColofficerComponent implements OnInit {
 
       }
     });
-
   }
 
   getusers() {
     this.http
       .get(
-        environment.api + '/api/tblusers'
+        environment.api + '/api/tblusers?filter[where][team]=REMEDIAL CREDIT'
       )
       .subscribe(data => {
         this.users = data;
@@ -212,6 +266,41 @@ export class ColofficerComponent implements OnInit {
     }, error => {
       console.log(error);
       swal('Error!', ' Cannot download template  file!', 'error');
+    });
+  }
+
+  updatememo(form) {
+    const body = {
+      'memogroup': form.mmemogroup,
+      'colofficer': form.mcolofficer
+    };
+    swal({
+      title: 'Are you sure?',
+      text: 'You want to allocate memo group?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Add!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.http.put(environment.api + '/api/tbl_colofficer_memogroups', body).subscribe(resp => {
+          swal('Success!', 'Successfully added!', 'success');
+          this.getData();
+          this.spinner.hide();
+        }, error => {
+          console.log(error);
+          swal('Error!', 'Update was not completed!', 'error');
+          this.spinner.hide();
+        });
+      }
+    });
+  }
+
+  getData() {
+    this.http.get<any>(environment.api + '/api/tbl_colofficer_memogroups').subscribe(resp => {
+      this.rowData1 = resp;
     });
   }
 
