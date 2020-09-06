@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { environment } from '../../../../environments/environment';
 import { FlexmonsterPivot } from 'ng-flexmonster';
 import * as Flexmonster from 'flexmonster';
+import {license} from '../../../../../env'
 
 @Component({
     selector: 'app-bucketsummary',
@@ -11,10 +12,11 @@ import * as Flexmonster from 'flexmonster';
 })
 export class BucketsummaryComponent implements OnInit {
     @ViewChild('pivot') pivot: FlexmonsterPivot;
+    flem = license.flem;
+
     public pivotReport = {
         dataSource: {
-            dataSourceType: "json",
-            data: this.getData()
+            data: environment.api + "/api/rollrates"
         },
         slice: {
             rows: [
@@ -91,139 +93,22 @@ export class BucketsummaryComponent implements OnInit {
         this.pivot.flexmonster.setReport({
             dataSource: {
                 dataSourceType: 'json',
-                filename: 'http://172.16.19.151:8000/api/rollrates'
-            }
+                filename: environment.api + '/api/rollrates'
+            },
+            slice: {
+                rows: [
+                  { uniqueName: 'colofficer' }
+                ],
+                columns: [
+                  { uniqueName: 'bucket_01AUG20' }
+                ],
+                measures: [
+                  { uniqueName: 'accnumber', aggregation: 'count' },
+                  { uniqueName: 'oustbalance_01AUG20', aggregation: 'sum' }
+                ]
+              }
         });
     }
-
-    getData() {
-        return [{
-            "accnumber": "01198010326800",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011107",
-            "branchname": null,
-            "arocode": "107BM01",
-            "rrocode": "RRO00",
-            "colofficer": "Unknown",
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 68841.65,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        },
-        {
-            "accnumber": "01198019896000",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011150",
-            "branchname": "BONDO BRANCH",
-            "arocode": "150BB02",
-            "rrocode": "RRO25",
-            "colofficer": null,
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 496847.44,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        },
-        {
-            "accnumber": "01198065933101",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011035",
-            "branchname": "STIMA PLAZA BRANCH",
-            "arocode": "035BB01",
-            "rrocode": "RRO00",
-            "colofficer": "Unknown",
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 13971,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        },
-        {
-            "accnumber": "01198066855001",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011033",
-            "branchname": "ATHI RIVER BRANCH",
-            "arocode": "033BM01",
-            "rrocode": "RRO00",
-            "colofficer": "Unknown",
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 327060,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        },
-        {
-            "accnumber": "01198075313002",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011005",
-            "branchname": "MERU BRANCH",
-            "arocode": "005PB02",
-            "rrocode": "RRO00",
-            "colofficer": "Unknown",
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 276.03000000000003,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        },
-        {
-            "accnumber": "01198093348200",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011126",
-            "branchname": "KAWANGWARE II BRANCH",
-            "arocode": "126PB01",
-            "rrocode": "RRO00",
-            "colofficer": "Unknown",
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 9554,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        },
-        {
-            "accnumber": "01198101795901",
-            "memogroup": "198",
-            "businessunit": null,
-            "remedialunit": null,
-            "branchcode": "00011032",
-            "branchname": "BURUBURU BRANCH",
-            "arocode": "032BM01",
-            "rrocode": "RRO00",
-            "colofficer": "Unknown",
-            "productcode": "custsuspense",
-            "daysinarr_01AUG20": 0,
-            "bucket_01AUG20": "1+",
-            "oustbalance_01AUG20": 23994.5,
-            "daysinarr_02AUG20": null,
-            "bucket_02AUG20": null,
-            "oustbalance_02AUG20": 0
-        }]
-      }
 
 
 

@@ -1,33 +1,66 @@
-const OCPURL = '-alinma.myocp-580729-bef98cd54cd05ea40763fca46bf638de-0000.us-south.containers.appdomain.cloud'
+var host = process.env.BACKEND_HOST || 'https://ecollectweb.co-opbank.co.ke';
+var manuals = process.env.MANUAL || '/app/manuals/';
+var path = process.env.BACKEND_PATH || '/home/ecollectadmin/demand_letters/';
+var accplanlink = process.env.ACCPLANLINK || 'http://172.16.204.71:3001';
+var kibanarpt = process.env.KIBANA || 'http://ecollectweb.co-opbank.co.ke:5601';
+var birt = process.env.BIRT || 'http://ecollectweb.co-opbank.co.ke:8787/birt';
+var ptpreport = process.env.PTPREPORT || '';
+var homedash = process.env.HOMEDASH || '';
+var workflow = process.env.WORKFLOW || '';
+var portfoliodash = process.env.PORTFOLIODASH || '';
+var accplanreport = process.env.ACCPLANREPORT || '';
+var xlstemplate = process.env.XLSTEMPLATE || '/home/ecollectadmin/templates/upload_notes.xlsx';
+var portal = process.env.PORTAL || '';
+var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
+var woffLink = '';
+var repossessLink = '';
+var calcelipfLink = '';
+var investigateLink= '';
+var debtcollectorLink= '';
+var relegationLink= '';
+
 
 export const environment = {
   production: true,
   adlogin: false,
-  sendsms: true,
-  api: 'https://ecollectapis-ecollectapis.159.122.130.146.nip.io',
-  nodeapi: 'https://nodeapi-nodeapi.159.122.130.146.nip.io/nodeapi',
-  letters_path: '/home/ecollectadmin/demand_letters/',
-  letters_api: 'http://docx-docx.159.122.130.146.nip.io/docx/',
-  uploadurl: 'http://filesapi-filesapi.159.122.130.146.nip.io/filesapi',
-  demanddownload: 'http://demanddownload-demanddownload.159.122.130.146.nip.io/demanddownload',
-  valor: 'http://valor-valor.159.122.130.146.nip.io/valor',
-  applink: '',
-  xlsuploadapi: 'http://xlsupload-xlsupload.159.122.130.146.nip.io/xlsupload/',
-  xlstemplate: '/root/templates/upload_notes.xlsx',
-  emailapi: 'http://demandemail-demandemail.159.122.130.146.nip.io/demandemail/email',
-  demandsmsapi: "http://sms-sms.159.122.130.146.nip.io/sms",
-  auth: 'http://adlogin-adlogin.159.122.130.146.nip.io/adlogin',
-  filesapi: 'http://filesapi-filesapi.159.122.130.146.nip.io/filesapi',
-  accplanlink: 'http://accplan-accplan.159.122.130.146.nip.io',
-  kibanarpt: 'http://kibana-oss-kibana.159.122.130.146.nip.io',
-  manuals_path: '/app/manuals/',
-  birt: 'http://birt-birt.159.122.130.146.nip.io/birt',
-  kibana: 'http://kibana-oss-kibana.159.122.130.146.nip.io/app/kibana#/dashboard?_g=0',
-  portfoliodash: 'https://52.117.54.217:4403/goto/bf80fe14782362d8f9307501e75bf055?embed=true',
-  portal: 'http://portal-portal.159.122.130.146.nip.io/portal',
-  accplanreport: 'http://52.117.54.217:5601/app/kibana#/discover/346b8c30-0b89-11ea-8410-c5d8870411ab?_g=()',
-  ptpreport: 'http://52.117.54.217:5601/app/kibana#/discover/6f42b0b0-0b8c-11ea-8410-c5d8870411ab?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-1y%2Cto%3Anow))'
-  ,homedash: 'http://172.16.19.151:5601/goto/f893ccd125308885e80090233919f80e?embed=true',
-  workflow: 'http://52.117.54.217:8089/sysworkflow/en/neoclassic/login/login'
+  sendsms: false,
+  api: '',
+  nodeapi: host + '/nodeapi',
+  letters_path: path,
+  letters_api: host + '/docx/',
+  uploadurl: host + '/filesapi',
+  demanddownload: host + '/demanddownload',
+  valor: host + '/valor',
+  applink: host,
+  xlsuploadapi: host + '/xlsupload/',
+  xlstemplate: xlstemplate,
+  sptemplate: '/app/templates/sptemplate.xlsx',
+  insurancetemplate: '/app/templates/insurance.xlsx',
+  accountallocationtemplate: '/app/templates/account.xlsx',
+  employerallocationtemplate: '/app/templates/employer.xlsx',
+  emailapi: host + '/demandemail/email',
+  demandsmsapi: host + "/sms",
+  auth: auth,
+  filesapi: host + '/filesapi',
+  s3link: host + '8010/app/files-to-s3',
+  accplanlink: accplanlink,
+  kibanarpt: kibanarpt,
+  manuals_path: manuals,
+  birt: birt,
+  kibana: kibanarpt,
+  portfoliodash: portfoliodash,
+  portal: portal,
+  accplanreport: accplanreport,
+  ptpreport: ptpreport,
+  homedash: homedash,
+  workflow: workflow,
+  repossessLink: repossessLink,
+  woffLink: woffLink,
+  calcelipfLink: calcelipfLink,
+  investigateLink: investigateLink,
+  debtcollectorLink: debtcollectorLink,
+  relegationLink: relegationLink,
+  platformDash: "http://ecollecttst.co-opbank.co.ke:3030/d/hb7fSE0Zz/1-node-exporter-for-prometheus-dashboard-en-v20191102?orgId=1",
+  rollratesdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/2635e190-d89a-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
+  userbucketdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/6d2971d0-d899-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))'
 };
-

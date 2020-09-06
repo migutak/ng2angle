@@ -15,10 +15,4 @@ EXPOSE 8880
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
-# ng build --configuration=uat
-# docker build -t 52.117.54.217:5000/ecollect:t.0.0 .
-# docker tag migutak/ecollect:uat 172.16.19.151:5000/ecollect:uat
-# docker push migutak/ecollect:1.0.0
-# docker push 172.16.19.151:5000/ecollect:uat
-# docker save -o migutak_ecollect.tar migutak/ecollect:1.0.0
 #

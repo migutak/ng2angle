@@ -14,7 +14,7 @@
     "modernizr": "modernizr -c modernizr-config.json -d src/modernizr.js",
     "postinstall": "node ./node_modules/protractor/bin/webdriver-manager update",
     "e2e": "ng e2e",
-    "docker:build": "docker build -t docker.io/migutak/ecollect:4.0.1 ."
+    "docker:build": "docker build -t docker.io/migutak/ecollect:4.0.2 ."
   },
   "dependencies": {
     "@ag-grid-community/all-modules": "^22.0.0",

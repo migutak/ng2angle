@@ -371,7 +371,7 @@ export class EcolService {
   }
 
   getfileshistory(custnumber) {
-    // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:max-line-length 
     return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');
   }
 
