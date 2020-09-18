@@ -906,6 +906,10 @@ export class EcolService {
     return this.httpClient.patch<any>(environment.api + '/api/pmt_insurance/' + data.id, data);
   }
 
+  userlastlogin(user) {
+    return this.httpClient.patch<any>(environment.api + '/api/tblusers/' + user.username, user);
+  }
+
   updateinsurance(data) {
     return this.httpClient.post<any>(environment.nodeapi + '/insurance/update', data);
   }

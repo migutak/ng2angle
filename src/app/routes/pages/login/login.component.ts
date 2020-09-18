@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 import { EcolService } from '../../../services/ecol.service';
-import { getDefaultService } from 'selenium-webdriver/chrome';
+import * as moment from 'moment';
 import { environment } from '../../../../environments/environment';
 
 const ADLOGIN = environment.adlogin;
@@ -108,7 +108,15 @@ export class LoginComponent implements OnInit {
                     sessionStorage.setItem('userpermission', JSON.stringify(permission));
                     sessionStorage.setItem('profile', '1');
                     // this.router.navigate([this.returnUrl]);
-                    this.router.navigate(['/home']);
+                    // update tblusers
+                    const userdata = {username: username, dateloglast: moment().add(1, 'day').format('YYYY-MMM-DD')};
+
+                    this.ecolService.userlastlogin(userdata).subscribe(resp => {
+                        this.router.navigate(['/home']);
+                    }, error => {
+                        console.log(error)
+                    })
+                    
                 }, error => {
                     console.log(error)
                     this.error = 'Error during login';

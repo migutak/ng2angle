@@ -12,12 +12,12 @@ var accplanreport = process.env.ACCPLANREPORT || '';
 var xlstemplate = process.env.XLSTEMPLATE || '/home/ecollectadmin/templates/upload_notes.xlsx';
 var portal = process.env.PORTAL || '';
 var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
-var woffLink = '';
-var repossessLink = '';
-var calcelipfLink = '';
-var investigateLink= '';
-var debtcollectorLink= '';
-var relegationLink= '';
+var woffLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
+var repossessLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/3794983825efb4146de0f07066276994/4785671285efb41c0945730007935178.php';
+var calcelipfLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
+var relegationLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/7424622735ef34e4a15a489065096514/4363139305ef34e4a43b934042572210.php';
+var investigateLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/7939093745ebc5cfc32a607061999855/4148506665ebc5d89d4a4e5016911975.php';
+var debtcollectorLink = '';
 
 
 export const environment = {

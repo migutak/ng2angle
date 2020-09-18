@@ -119,10 +119,11 @@
               <div class="col-xl-10">
                 <select class="form-control" formControlName="team" [formControl]="valForm.controls['team']" [ngClass]="{ 'is-invalid': valForm.controls['team'].hasError('required') }">
                   <option value="">Please select</option>
-                  <!--<option value="CMD-COLLECTIONS">CMD-COLLECTIONS</option>-->
+                  <option value="CO-OPERATIVES">CO-OPERATIVES</option>
                   <option value="REMEDIAL CREDIT">REMEDIAL CREDIT</option>
                   <option value="CREDITCARDS">CREDITCARDS</option>
                   <option value="BRANCH">BRANCH</option>
+                  <option value="CIBD">CIBD</option>
                   <option value="OTHER">OTHER</option>
                 </select>
                 <span class="text-danger" *ngIf="valForm.controls['team'].hasError('required') && (valForm.controls['team'].dirty || valForm.controls['team'].touched)">Team
