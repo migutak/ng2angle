@@ -198,6 +198,9 @@ export class ActivityActionComponent implements OnInit {
         this.account.cmdstatus = data[0].cmdstatus;
         this.account.routetostate = data[0].routetostate;
         this.account.excuse_other = data[0].excuse_other;
+        this.account.restructure = data[0].restructure;
+        this.account.restructureamount = data[0].restructureamount;
+        this.account.abilitytopay = data[0].abilitytopay;
       }
       // build form
       this.buildForm();
@@ -326,7 +329,10 @@ export class ActivityActionComponent implements OnInit {
       route: [this.account.routetostate],
       paymode: [''],
       callbacktime: [''],
-      rfdother: [{ value: this.account.excuse_other, disabled: true }]
+      rfdother: [{ value: this.account.excuse_other, disabled: true }],
+      restructure: [this.account.restructure],
+      restructureamount: [{value: this.account.restructureamount, disabled: true}],
+      abilitytopay: [this.account.abilitytopay],
     });
   }
 
@@ -386,7 +392,10 @@ export class ActivityActionComponent implements OnInit {
       noteimp: 'N',
       rfdother: this.f.rfdother.value,
       owner: this.username,
-      product: this.account.section
+      product: this.account.section,
+      restructure: this.f.restructure.value,
+      restructureamount: this.f.restructureamount.value,
+      abilitytopay: this.f.abilitytopay.value
     };
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
@@ -620,6 +629,14 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
+  restructure(value) {
+    if(value) {
+      this.actionForm.controls.restructureamount.enable();
+    } else {
+      this.actionForm.controls.restructureamount.disable();
+    }
+  }
+
   changeReason(value) {
     if (value === 'Other') {
       this.actionForm.controls.rfdother.enable();
@@ -649,12 +666,6 @@ export class ActivityActionComponent implements OnInit {
       this.actionForm.controls.toemail.setValue(false);
       this.capture = false;
     } else {
-      //this.actionForm.controls.ptpamount.disable();
-      //this.actionForm.controls.ptpdate.disable();
-      //this.actionForm.controls.ptptype.disable();
-      //this.actionForm.controls.ptpamount.setValue(0);
-      //this.actionForm.controls.ptpdate.setValue(Date());
-      //this.actionForm.controls.ptptype.setValue('');
       this.actionForm.controls.ptpsms.setValue(false);
       this.actionForm.controls.toemail.setValue(false);
       this.capture = true;

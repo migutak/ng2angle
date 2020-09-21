@@ -109,6 +109,37 @@
                 <ng-option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</ng-option>
               </ng-select>
             </div>
+          </div> 
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+          <div class="col-xl-2 col-md-3">
+            <div class="checkbox c-checkbox form-check-inline">
+              <label>
+                Request for restructure made <input type="checkbox" [checked]="false" name="restructure" id="restructure" 
+                  name="restructure" formControlName="restructure" 
+                  (ngModelChange)="restructure(actionForm.value.restructure)" />
+                <span class="fa fa-check"></span></label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <input type="number" id="restructureamount" name="restructureamount" formControlName="restructureamount" placeholder="Enter Restructure amount" class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            Ability to pay
+          </div>
+          <div class="col-md-3">
+            <div class="col-md-12">
+              <ng-select id="abilitytopay" name="abilitytopay" formControlName="abilitytopay" placeholder="Select ability to pay">
+                <ng-option value="Unknown">Unknown</ng-option>
+                <ng-option value="Able and willing">Able and willing</ng-option>
+                <ng-option value="Unable and willing">Unable and willing</ng-option>
+                <ng-option value="Unwilling and able">Unwilling and able</ng-option>
+                <ng-option value="Unwilling and unable">Unwilling and unable</ng-option>
+              </ng-select>
+            </div>
           </div>
         </div>
 
@@ -145,31 +176,6 @@
             Promised to Pay?
           </div>
           <div class="col-md-3">
-            <!--<div class="col-md-12">
-              <div class="form-group row">
-                <label class="col-md-0 col-form-label"></label>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" id="inlineRadio1" type="radio" formControlName="ptptype"
-                    name="ptptype" value="single" (click)="handleChange('single')" />
-                  <label class="form-check-label" for="inlineRadio1">Single </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" id="inlineRadio2" type="radio" formControlName="ptptype"
-                    name="ptptype" value="multiple" (click)="handleChange('multiple')" />
-                  <label class="form-check-label" for="inlineRadio2">Multiple </label>
-                </div>
-                <div class="form-check form-check-inline" [hidden]="capture">
-                  <span><button class="btn btn-link" (click)="multiplecapturefnc()">Capture multiple</button></span>
-                </div>
-                
-              </div>
-            </div>-->
-            <!--<div class="col-md-12">
-              <ng-select id="route" name="route" formControlName="route">
-                <ng-option *ngFor="let r of reviewers" [value]="r.username">{{r.firstname}} {{r.lastname}} {{r.surname}}
-                </ng-option>
-              </ng-select>
-            </div>-->
             <div class="col-md-12">
               <ng-select id="ptp" name="ptp" formControlName="ptp" placeholder="Select PTP"
                 (ngModelChange)="changePtp(actionForm.value.ptp)">
