@@ -93,18 +93,17 @@ export class LoginComponent implements OnInit {
 
     getuser(username, password) {
         this.ecolService.login(username).subscribe(user => {
-            if (user.length > 0) {
+            if (user.data) {
                 // store user details and basic auth credentials in local storage
                 // to keep user logged in between page refreshes
                 // get user permissions
-                this.ecolService.getpermissions(user[0].ROLE).subscribe(permission => {
-                    // console.log(permission);
+                this.ecolService.getpermissions(user.data[0].ROLE).subscribe(permission => {
                     user.authdata = window.btoa(username + ':' + password);
-                    localStorage.setItem('currentUser', JSON.stringify(user[0]));
+                    localStorage.setItem('currentUser', JSON.stringify(user.data[0]));
                     localStorage.setItem('userpermission', JSON.stringify(permission));
                     localStorage.setItem('profile', '1');
 
-                    sessionStorage.setItem('currentUser', JSON.stringify(user[0]));
+                    sessionStorage.setItem('currentUser', JSON.stringify(user.data[0]));
                     sessionStorage.setItem('userpermission', JSON.stringify(permission));
                     sessionStorage.setItem('profile', '1');
                     // this.router.navigate([this.returnUrl]);

@@ -292,7 +292,7 @@ export class EcolService {
   }
 
   login(username: string) {
-    return this.httpClient.get<any>(environment.api + '/api/tblusers/search?username=' + username);
+    return this.httpClient.get<any>(environment.nodeapi + '/tblusers/login/' + username);
   }
 
   notifications() {
@@ -317,7 +317,7 @@ export class EcolService {
   }
 
   getpermissions(role_id: string) {
-    return this.httpClient.get<any>(environment.api + '/api/permissionsettings?filter[where][role_id]=' + role_id);
+    return this.httpClient.get<any>(environment.nodeapi + '/permissionsettings?filter[where][role_id]=' + role_id);
   }
 
   s_account_plans(accnumber, planid) {

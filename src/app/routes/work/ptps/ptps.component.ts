@@ -106,7 +106,7 @@ export class PtpsComponent implements OnInit {
       getRows(params) {
         //console.log(JSON.stringify(params.request, null, 1));
 
-        fetch(environment.api + '/api/ptps/gridbrokenptps', {
+        fetch(environment.nodeapi + '/ptps/gridbrokenptps', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { 'Content-Type': 'application/json; charset=utf-8' }

@@ -129,7 +129,7 @@ export class ViewallComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
-        fetch(environment.api + '/api/tqall/gridviewall', {
+        fetch(environment.nodeapi + '/tqall/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }

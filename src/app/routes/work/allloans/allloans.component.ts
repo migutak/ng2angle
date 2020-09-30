@@ -108,7 +108,7 @@ export class AllloansComponent implements OnInit {
     const datasource = {
       // tslint:disable-next-line:no-shadowed-variable
       getRows(params) {
-        fetch(environment.api + '/api/watch_stage/gridviewall_loans', {
+        fetch(environment.nodeapi + '/watchstage/gridviewall_loans', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { 'Content-Type': 'application/json; charset=utf-8' }
