@@ -1,0 +1,126 @@
+<div class="content-heading">
+  <div>
+    Reasons for Default
+    <small>Setups</small>
+  </div>
+</div>
+<div class="container-fluid">
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-fade">
+    <p style="font-size: 20px; color: white">Processing ...</p>
+  </ngx-spinner>
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          Reasons
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4">
+              <div class="card card-primary">
+                <div class="card-body">
+
+                  <form #settingsForm="ngForm" class="form-horizontal" (ngSubmit)="fncaddSubmit(settingsForm)" *ngIf="new"
+                    autocomplete="off">
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Reason</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="excuse" id="excuse" #excuse="ngModel" autocomplete="off"
+                          [(ngModel)]="model.excuse" [ngClass]="{ 'is-invalid': excuse.invalid }" required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Reason Details</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="excusedetails" id="excusedetails"
+                          #excusedetails="ngModel" [(ngModel)]="model.excusedetails" autocomplete="off"
+                          [ngClass]="{ 'is-invalid': excusedetails.invalid }" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-10">
+                        <label class="checkbox c-checkbox">
+                          <input type="checkbox" name="disabled" id="disabled" #disabled="ngModel"
+                            [(ngModel)]="model.disabled" [checked]="model.disabled" />
+                          <span class="fa fa-check"></span> Disabled</label>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="clearfix">
+                        <div class="float-left">
+                          <button [disabled]="!settingsForm.valid || !settingsForm.dirty"
+                            class="btn btn-outline-primary" type="submit">
+                            <em class="fa fa-check fa-fw"></em>Add New</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <form #editForm="ngForm" class="form-horizontal" (ngSubmit)="editSubmit(editForm)" *ngIf="!new" autocomplete="off">
+
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Reason</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="excuse" id="excuse" #excuse="ngModel" autocomplete="off"
+                          [(ngModel)]="model.excuse" [ngClass]="{ 'is-invalid': excuse.invalid }" required />
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-xl-4 col-form-label">Reason details</label>
+                      <div class="col-xl-8">
+                        <input class="form-control" type="text" name="excusedetails" id="excusedetails" autocomplete="off"
+                          #excusedetails="ngModel" [(ngModel)]="model.excusedetails"
+                          [ngClass]="{ 'is-invalid': excusedetails.invalid }" required />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-10">
+                        <label for="disabled" class="checkbox c-checkbox">
+                          <input type="checkbox" name="disabled" id="disabled" #disabled="ngModel"
+                            [(ngModel)]="model.disabled" [checked]="model.disabled" />
+                          <span class="fa fa-check"></span> Disabled</label>
+                      </div>
+                    </div>
+
+                    <div class="float-left">
+                      <button type="submit"  [disabled]="!editForm.valid || !editForm.dirty" class="btn btn-outline-primary" type="submit">
+                        <em class="fa fa-pencil fa-fw"></em>Update</button>
+                    </div>
+                    <div class="float-left">
+                      <button class="btn btn-outline-warning" (click)="shownew()">
+                        <em class="fa fa-check fa-fw"></em>Cancel</button>
+                    </div>
+
+                    <div class="float-right">
+                      <button class="btn btn-danger" type="button" (click)="delete()">
+                        <em class="fas fa-trash-alt fa-fw"></em>Delete</button>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8">
+              <div class="col-xl-12">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-6">
+                    <input class="mb form-control" placeholder="Filter..." type="text"
+                      (keyup)="onQuickFilterChanged($event)" />
+                  </div>
+                </div>
+                <ag-grid-angular #agGrid [rowData]="rowData1" class="ag-angle" style="width: 100%; height: 600px"
+                  [gridOptions]="gridOptions" (rowClicked)='onRowClicked($event)' [modules]='modules'
+                  class="ag-theme-balham" (gridReady)="gridReady($event)">
+                </ag-grid-angular>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

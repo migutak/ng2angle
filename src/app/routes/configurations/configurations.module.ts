@@ -10,6 +10,7 @@ import {AccplansComponent} from './accplans/accplans.component';
 import {PlanactionsComponent} from './planactions/planactions.component';
 import {PlanmemosComponent} from './planmemos/planmemos.component';
 import {SpComponent} from './sp/sp.component';
+import {ReasonsComponent} from './reasons/reasons.component';
 
 import {NgxSelectModule} from 'ngx-select-ex';
 import {AgGridModule} from '@ag-grid-community/angular';
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path: 'planactions', component: PlanactionsComponent},
   {path: 'planmemos', component: PlanmemosComponent},
   {path: 'sp', component: SpComponent},
-  {path: 'insurance', component: InsuranceComponent}
+  {path: 'insurance', component: InsuranceComponent},
+  {path: 'reasons', component: ReasonsComponent}
 ];
 
 @NgModule({
@@ -49,7 +51,8 @@ const routes: Routes = [
     PlanmemosComponent,
     SpComponent,
     InsuranceComponent,
-    Insurance2Component
+    Insurance2Component,
+    ReasonsComponent
   ],
   exports: [
       RouterModule

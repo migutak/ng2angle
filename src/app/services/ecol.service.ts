@@ -169,9 +169,18 @@ export class EcolService {
     return this.httpClient.get(url);
   }
   getexcuse() {
-    const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
-    return this.httpClient.get(url);
+    const url = environment.api + '/api/tblexcuse?filter[order]=excuse ASC';
+    return <any>this.httpClient.get(url);
   }
+  getexcuseid(excuse) {
+    const url = environment.api + '/api/tblexcuse?filter[where][excuse]='+excuse;
+    return <any>this.httpClient.get(url);
+  }
+  getexcusedetails(excuse) {
+    const url = environment.api + '/api/tblexcuse_details?filter[where][excuse]='+excuse;
+    return <any>this.httpClient.get(url);
+  }
+
   getcure() {
     const url = environment.api + '/api/cure';
     return this.httpClient.get(url);
@@ -214,6 +223,16 @@ export class EcolService {
   putsptype(body) {
     const url = environment.api + '/api/sptypes';
     return this.httpClient.put(url, body);
+  }
+
+  patchtblexcuse(body) {
+    const url = environment.api + '/api/tblexcuse/' + body.id;
+    return this.httpClient.patch(url, body);
+  }
+
+  posttblexcuse(body) {
+    const url = environment.api + '/api/tblexcuse';
+    return this.httpClient.post(url, body);
   }
 
   postnotes(body) {

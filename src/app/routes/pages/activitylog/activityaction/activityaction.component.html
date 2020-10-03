@@ -99,14 +99,22 @@
               </ng-select>
             </div>
           </div>
-          <div class="col-md-3">
-            Reason for default
+          <div class="col-md-2">
+            Reason for default*
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <div class="col-md-12">
-              <ng-select id="reason" name="reason" formControlName="reason" placeholder="Select reason"
+              <!--<ng-select id="reason" name="reason" formControlName="reason" placeholder="Select reason"
                 [ngClass]="{ 'is-invalid': f.reason.errors }" (ngModelChange)="changeReason(actionForm.value.reason)">
                 <ng-option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</ng-option>
+              </ng-select>-->
+              <ng-select [items]="reason" id="reason" name="reason" formControlName="reason"
+                        bindLabel="excusedetails"
+                        bindValue="excusedetails"
+                        groupBy="excuse">
+                  <ng-template ng-optgroup-tmp let-item="item">
+                      {{item.excuse || 'Unnamed group'}}
+                  </ng-template>
               </ng-select>
             </div>
           </div> 
@@ -116,7 +124,7 @@
           <div class="col-xl-2 col-md-3">
             <div class="checkbox c-checkbox form-check-inline">
               <label>
-                Request for restructure made <input type="checkbox" [checked]="false" name="restructure" id="restructure" 
+                Request for restructure <input type="checkbox" [checked]="false" name="restructure" id="restructure" 
                   name="restructure" formControlName="restructure" 
                   (ngModelChange)="restructure(actionForm.value.restructure)" />
                 <span class="fa fa-check"></span></label>
@@ -125,22 +133,31 @@
           <div class="col-md-3">
             <div class="col-md-12">
               <input type="number" id="restructureamount" name="restructureamount" formControlName="restructureamount" placeholder="Enter Restructure amount" class="form-control" />
+              
+                <div class="input-group">
+                  <input type="text" placeholder="Restructure date" class="form-control" formControlName="restructuredate"
+                    #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
+                          class="fa fa-calendar"></i>
+                      </span></button>
+                  </div>
+              </div>
             </div>
           </div>
-          <div class="col-md-3">
-            Ability to pay
+          <!--<div class="col-md-3">
+            Reason for default Details
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <ng-select id="abilitytopay" name="abilitytopay" formControlName="abilitytopay" placeholder="Select ability to pay">
-                <ng-option value="Unknown">Unknown</ng-option>
-                <ng-option value="Able and willing">Able and willing</ng-option>
-                <ng-option value="Unable and willing">Unable and willing</ng-option>
-                <ng-option value="Unwilling and able">Unwilling and able</ng-option>
-                <ng-option value="Unwilling and unable">Unwilling and unable</ng-option>
+              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
+                class="form-control"></textarea>
+              <ng-select id="excusedetails" name="excusedetails" formControlName="excusedetails" placeholder="Select reason details"
+                [ngClass]="{ 'is-invalid': f.excusedetails.errors }">
+                <ng-option *ngFor="let e of excusedetails" [value]="e.excusedetails">{{e.excusedetails}}</ng-option>
               </ng-select>
             </div>
-          </div>
+          </div>-->
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -161,14 +178,20 @@
             </div>
           </div>
           <div class="col-md-3">
-            Other reason for default
+            Ability to pay
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
-                class="form-control"></textarea>
+              <ng-select id="abilitytopay" name="abilitytopay" formControlName="abilitytopay" placeholder="Select ability to pay">
+                <ng-option value="Unknown">Unknown</ng-option>
+                <ng-option value="Able and willing">Able and willing</ng-option>
+                <ng-option value="Unable and willing">Unable and willing</ng-option>
+                <ng-option value="Unwilling and able">Unwilling and able</ng-option>
+                <ng-option value="Unwilling and unable">Unwilling and unable</ng-option>
+              </ng-select>
             </div>
           </div>
+          
         </div>
 
         <div class="row" style="padding-top: 20px">

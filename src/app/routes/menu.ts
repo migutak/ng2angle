@@ -488,6 +488,12 @@ const SP = {
     icon: 'icon-docs'
 };
 
+const REASONS = {
+    text: 'Reason for default',
+    link: '/configurations/reasons',
+    icon: 'icon-speech'
+};
+
 const INSURANCE = {
     text: 'Insurance Co',
     link: '/configurations/insurance',
@@ -649,6 +655,7 @@ const teamleader_menu = [
     SMS,
     AccountPlans,
     SP,
+    REASONS,
     headingDocumentations,
     Manuals
 ];

@@ -48,6 +48,7 @@ export class ActivityActionComponent implements OnInit {
   party: any = [];
   cure: any = [];
   excuse: any = [];
+  excusedetails: any = [];
   capture:boolean= true;
   ptpcaptured:boolean = true;
   ptps: any = [];
@@ -106,7 +107,9 @@ export class ActivityActionComponent implements OnInit {
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
     return day + '-' + month + '-' + year;
-  }
+  };
+
+  reason = [];
 
   constructor(
     public settings: SettingsService,
@@ -295,8 +298,15 @@ export class ActivityActionComponent implements OnInit {
   }
 
   getexcuse() {
-    this.ecolService.getexcuse().subscribe(excuse => {
-      this.excuse = excuse;
+    this.ecolService.getexcuse().subscribe(reasons => {
+      this.reason = reasons;
+      for(let i=0; i<reasons.length; i++) {
+        if (this.reason[i].disabled === "false") {
+          this.reason[i].disabled = false;
+        } else {
+          this.reason[i].disabled = true;
+        }
+      }
     });
   }
 
@@ -325,6 +335,7 @@ export class ActivityActionComponent implements OnInit {
       reviewdate: [this.account.reviewdate],
       // reason: [this.account.excuse, Validators.required],
       reason: ['', Validators.required],
+      //excusedetails: ['', Validators.required],
       cmdstatus: [this.account.cmdstatus],
       flag: [false],
       route: [this.account.routetostate],
@@ -333,6 +344,7 @@ export class ActivityActionComponent implements OnInit {
       rfdother: [{ value: this.account.excuse_other, disabled: true }],
       restructure: [this.account.restructure],
       restructureamount: [{value: this.account.restructureamount, disabled: true}],
+      restructuredate: [{value: this.account.restructuredate, disabled: true}],
       abilitytopay: [this.account.abilitytopay],
     });
   }
@@ -396,6 +408,7 @@ export class ActivityActionComponent implements OnInit {
       product: this.account.section,
       restructure: this.f.restructure.value,
       restructureamount: this.f.restructureamount.value,
+      restructuredate: this.f.restructuredate.value,
       abilitytopay: this.f.abilitytopay.value
     };
     if (this.f.flag.value) {
@@ -633,17 +646,36 @@ export class ActivityActionComponent implements OnInit {
   restructure(value) {
     if(value) {
       this.actionForm.controls.restructureamount.enable();
+      this.actionForm.controls.restructuredate.enable();
+      this.actionForm.controls["restructureamount"].setValidators(Validators.required);
+      this.actionForm.controls["restructuredate"].setValidators(Validators.required);
+      this.actionForm.controls["restructuredate"].updateValueAndValidity();
+      this.actionForm.controls["restructureamount"].updateValueAndValidity();
     } else {
       this.actionForm.controls.restructureamount.disable();
+      this.actionForm.controls.restructuredate.disable();
+      this.actionForm.controls.restructureamount.setValue('');
+      this.actionForm.controls.restructuredate.setValue('');
     }
   }
 
-  changeReason(value) {
-    if (value === 'Other') {
-      this.actionForm.controls.rfdother.enable();
-    } else {
-      this.actionForm.controls.rfdother.disable();
-    }
+  changeReason(excuse) {
+    this.ecolService.getexcuseid(excuse).subscribe(respid => {
+      this.ecolService.getexcusedetails(respid[0].id).subscribe(excuses => {
+        if(excuses.length>0) {
+          this.excusedetails = excuses;
+        } else {
+          this.excusedetails = [];
+        }
+        
+      }, error=> {
+        console.log(error);
+        alert('error retrieving reason for default')
+      })
+    }, error=> {
+      console.log(error);
+      alert('error retrieving reason for default')
+    })
   }
 
   changePtp(value) {

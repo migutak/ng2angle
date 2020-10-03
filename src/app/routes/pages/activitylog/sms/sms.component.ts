@@ -198,7 +198,7 @@ export class SmsComponent implements OnInit {
       ptpdate: this.currentDate,
       collectornote: sms,
       reviewdate: moment(this.account.reviewdate).format('DD-MMM-YYYY'),
-      reason: this.account.excuse,
+      reason: '',
       cmdstatus: this.account.cmdstatus,
       route: this.account.routetostate,
       paymode: '',
