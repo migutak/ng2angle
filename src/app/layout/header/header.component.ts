@@ -215,9 +215,6 @@ export class HeaderComponent implements OnInit {
     
 
     videos(content) {
-        this.modalService.open(content, this.modalOptions).result.then((result) => {
-
-        }, (reason) => {
-        });
+        window.open(content,'_blank')
     }
 }

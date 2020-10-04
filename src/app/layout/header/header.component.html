@@ -108,26 +108,26 @@
                     class="far fa-file-video"></i>
                 How to videos <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> How to
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_action.mp4')" class="dropdown-item"><i class="fas fa-video"></i> How to
                         action</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-file-video"></i> Add a
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_contact.mp4')" class="dropdown-item"><i class="fas fa-file-video"></i> Add a
                         contact</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> Capture
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_ptp.mp4')" class="dropdown-item"><i class="fas fa-video"></i> Capture
                         PTP</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-file-video"></i> Send
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_senddemand.mp4')" class="dropdown-item"><i class="fas fa-file-video"></i> Send
                         demand letter</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-play"></i> Bulk
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_bulknotes.mp4')" class="dropdown-item"><i class="fas fa-play"></i> Bulk
                         notes</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> Upload
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_fileupload.mp4')" class="dropdown-item"><i class="fas fa-video"></i> Upload
                         file</a></li>
                 <li class="divider dropdown-divider"></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> How to
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_cancelipf.mp4')" class="dropdown-item"><i class="fas fa-video"></i> How to
                         Cancel IPF</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-file-video"></i> Request repossession</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> Request Investigation</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-file-video"></i> Send to EDC</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-play"></i> Writeoff</a></li>
-                <li><a href="#" (click)="videos(content)" class="dropdown-item"><i class="fas fa-video"></i> Relegate account</a></li>
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_repossession.mp4')" class="dropdown-item"><i class="fas fa-file-video"></i> Request repossession</a></li>
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_investigation.mp4')" class="dropdown-item"><i class="fas fa-video"></i> Request Investigation</a></li>
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_edc.mp4')" class="dropdown-item"><i class="fas fa-file-video"></i> Send to EDC</a></li>
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_writeoff.mp4')" class="dropdown-item"><i class="fas fa-play"></i> Writeoff</a></li>
+                <li><a href="#" (click)="videos('https://migut-files.s3.us-east-2.amazonaws.com/video_relegate.mp4')" class="dropdown-item"><i class="fas fa-video"></i> Relegate account</a></li>
             </ul>
         </li>
 
@@ -277,7 +277,7 @@
       </div>
       <div class="modal-body">
         <video width="450" height="300" controls>
-            <source src="/app/video/file_upload.mp4" type="video/mp4">
+            <source [src]="video_bulknotes" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>

@@ -7,9 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as XLSX from 'xlsx';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 declare var $: any;
 
 
