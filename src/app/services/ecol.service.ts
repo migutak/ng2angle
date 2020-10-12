@@ -129,7 +129,7 @@ export class EcolService {
 
   getallnotes(filter, cust) {
     //
-    let url = environment.api + '/api/notehis/custnotes?custnumber=' + cust ;
+    let url = environment.nodeapi + '/notehis/custnotes?custnumber=' + cust ;
 
     if (filter !== '') {
       url = url + '&offset=' + filter.skip + '&next= ' + filter.limit;
@@ -139,13 +139,13 @@ export class EcolService {
 
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response = this.httpClient.get<any>(environment.api + '/api/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' + '&filter[order]=notedate DESC');
+    const response = this.httpClient.get<any>(environment.nodeapi + '/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' ); //+ '&filter[order]=notedate DESC'
     return forkJoin([response]);
   }
 
   getflaggednotes(cust) {
     // tslint:disable-next-line:max-line-length
-    const response = this.httpClient.get<any>(environment.api + '/api/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' + '&filter[order]=notedate DESC');
+    const response = this.httpClient.get<any>(environment.nodeapi + '/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][noteimp]=Y' ); //+ '&filter[order]=notedate DESC'
     return forkJoin([response]);
   }
 
@@ -168,6 +168,12 @@ export class EcolService {
     const url = environment.api + '/api/tbl_s_planmemos';
     return this.httpClient.get(url);
   }
+
+  excuse() {
+    const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
+    return <any>this.httpClient.get(url);
+  }
+
   getexcuse() {
     const url = environment.api + '/api/tblexcuse?filter[order]=excuse ASC';
     return <any>this.httpClient.get(url);
@@ -191,7 +197,7 @@ export class EcolService {
   }
 
   postactivitylogs(body) {
-    const url = environment.api + '/api/activitylogs';
+    const url = environment.nodeapi + '/activitylogs';
     return this.httpClient.post(url, body);
   }
 
@@ -322,13 +328,13 @@ export class EcolService {
     return this.httpClient.post<any>(environment.auth, body);
   }
 
-  putuser(user: object) {
-    return this.httpClient.put<any>(environment.api + '/api/tblusers', user);
+  putuser(user: any) {
+    return this.httpClient.put<any>(environment.nodeapi + '/tblusers/' + user.username, user);
 
   }
 
   getuser(username: string) {
-    return this.httpClient.get<any>(environment.api + '/api/tblusers/search?username=' + username);
+    return this.httpClient.get<any>(environment.nodeapi + '/tblusers/search?username=' + username);
   }
 
   getcmdacc(custnumber: string) {
@@ -366,7 +372,7 @@ export class EcolService {
 
   getaccount(accnumber) {
     // return this.httpClient.get<any>(environment.api + '/api/tbl_q_all/' + accnumber);
-    return this.httpClient.get<any>(environment.api + '/api/tqall/' + accnumber);
+    return this.httpClient.get<any>(environment.nodeapi + '/tqall/' + accnumber);
   }
 
   getStaticLoans(accnumber) {
@@ -679,7 +685,7 @@ export class EcolService {
 
   getptps(accnumber) {
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get<any>(environment.api + '/api/ptps?filter[where][accnumber]=' + accnumber + '&filter[order]=actiondate DESC');
+    return this.httpClient.get<any>(environment.nodeapi + '/ptps?filter[where][accnumber]=' + accnumber ); //+ '&filter[order]=actiondate DESC'
   }
 
   sendDemandEmail(data) {
@@ -869,7 +875,7 @@ export class EcolService {
   }
 
   totalnotes(custnumber) {
-    return this.httpClient.get<any>(environment.api + '/api/notehis/total?custnumber=' + custnumber);
+    return this.httpClient.get<any>(environment.nodeapi + '/notehis/total?custnumber=' + custnumber);
   }
 
   totalguarantors(custnumber) {
@@ -926,7 +932,7 @@ export class EcolService {
   }
 
   userlastlogin(user) {
-    return this.httpClient.patch<any>(environment.api + '/api/tblusers/' + user.username, user);
+    return this.httpClient.patch<any>(environment.nodeapi + '/tblusers/' + user.username, user);
   }
 
   updateinsurance(data) {

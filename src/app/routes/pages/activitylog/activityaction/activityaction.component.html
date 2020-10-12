@@ -88,15 +88,15 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <!--<select id="party" name="party"
+              <select id="party" name="party"
                 formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
-              </select>-->
-              <ng-select id="party" name="party" formControlName="party" placeholder="Select party"
+              </select>
+              <!--<ng-select id="party" name="party" formControlName="party" placeholder="Select party"
                 (ngModelChange)="changeParty(actionForm.value)">
                 <ng-option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</ng-option>
-              </ng-select>
+              </ng-select>-->
             </div>
           </div>
           <div class="col-md-2">
@@ -104,14 +104,11 @@
           </div>
           <div class="col-md-4">
             <div class="col-md-12">
-              <ng-select [items]="reason" id="reason" name="reason" formControlName="reason"
-                        bindLabel="excusedetails"
-                        bindValue="excusedetails"
-                        groupBy="excuse">
-                  <ng-template ng-optgroup-tmp let-item="item">
-                      {{item.excuse || 'Unnamed group'}}
-                  </ng-template>
-              </ng-select>
+              <select id="reason" name="reason" (ngModelChange)="changeReason(actionForm.value.reason)"
+                formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': f.reason.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</option>
+              </select>
             </div>
           </div> 
         </div>
@@ -141,19 +138,21 @@
               </div>
             </div>
           </div>
-          <!--<div class="col-md-3">
-            Reason for default Details
+          <div class="col-md-2">
+            Reason for default details
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <div class="col-md-12">
-              <textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
-                class="form-control"></textarea>
-              <ng-select id="excusedetails" name="excusedetails" formControlName="excusedetails" placeholder="Select reason details"
-                [ngClass]="{ 'is-invalid': f.excusedetails.errors }">
-                <ng-option *ngFor="let e of excusedetails" [value]="e.excusedetails">{{e.excusedetails}}</ng-option>
-              </ng-select>
+              <!--<textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
+                class="form-control"></textarea>-->
+
+              <select id="excusedetails" name="excusedetails" 
+                formControlName="excusedetails" class="form-control" [ngClass]="{ 'is-invalid': f.excusedetails.errors }">
+                <option value="">Please select</option>
+                <option *ngFor="let e of excusedetails" [value]="e.excusedetails">{{e.excusedetails}}</option>
+              </select>
             </div>
-          </div>-->
+          </div>
         </div>
 
         <div class="row" style="padding-top: 20px">

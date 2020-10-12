@@ -44,9 +44,7 @@ export class SearchComponent implements OnInit {
       'createdate': [{ value: new Date(), disabled: false }],
       'active': ['', Validators.required]
     });
-    // Datepicker
     this.minDate = new Date();
-    //this.minDate.setDate(this.minDate.getDate() + 1);
   }
 
   ngOnInit() {
@@ -55,12 +53,10 @@ export class SearchComponent implements OnInit {
 
   submitForm($ev, value: any) {
     $ev.preventDefault();
-    // tslint:disable-next-line:forin
     for (const c in this.valForm.controls) {
       this.valForm.controls[c].markAsTouched();
     }
     
-    // console.log(value);
     this.putuser(value);
   }
 
@@ -72,7 +68,6 @@ export class SearchComponent implements OnInit {
    }
    this.ecolService.loader();
    this.ecolService.putuser(body).subscribe(data => {
-     // console.log(data);
       swal('Successful!', 'user updated!', 'success');
 
     }, error => {

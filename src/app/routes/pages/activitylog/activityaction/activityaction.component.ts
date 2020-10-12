@@ -45,7 +45,7 @@ export class ActivityActionComponent implements OnInit {
   actionForm: FormGroup;
   submitted = false;
   cmdstatus: any = [];
-  party: any = [];
+  party: any = [{"partyid":1,"party":"Account Holder","active":"true"},{"partyid":2,"party":"No Answer","active":"true"},{"partyid":3,"party":"Number not in service","active":"true"},{"partyid":4,"party":"Secondary accountHolder","active":"true"},{"partyid":5,"party":"Third Party","active":"true"},{"partyid":6,"party":"Disconnected","active":"true"},{"partyid":7,"party":"Not applicable","active":"true"}];
   cure: any = [];
   excuse: any = [];
   excusedetails: any = [];
@@ -161,8 +161,8 @@ export class ActivityActionComponent implements OnInit {
 
     //
     this.getcmdstatus();
-    this.getreviewers();
-    this.getparty();
+    //this.getreviewers();
+    //this.getparty();
     // this.getcollectoraction();
     this.getexcuse();
     //
@@ -298,7 +298,12 @@ export class ActivityActionComponent implements OnInit {
   }
 
   getexcuse() {
-    this.ecolService.getexcuse().subscribe(reasons => {
+    this.ecolService.excuse().subscribe(reasons => {
+      this.excuse = reasons;
+    }, error => {
+      console.log(error)
+    });
+    /*this.ecolService.getexcuse().subscribe(reasons => {
       this.reason = reasons;
       for(let i=0; i<reasons.length; i++) {
         if (this.reason[i].disabled === "false") {
@@ -307,7 +312,7 @@ export class ActivityActionComponent implements OnInit {
           this.reason[i].disabled = true;
         }
       }
-    });
+    });*/
   }
 
   getcure() {
@@ -322,20 +327,20 @@ export class ActivityActionComponent implements OnInit {
   buildForm() {
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: [{ value: '', disabled: true }],
+      party: ['', Validators.required ],
       ptpamount: [{ value: 0, disabled: true }],
       toemail: [{ value: '', disabled: false }],
       toemailaddress: [{ value: this.emailaddress, disabled: false  }],
       ptpsms: [{ value: '', disabled: false }],
       ptpsmsnumber: [{ value: this.autodial_telnumber, disabled: true }],
-      ptp: [{ value: 'No', disabled: true }],
+      ptp: [{ value: 'No', disabled: false }],
       ptptype: [{ value: '', disabled: true }],
       ptpdate: [{ value: this.currentDate, disabled: true }],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
       // reason: [this.account.excuse, Validators.required],
       reason: ['', Validators.required],
-      //excusedetails: ['', Validators.required],
+      excusedetails: ['', Validators.required],
       cmdstatus: [this.account.cmdstatus],
       flag: [false],
       route: [this.account.routetostate],
@@ -381,19 +386,14 @@ export class ActivityActionComponent implements OnInit {
     // post data
     this.ecolService.loader();
     this.savebody = {
-      collectoraction: this.f.collectoraction.value,
+      action: this.f.collectoraction.value,
       party: this.f.party.value,
-      ptpamount: this.ptpamount,
-      ptp: this.f.ptp.value,
-      ptpdate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
-      toemailaddress: this.f.toemailaddress.value,
-      toemail: this.f.toemail.value,
-      ptpsms: this.f.ptpsms.value,
-      ptpsmsnumber: this.f.ptpsmsnumber.value,
-      ptpemailaddress: this.f.toemailaddress.value,
-      collectornote: this.f.collectornote.value,
+      promiseamount: this.ptpamount,
+      ptp: this.f.ptp.value,    
+      notemade: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
+      reasondetails: this.f.excusedetails.value,
       cmdstatus: this.f.cmdstatus.value,
       route: this.f.route.value,
       paymode: this.f.paymode.value,
@@ -409,7 +409,13 @@ export class ActivityActionComponent implements OnInit {
       restructure: this.f.restructure.value,
       restructureamount: this.f.restructureamount.value,
       restructuredate: this.f.restructuredate.value,
-      abilitytopay: this.f.abilitytopay.value
+      abilitytopay: this.f.abilitytopay.value  || 'Unknown',
+      promisedate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
+      toemailaddress: this.f.toemailaddress.value,
+      toemail: this.f.toemail.value,
+      ptpsms: this.f.ptpsms.value,
+      ptpsmsnumber: this.f.ptpsmsnumber.value,
+      ptpemailaddress: this.f.toemailaddress.value,
     };
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
@@ -423,7 +429,6 @@ export class ActivityActionComponent implements OnInit {
         ptpamount: this.ptps
       }
 
-      //console.log(ptpemailbody)
     }
 
 
@@ -573,13 +578,13 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeAction(value) {
-    if (value === 'OC' || value === 'IC' || value === 'MET') {
+    /*if (value === 'OC' || value === 'IC' || value === 'MET') {
       this.actionForm.controls.party.enable();
       this.actionForm.controls.party.setValue('No Answer');
     } else {
       this.actionForm.controls.party.disable();
       this.actionForm.controls.party.setValue(null);
-    }
+    }*/
 
     if (value === 'REPO') {
       this.repo = true;
@@ -634,14 +639,14 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
-  changeParty(form) {
-    if (form.party === 1 || form.party === 4 || form.party === 5) {
+  /*changeParty(form) {
+    if (form.party === "1" || form.party === "4" || form.party === "5") {
       this.actionForm.controls.ptp.enable();
     } else {
       this.actionForm.controls.ptp.disable();
       this.actionForm.controls.ptp.setValue('No');
     }
-  }
+  }*/
 
   restructure(value) {
     if(value) {
@@ -660,8 +665,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeReason(excuse) {
-    this.ecolService.getexcuseid(excuse).subscribe(respid => {
-      this.ecolService.getexcusedetails(respid[0].id).subscribe(excuses => {
+      this.ecolService.getexcusedetails(excuse).subscribe(excuses => {
         if(excuses.length>0) {
           this.excusedetails = excuses;
         } else {
@@ -672,10 +676,6 @@ export class ActivityActionComponent implements OnInit {
         console.log(error);
         alert('error retrieving reason for default')
       })
-    }, error=> {
-      console.log(error);
-      alert('error retrieving reason for default')
-    })
   }
 
   changePtp(value) {
@@ -766,7 +766,7 @@ export class ActivityActionComponent implements OnInit {
 
   saveallptps() {
     this.ecolService.postptps(this.ptps).subscribe(resp => {
-      // console.log('ptp post resp', resp)
+
     }, error => {
       console.log(error);
       swal('Error!', 'Error occurred during processing - ptps!', 'error');
