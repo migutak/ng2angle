@@ -271,15 +271,15 @@ export class ActivityLogComponent implements OnInit {
 
   getaccount(accnumber) {
     this.spinner.show();
-    this.ecolService.getAccount(accnumber).subscribe(data => {
-      this.accountdetails = data[0];
-      this.guarantors = data[0].guarantors;
-      this.model.accnumber = data[0].accnumber;
-      this.model.custnumber = data[0].custnumber;
-      this.model.addressline1 = data[0].addressline1;
-      this.model.postcode = data[0].postcode;
-      this.model.emailaddress = data[0].emailaddress;
-      this.model.celnumber = data[0].celnumber;
+    this.ecolService.getaccount(accnumber).subscribe(data => {
+      this.accountdetails = data;
+      //this.guarantors = data[0].guarantors; removed with getAccount
+      this.model.accnumber = data.accnumber;
+      this.model.custnumber = data.custnumber;
+      this.model.addressline1 = data.addressline1;
+      this.model.postcode = data.postcode;
+      this.model.emailaddress = data.emailaddress;
+      this.model.celnumber = data.celnumber;
       // tslint:disable-next-line:max-line-length
       this.autodial_telnumber = this.accountdetails.cellnumber || this.accountdetails.mobile || this.accountdetails.phonenumber || this.accountdetails.telnumber || this.accountdetails.celnumber;
       this.spinner.hide();

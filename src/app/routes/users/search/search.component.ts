@@ -86,16 +86,16 @@ export class SearchComponent implements OnInit {
           }
           this.valForm.patchValue({
             username: data[0].USERNAME,
-            firstname: data[0].FIRSTNAME,
-            lastname: data[0].LASTNAME,
+            firstname: data[0].FIRSTNAME  || '',
+            lastname: data[0].LASTNAME  || '',
             surname: data[0].SURNAME,
-            division: data[0].DIVISION,
-            team: data[0].TEAM,
-            branch: data[0].BRANCH,
-            email: data[0].EMAIL,
+            division: data[0].DIVISION  || '',
+            team: data[0].TEAM  || '',
+            branch: data[0].BRANCH  || '',
+            email: data[0].EMAIL  || '',
             active: active,
-            expirydate: data[0].EXPIRYDATE,
-            createdate: data[0].CREATEDATE,
+            expirydate: data[0].EXPIRYDATE || '0',
+            createdate: data[0].CREATEDATE || '2013-01-01T10:46:19.000Z', 
             role: data[0].ROLE
           });
           // success

@@ -117,12 +117,11 @@ export class ActivityActionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ecolService: EcolService,
     private dataService: DataService,
-    private spinner: NgxSpinnerService,
-    private httpClient: HttpClient,
+    private spinner: NgxSpinnerService
   ) {
     this.minDate = { year: this.year, month: this.month, day: this.day };
     this.minxDate = new Date();
-    this.minxDate.setDate(this.minxDate.getDate() - 1);
+    this.minxDate.setDate(this.minxDate.getDate());
   }
 
   ngOnInit() {
@@ -403,19 +402,19 @@ export class ActivityActionComponent implements OnInit {
       oustamount: this.account.oustbalance || 0,
       notesrc: 'made a note',
       noteimp: 'N',
-      rfdother: this.f.rfdother.value,
+      rfdother: this.f.rfdother.value  || '0',
       owner: this.username,
-      product: this.account.section,
-      restructure: this.f.restructure.value,
-      restructureamount: this.f.restructureamount.value,
+      product: this.account.section  || '0',
+      restructure: this.f.restructure.value || false,
+      restructureamount: this.f.restructureamount.value  || 0,
       restructuredate: this.f.restructuredate.value,
       abilitytopay: this.f.abilitytopay.value  || 'Unknown',
       promisedate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
-      toemailaddress: this.f.toemailaddress.value,
-      toemail: this.f.toemail.value,
-      ptpsms: this.f.ptpsms.value,
-      ptpsmsnumber: this.f.ptpsmsnumber.value,
-      ptpemailaddress: this.f.toemailaddress.value,
+      toemailaddress: this.f.toemailaddress.value  || '0',
+      toemail: this.f.toemail.value  || '0',
+      ptpsms: this.f.ptpsms.value  || '0',
+      ptpsmsnumber: this.f.ptpsmsnumber.value  || '0',
+      ptpemailaddress: this.f.toemailaddress.value  || '0'
     };
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
