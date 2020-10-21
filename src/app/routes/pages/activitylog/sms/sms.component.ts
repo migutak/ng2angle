@@ -191,12 +191,12 @@ export class SmsComponent implements OnInit {
 
   addActivity(sms) {
     const body = {
-      collectoraction: 'SMS',
+      action: 'SMS',
       party: '',
-      ptpamount: '',
+      promiseamount: '',
       ptp: '',
       ptpdate: this.currentDate,
-      collectornote: sms,
+      notemade: sms,
       reviewdate: moment(this.account.reviewdate).format('DD-MMM-YYYY'),
       reason: '',
       cmdstatus: this.account.cmdstatus,

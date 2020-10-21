@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
     }
 
   branches: Array<any>;
-  buttonTitle = 'update user';
+  buttonTitle = true;
 
   constructor(fb: FormBuilder, private ecolService: EcolService ) {
     // Model Driven validation
@@ -60,20 +60,47 @@ export class SearchComponent implements OnInit {
     this.putuser(value);
   }
 
-  putuser(body) {
+  CreateUserfnc($ev, value: any) {
+    if(value.lastname === "") {
+      value.lastname = " "
+    };
+    $ev.preventDefault();
+    for (const c in this.valForm.controls) {
+      this.valForm.controls[c].markAsTouched();
+    }
+    
+    this.postuser(value);
+  }
+
+  postuser(body) {
    if(body.active == true) {
      body.active = 'Y'
    } else {
      body.active = 'N'
    }
    this.ecolService.loader();
-   this.ecolService.putuser(body).subscribe(data => {
+   this.ecolService.postuser(body).subscribe(data => {
       swal('Successful!', 'user updated!', 'success');
 
     }, error => {
       swal('Error!', 'Error occurred during processing!', 'error');
     });
   }
+
+  putuser(body) {
+    if(body.active == true) {
+      body.active = 'Y'
+    } else {
+      body.active = 'N'
+    }
+    this.ecolService.loader();
+    this.ecolService.putuser(body).subscribe(data => {
+       swal('Successful!', 'user updated!', 'success');
+ 
+     }, error => {
+       swal('Error!', 'Error occurred during processing!', 'error');
+     });
+   }
 
   search(username) {
     this.ecolService.loader();
@@ -86,13 +113,13 @@ export class SearchComponent implements OnInit {
           }
           this.valForm.patchValue({
             username: data[0].USERNAME,
-            firstname: data[0].FIRSTNAME  || '',
-            lastname: data[0].LASTNAME  || '',
+            firstname: data[0].FIRSTNAME  || ' ',
+            lastname: data[0].LASTNAME  || ' ',
             surname: data[0].SURNAME,
-            division: data[0].DIVISION  || '',
-            team: data[0].TEAM  || '',
-            branch: data[0].BRANCH  || '',
-            email: data[0].EMAIL  || '',
+            division: data[0].DIVISION  || ' ',
+            team: data[0].TEAM  || ' ',
+            branch: data[0].BRANCH  || ' ',
+            email: data[0].EMAIL  || ' ',
             active: active,
             expirydate: data[0].EXPIRYDATE || '0',
             createdate: data[0].CREATEDATE || '2013-01-01T10:46:19.000Z', 
@@ -100,10 +127,10 @@ export class SearchComponent implements OnInit {
           });
           // success
         swal('Successful!', 'user details retrieved!', 'success');
-        this.buttonTitle = 'Update User';
+        this.buttonTitle = true;
         } else {
           swal('Warning!', 'No user found!', 'warning');
-          this.buttonTitle = 'Create User';
+          this.buttonTitle = false;
           this.valForm.patchValue({
             username: '',
             firstname: '',
@@ -122,7 +149,7 @@ export class SearchComponent implements OnInit {
       }, error => {
         console.log(error);
         swal('Error!', 'Error occurred during processing!', 'error');
-        this.buttonTitle = 'Create User';
+        this.buttonTitle = false;
       });
     }
   }

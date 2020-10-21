@@ -333,6 +333,10 @@ export class EcolService {
 
   }
 
+  postuser(user: any) {
+    return this.httpClient.post<any>(environment.nodeapi + '/tblusers', user);
+  }
+
   getuser(username: string) {
     return this.httpClient.get<any>(environment.nodeapi + '/tblusers/search?username=' + username);
   }
