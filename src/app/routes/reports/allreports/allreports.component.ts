@@ -162,6 +162,10 @@ export class AllReportsComponent implements OnInit {
         window.open(environment.birt + '/frameset?__report=collectoractivity_test2.rptdesign&__title=Activity Report', '_blank');
     }
 
+    openactivityrawrpt() {
+        window.open(environment.birt + '/frameset?__report=collector_activity_raw.rptdesign&__title=Activity Report Raw', '_blank');
+    }
+
     open(report) {
         window.open(environment.birt + report, '_blank');
     }

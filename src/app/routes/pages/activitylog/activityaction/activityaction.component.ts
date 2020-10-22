@@ -394,7 +394,7 @@ export class ActivityActionComponent implements OnInit {
       reason: this.f.reason.value,
       reasondetails: this.f.excusedetails.value,
       cmdstatus: this.f.cmdstatus.value || "  ",
-      route: this.f.route.value || 'ACTIVE COLLECTIONS',
+      route: this.f.route.value || 'ACTIVE COLLECTION',
       paymode: this.f.paymode.value,
       accountnumber: this.accnumber,
       custnumber: this.custnumber,
