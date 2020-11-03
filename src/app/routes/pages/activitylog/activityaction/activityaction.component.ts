@@ -338,8 +338,8 @@ export class ActivityActionComponent implements OnInit {
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
       // reason: [this.account.excuse, Validators.required],
-      reason: ['', Validators.required],
-      excusedetails: ['', Validators.required],
+      reason: [''],
+      excusedetails: [''],
       cmdstatus: [this.account.cmdstatus],
       flag: [false],
       route: [this.account.routetostate],
@@ -638,14 +638,22 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
-  /*changeParty(form) {
+  changeParty(form) {
     if (form.party === "1" || form.party === "4" || form.party === "5") {
-      this.actionForm.controls.ptp.enable();
+      //this.actionForm.controls.ptp.enable();
+      this.actionForm.controls["reason"].setValidators(Validators.required);
+      this.actionForm.controls["reason"].updateValueAndValidity();
+      this.actionForm.controls["excusedetails"].setValidators(Validators.required);
+      this.actionForm.controls["excusedetails"].updateValueAndValidity();
     } else {
-      this.actionForm.controls.ptp.disable();
-      this.actionForm.controls.ptp.setValue('No');
+      //this.actionForm.controls.ptp.disable();
+      //this.actionForm.controls.ptp.setValue('No');
+      this.actionForm.controls["reason"].setValidators([]);
+      this.actionForm.controls["reason"].updateValueAndValidity();
+      this.actionForm.controls["excusedetails"].setValidators([]);
+      this.actionForm.controls["excusedetails"].updateValueAndValidity();
     }
-  }*/
+  }
 
   restructure(value) {
     if(value) {
@@ -720,6 +728,7 @@ export class ActivityActionComponent implements OnInit {
 
     }
   }
+
 
   multiplecapturefnc() {
     // tslint:disable-next-line:max-line-length

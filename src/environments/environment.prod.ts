@@ -22,7 +22,7 @@ var debtcollectorLink = '';
 
 export const environment = {
   production: true,
-  adlogin: false,
+  adlogin: true,
   sendsms: false,
   api: host,
   nodeapi: host + '/nodeapi',

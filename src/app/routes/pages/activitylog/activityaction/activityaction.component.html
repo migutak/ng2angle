@@ -88,7 +88,7 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="party" name="party"
+              <select id="party" name="party" (ngModelChange)="changeParty(actionForm.value)"
                 formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
