@@ -8,6 +8,8 @@ import { AllReportsComponent } from './allreports/allreports.component';
 import { RollratesComponent } from './rollrates/rollrates.component';
 import { BucketsummaryComponent } from './bucketsummary/bucketsummary.component';
 import { FlexmonsterPivotModule } from 'ng-flexmonster';
+// search module
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const routes: Routes = [
     { path: '', redirectTo: 'allreports' },
@@ -22,7 +24,8 @@ const routes: Routes = [
         SharedModule,
         FlexmonsterPivotModule,
         TreeModule.forRoot(),
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        Ng2SearchPipeModule
     ],
     declarations: [
         AllReportsComponent,

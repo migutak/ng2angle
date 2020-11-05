@@ -2,172 +2,27 @@
     <div>Reports
         <small></small></div>
 </div>
-<!--<div class="container-fluid">
-    <div class="row">
-        <div class="col-xl-4 col-md-6 col-xl-push-3 col-md-push-6">
-            <div class="card">
-                <div class="card-body">
-                    <form>
-                        <input class="form-control" #filter (keyup)="filterNodes(filter.value, tree)" placeholder="filter nodes" />
-                    </form>
-                    <tree-root #tree [nodes]="nodes" [focused]="true" [options]="customTemplateStringOptions" (onEvent)="onEvent($event)">
-                        <ng-template #treeNodeTemplate let-node>
-                            <span title="{{node.data.subTitle}}">{{ node.data.name }}</span>
-                            <span class="float-right">{{ childrenCount(node) }}</span>
-                            <button class="btn btn-secondary btn-xs" (click)="go($event)"><em class="fa fa-exclamation text-muted"></em></button>
-                        </ng-template>
-                        <ng-template #loadingTemplate>Loading, please hold....</ng-template>
-                    </tree-root>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 <div class="container-fluid">
     <div class="col-md-12">
         <!-- Categories-->
         <div class="card card-default">
             <div class="card-header">List of reports</div>
+            <div class="search-hero">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off"
+                    placeholder="&#61442;  Searching here ">
+            </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    <li>
-                        <a href="" (click)="openactivityrpt()">
-                            <em class="fa fa-file fa-fw"></em>Collector activity</a>
+                    <li *ngFor="let report of reports | filter:searchText">
+                        <a href="" (click)="open(report.link)">
+                            <em [class] ="report.icon"></em>{{report.name}}</a>
                     </li>
                     <li>
-                        <a href="" (click)="openactivityrawrpt()">
-                            <em class="fa fa-file fa-fw"></em>Collector activity (Raw)</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=amountcollectedtest.rptdesign&__title=Amount Collected')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Amount collected</a>
-                    </li>
-                    <li>
-                        <a href="" (click)="open('/frameset?__report=sms.rptdesign&__title=SMS Sent Report')">
-                            <em class="fa fa-chart-pie fa-fw"></em>SMS report</a>
-                    </li>
-                    <li>
-                        <a href="" (click)="open('/frameset?__report=notes.rptdesign&__title=Notes')">
-                            <em class="fa fa-chart-line fa-fw"></em>Daily Notes report</a>
-                    </li>
-                    <li>
-                        <a href="" (click)="open('/frameset?__report=bulk_notes.rptdesign&__title=Bulk Notes')">
-                            <em class="fa fa-chart-line fa-fw"></em>Bulk notes report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=unactioned.rptdesign&__title=Unactioned report - all Loans')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Unactioned report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=unactionedcc.rptdesign&__title=Unactioned report - credit cards')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Unactioned report - credit cards</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=unactionedmcoopcash.rptdesign&__title=Unactioned Report Unactioned report - Ecredit')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Unactioned report - Ecredit</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=payingaccounts.rptdesign&__title=Unactioned report CMD')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Paying Accounts with History of Default</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=portfoliomovt.rptdesign&__title=Portfolio Movement Report')">
-                            <em class="fa fa-file fa-fw"></em>Portfolio movement</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=portfoliomovt_cc_test.rptdesign&__title=Portfolio Movement Report')">
-                            <i class="far fa-newspaper"></i> Portfolio movement Credit cards</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=file_analysis_test.rptdesign&__title=Relegation Analysis')">
-                            <em class="fa fa-chart-pie fa-fw"></em>Relegation Analysis</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=expiredindemnity.rptdesign&__title=Expired indemnity')">
-                            <em class="fa fa-chart-line fa-fw"></em>Service providers Expired Indemnity report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=summary_allocation_report.rptdesign&__title=Allocation Summary')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Allocation summary</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=accountswithplan_details.rptdesign&__title=Allocation Summary')">
-                            <i class="far fa-sticky-note"></i> Account plan report (Remedial)</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=demands.rptdesign&__title=Demand Letters Status Report - Loans')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Demand Letters Status Report - Loans</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=demandscc.rptdesign&__title=Demand Letters Status Report - Credit Cards')">
-                            <em class="fa fa-box"></em> Demand Letters Status Report - Cards</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=utilization.rptdesign&__title=Daily Utilization Report')">
-                            <em class="fa fa-chart-bar fa-fw"></em>E-Collect utilization Report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=accplan_simple.rptdesign&__title=Account Plan Report - Simple')">
-                            <em class="fa fa-box"></em> Account plan Report - Simple</a>
-                    </li>
-                    <li>
-                        <a href=""
-                        (click)="open('/frameset?__report=ptps.rptdesign&__title=Promises to Pay')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Promises to Pay</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=notes_for_customer.rptdesign&__title=Customer Notes Report')">
-                            <em class="fa fa-box"></em> Customer Notes Report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=remedial_offerings.rptdesign&__title=Remedial Report')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Remedial Offering Report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="exportwoffstory()">
+                        <a href="" (click)="exportwoffstory()">
                             <em class="fa fa-box"></em> Write-off story Report</a>
                     </li>
                     <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=relegation_overdue.rptdesign&__title=Relegation Overdue Accounts Report')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Relegation Overdue Accounts Report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=relegated.rptdesign&__title=Relegated accounts')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Relegated Accounts Report</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=ipfcancellation.rptdesign&__title=IPF Cancellations')">
-                            <em class="fa fa-chart-bar fa-fw"></em>IPF Cancellations</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="open('/frameset?__report=repossessions.rptdesign&__title=Asset Finance Repossessions')">
-                            <em class="fa fa-chart-bar fa-fw"></em>Asset Finance Repossessions</a>
-                    </li>
-                    <li>
-                        <a href=""
-                            (click)="exportproducts()">
+                        <a href="" (click)="exportproducts()">
                             <em class="fa fa-box"></em> Remedial Products Offered Report</a>
                     </li>
                 </ul>

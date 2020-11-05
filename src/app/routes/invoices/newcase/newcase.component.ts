@@ -102,11 +102,9 @@ export class NewcaseComponent implements OnInit {
             this.spinner.hide();
             return;
         }
-        this.ecolService.customer_stage(this.data.custnumber).subscribe(account => {
+        this.ecolService.customers_stage(this.data.custnumber).subscribe(account => {
             if (account) {
                 this.data.custname = account.firstname;
-                //this.data.rrocode = account.rrocode;
-                //this.data.arocode = account.arocode;
                 this.spinner.hide();
             } else {
                 swal('Warning!', 'A/C Details not found for  ' + this.data.accnumber, 'success');

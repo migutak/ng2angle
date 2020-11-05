@@ -98,7 +98,7 @@
                     <div class="col-xl-9 input-group">
                         <input type="text" class="form-control" #dp1="bsDatepicker" bsDatepicker [bsConfig]="bsConfig"
                             id="feenotedate" name="feenotedate" #feenotedate="ngModel" [(ngModel)]="data.feenotedate"
-                            [maxDate]="minDate" [ngClass]="{ 'is-invalid': feenotedate.errors }" required>
+                            [ngClass]="{ 'is-invalid': feenotedate.errors }" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" (click)="dp1.show()"
                                 [attr.aria-expanded]="dp1.isOpen" type="button"><span><i
@@ -112,7 +112,7 @@
                     <div class="col-xl-9 input-group">
                         <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig"
                             id="dateinput" name="dateinput" #dateinput="ngModel" [(ngModel)]="data.dateinput"
-                            [maxDate]="minDate" [ngClass]="{ 'is-invalid': dateinput.errors }" required>
+                            [ngClass]="{ 'is-invalid': dateinput.errors }" required>
 
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen"

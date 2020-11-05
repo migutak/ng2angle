@@ -51,6 +51,10 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/customer_stage/' + custnumber);
   }
 
+  customers_stage(custnumber) {
+    return this.httpClient.get<any>(environment.api + '/api/customers_stage/' + custnumber);
+  }
+
   approverelegate(body){
     return this.httpClient.patch(environment.nodeapi + '/tbl-relegations/' + body.casenumber, body);
   }

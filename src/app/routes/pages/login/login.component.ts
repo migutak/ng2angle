@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
 
     getuser(username, password) {
         this.ecolService.login(username).subscribe(user => {
-            if (user.data) {
+            if (user.data.length>0) {
                 // store user details and basic auth credentials in local storage
                 // to keep user logged in between page refreshes
                 // get user permissions
@@ -123,7 +123,7 @@ export class LoginComponent implements OnInit {
                 });
                 //
             } else {
-                this.error = 'User not created on E-Collect';
+                this.error = 'Invalid User Details';
                 this.loading = false;
             }
 
