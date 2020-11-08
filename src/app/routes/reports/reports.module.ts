@@ -10,6 +10,7 @@ import { BucketsummaryComponent } from './bucketsummary/bucketsummary.component'
 import { FlexmonsterPivotModule } from 'ng-flexmonster';
 // search module
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { WebdatarocksComponent } from '../../webdatarocks/webdatarocks.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'allreports' },

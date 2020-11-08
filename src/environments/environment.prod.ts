@@ -19,7 +19,6 @@ var relegationLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/742462
 var investigateLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/7939093745ebc5cfc32a607061999855/4148506665ebc5d89d4a4e5016911975.php';
 var debtcollectorLink = '';
 
-
 export const environment = {
   production: true,
   adlogin: true,

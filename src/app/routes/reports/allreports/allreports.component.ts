@@ -6,7 +6,6 @@ import { ExportWoffStoryService } from '../../../services/exportwoffstory.servic
 import { ExportProductsService } from '../../../services/exportproductsstory.service';
 
 
-
 @Component({
     selector: 'app-allreports',
     templateUrl: './allreports.component.html',
@@ -17,82 +16,83 @@ import { ExportProductsService } from '../../../services/exportproductsstory.ser
 export class AllReportsComponent implements OnInit {
 
     report: string = null;
+    searchText: any;
 
     reports = [
         {
             link: '/frameset?__report=collectoractivity_test2.rptdesign&__title=Activity Report',
-            name: 'Collector activity',
+            name: ' Collector activity',
             icon:'fa fa-file fa-fw'
         },
         {
             link: '/frameset?__report=collector_activity_raw.rptdesign&__title=Activity Report Raw',
-            name: 'Collector activity (Raw)',
+            name: ' Collector activity (Raw)',
             icon: 'fa fa-file fa-fw'
         },
         {
             link: '/frameset?__report=amountcollectedtest.rptdesign&__title=Amount Collected',
-            name: 'Amount Collected',
+            name: ' Amount Collected',
             icon: 'fa fa-file fa-fw'
         },
         {
             link: '/frameset?__report=sms.rptdesign&__title=SMS Sent Report',
-            name: 'SMS Report',
+            name: ' SMS Report',
             icon: 'fa fa-chart-pie fa-fw'
         },
         {
             link: '/frameset?__report=notes.rptdesign&__title=Notes',
-            name: 'Daily Notes report',
+            name: ' Daily Notes report',
             icon: 'fa fa-chart-line fa-fw'
         },
         {
             link: '/frameset?__report=bulk_notes.rptdesign&__title=Bulk Notes',
-            name: 'Bulk notes report',
+            name: ' Bulk notes report',
             icon: 'fa fa-chart-line fa-fw'
         },
         {
             link: '/frameset?__report=unactioned.rptdesign&__title=Unactioned report - all Loans',
-            name: 'Unactioned report',
+            name: ' Unactioned report',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=unactionedcc.rptdesign&__title=Unactioned report - credit cards',
-            name: 'Unactioned report - credit cards',
+            name: ' Unactioned report - credit cards',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=unactionedmcoopcash.rptdesign&__title=Unactioned Report Unactioned report - Ecredit',
-            name: 'Unactioned report - Ecredit',
+            name: ' Unactioned report - Ecredit',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=payingaccounts.rptdesign&__title=Unactioned report CMD',
-            name: 'Paying Accounts with History of Default',
+            name: ' Paying Accounts with History of Default',
             icon: 'fa fa-chart-bar fa-fw'
         }
         ,
         {
             link: '/frameset?__report=portfoliomovt.rptdesign&__title=Portfolio Movement Report',
-            name: 'Portfolio movement',
+            name: ' Portfolio movement',
             icon: 'fa fa-file fa-fw'
         },
         {
             link: '/frameset?__report=portfoliomovt_cc_test.rptdesign&__title=Portfolio Movement Report',
-            name: 'Portfolio movement Credit cards',
+            name: ' Portfolio movement Credit cards',
             icon: 'far fa-newspaper'
         },
         {
             link: '/frameset?__report=file_analysis_test.rptdesign&__title=Relegation Analysis',
-            name: 'Relegation Analysis',
+            name: ' Relegation Analysis',
             icon: 'fa fa-chart-pie fa-fw'
         },
         {
             link: '/frameset?__report=expiredindemnity.rptdesign&__title=Expired indemnity',
-            name: 'Service providers Expired Indemnity report',
+            name: ' Service providers Expired Indemnity report',
             icon: 'fa fa-chart-line fa-fw'
         },
         {
             link: '/frameset?__report=summary_allocation_report.rptdesign&__title=Allocation Summary',
-            name: 'Allocation summary',
+            name: ' Allocation summary',
             icon: 'fa fa-chart-bar fa-fw'
         }
 
@@ -104,22 +104,22 @@ export class AllReportsComponent implements OnInit {
         },
         {
             link: '/frameset?__report=demands.rptdesign&__title=Demand Letters Status Report - Loans',
-            name: 'Demand Letters Status Report - Loans',
+            name: ' Demand Letters Status Report - Loans',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=demandscc.rptdesign&__title=Demand Letters Status Report - Credit Cards',
-            name: 'Demand Letters Status Report - Cards',
+            name: ' Demand Letters Status Report - Cards',
             icon: 'fa fa-box'
         },
         {
             link: '/frameset?__report=utilization.rptdesign&__title=Daily Utilization Report',
-            name: 'E-Collect utilization Report',
+            name: ' E-Collect utilization Report',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=accplan_simple.rptdesign&__title=Account Plan Report - Simple',
-            name: 'Account plan Report - Simple',
+            name: ' Account plan Report - Simple',
             icon: 'fa fa-box'
         }
         ,
@@ -130,35 +130,37 @@ export class AllReportsComponent implements OnInit {
         },
         {
             link: '/frameset?__report=notes_for_customer.rptdesign&__title=Customer Notes Report',
-            name: 'Customer Notes Report',
+            name: ' Customer Notes Report',
             icon: 'fa fa-box'
         },
         {
             link: '/frameset?__report=remedial_offerings.rptdesign&__title=Remedial Report',
-            name: 'Remedial Offering Report',
+            name: ' Remedial Offering Report',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=relegation_overdue.rptdesign&__title=Relegation Overdue Accounts Report',
-            name: 'Relegation Overdue Accounts Report',
+            name: ' Relegation Overdue Accounts Report',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=relegated.rptdesign&__title=Relegated accounts',
-            name: 'Relegated Accounts Report',
+            name: ' Relegated Accounts Report',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=repossessions.rptdesign&__title=Asset Finance Repossessions',
-            name: 'Asset Finance Repossessions',
+            name: ' Asset Finance Repossessions',
             icon: 'fa fa-chart-bar fa-fw'
         },
         {
             link: '/frameset?__report=ipfcancellation.rptdesign&__title=IPF Cancellations',
-            name: 'IPF Cancellations',
+            name: ' IPF Cancellations',
             icon: 'fa fa-chart-bar fa-fw'
         }
     ];
+
+    filteredArray = [...this.reports];
 
     onEvent(msg) {
         console.log(msg);
@@ -181,6 +183,34 @@ export class AllReportsComponent implements OnInit {
 
     ngOnInit() { }
 
+
+    private filterArray() {
+        // Ensures  empty list.
+        if (!this.reports.length) {
+            this.filteredArray = [];
+            return;
+        }
+
+        // if no search is detected, the list remains in view.
+        if (!this.searchText) {
+            this.filteredArray = [...this.reports]; // keep your reports immutable
+            return;
+        }
+
+        const list = [...this.reports]; // keep list immutable
+        const properties = Object.keys(list[0]); // get list properties
+
+        // check all properties for each list and return data if matching to searchText
+        this.filteredArray =  list.filter((listdata) => {
+            return properties.find((property) => {
+                const valueString = listdata[property].toString().toLowerCase();
+                return valueString.includes(this.searchText.toLowerCase());
+            })
+                ? listdata
+                : null;
+        });
+
+    }
 
 
     onNavigate(reportname) {

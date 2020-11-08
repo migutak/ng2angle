@@ -5,6 +5,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule} from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { WebdatarocksComponent } from '../../webdatarocks/webdatarocks.component';
+
 // Import angular-fusioncharts
 // import { FusionChartsModule } from 'angular-fusioncharts';
 
@@ -28,7 +30,7 @@ const routes: Routes = [
         NgSelectModule,
         NgxChartsModule
     ],
-    declarations: [HomeComponent],
+    declarations: [HomeComponent, WebdatarocksComponent],
     bootstrap:    [ HomeComponent ],
     exports: [
         RouterModule

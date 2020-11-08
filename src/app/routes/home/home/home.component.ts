@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 declare var $: any;
+import { ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { EcolService } from '../../../services/ecol.service';
+import { WebdatarocksComponent } from '../../../webdatarocks/webdatarocks.component';
 
 
 @Component({
@@ -17,47 +19,64 @@ export class HomeComponent implements OnInit {
 
     public portfoliodash = environment.portfoliodash;
 
-    //single: any[];
-    branches: any[];
-    view: any[] = [1500, 400];
-    single: any[];
-    volume: any[];
-    arocodes: any[];
-    productcodes: any[];
-    selectedBranch: string;
-    selectedarocode: string;
-    selectedproduct: string;
-    showLegend: boolean = true;
-    // options
-    showXAxis = true;
-    showYAxis = true;
-    gradient = true;
-    legend: boolean = true;
-    legendPosition: string = 'below';
-    showXAxisLabel = true;
-    xAxisLabel = 'Bucket';
-    showYAxisLabel = true;
-    yAxisLabel = 'Value (Ksh)';
-    label = 'Total No. of Accounts'
+    @ViewChild('pivot1') child: WebdatarocksComponent;
 
-    /*colorScheme = {
-        domain: ['#5AA454', '#AAAAAA', '#C7B42C', '#A10A28']
-    };*/
-
-    colorScheme = 'cool'; // forest, neons, cool, horizon
-
-
-    onSelect(event) {
-        console.log(event);
+    onPivotReady(pivot: WebDataRocks.Pivot): void {
+        console.log('[ready] WebdatarocksComponent', this.child);
     }
 
-    constructor(public http: HttpClient, private ecolService: EcolService, ) {
-        //this.homedash = environment.homedash;
+    onCustomizeCell(
+        cell: WebDataRocks.CellBuilder,
+        data: WebDataRocks.CellData
+    ): void {
+        if (data.isClassicTotalRow) {
+            cell.addClass('fm-total-classic-r');
+        }
+        if (data.isGrandTotalRow) {
+            cell.addClass('fm-grand-total-r');
+        }
+        if (data.isGrandTotalColumn) {
+            cell.addClass('fm-grand-total-c');
+        }
+    }
 
-        //this.getbranches();
-        //this.getbucket();
-        //this.getarocode();
-        //this.getproductcode();
+    onReportComplete(): void {
+        this.child.webDataRocks.off('reportcomplete');
+        this.child.webDataRocks.setReport({
+            dataSource: {
+                //filename: 'https://cdn.webdatarocks.com/data/data.json',
+                //filename: 'http://127.0.0.1:8000/api/tqall?filter[where][productcode]=MortCnstPPMTLoan',
+            },
+/*
+            slice: {
+                rows: [
+                    { uniqueName: 'Category' }
+                ],
+                columns: [
+                    { uniqueName: 'Destination' }
+                ],
+                measures: [
+                    { uniqueName: 'Category', aggregation: 'count' },
+                    { uniqueName: 'Price', aggregation: 'sum' }
+                ]
+            }*/
+            slice: {
+                rows: [
+                    { uniqueName: 'bucket' }
+                ],
+                columns: [
+                    { uniqueName: 'branchname' }
+                ],
+                measures: [
+                    { uniqueName: 'accnumber', aggregation: 'count' },
+                    { uniqueName: 'oustbalance', aggregation: 'sum' }
+                ]
+            }
+        });
+    }
+
+    constructor(public http: HttpClient, private ecolService: EcolService,) {
+
     }
 
     ngOnInit() {
@@ -76,77 +95,9 @@ export class HomeComponent implements OnInit {
         console.log($event);
     }
 
-    opendash(){
+    opendash() {
         window.open("http://172.16.19.151:5601/app/kibana#/dashboard/8eaf9600-d70d-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))"
-        ,"_blank")
-    }
-
-    getarocode() {
-        this.http.get<any>(environment.nodeapi + '/loans/arocodes').subscribe(data => {
-            this.arocodes = data.data;
-        }, error => {
-            console.log(error);
-        });
-    }
-
-    getbranches() {
-        this.ecolService.getbranches().subscribe(branches => {
-            this.branches = branches;
-        }, error => {
-            console.log(error);
-        });
-    }
-
-    getproductcode() {
-        this.http.get<any>(environment.nodeapi + '/loans/productcode').subscribe(data => {
-            this.productcodes = data.data;
-        }, error => {
-            console.log(error);
-        });
-    }
-
-    getbucket() {
-        this.ecolService.buckets().subscribe(data => {
-            this.single = [
-                {
-                    "name": "01 - 30 Days",
-                    "value": data[0].VALUE
-                },
-                {
-                    "name": "31 - 60 Days",
-                    "value": data[1].VALUE
-                },
-                {
-                    "name": "61 - 90 Days",
-                    "value": data[2].VALUE
-                },
-                {
-                    "name": "Over 90 Days",
-                    "value": data[3].VALUE
-                }
-            ];
-
-            this.volume = [
-                {
-                    "name": "01 - 30 Days",
-                    "value": data[0].VOLUME
-                },
-                {
-                    "name": "31 - 60 Days",
-                    "value": data[1].VOLUME
-                },
-                {
-                    "name": "61 - 90 Days",
-                    "value": data[2].VOLUME
-                },
-                {
-                    "name": "Over 90 Days",
-                    "value": data[3].VOLUME
-                }
-            ];
-        }, error => {
-            console.log(error);
-        });
+            , "_blank")
     }
 
 }

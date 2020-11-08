@@ -17,10 +17,11 @@ import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 import { license } from '../../env';
 import '@ag-grid-enterprise/all-modules';
-// License goes here please
+// License goes here please 
 import { LicenseManager } from "@ag-grid-enterprise/all-modules";
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-LicenseManager.setLicenseKey(license.value); 
+LicenseManager.setLicenseKey(license.value);
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
@@ -52,7 +53,8 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    providers: [BnNgIdleService],
+    //providers: [BnNgIdleService],
+    providers: [BnNgIdleService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
     bootstrap: [AppComponent]
 })
 

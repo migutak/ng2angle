@@ -20,7 +20,7 @@ export class ExportWoffStoryService {
   async generateWoffstory() {
     // Excel Title, Header, Data
     const title = 'Write-off Story Report';
-    const header = ['accnumber', 'custnumber', 'owner', 'woffstory', 'lastupdate', 'client_name', 'rrocode', 'arocode', 'branchname'];
+    const header = ['account number', 'customer number', 'account name', 'branch', 'date of advance', 'original debt', 'current book balance', 'provision princ', 'provision int'];
 
 
     // Create workbook and worksheet
@@ -69,7 +69,7 @@ export class ExportWoffStoryService {
       let data = [];
       let datax = [];
       for (let x=0; x < resp.length; x++) {
-        data.push(resp[x].ACCNUMBER,resp[x].CUSTNUMBER, resp[x].OWNER,resp[x].WOFFSTORY,resp[x].LASTUPDATE,resp[x].CLIENT_NAME,resp[x].RROCODE,resp[x].AROCODE,resp[x].BRANCHNAME)
+        data.push(resp[x].ACCNUMBER,resp[x].CUSTNUMBER, resp[x].CLIENT_NAME,resp[x].BRANCHNAME,resp[x].ORIGDATE,resp[x].OUSTBALANCE,resp[x].OUSTBALANCE,resp[x].OUSTBALANCE,resp[x].OUSTBALANCE)
         datax.push(data)
         data = [];
       }
