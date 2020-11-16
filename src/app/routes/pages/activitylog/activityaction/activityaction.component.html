@@ -324,8 +324,7 @@
         <div class="row" style="padding-top: 20px">
           <div class="col-md-12">
             <label>Collector note</label>
-            <textarea class="form-control" rows="3" id="collectornote" name="collectornote" class="form-control"
-              formControlName="collectornote" class="form-control"
+            <textarea class="form-control" rows="3" id="collectornote" name="collectornote" formControlName="collectornote"
               [ngClass]="{ 'is-invalid': f.collectornote.errors }"></textarea>
           </div>
           <p *ngIf="f.collectornote.errors?.minlength">minimum of five(5) characters is required</p>

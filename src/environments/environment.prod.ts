@@ -31,7 +31,7 @@ export const environment = {
   demanddownload: host + '/demanddownload',
   valor: host + '/valor',
   applink: host,
-  xlsuploadapi: host + '/xlsupload/',
+  //xlsuploadapi: host + '/xlsupload/',
   xlstemplate: xlstemplate,
   sptemplate: '/app/templates/sptemplate.xlsx',
   insurancetemplate: '/app/templates/insurance.xlsx',

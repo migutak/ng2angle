@@ -184,7 +184,7 @@ export class AllReportsComponent implements OnInit {
     ngOnInit() { }
 
 
-    private filterArray() {
+    public filterArray() {
         // Ensures  empty list.
         if (!this.reports.length) {
             this.filteredArray = [];

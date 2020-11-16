@@ -85,6 +85,23 @@
                             
                         </div>
                         <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Product status</label>
+                            <div class="col-xl-10">
+                                <select class="custom-select custom-select-sm" id="productstatus" name="productstatus" #productstatus="ngModel" [(ngModel)]="data.productstatus"
+                                [ngClass]="{ 'is-invalid': productstatus.errors }" required>
+                                    <option selected="">Select a product status</option>
+                                    <option>Pending</option>
+                                    <option>Closed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Additional details</label>
+                            <div class="col-xl-10">
+                                <textarea class="form-control" rows="3" id="additionaldetails" name="additionaldetails" #additionaldetails="ngModel" [(ngModel)]="data.additionaldetails" ></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-xl-2 col-form-label"></label>
                             <div class="col-xl-10">
                                 <div class="checkbox c-checkbox">
@@ -101,6 +118,7 @@
                                 <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!productsForm.valid">Submit to update</button>
                             </div>
                         </div>
+                        
                     </form>
                 </div>
             

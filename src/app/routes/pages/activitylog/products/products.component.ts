@@ -80,6 +80,8 @@ export class ProductsComponent implements OnInit {
         this.data.product = resp.product;
         this.data.oustbalance = resp.oustbalance,
         this.data.settlementamount = resp.settlementamount,
+        this.data.productstatus = resp.productstatus,
+        this.data.additionaldetails = resp.additionaldetails,
         this.data.dateofoffering = moment(resp.dateofoffering).format('YYYY-MM-DD'),
         this.data.expecteddate = moment(resp.expecteddate).format('YYYY-MM-DD')
       }
@@ -108,7 +110,9 @@ export class ProductsComponent implements OnInit {
       product: form.value.product,
       settlementamount: form.value.settlementamount,
       dateofoffering: moment(form.value.dateofoffering).format('YYYY-MM-DD'),
-      expecteddate: moment(form.value.expecteddate).format('YYYY-MM-DD')
+      expecteddate: moment(form.value.expecteddate).format('YYYY-MM-DD'),
+      additionaldetails: form.value.additionaldetails,
+      productstatus: form.value.productstatus
     };
     this.ecolService.productofferings(body).subscribe(resp => {
       swal('Success!', 'Product updated', 'success');

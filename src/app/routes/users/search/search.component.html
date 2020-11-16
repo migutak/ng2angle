@@ -125,6 +125,7 @@
                   <option value="CARDCENTER">CARDCENTER</option>
                   <option value="BRANCH">BRANCH</option>
                   <option value="CIBD">CIBD</option>
+                  <option value="HEAD OFFICE">HEAD OFFICE</option>
                   <option value="OTHER">OTHER</option>
                 </select>
                 <span class="text-danger" *ngIf="valForm.controls['team'].hasError('required') && (valForm.controls['team'].dirty || valForm.controls['team'].touched)">Team
@@ -204,6 +205,18 @@
                       <input type="radio" name="role" value="creditcards" formControlName="role"
                         [formControl]="valForm.controls['role']" />
                       <span class="fa fa-circle"></span>Credit Cards</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="retailbanking" formControlName="role"
+                        [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Retail Banking</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="businessbanking" formControlName="role"
+                        [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Business Banking</label>
                   </div>
                 </div>
               </div>

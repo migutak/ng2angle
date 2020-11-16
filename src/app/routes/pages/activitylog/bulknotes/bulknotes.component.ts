@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import {ViewChild} from '@angular/core';
 import {DataService} from '../../../../services/data.service';
 
-const URL = environment.xlsuploadapi;
+//const URL = environment.xlsuploadapi;
 
 @Component({
   selector: 'app-bulknotes',
@@ -30,7 +30,7 @@ export class BulknotesComponent implements OnInit {
   @ViewChild('myInput')
   myInputVariable: ElementRef;
 
-  public uploader: FileUploader = new FileUploader({url: URL});
+  //public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
 
@@ -48,7 +48,7 @@ export class BulknotesComponent implements OnInit {
               private httpClient: HttpClient,
               private ecolService: EcolService) {
     //
-    //
+    /*
     this.uploader.onBuildItemForm = (item, form) => {
       form.append('owner', this.username);
       form.append('custnumber', this.custnumber);
@@ -60,7 +60,7 @@ export class BulknotesComponent implements OnInit {
     };
     this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
-
+*/
   }
 
   ngOnInit() {
@@ -249,9 +249,6 @@ export class BulknotesComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.ecolService.loader();
-          /*this.httpClient.post('http://127.0.0.1:1020/send-to-que', this.outdata).subscribe(events => {
-            console.log(events)
-          })*/
           this.ecolService.bulknotes(this.outdata).subscribe(events => {
               swal({
                 type: 'success',

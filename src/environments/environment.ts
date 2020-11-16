@@ -31,7 +31,7 @@ export const environment = {
   uploadurl: host + '3000/filesapi',
   demanddownload: host + 3000,
   valor: host + '3000/api/',
-  xlsuploadapi: host + '5001/xlsupload/',
+  //xlsuploadapi: host + '5001/xlsupload/',
   xlstemplate: xlstemplate,
   sptemplate: sptemplate,
   insurancetemplate:insurancetemplate,
