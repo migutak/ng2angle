@@ -114,6 +114,12 @@ export class ViewallComponent implements OnInit {
         width: 90,
         filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       },
+      {
+        headerName: 'AROCODE',
+        field: 'AROCODE',
+        width: 100,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
+      }
 
     ];
     this.defaultColDef = {

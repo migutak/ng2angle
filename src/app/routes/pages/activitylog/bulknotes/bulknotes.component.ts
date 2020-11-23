@@ -10,7 +10,7 @@ import {HttpClient} from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import {ViewChild} from '@angular/core';
 import {DataService} from '../../../../services/data.service';
-
+import * as moment from 'moment';
 //const URL = environment.xlsuploadapi;
 
 @Component({
@@ -26,6 +26,8 @@ export class BulknotesComponent implements OnInit {
   willDownload = false;
   outdata = [];
   fileUploadProgress = 0;
+  account: any = [];
+  iscard: Boolean = false;
 
   @ViewChild('myInput')
   myInputVariable: ElementRef;
@@ -45,7 +47,6 @@ export class BulknotesComponent implements OnInit {
   constructor(public settings: SettingsService,
               private route: ActivatedRoute,
               public dataService: DataService,
-              private httpClient: HttpClient,
               private ecolService: EcolService) {
     //
     /*
@@ -61,6 +62,14 @@ export class BulknotesComponent implements OnInit {
     this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
 */
+  }
+
+  currentDate() {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return day + '-' + month + '-' + year;
   }
 
   ngOnInit() {
@@ -83,6 +92,20 @@ export class BulknotesComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParams => {
       this.sys = queryParams.get('sys');
     });
+
+    if (this.sys === 'cc') {
+      this.getcard(this.accnumber);
+      this.iscard = true;
+    } else if (this.sys === 'watchcc') {
+      this.getwatchcard(this.accnumber);
+      this.iscard = true;
+    } else if (this.sys === 'watch') {
+      this.getwatch(this.accnumber);
+    } else if (this.sys === 'mcoopcash') {
+      this.getmcoopcashaccount(this.accnumber);
+    } else {
+      this.getaccount(this.accnumber);
+    }
   }
 
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -255,7 +278,6 @@ export class BulknotesComponent implements OnInit {
                 title: 'ALL Good',
                 text: this.outdata.length + ' rows has been processed!',
               });
-            
           }, error => {
             console.log(error);
             swal({
@@ -264,6 +286,8 @@ export class BulknotesComponent implements OnInit {
               text: 'Something went wrong with xlxs upload!',
             });
           });
+          // add an activity
+          this.addActivity();
         } else {
           this.myInputVariable.nativeElement.value = '';
           document.getElementById('output').innerHTML = '';
@@ -271,16 +295,78 @@ export class BulknotesComponent implements OnInit {
           swal.close();
         }
       });
-
     };
     reader.readAsBinaryString(file);
 
+  }
+
+  addActivity() {
+    const body = {
+      action: 'UPLOAD',
+      party: '7',
+      promiseamount: 0,
+      ptp: 'No',
+      ptpdate: this.currentDate,
+      notemade: 'Bulk upload of a note',
+      reviewdate: moment(this.account.reviewdate).format('DD-MMM-YYYY'),
+      reason: '',
+      cmdstatus: this.account.cmdstatus,
+      route: this.account.routetostate || 'ACTIVE COLLECTION',
+      paymode: '',
+      accountnumber: this.accnumber,
+      custnumber: this.custnumber,
+      arramount: this.account.totalarrears || 0,
+      oustamount: this.account.oustbalance || 0,
+      notesrc: 'uploaded a note',
+      noteimp: 'N',
+      rfdother: '',
+      owner: this.username,
+      product: this.account.section
+    };
+    // add action
+    this.ecolService.postactivitylogs(body).subscribe(data => {
+      // success
+    }, error => {
+      console.log(error);
+      swal('Error!', 'activitylog ::: service is currently not available', 'error');
+    });
   }
 
 
   sendNotesData(custnumber) {
     this.ecolService.totalnotes(custnumber).subscribe(data => {
       this.dataService.pustNotesData(data[0].TOTAL);
+    });
+  }
+
+  getaccount(account) {
+    this.ecolService.getaccount(account).subscribe(data => {
+      this.account = data;
+    });
+  }
+
+  getmcoopcashaccount(loanaccaccount) {
+    this.ecolService.getmcoopcashAccount(loanaccaccount).subscribe(data => {
+      this.account = data;
+    });
+  }
+
+  getcard(cardacct) {
+    this.ecolService.getcardAccount(cardacct).subscribe(data => {
+      this.account = data[0];
+    });
+  }
+
+  getwatchcard(cardacct) {
+    this.ecolService.getWatchcardAccount(cardacct).subscribe(data => {
+      this.account = data[0];
+    });
+  }
+
+  getwatch(accnumber) {
+    this.ecolService.getwatch(accnumber).subscribe(data => {
+      console.log(data);
+      this.account = data;
     });
   }
 

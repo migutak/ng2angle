@@ -120,6 +120,12 @@ export class MyworklistComponent implements OnInit {
         headerName: 'COLOFFICER',
         field: 'COLOFFICER',
         filter: 'agTextColumnFilter', filterParams: {newRowsAction: 'keep'}, resizable: true,
+      },
+      {
+        headerName: 'AROCODE',
+        field: 'AROCODE',
+        width: 100,
+        filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }
       }
     ];
     this.sortingOrder = ['desc', 'asc', null];

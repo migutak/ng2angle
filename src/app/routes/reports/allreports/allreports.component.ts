@@ -157,6 +157,11 @@ export class AllReportsComponent implements OnInit {
             link: '/frameset?__report=ipfcancellation.rptdesign&__title=IPF Cancellations',
             name: ' IPF Cancellations',
             icon: 'fa fa-chart-bar fa-fw'
+        },
+        {
+            link: '/frameset?__report=restructure.rptdesign&__title=Restructure',
+            name: ' Restructure report',
+            icon: 'fa fa-chart-bar fa-fw'
         }
     ];
 
