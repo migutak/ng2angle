@@ -20,7 +20,7 @@ export class ExportProductsService {
   async generateWoffstory() {
     // Excel Title, Header, Data
     const title = 'Remedial Products Offered Report';
-    const header = ['Product name', 'Date offered', 'RRO Code', 'Customer Number', 'Accounts Number', 'Account name', 'Account Balance', 'Settlement Value', 'Settlement Due Date'];
+    const header = ['Product name', 'Date of approval', 'RRO Code', 'Customer Number', 'Accounts Number', 'Account name', 'Account Balance', 'Settlement Value', 'Settlement Due Date', 'Settlement Date', 'Status', 'Remedial Partner/Collector', 'Remedial Unit'];
 
 
     // Create workbook and worksheet
@@ -42,8 +42,8 @@ export class ExportProductsService {
       extension: 'png',
     });
 
-    worksheet.addImage(logo, 'H1:I3');
-    worksheet.mergeCells('A1:G2');
+    worksheet.addImage(logo, 'L1:M3');
+    worksheet.mergeCells('A1:M2');
 
 
     // Blank Row
@@ -57,8 +57,8 @@ export class ExportProductsService {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'AED6F1' }, // FFFFFF00 00543D
-        bgColor: { argb: 'AED6F1' }
+        fgColor: { argb: '7ac142' }, // FFFFFF00 00543D
+        bgColor: { argb: '7ac142' }
       };
       cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
     });
@@ -69,7 +69,7 @@ export class ExportProductsService {
       let data = [];
       let datax = [];
       for (let x=0; x < resp.length; x++) {
-        data.push(resp[x].product,resp[x].dateofoffering, resp[x].rrocode,resp[x].custnumber,resp[x].accnumber,resp[x].custname,resp[x].oustbalance,resp[x].settlementamount,resp[x].expecteddate)
+        data.push(resp[x].product,resp[x].dateofoffering, resp[x].rrocode,resp[x].custnumber,resp[x].accnumber,resp[x].custname,resp[x].oustbalance,resp[x].settlementamount,resp[x].expecteddate,resp[x].settlementdate,resp[x].productstatus,resp[x].collector,resp[x].remedialunit)
         datax.push(data)
         data = [];
       }
@@ -79,7 +79,7 @@ export class ExportProductsService {
         
       });
 
-      worksheet.getColumn(6).width = 100;
+      worksheet.getColumn(6).width = 50;
       worksheet.addRow([]);
 
 
@@ -88,12 +88,12 @@ export class ExportProductsService {
       footerRow.getCell(1).fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'AED6F1' } //FFCCFFE5
+        fgColor: { argb: '7ac142' } //FFCCFFE5
       };
       footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
 
       // Merge Cells
-      worksheet.mergeCells(`A${footerRow.number}:I${footerRow.number}`);
+      worksheet.mergeCells(`A${footerRow.number}:M${footerRow.number}`);
 
       // Generate Excel File with given name
       workbook.xlsx.writeBuffer().then((data: any) => {

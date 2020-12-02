@@ -7,33 +7,60 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-body">
-                    <form class="form-horizontal" #productsForm="ngForm" (ngSubmit)="updatefunc(productsForm)" novalidate autocomplete="off">
+                    <form class="form-horizontal" #productsForm="ngForm" (ngSubmit)="updatefunc(productsForm)"
+                        novalidate autocomplete="off">
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Customer Name</label>
                             <div class="col-xl-10">
-                                <input class="form-control" type="text" id="custname" name="custname" #custname="ngModel" [(ngModel)]="data.custname"
-                                [ngClass]="{ 'is-invalid': custname.errors }" required/>
+                                <input class="form-control" type="text" id="custname" name="custname"
+                                    #custname="ngModel" [(ngModel)]="data.custname"
+                                    [ngClass]="{ 'is-invalid': custname.errors }" required />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Account Balance</label>
                             <div class="col-xl-10">
-                                <input class="form-control" type="number" id="oustbalance" name="oustbalance" #oustbalance="ngModel" [(ngModel)]="data.oustbalance"
-                                [ngClass]="{ 'is-invalid': oustbalance.errors }" required/>
+                                <input class="form-control" type="number" id="oustbalance" name="oustbalance"
+                                    #oustbalance="ngModel" [(ngModel)]="data.oustbalance"
+                                    [ngClass]="{ 'is-invalid': oustbalance.errors }" required />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">RRO Code</label>
                             <div class="col-xl-10">
-                                <input class="form-control" type="text" id="rrocode" name="rrocode" #rrocode="ngModel" [(ngModel)]="data.rrocode"
-                                [ngClass]="{ 'is-invalid': rrocode.errors }" required/>
+                                <input class="form-control" type="text" id="rrocode" name="rrocode" #rrocode="ngModel"
+                                    [(ngModel)]="data.rrocode" [ngClass]="{ 'is-invalid': rrocode.errors }" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Remedial Partner/Collector</label>
+                            <div class="col-xl-5">
+                                <select class="custom-select custom-select-sm" id="collector" name="collector"
+                                    #collector="ngModel" [(ngModel)]="data.collector"
+                                    [ngClass]="{ 'is-invalid': collector.errors }" required>
+                                    <option value="">Select a collector</option>
+                                    <option *ngFor="let u of users" value="{{u.firstname | uppercase}} {{u.surname | uppercase}} {{u.lastname | uppercase}} ({{u.username}}) ">{{u.firstname | uppercase}} {{u.surname | uppercase}} {{u.lastname | uppercase}} ({{u.username}}) </option>
+                                </select>
+                            </div>
+
+                            <label class="col-xl-2 col-form-label">Remedial Unit</label>
+                            <div class="col-xl-3">
+                                <select class="custom-select custom-select-sm" id="remedialunit" name="remedialunit"
+                                    #remedialunit="ngModel" [(ngModel)]="data.remedialunit"
+                                    [ngClass]="{ 'is-invalid': remedialunit.errors }" required>
+                                    <option value="" >Select the remedial unit</option>
+                                    <option>CORPORATE</option>
+                                    <option>MSME</option>
+                                    <option>RETAIL</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Product Offering</label>
                             <div class="col-xl-10">
-                                <select class="custom-select custom-select-sm" id="product" name="product" #product="ngModel" [(ngModel)]="data.product"
-                                [ngClass]="{ 'is-invalid': product.errors }" required>
+                                <select class="custom-select custom-select-sm" id="product" name="product"
+                                    #product="ngModel" [(ngModel)]="data.product"
+                                    [ngClass]="{ 'is-invalid': product.errors }" required>
                                     <option selected="">Select a product</option>
                                     <option>Private Treaty Sale</option>
                                     <option>Debt discount/Full & Final Settlement</option>
@@ -56,39 +83,64 @@
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Settlement Amount</label>
                             <div class="col-xl-10">
-                                <input class="form-control" type="number" id="settlementamount" name="settlementamount" #settlementamount="ngModel" [(ngModel)]="data.settlementamount"
-                                [ngClass]="{ 'is-invalid': settlementamount.errors }" required/>
+                                <input class="form-control" type="number" id="settlementamount" name="settlementamount"
+                                    #settlementamount="ngModel" [(ngModel)]="data.settlementamount"
+                                    [ngClass]="{ 'is-invalid': settlementamount.errors }" required />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-xl-2 col-form-label">Date of offering</label>
+                            <label class="col-xl-2 col-form-label">Date of approval</label>
                             <div class="col-xl-10 input-group">
-                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="dateofoffering" name="dateofoffering" #dateofoffering="ngModel" [(ngModel)]="data.dateofoffering"
-                                [ngClass]="{ 'is-invalid': dateofoffering.errors }" required>
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                    [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="dateofoffering"
+                                    name="dateofoffering" #dateofoffering="ngModel" [(ngModel)]="data.dateofoffering"
+                                    [ngClass]="{ 'is-invalid': dateofoffering.errors }" required>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
-                                      </span></button>
+                                    <button class="btn btn-outline-primary" (click)="dp.show()"
+                                        [attr.aria-expanded]="dp.isOpen" type="button"><span><i
+                                                class="far fa-calendar-alt"></i>
+                                        </span></button>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Expected due date</label>
                             <div class="col-xl-10 input-group">
-                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="expecteddate" name="expecteddate" #expecteddate="ngModel" [(ngModel)]="data.expecteddate"
-                                [ngClass]="{ 'is-invalid': expecteddate.errors }" required>
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                    [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="expecteddate"
+                                    name="expecteddate" #expecteddate="ngModel" [(ngModel)]="data.expecteddate"
+                                    [ngClass]="{ 'is-invalid': expecteddate.errors }" required>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" (click)="dp.show()" [attr.aria-expanded]="dp.isOpen" type="button"><span><i class="far fa-calendar-alt"></i>
-                                      </span></button>
+                                    <button class="btn btn-outline-primary" (click)="dp.show()"
+                                        [attr.aria-expanded]="dp.isOpen" type="button"><span><i
+                                                class="far fa-calendar-alt"></i>
+                                        </span></button>
                                 </div>
                             </div>
-                            
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Settlement/Closure Date</label>
+                            <div class="col-xl-10 input-group">
+                                <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+                                    [bsValue]="bsValue" name="dp-basic" [bsConfig]="bsConfig" id="settlementdate"
+                                    name="settlementdate" #settlementdate="ngModel" [(ngModel)]="data.settlementdate"
+                                    [ngClass]="{ 'is-invalid': settlementdate.errors }" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" (click)="dp.show()"
+                                        [attr.aria-expanded]="dp.isOpen" type="button"><span><i
+                                                class="far fa-calendar-alt"></i>
+                                        </span></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Product status</label>
                             <div class="col-xl-10">
-                                <select class="custom-select custom-select-sm" id="productstatus" name="productstatus" #productstatus="ngModel" [(ngModel)]="data.productstatus"
-                                [ngClass]="{ 'is-invalid': productstatus.errors }" required>
+                                <select class="custom-select custom-select-sm" id="productstatus" name="productstatus"
+                                    #productstatus="ngModel" [(ngModel)]="data.productstatus"
+                                    [ngClass]="{ 'is-invalid': productstatus.errors }" required>
                                     <option selected="">Select a product status</option>
                                     <option>Pending</option>
                                     <option>Closed</option>
@@ -98,7 +150,27 @@
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label">Additional details</label>
                             <div class="col-xl-10">
-                                <textarea class="form-control" rows="3" id="additionaldetails" name="additionaldetails" #additionaldetails="ngModel" [(ngModel)]="data.additionaldetails" ></textarea>
+                                <textarea class="form-control" rows="3" id="additionaldetails" name="additionaldetails"
+                                    #additionaldetails="ngModel" [(ngModel)]="data.additionaldetails"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xl-2 col-form-label">Attachment</label>
+                            <div class="col-xl-8">
+                                <input type="file" name="file" ng2FileSelect [uploader]="uploader"
+                                    (change)="selectFiles($event)" /> <br />
+                                <button type="button" class="btn btn-warning btn-sm btn-square"
+                                    (click)="uploader.uploadAll()" [disabled]="!selectedFiles">
+                                    Upload
+                                </button>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">Approvals uploaded</div>
+                                <ul class="list-group list-group-flush" *ngFor="let file of fileInfos">
+                                    <li class="list-group-item">
+                                        <a href="{{ file.filepath }}" (click)="downloadFile(file.destpath, file.filename)"><i class="fa fa-download"></i> {{ file.filename }}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -106,8 +178,9 @@
                             <div class="col-xl-10">
                                 <div class="checkbox c-checkbox">
                                     <label>
-                                        <input type="checkbox" checked="checked" id="confirm" name="confirm" #confirm="ngModel" [(ngModel)]="data.confirm"
-                                        [ngClass]="{ 'is-invalid': confirm.errors }" required/>
+                                        <input type="checkbox" checked="checked" id="confirm" name="confirm"
+                                            #confirm="ngModel" [(ngModel)]="data.confirm"
+                                            [ngClass]="{ 'is-invalid': confirm.errors }" required />
                                         <span class="fa fa-check"></span>Confirm details provided</label>
                                 </div>
                             </div>
@@ -115,13 +188,14 @@
                         <div class="form-group row">
                             <label class="col-xl-2 col-form-label"></label>
                             <div class="col-xl-10">
-                                <button type="submit" class="btn btn-sm btn-square btn-warning" [disabled]="!productsForm.valid">Submit to update</button>
+                                <button type="submit" class="btn btn-sm btn-square btn-warning"
+                                    [disabled]="!productsForm.valid">Submit to update</button>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
-            
+
             </div>
         </div>
     </div>

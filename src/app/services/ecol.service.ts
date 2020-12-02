@@ -408,6 +408,16 @@ export class EcolService {
     return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[order]=stagedate desc');
   }
 
+  getfilesProducts(custnumber) {
+    // tslint:disable-next-line:max-line-length 
+    return this.httpClient.get<any>(environment.api + '/api/uploads?filter[where][custnumber]=' + custnumber + '&filter[where][docdesc]=Product approval&filter[order]=stagedate desc');
+  }
+
+  getremedialusers() {
+    // tslint:disable-next-line:max-line-length 
+    return this.httpClient.get<any>(environment.api + '/api/tblusers?filter[where][remedialunit][inq]=CORPORATE&filter[where][remedialunit][inq]=RETAIL&filter[where][remedialunit][inq]=MSME&filter[order]=username asc');
+  }
+
   getsms(cust) {
     return this.httpClient.get<any>(environment.api + '/api/sms?filter[where][custnumber]=' + cust + '&filter[order]=stagedate desc');
   }

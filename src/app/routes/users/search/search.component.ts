@@ -42,7 +42,8 @@ export class SearchComponent implements OnInit {
       'role': ['', Validators.required],
       'expirydate': [''],
       'createdate': [{ value: new Date(), disabled: false }],
-      'active': ['', Validators.required]
+      'active': ['', Validators.required],
+      'remedialunit': ['', Validators.required]
     });
     this.minDate = new Date();
   }
@@ -123,7 +124,8 @@ export class SearchComponent implements OnInit {
             active: active,
             expirydate: data[0].EXPIRYDATE || '0',
             createdate: data[0].CREATEDATE || '2013-01-01T10:46:19.000Z', 
-            role: data[0].ROLE
+            role: data[0].ROLE,
+            remedialunit: data[0].REMEDIALUNIT
           });
           // success
         swal('Successful!', 'user details retrieved!', 'success');
@@ -143,7 +145,8 @@ export class SearchComponent implements OnInit {
             active: '',
             createdate: new Date(),
             expirydate: '',
-            role: ''
+            role: '',
+            remedialunit: ''
           });
         }
       }, error => {
