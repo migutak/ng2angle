@@ -145,7 +145,9 @@ export class AppComponent implements OnInit {
     this.ecolService.ifLogged();
     this.ecolService.ifclosed();
     const currentUser = JSON.parse(localStorage.getItem('currentUser')); // to get username in localstorage..
-    this.username = currentUser.USERNAME;
+    if(currentUser) {
+      this.username = currentUser.USERNAME;
+    }
 
     document.addEventListener('click', e => {
       const target = e.target as HTMLElement;

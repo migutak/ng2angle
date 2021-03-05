@@ -21,6 +21,7 @@ export class ProductsComponent implements OnInit {
   username: string;
   sys: string;
   data: any = {};
+  closed: boolean = true;
   account: any = [];
   users: any = [];
   fileInfos: any = [];
@@ -100,7 +101,10 @@ export class ProductsComponent implements OnInit {
     
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
-
+    
+    if(currentUser.ROLE === 'teamleader') {
+      this.closed = false;
+    }
 
     this.accnumber = this.route.snapshot.queryParamMap.get('accnumber');
     this.route.queryParamMap.subscribe(queryParams => {
@@ -127,6 +131,8 @@ export class ProductsComponent implements OnInit {
     this.getfileshistory(this.custnumber);
     
   }
+
+  
 
   selectFiles(event) {
     this.progressInfos = [];

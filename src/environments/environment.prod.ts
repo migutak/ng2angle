@@ -11,7 +11,6 @@ var portfoliodash = process.env.PORTFOLIODASH || '';
 var accplanreport = process.env.ACCPLANREPORT || '';
 var xlstemplate = process.env.XLSTEMPLATE || '/home/ecollectadmin/templates/upload_notes.xlsx';
 var portal = process.env.PORTAL || '';
-var auth = process.env.AUTH || 'https://ecollectweb.co-opbank.co.ke/adlogin';
 var woffLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/1724828025eb722fb290be3084726097/8781117455eb7239b9baa98082875090.php';
 var repossessLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/3794983825efb4146de0f07066276994/4785671285efb41c0945730007935178.php';
 var calcelipfLink = 'http://172.16.204.71:8089/sysworkflow/en/neoclassic/9041327775e5073c2d5e218012768462/5572014855e5073ef3ec4d6027571529.php';
@@ -39,7 +38,7 @@ export const environment = {
   employerallocationtemplate: '/app/templates/employer.xlsx',
   emailapi: host + '/demandemail/email',
   demandsmsapi: host + "/sms",
-  auth: auth,
+  auth: host + '/adlogin',
   filesapi: host + '/filesapi',
   s3link: host + '8010/app/files-to-s3',
   accplanlink: accplanlink,

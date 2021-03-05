@@ -9,7 +9,6 @@ import { environment } from '../../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgOption } from '@ng-select/ng-select';
-import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 //import { NgxSmartModalService } from 'ngx-smart-modal';
 import { v4 as uuidv4 } from 'uuid';
@@ -187,7 +186,6 @@ export class ActivityActionComponent implements OnInit {
       this.model.emailaddress = data[0].emailaddress;
       this.emailaddress = data[0].emailaddress;
       this.getstatic(this.accnumber);
-
     });
   }
 
@@ -405,7 +403,7 @@ export class ActivityActionComponent implements OnInit {
       rfdother: this.f.rfdother.value  || '0',
       owner: this.username,
       product: this.account.section  || '0',
-      restructure: this.f.restructure.value || false,
+      restructure: String(this.f.restructure.value) || 'false',
       restructureamount: this.f.restructureamount.value  || 0,
       restructuredate: this.f.restructuredate.value || " ",
       abilitytopay: this.f.abilitytopay.value  || 'Unknown',
@@ -671,8 +669,8 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
-  changeReason(excuse) {
-      this.ecolService.getexcusedetails(excuse).subscribe(excuses => {
+  changeReason(in_excuse) {
+      /*this.ecolService.getexcusedetails(in_excuse).subscribe(excuses => {
         if(excuses.length>0) {
           this.excusedetails = excuses;
         } else {
@@ -682,7 +680,11 @@ export class ActivityActionComponent implements OnInit {
       }, error=> {
         console.log(error);
         alert('error retrieving reason for default')
-      })
+      })*/
+
+      /// find in excuses array
+      this.excusedetails = this.excuse.filter(x => x.excuse === in_excuse);
+      console.log(this.excusedetails);
   }
 
   changePtp(value) {

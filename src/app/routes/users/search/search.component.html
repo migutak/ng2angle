@@ -89,6 +89,7 @@
                     <option value="BRANCH">BRANCH</option>
                     <option value="INTERNAL AUDIT">INTERNAL AUDIT</option>
                     <option value="TRANSFORMATION">TRANSFORMATION</option>
+                    <option value="BRANCH BANKING">BRANCH BANKING</option>
                   </select>
                   <span class="text-danger"
                     *ngIf="valForm.controls['division'].hasError('required') && (valForm.controls['division'].dirty || valForm.controls['division'].touched)">division
@@ -232,6 +233,12 @@
                       <input type="radio" name="role" value="businessbanking" formControlName="role"
                         [formControl]="valForm.controls['role']" />
                       <span class="fa fa-circle"></span>Business Banking</label>
+                  </div>
+                  <div class="c-radio">
+                    <label>
+                      <input type="radio" name="role" value="businessbanking" formControlName="role"
+                        [formControl]="valForm.controls['role']" />
+                      <span class="fa fa-circle"></span>Branch Banking</label>
                   </div>
                 </div>
               </div>
