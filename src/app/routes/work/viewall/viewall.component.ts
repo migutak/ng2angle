@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
-import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
+import * as moment from 'moment';
+import { EcolService } from '../../../services/ecol.service'
 
+let _EcolService: any = EcolService
 
 @Component({
   selector: 'app-viewall',
   templateUrl: './viewall.component.html',
   styleUrls: ['./viewall.component.scss']
 })
+
 export class ViewallComponent implements OnInit {
   public gridApi;
   public gridColumnApi;
@@ -28,7 +31,7 @@ export class ViewallComponent implements OnInit {
   pivotPanelShow = true;
 
   modules = AllModules;
-  
+
 
   constructor() {
     this.columnDefs = [
@@ -48,7 +51,7 @@ export class ViewallComponent implements OnInit {
       { field: 'DAYSINARR', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'CUSTNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'BUCKET', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },  
+      { field: 'PRODUCTCODE', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'SECTION', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       {
         field: 'OUSTBALANCE',
@@ -129,18 +132,68 @@ export class ViewallComponent implements OnInit {
 
     const datasource = {
       getRows(params) {
+        var response_body: any;
+        var _httpResponse: any;
+        //console.log(JSON.stringify(params.request, null, 1));
+        const started = Date.now();
+        const started_datetime = moment().format();
         fetch(environment.nodeapi + '/tqall/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }
         })
-          .then(httpResponse => httpResponse.json())
+          .then(httpResponse =>
+            _httpResponse = httpResponse
+          )
+          .then(httpResponse =>
+            httpResponse.json()
+          )
           .then(response => {
             params.successCallback(response.rows, response.lastRow);
+            response_body = response;
           })
           .catch(error => {
             console.error(error);
             params.failCallback();
+            
+          })
+          .finally(() => {
+            const now = Date.now();
+            const end_datetime = moment().format();
+            const elapsed = now - started;
+            if(!_httpResponse) {
+              _httpResponse = {
+                url: environment.nodeapi + '/tqall/gridviewall',
+                status: 102,
+                statusText: 'net::ERR_CONNECTION_REFUSED',
+                message: 'Failed to fetch',
+                ok: false
+              }
+            }
+            const date = moment().format();
+            const esmsg = {
+              "datetime": date,
+              "endpoint_url": _httpResponse.url,
+              "method": 'POST',
+              "request_body": params.request,
+              //"response_body": response_body,
+              "start_time": started_datetime,
+              "end_time": end_datetime,
+              "time_elapsed(ms)": elapsed,
+              "status_code": _httpResponse.status,
+              "status_text": _httpResponse.statusText,
+              "user": JSON.parse(localStorage.getItem('currentUser')).USERNAME,
+              "client_ip": 'xx.xx.xx.xx',
+              "message": _httpResponse.message,
+              "ok": _httpResponse.ok
+            }
+            fetch(`${environment.elasticsearch}/ecollectclientapp/_doc`, {
+              method: 'post',
+              body: JSON.stringify(esmsg),
+              headers: { "Content-Type": "application/json; charset=utf-8" }
+            }).catch(error => {
+              console.error(error);
+            })
           })
       }
     };
@@ -173,17 +226,15 @@ export class ViewallComponent implements OnInit {
 
   onCellClicked(event: any) {
     this.model = event.node.data;
-    if(this.model.ACCNUMBER == event.value) {
-    // tslint:disable-next-line:max-line-length
-     window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections&nationid=' + this.model.NATIONID, '_blank');
+    if (this.model.ACCNUMBER == event.value) {
+      // tslint:disable-next-line:max-line-length
+      window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.currentUser.USERNAME + '&sys=collections&nationid=' + this.model.NATIONID, '_blank');
     }
   }
-
-
   public ngOnInit(): void {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser.USERNAME;
   }
 
-
 }
+

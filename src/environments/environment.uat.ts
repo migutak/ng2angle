@@ -48,5 +48,6 @@ export const environment = {
   debtcollectorLink: debtcollectorLink,
   platformDash: "",
   rollratesdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/2635e190-d89a-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
-  userbucketdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/6d2971d0-d899-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))'
+  userbucketdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/6d2971d0-d899-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
+  elasticsearch: 'http://172.16.19.151:9200'
 };

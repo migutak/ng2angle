@@ -59,8 +59,8 @@ export const environment = {
   relegationLink: relegationLink,
   investigateLink: investigateLink,
   debtcollectorLink:debtcollectorLink,
-  platformDash: "http://52.117.93.88.nip.io:30041/goto/abafb13b1352b327883879c096c8d60d",
+  platformDash: "",
   rollratesdash: '',
-  userbucketdash: ''
-  
+  userbucketdash: '',
+  elasticsearch: 'http://127.0.0.1:9200'
 };

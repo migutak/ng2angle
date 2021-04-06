@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GridOptions} from '@ag-grid-community/all-modules';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-// import { EcolService } from '../../../services/ecol.ervice';
+import { EcolService } from '../../../services/ecol.service'
 import {AllModules} from '@ag-grid-enterprise/all-modules';
 
 @Component({
@@ -43,7 +43,6 @@ export class MyallocationsComponent implements OnInit {
 
       // suppressCellSelection: true,
 
-
       // domLayout: 'autoHeight',
       rowSelection: 'single',
       rowModelType: 'normal',
@@ -63,7 +62,7 @@ export class MyallocationsComponent implements OnInit {
         this.http
           .get(environment.api + '/api/tcards/myallocations?colofficer=' + this.username)
           .subscribe(resp => {
-            console.log(typeof resp); // to check whether object or array
+           // console.log(typeof resp); // to check whether object or array
             this.str = JSON.stringify(resp, null, 4);
             const obj: any = JSON.parse(this.str);
 

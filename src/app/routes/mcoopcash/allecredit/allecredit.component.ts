@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-allecredit',
@@ -18,13 +19,14 @@ export class AllecreditComponent implements OnInit {
   public cacheBlockSize;
   public maxBlocksInCache;
   public rowData: [];
+  modules = AllModules;
 
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   username: string;
   searchText: string;
   model: any = {};
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.columnDefs = [
       {
         field: 'LOANACCNUMBER',
@@ -90,12 +92,18 @@ export class AllecreditComponent implements OnInit {
     const datasource = {
       getRows(params) {
         //console.log(JSON.stringify(params.request, null, 1));
-
+        var response_body: any;
+        var _httpResponse: any;
+        const started = Date.now();
+        const started_datetime = moment().format();
         fetch(environment.api + '/api/mcoopcash_stage/gridviewall', {
           method: 'post',
           body: JSON.stringify(params.request),
           headers: { "Content-Type": "application/json; charset=utf-8" }
         })
+        .then(httpResponse =>
+          _httpResponse = httpResponse
+        )
           .then(httpResponse => httpResponse.json())
           .then(response => {
             params.successCallback(response.rows, response.lastRow);
@@ -103,6 +111,34 @@ export class AllecreditComponent implements OnInit {
           .catch(error => {
             console.error(error);
             params.failCallback();
+          })
+          .finally(() => {
+            const now = Date.now();
+            const end_datetime = moment().format();
+            const elapsed = now - started;
+            if(!_httpResponse) {
+              _httpResponse = {
+                url: environment.nodeapi + '/tqall/gridviewall',
+                status: 102,
+                statusText: 'net::ERR_CONNECTION_REFUSED',
+                message: 'Failed to fetch',
+                ok: false
+              }
+            }
+            const esmsg = {
+              "endpoint_url": _httpResponse.url,
+              "method": 'POST',
+              "request_body": params.request,
+              "response_body": response_body,
+              "starttime": started_datetime,
+              "endtime": end_datetime,
+              "elapsed": elapsed,
+              "status": _httpResponse.status,
+              "statusText": _httpResponse.statusText,
+              "message": _httpResponse.message,
+              "ok": _httpResponse.ok
+            }
+            this.EcolService.eslogging(esmsg);
           })
       }
     };

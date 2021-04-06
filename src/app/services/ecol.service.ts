@@ -4,11 +4,14 @@ import { environment } from '../../environments/environment';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EcolService {
+
+  currentUser = JSON.parse(localStorage.getItem('currentUser')) || {USERNAME: null};
 
   constructor(
     private httpClient: HttpClient,
@@ -959,6 +962,40 @@ export class EcolService {
 
   deleteinsurance(id) {
     return this.httpClient.post<any>(environment.nodeapi + '/insurance/delete', id);
+  }
+
+  eslogging(entry: any) {
+
+    var headers = new HttpHeaders();
+    const date = moment().format();
+
+    let body = {
+      "datetime": date,
+      "index": "clientapplication",
+      "endpoint_url": entry.endpoint_url,
+      "method": entry.method,
+      "request_body": entry.request_body,
+      "response_body": entry.response_body,
+      "starttime": entry.starttime,
+      "endtime": entry.endtime,
+      "elapsed": entry.elapsed,
+      "status_code": entry.status,
+      "statusText": entry.statusText,
+      "user": this.currentUser.USERNAME,
+      "client_ip": 'xx.xx.xx.xx',
+      "message": entry.message,
+      "ok": entry.ok
+    }
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    
+    if(!body.endpoint_url.includes('ecollectclientapp')) {
+      this.httpClient.post(`${environment.elasticsearch}/ecollectclientapp/_doc`, body).subscribe(resp => {
+        console.log('...eslogging')
+      })
+    }
+    // 
   }
 
 

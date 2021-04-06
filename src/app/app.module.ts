@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 //import { NgHttpLoaderModule } from 'ng-http-loader';
  
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -16,9 +16,10 @@ import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 import { license } from '../../env';
-import '@ag-grid-enterprise/all-modules';
+import '@ag-grid-enterprise/all-modules'; 
 // License goes here please 
 import { LicenseManager } from "@ag-grid-enterprise/all-modules"; 
+import { LoggingInterceptorService } from './services/logging-interceptor.service';
  
 LicenseManager.setLicenseKey(license.value);
 
@@ -52,8 +53,11 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    //providers: [BnNgIdleService],
-    providers: [BnNgIdleService],
+    //providers: [BnNgIdleService], 
+    providers: [
+        BnNgIdleService,
+        {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi:true}
+    ],
     bootstrap: [AppComponent]
 })
 
