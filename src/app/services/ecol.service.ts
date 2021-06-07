@@ -207,7 +207,7 @@ export class EcolService {
     const url = environment.nodeapi + '/activitylogs';
     return this.httpClient.post(url, body);
   }
-
+/*
   bulktotblportfolio(body) {
     const url = environment.api + '/api/tbl_portfolio_static/actiondate';
     return this.httpClient.post(url, body);
@@ -216,7 +216,7 @@ export class EcolService {
   bulktotblcardsstatic(body) {
     const url = environment.api + '/api/TBLCARD_STATIC/actiondate';
     return this.httpClient.post(url, body);
-  }
+  }*/
 
   getallsptype() {
     const url = environment.api + '/api/sptypes';
