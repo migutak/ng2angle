@@ -89,6 +89,24 @@ export class ActivityActionComponent implements OnInit {
     { collectoractionid: 'INVESTIGATE', collectoraction: 'SEND FOR INVESTIGATION' }
   ];
 
+  remedialproducts: any = [
+    {name: 'None'},
+    {name: 'Restructure'},
+    {name: 'Top up'},
+    {name: 'Interest Concession'},
+    {name: 'Debt discount (Full & final Settlement)'},
+    {name: 'Rescheduling'},
+    {name: 'Insurance claim'},
+    {name: 'Out of court settlement'},
+    {name: 'Foreclosure'},
+    {name: 'Take over'},
+    {name: 'Write off'},
+    {name: 'Interest Concession'},
+    {name: 'Consolidation'},
+    {name: 'Private treaty sale'},
+    {name: 'Auction'},
+  ]
+
   message: string;
   ptpamount: number =0;
   reviewers: any = [];
@@ -335,7 +353,7 @@ export class ActivityActionComponent implements OnInit {
       ptpdate: [{ value: this.currentDate, disabled: true }],
       collectornote: ['', [Validators.required, Validators.minLength(5)]],
       reviewdate: [this.account.reviewdate],
-      // reason: [this.account.excuse, Validators.required],
+      //reason: [this.account.excuse, Validators.required],
       reason: [''],
       excusedetails: [''],
       cmdstatus: [this.account.cmdstatus],
@@ -344,10 +362,12 @@ export class ActivityActionComponent implements OnInit {
       paymode: [''],
       callbacktime: [''],
       rfdother: [{ value: this.account.excuse_other, disabled: true }],
-      restructure: [this.account.restructure],
-      restructureamount: [{value: this.account.restructureamount, disabled: true}],
-      restructuredate: [{value: this.account.restructuredate, disabled: true}],
+      //restructure: [this.account.restructure],
+      //restructureamount: [{value: this.account.restructureamount, disabled: true}],
+      //restructuredate: [{value: this.account.restructuredate, disabled: true}],
       abilitytopay: [this.account.abilitytopay],
+      remedialproduct: [{value: this.account.remedialproduct, disabled: false}],
+      productclosuredate: [{value: this.account.productclosuredate, disabled: false}]
     });
   }
 
@@ -403,9 +423,11 @@ export class ActivityActionComponent implements OnInit {
       rfdother: this.f.rfdother.value  || '0',
       owner: this.username,
       product: this.account.section  || '0',
-      restructure: String(this.f.restructure.value) || 'false',
-      restructureamount: this.f.restructureamount.value  || 0,
-      restructuredate: this.f.restructuredate.value || " ",
+      //restructure: String(this.f.restructure.value) || 'false',
+      //restructureamount: this.f.restructureamount.value  || 0,
+      //restructuredate: this.f.restructuredate.value || " ",
+      remedialproduct: this.f.remedialproduct.value  || 'None',
+      productclosuredate: this.f.productclosuredate.value || " ",
       abilitytopay: this.f.abilitytopay.value  || 'Unknown',
       promisedate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
       toemailaddress: this.f.toemailaddress.value  || '0',

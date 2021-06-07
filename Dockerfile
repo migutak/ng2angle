@@ -10,8 +10,8 @@ COPY ecollect /usr/share/nginx/html
 RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
     chmod -R 770 /var/cache/nginx /var/run /var/log/nginx
 
-EXPOSE 80
+EXPOSE 8888
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
-# docker build -t migutak/ecollect:5.0 .
+# docker build -t migutak/ecollect:5.1 .

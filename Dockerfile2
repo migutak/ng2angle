@@ -24,4 +24,4 @@ COPY --from=builder /home/node/app/ecollect /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
 
-# docker build -t migutak/ecollect:3.0.0 -f Dockerfile2 .
+# docker build -t migutak/ecollect:4.1 -f Dockerfile2 .

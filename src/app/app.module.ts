@@ -26,12 +26,12 @@ LicenseManager.setLicenseKey(license.value);
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+} 
 
 @NgModule({
     declarations: [
         AppComponent,
-    ],
+    ], 
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -47,13 +47,13 @@ export function createTranslateLoader(http: HttpClient) {
         NgxSmartModalModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
-                provide: TranslateLoader,
+                provide: TranslateLoader, 
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             }
         })
     ],
-    //providers: [BnNgIdleService], 
+    //providers: [BnNgIdleService],
     providers: [
         BnNgIdleService,
         {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi:true}

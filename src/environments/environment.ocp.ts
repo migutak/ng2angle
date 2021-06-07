@@ -22,8 +22,8 @@ var debtcollectorLink = '';
 export const environment = {
   production: true,
   adlogin: false,
-  sendsms: false,
-  api: host,
+  sendsms: false, 
+  api: host, 
   nodeapi: host + '/nodeapi',
   letters_path: path,
   letters_api: host + '/docx/',

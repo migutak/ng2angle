@@ -88,8 +88,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <select id="party" name="party" (ngModelChange)="changeParty(actionForm.value)"
-                formControlName="party" class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
+              <select id="party" name="party" (ngModelChange)="changeParty(actionForm.value)" formControlName="party"
+                class="form-control" [ngClass]="{ 'is-invalid': f.party.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let p of party" [value]="p.partyid">{{p.party}}</option>
               </select>
@@ -110,31 +110,51 @@
                 <option *ngFor="let ex of excuse" [value]="ex.excuse">{{ex.excuse}}</option>
               </select>
             </div>
-          </div> 
+          </div>
         </div>
 
         <div class="row" style="padding-top: 20px">
           <div class="col-xl-2 col-md-3">
-            <div class="checkbox c-checkbox form-check-inline">
+            Proposed remedial product
+            <!--<div class="checkbox c-checkbox form-check-inline">
               <label>
                 Request for restructure <input type="checkbox" [checked]="false" name="restructure" id="restructure" 
                   name="restructure" formControlName="restructure" 
                   (ngModelChange)="restructure(actionForm.value.restructure)" />
-                <span class="fa fa-check"></span></label>
-            </div>
+                <span class="fa fa-check"></span>
+              </label>
+            </div>-->
+
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
+              <!--
               <input type="number" id="restructureamount" name="restructureamount" formControlName="restructureamount" placeholder="Enter Restructure amount" class="form-control" />
-              
-                <div class="input-group">
-                  <input type="text" placeholder="Restructure date" class="form-control" formControlName="restructuredate"
-                    #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
-                          class="fa fa-calendar"></i>
-                      </span></button>
-                  </div>
+              -->
+              <select id="remedialproduct" name="remedialproduct" formControlName="remedialproduct"
+                class="form-control">
+                <option value="">Please select</option>
+                <option *ngFor="let rp of remedialproducts" [value]="rp.name">{{rp.name}}</option>
+              </select>
+
+              <div class="input-group">
+              <!--
+                <input type="text" placeholder="Restructure date" class="form-control" formControlName="restructuredate"
+                  #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
+                        class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
+              -->
+                <input type="text" placeholder="Proposed Product Closure Date" class="form-control" formControlName="productclosuredate"
+                  #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
+                        class="fa fa-calendar"></i>
+                    </span></button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -146,8 +166,8 @@
               <!--<textarea rows="2" id="rfdother" name="rfdother" class="form-control" formControlName="rfdother"
                 class="form-control"></textarea>-->
 
-              <select id="excusedetails" name="excusedetails" 
-                formControlName="excusedetails" class="form-control" [ngClass]="{ 'is-invalid': f.excusedetails.errors }">
+              <select id="excusedetails" name="excusedetails" formControlName="excusedetails" class="form-control"
+                [ngClass]="{ 'is-invalid': f.excusedetails.errors }">
                 <option value="">Please select</option>
                 <option *ngFor="let e of excusedetails" [value]="e.excusedetails">{{e.excusedetails}}</option>
               </select>
@@ -177,7 +197,8 @@
           </div>
           <div class="col-md-3">
             <div class="col-md-12">
-              <ng-select id="abilitytopay" name="abilitytopay" formControlName="abilitytopay" placeholder="Select ability to pay">
+              <ng-select id="abilitytopay" name="abilitytopay" formControlName="abilitytopay"
+                placeholder="Select ability to pay">
                 <ng-option value="Unknown">Unknown</ng-option>
                 <ng-option value="Able and willing">Able and willing</ng-option>
                 <ng-option value="Unable and willing">Unable and willing</ng-option>
@@ -186,7 +207,7 @@
               </ng-select>
             </div>
           </div>
-          
+
         </div>
 
         <div class="row" style="padding-top: 20px">
@@ -296,12 +317,11 @@
               </tr>
             </tbody>
           </table>
-          
+
         </div>
         <div class="form-group row" style="padding-top: 20px" [hidden]="ptpcaptured">
           <label class="col-xl-3">
-            <input type="checkbox" [checked]="true" name="ptpsms" id="ptpsms" name="ptpsms"
-            formControlName="ptpsms" />
+            <input type="checkbox" [checked]="true" name="ptpsms" id="ptpsms" name="ptpsms" formControlName="ptpsms" />
             Send PTP SMS Reminder </label>
           <div class="col-xl-3">
             <input type="text" name="ptpsmsnumber" id="ptpsmsnumber" name="ptpsmsnumber" class="form-control"
@@ -324,8 +344,8 @@
         <div class="row" style="padding-top: 20px">
           <div class="col-md-12">
             <label>Collector note</label>
-            <textarea class="form-control" rows="3" id="collectornote" name="collectornote" formControlName="collectornote"
-              [ngClass]="{ 'is-invalid': f.collectornote.errors }"></textarea>
+            <textarea class="form-control" rows="3" id="collectornote" name="collectornote"
+              formControlName="collectornote" [ngClass]="{ 'is-invalid': f.collectornote.errors }"></textarea>
           </div>
           <p *ngIf="f.collectornote.errors?.minlength">minimum of five(5) characters is required</p>
         </div>
@@ -352,7 +372,7 @@
             <input type="text" name="callbacktime" id="callbacktime" name="callbacktime" class="form-control"
               formControlName="callbacktime" />
 
-              
+
           </div>
 
         </div>
