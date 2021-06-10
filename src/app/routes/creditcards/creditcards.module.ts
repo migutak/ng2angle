@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { AllcardsComponent } from './allcards/allcards.component';
-import { LoansComponent } from './loans/loans.component';
 import { MyallocationsComponent } from './myallocations/myallocations.component';
 import { MyworklistComponent } from './myworklist/myworklist.component';
 import { ViewallComponent } from './viewall/viewall.component';
@@ -16,7 +15,7 @@ import {AgGridModule} from '@ag-grid-community/angular';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
   { path: 'allcards', component: AllcardsComponent },
-  { path: 'loans', component: LoansComponent },
+  //{ path: 'loans', component: LoansComponent },
   { path: 'myallocations', component: MyallocationsComponent },
   { path: 'myworklist', component: MyworklistComponent },
   { path: 'viewall', component: ViewallComponent },
@@ -30,7 +29,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AllcardsComponent,
-    LoansComponent,
+    //LoansComponent,
     MyallocationsComponent,
     MyworklistComponent,
     ViewallComponent,

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { jqxButtonComponent} from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ViewallComponent } from './viewall/viewall.component';
@@ -42,7 +41,7 @@ const routes: Routes = [
     NgxDatatableModule,
     RouterModule.forChild(routes)
   ],
-  entryComponents: [jqxButtonComponent],
+  entryComponents: [],
   providers: [
     JqxDomService
   ],

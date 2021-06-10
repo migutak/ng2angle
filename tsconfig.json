@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "skipLibCheck": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -24,5 +25,5 @@
   "files": [
     "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid.ts",
     "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxbuttons.ts"
-  ]
+  ],
 }

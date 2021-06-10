@@ -50,7 +50,7 @@ export const routes = [
             { path: 'forms', loadChildren: './forms/forms.module#FormsModule' },
             { path: 'work', loadChildren: './work/work.module#WorkModule' },
             { path: 'watch', loadChildren: './watch/watch.module#WatchModule' },
-            { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
+
             { path: 'remedial', loadChildren: './remedial/remedial.module#RemedialModule' },
             { path: 'mcoopcash', loadChildren: './mcoopcash/mcoopcash.module#McoopcashModule' },
             { path: 'reports', loadChildren: './reports/reports.module#ReportsModule' },

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { Routes, RouterModule } from '@angular/router';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule} from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -27,8 +26,8 @@ const routes: Routes = [
         SharedModule,
         FormsModule,
         RouterModule.forChild(routes),
-        NgSelectModule,
-        NgxChartsModule
+        NgSelectModule
+        
     ],
     declarations: [HomeComponent, WebdatarocksComponent],
     bootstrap:    [ HomeComponent ],

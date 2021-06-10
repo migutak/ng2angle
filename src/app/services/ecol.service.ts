@@ -177,29 +177,35 @@ export class EcolService {
   }
 
   excuse() {
-    const url = environment.api + '/api/excuse?filter[order]=excuse ASC';
+    const url = environment.api + '/api/excuse?cache=3600&filter[order]=excuse ASC';
     return <any>this.httpClient.get(url);
   }
 
   getexcuse() {
-    const url = environment.api + '/api/tblexcuse?filter[order]=excuse ASC';
+    const url = environment.api + '/api/tblexcuse?cache=3600&filter[order]=excuse ASC';
     return <any>this.httpClient.get(url);
   }
   getexcuseid(excuse) {
-    const url = environment.api + '/api/tblexcuse?filter[where][excuse]='+excuse;
+    const url = environment.api + '/api/tblexcuse?cache=3600&filter[where][excuse]='+excuse;
     return <any>this.httpClient.get(url);
   }
+
+  excusedetails() {
+    const url = environment.api + '/api/tblexcuse_details?cache=3600';
+    return <any>this.httpClient.get(url);
+  }
+
   getexcusedetails(excuse) {
-    const url = environment.api + '/api/tblexcuse_details?filter[where][excuse]='+excuse;
+    const url = environment.api + '/api/tblexcuse_details?cache=3600&filter[where][excuse]='+excuse;
     return <any>this.httpClient.get(url);
   }
 
   getcure() {
-    const url = environment.api + '/api/cure';
+    const url = environment.api + '/api/cure?cache=3600';
     return this.httpClient.get(url);
   }
   getparty() {
-    const url = environment.api + '/api/party';
+    const url = environment.api + '/api/party?cache=3600';
     return this.httpClient.get(url);
   }
 

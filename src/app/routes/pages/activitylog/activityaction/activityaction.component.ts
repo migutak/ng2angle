@@ -44,12 +44,12 @@ export class ActivityActionComponent implements OnInit {
   actionForm: FormGroup;
   submitted = false;
   cmdstatus: any = [];
-  party: any = [{"partyid":1,"party":"Account Holder","active":"true"},{"partyid":2,"party":"No Answer","active":"true"},{"partyid":3,"party":"Number not in service","active":"true"},{"partyid":4,"party":"Secondary accountHolder","active":"true"},{"partyid":5,"party":"Third Party","active":"true"},{"partyid":6,"party":"Disconnected","active":"true"},{"partyid":7,"party":"Not applicable","active":"true"}];
+  party: any = [{ "partyid": 1, "party": "Account Holder", "active": "true" }, { "partyid": 2, "party": "No Answer", "active": "true" }, { "partyid": 3, "party": "Number not in service", "active": "true" }, { "partyid": 4, "party": "Secondary accountHolder", "active": "true" }, { "partyid": 5, "party": "Third Party", "active": "true" }, { "partyid": 6, "party": "Disconnected", "active": "true" }, { "partyid": 7, "party": "Not applicable", "active": "true" }];
   cure: any = [];
   excuse: any = [];
   excusedetails: any = [];
-  capture:boolean= true;
-  ptpcaptured:boolean = true;
+  capture: boolean = true;
+  ptpcaptured: boolean = true;
   ptps: any = [];
   static: any = [];
   ptp_m: any = {};
@@ -90,25 +90,25 @@ export class ActivityActionComponent implements OnInit {
   ];
 
   remedialproducts: any = [
-    {name: 'None'},
-    {name: 'Restructure'},
-    {name: 'Top up'},
-    {name: 'Interest Concession'},
-    {name: 'Debt discount (Full & final Settlement)'},
-    {name: 'Rescheduling'},
-    {name: 'Insurance claim'},
-    {name: 'Out of court settlement'},
-    {name: 'Foreclosure'},
-    {name: 'Take over'},
-    {name: 'Write off'},
-    {name: 'Interest Concession'},
-    {name: 'Consolidation'},
-    {name: 'Private treaty sale'},
-    {name: 'Auction'},
+    { name: 'None' },
+    { name: 'Restructure' },
+    { name: 'Top up' },
+    { name: 'Interest Concession' },
+    { name: 'Debt discount (Full & final Settlement)' },
+    { name: 'Rescheduling' },
+    { name: 'Insurance claim' },
+    { name: 'Out of court settlement' },
+    { name: 'Foreclosure' },
+    { name: 'Take over' },
+    { name: 'Write off' },
+    { name: 'Interest Concession' },
+    { name: 'Consolidation' },
+    { name: 'Private treaty sale' },
+    { name: 'Auction' },
   ]
 
   message: string;
-  ptpamount: number =0;
+  ptpamount: number = 0;
   reviewers: any = [];
   account: any = [];
   sys = 'collections';
@@ -318,6 +318,7 @@ export class ActivityActionComponent implements OnInit {
     }, error => {
       console.log(error)
     });
+
     /*this.ecolService.getexcuse().subscribe(reasons => {
       this.reason = reasons;
       for(let i=0; i<reasons.length; i++) {
@@ -342,10 +343,10 @@ export class ActivityActionComponent implements OnInit {
   buildForm() {
     this.actionForm = this.formBuilder.group({
       collectoraction: ['', Validators.required],
-      party: ['', Validators.required ],
+      party: ['', Validators.required],
       ptpamount: [{ value: 0, disabled: true }],
       toemail: [{ value: '', disabled: false }],
-      toemailaddress: [{ value: this.emailaddress, disabled: false  }],
+      toemailaddress: [{ value: this.emailaddress, disabled: false }],
       ptpsms: [{ value: '', disabled: false }],
       ptpsmsnumber: [{ value: this.autodial_telnumber, disabled: true }],
       ptp: [{ value: 'No', disabled: false }],
@@ -366,8 +367,8 @@ export class ActivityActionComponent implements OnInit {
       //restructureamount: [{value: this.account.restructureamount, disabled: true}],
       //restructuredate: [{value: this.account.restructuredate, disabled: true}],
       abilitytopay: [this.account.abilitytopay],
-      remedialproduct: [{value: this.account.remedialproduct, disabled: false}],
-      productclosuredate: [{value: this.account.productclosuredate, disabled: false}]
+      remedialproduct: [{ value: this.account.remedialproduct, disabled: false }],
+      productclosuredate: [{ value: this.account.productclosuredate, disabled: false }]
     });
   }
 
@@ -380,17 +381,17 @@ export class ActivityActionComponent implements OnInit {
     }
 
     if (this.f.ptp.value == 'Yes' && this.ptps.length == 0) {
-     swal('Alert','Please Capture Promises ','warning');
+      swal('Alert', 'Please Capture Promises ', 'warning');
       return;
     }
 
     if (this.f.toemail.value && this.f.toemailaddress.value == '') {
-      swal('Alert','Please fill Customer email','warning');
+      swal('Alert', 'Please fill Customer email', 'warning');
       return;
     }
 
     if (this.f.ptpsms.value && this.f.ptpsmsnumber.value == '') {
-      swal('Alert','Please provide PTP SMS reminder Mobile number','warning');
+      swal('Alert', 'Please provide PTP SMS reminder Mobile number', 'warning');
       return;
     }
 
@@ -406,7 +407,7 @@ export class ActivityActionComponent implements OnInit {
       action: this.f.collectoraction.value,
       party: this.f.party.value,
       promiseamount: this.ptpamount,
-      ptp: this.f.ptp.value,    
+      ptp: this.f.ptp.value,
       notemade: this.f.collectornote.value,
       reviewdate: moment(this.f.reviewdate.value).format('DD-MMM-YYYY'),
       reason: this.f.reason.value,
@@ -420,21 +421,21 @@ export class ActivityActionComponent implements OnInit {
       oustamount: this.account.oustbalance || 0,
       notesrc: 'made a note',
       noteimp: 'N',
-      rfdother: this.f.rfdother.value  || '0',
+      rfdother: this.f.rfdother.value || '0',
       owner: this.username,
-      product: this.account.section  || '0',
+      product: this.account.section || '0',
       //restructure: String(this.f.restructure.value) || 'false',
       //restructureamount: this.f.restructureamount.value  || 0,
       //restructuredate: this.f.restructuredate.value || " ",
-      remedialproduct: this.f.remedialproduct.value  || 'None',
+      remedialproduct: this.f.remedialproduct.value || 'None',
       productclosuredate: this.f.productclosuredate.value || " ",
-      abilitytopay: this.f.abilitytopay.value  || 'Unknown',
+      abilitytopay: this.f.abilitytopay.value || 'Unknown',
       promisedate: moment(this.f.ptpdate.value).format('YYYY-MMM-DD'),
-      toemailaddress: this.f.toemailaddress.value  || '0',
-      toemail: this.f.toemail.value  || '0',
-      ptpsms: this.f.ptpsms.value  || '0',
-      ptpsmsnumber: this.f.ptpsmsnumber.value  || '0',
-      ptpemailaddress: this.f.toemailaddress.value  || '0'
+      toemailaddress: this.f.toemailaddress.value || '0',
+      toemail: this.f.toemail.value || '0',
+      ptpsms: this.f.ptpsms.value || '0',
+      ptpsmsnumber: this.f.ptpsmsnumber.value || '0',
+      ptpemailaddress: this.f.toemailaddress.value || '0'
     };
     if (this.f.flag.value) {
       this.savebody.noteimp = 'Y';
@@ -444,7 +445,7 @@ export class ActivityActionComponent implements OnInit {
       // send ptp reminder email
       const ptpemailbody = {
         toemail: this.f.toemailaddress.value,
-        ccemail: this.username+'@co-opbank.co.ke',
+        ccemail: this.username + '@co-opbank.co.ke',
         ptpamount: this.ptps
       }
 
@@ -458,7 +459,7 @@ export class ActivityActionComponent implements OnInit {
       // save ptps
       if (this.f.ptp.value == 'Yes') {
         // add ptpsmsnumber and ptpemailadress to ptps[]
-        for(let x=0; x<this.ptps.length; x++) {
+        for (let x = 0; x < this.ptps.length; x++) {
           this.ptps[x].ptpsms = this.savebody.ptpsms;
           this.ptps[x].ptpemail = this.savebody.toemail;
           this.ptps[x].ptpsmsnumber = this.savebody.ptpsmsnumber;
@@ -467,7 +468,7 @@ export class ActivityActionComponent implements OnInit {
         this.saveallptps();
         this.sendPtpsData(this.accnumber);
       }
-      
+
       // watch stream put watch_static
       if (this.sys === 'watchcc') {
         const watchccbody = {
@@ -515,33 +516,33 @@ export class ActivityActionComponent implements OnInit {
       if (this.savebody.collectoraction === 'RELG') {
         const relegateBody = {
           casenumber: uuidv4(),
-          accnumber :  this.accnumber,
-          custnumber : this.custnumber,
-          custname : this.account.client_name,
-          oustbalance : this.account.oustbalance,
-          section : this.account.section,
-          daysinarr : this.account.daysinarr,
-          totalarrears : this.account.totalarrears,
-          bucket : this.account.bucket,
-          productcode : this.account.productcode,
-          arocode : this.account.arocode,
-          rrocode : this.account.rrocode,
-          branchcode : this.account.branchcode,
-          branchname : this.account.branchname,
-          applink : environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=relegation&nationid=' + this.account.nationid + '&relg=' + this.username,
-          requestby : this.username,
-          status : 'pending',
-          approved : '0',
+          accnumber: this.accnumber,
+          custnumber: this.custnumber,
+          custname: this.account.client_name,
+          oustbalance: this.account.oustbalance,
+          section: this.account.section,
+          daysinarr: this.account.daysinarr,
+          totalarrears: this.account.totalarrears,
+          bucket: this.account.bucket,
+          productcode: this.account.productcode,
+          arocode: this.account.arocode,
+          rrocode: this.account.rrocode,
+          branchcode: this.account.branchcode,
+          branchname: this.account.branchname,
+          applink: environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=relegation&nationid=' + this.account.nationid + '&relg=' + this.username,
+          requestby: this.username,
+          status: 'pending',
+          approved: '0',
           requestdate: new Date()
         };
 
         // set applink with casenumber
         relegateBody.applink = environment.applink + '/activitylog?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=relegation&nationid=' + this.account.nationid + '&relg=' + relegateBody.casenumber,
-        this.ecolService.relegation(relegateBody).subscribe(resp => {
-          console.log(resp)
-        }, error => { 
-          console.log(error); 
-        });
+          this.ecolService.relegation(relegateBody).subscribe(resp => {
+            console.log(resp)
+          }, error => {
+            console.log(error);
+          });
       }
 
       // close windows
@@ -676,7 +677,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   restructure(value) {
-    if(value) {
+    if (value) {
       this.actionForm.controls.restructureamount.enable();
       this.actionForm.controls.restructuredate.enable();
       this.actionForm.controls["restructureamount"].setValidators(Validators.required);
@@ -692,21 +693,23 @@ export class ActivityActionComponent implements OnInit {
   }
 
   changeReason(in_excuse) {
-      /*this.ecolService.getexcusedetails(in_excuse).subscribe(excuses => {
-        if(excuses.length>0) {
+    if (in_excuse) {
+      this.ecolService.getexcusedetails(in_excuse).subscribe(excuses => {
+        if (excuses.length > 0) {
           this.excusedetails = excuses;
         } else {
           this.excusedetails = [];
         }
-        
-      }, error=> {
+
+      }, error => {
         console.log(error);
         alert('error retrieving reason for default')
-      })*/
+      })
+    }
 
-      /// find in excuses array
-      this.excusedetails = this.excuse.filter(x => x.excuse === in_excuse);
-      console.log(this.excusedetails);
+    /// find in excuses array
+    // this.excusedetails = this.excuse.filter(x => x.excuse === in_excuse);
+    // console.log(this.excusedetails);
   }
 
   changePtp(value) {
@@ -760,7 +763,7 @@ export class ActivityActionComponent implements OnInit {
   }
 
   showptpcaptured() {
-    if(this.ptps.length > 0) {
+    if (this.ptps.length > 0) {
       this.ptpcaptured = false;
     } else {
       this.ptpcaptured = true;
@@ -788,12 +791,12 @@ export class ActivityActionComponent implements OnInit {
     const accnumber = this.accnumber;
     const paymode = form.value.paymode;
 
-    this.ptps.push({ promisedate: promisedate, ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber, paymode:paymode, arramount: this.account.totalarrears});
+    this.ptps.push({ promisedate: promisedate, ptpdate: ptpdate, ptpamount: ptpamount, owner: owner, accnumber: accnumber, paymode: paymode, arramount: this.account.totalarrears });
     this.isptptosave = true;
     this.ptpamount = this.ptpamount + parseInt(ptpamount);
 
     this.showptpcaptured();
-    
+
   }
 
   saveallptps() {
