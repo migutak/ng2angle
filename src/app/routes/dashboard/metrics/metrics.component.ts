@@ -12,7 +12,7 @@ export class MetricsComponent implements OnInit {
 
     metrics: string;
     
-    url: string = environment.platformDash;
+    url: string = environment.requestsDash;
     urlSafe: SafeResourceUrl;
 
     constructor(private domSanitizer : DomSanitizer) {

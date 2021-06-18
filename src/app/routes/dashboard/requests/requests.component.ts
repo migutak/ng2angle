@@ -3,16 +3,16 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import { environment } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-logs',
-    templateUrl: './logs.component.html',
-    styleUrls: ['./logs.component.scss']
+    selector: 'app-requests',
+    templateUrl: './requests.component.html',
+    styleUrls: ['./requests.component.scss']
 })
 
-export class LogsComponent implements OnInit {
+export class RequestsComponent implements OnInit {
 
     metrics: string;
     
-    url: string = environment.logsDash;
+    url: string = environment.requestsDash;
     urlSafe: SafeResourceUrl;
 
     constructor(private domSanitizer : DomSanitizer) {

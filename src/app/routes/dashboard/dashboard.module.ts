@@ -5,6 +5,7 @@ import { Dashboardv1Component } from './dashboardv1/dashboardv1.component';
 import { Dashboardv2Component } from './dashboardv2/dashboardv2.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { LogsComponent } from './logs/logs.component';
+import { RequestsComponent } from './requests/requests.component';
 
    
 
@@ -14,6 +15,7 @@ const routes: Routes = [
     { path: 'v2', component: Dashboardv2Component },
     { path: 'metrics', component: MetricsComponent },
     { path: 'logs', component: LogsComponent },
+    { path: 'requests', component: RequestsComponent },
 ];
 
 @NgModule({
@@ -25,7 +27,8 @@ const routes: Routes = [
         Dashboardv1Component,
         Dashboardv2Component,
         MetricsComponent,
-        LogsComponent
+        LogsComponent,
+        RequestsComponent
     ],
     exports: [
         RouterModule

@@ -101,6 +101,10 @@ const DashboardAdmin = {
         {
             text: 'Application logs',
             link: '/dashboard/logs'
+        },
+        {
+            text: 'Requests',
+            link: '/dashboard/requests'
         }
     ]
 };

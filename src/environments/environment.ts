@@ -62,5 +62,8 @@ export const environment = {
   platformDash: "",
   rollratesdash: '',
   userbucketdash: '',
-  elasticsearch: 'http://127.0.0.1:9200'
+  elasticsearch: 'http://127.0.0.1:9200',
+  logsDash: "https://172.16.19.151:5601/goto/0a0a4f2303fb19ed1cdaa583dc0efa56",
+  requestsDash: "https://172.16.19.151:5601/goto/c7a30355bcd476a1f1028c1f150e58b0"
+
 };

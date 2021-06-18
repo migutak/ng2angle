@@ -61,5 +61,8 @@ export const environment = {
   platformDash: "http://ecollecttst.co-opbank.co.ke:3030/d/hb7fSE0Zz/1-node-exporter-for-prometheus-dashboard-en-v20191102?orgId=1",
   rollratesdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/2635e190-d89a-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
   userbucketdash: 'http://172.16.19.151:5601/app/kibana#/dashboard/6d2971d0-d899-11ea-9a3b-a19986078728?_g=(filters%3A!()%2CrefreshInterval%3A(pause%3A!f%2Cvalue%3A10000)%2Ctime%3A(from%3Anow-1h%2Cto%3Anow))',
-  elasticsearch: 'http://ecollectweb.co-opbank.co.ke:9200'
+  elasticsearch: 'http://ecollectweb.co-opbank.co.ke:9200',
+  logsDash: "https://172.16.19.151:5601/goto/0a0a4f2303fb19ed1cdaa583dc0efa56",
+  requestsDash: "https://172.16.19.151:5601/goto/c7a30355bcd476a1f1028c1f150e58b0"
+
 };
