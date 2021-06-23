@@ -21,7 +21,7 @@ import '@ag-grid-enterprise/all-modules';
 import { LicenseManager } from "@ag-grid-enterprise/all-modules"; 
 import { LoggingInterceptorService } from './services/logging-interceptor.service';
  
-LicenseManager.setLicenseKey(license.value);
+LicenseManager.setLicenseKey(license.value); 
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {

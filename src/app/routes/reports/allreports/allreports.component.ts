@@ -162,6 +162,11 @@ export class AllReportsComponent implements OnInit {
             link: '/frameset?__report=restructure.rptdesign&__title=Restructure',
             name: ' Restructure report',
             icon: 'fa fa-chart-bar fa-fw'
+        },
+        {
+            link: '/frameset?__report=proposedremedialproduct.rptdesign&__title=Proposed remedial Products report',
+            name: ' Proposed remedial Products report',
+            icon: 'fa fa-chart-bar fa-fw'
         }
     ];
 
