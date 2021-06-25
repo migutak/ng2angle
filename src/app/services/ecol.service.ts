@@ -144,6 +144,10 @@ export class EcolService {
     return this.httpClient.get<any>(url);
   }
 
+  previewipf(body) {
+    return this.httpClient.post<any>(environment.letters_api + 'ipfcancellation/download', body);
+  }
+
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
     const response = this.httpClient.get<any>(environment.nodeapi + '/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' ); //+ '&filter[order]=notedate DESC'
