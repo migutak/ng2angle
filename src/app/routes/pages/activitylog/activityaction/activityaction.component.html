@@ -115,7 +115,14 @@
 
         <div class="row" style="padding-top: 20px">
           <div class="col-xl-2 col-md-3">
-            Proposed remedial product
+            <div class="checkbox c-checkbox form-check-inline">
+              <label>
+                Proposed remedial product <input type="checkbox" [checked]="false" name="checkremedialproduct"
+                  id="checkremedialproduct" name="checkremedialproduct" formControlName="checkremedialproduct"
+                  (ngModelChange)="checkremedialproductfnc(actionForm.value.checkremedialproduct)" />
+                <span class="fa fa-check"></span>
+              </label>
+            </div>
             <!--<div class="checkbox c-checkbox form-check-inline">
               <label>
                 Request for restructure <input type="checkbox" [checked]="false" name="restructure" id="restructure" 
@@ -138,7 +145,7 @@
               </select>
 
               <div class="input-group">
-              <!--
+                <!--
                 <input type="text" placeholder="Restructure date" class="form-control" formControlName="restructuredate"
                   #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
                 <div class="input-group-append">
@@ -147,8 +154,9 @@
                     </span></button>
                 </div>
               -->
-                <input type="text" placeholder="Proposed Product Closure Date" class="form-control" formControlName="productclosuredate"
-                  #dp1="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
+                <input type="text" placeholder="Proposed Product Closure Date" class="form-control"
+                  formControlName="productclosuredate" #dp1="bsDatepicker" bsDatepicker
+                  [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" [minDate]="minxDate">
                 <div class="input-group-append">
                   <button class="btn btn-outline-primary" (click)="dp1.toggle()" type="button"><span><i
                         class="fa fa-calendar"></i>
@@ -360,7 +368,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <!--<div class="row">
           <div class="col-md-3 col-form-label">
             <div class="checkbox c-checkbox form-check-inline">
               <label>
@@ -375,7 +383,7 @@
 
           </div>
 
-        </div>
+        </div>-->
 
       </div>
       <div class="card-footer">

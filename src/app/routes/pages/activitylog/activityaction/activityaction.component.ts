@@ -363,12 +363,13 @@ export class ActivityActionComponent implements OnInit {
       paymode: [''],
       callbacktime: [''],
       rfdother: [{ value: this.account.excuse_other, disabled: true }],
+      checkremedialproduct: [false],
       //restructure: [this.account.restructure],
       //restructureamount: [{value: this.account.restructureamount, disabled: true}],
       //restructuredate: [{value: this.account.restructuredate, disabled: true}],
       abilitytopay: [this.account.abilitytopay],
-      remedialproduct: [{ value: this.account.remedialproduct, disabled: false }],
-      productclosuredate: [{ value: this.account.productclosuredate, disabled: false }]
+      remedialproduct: [{ value: this.account.remedialproduct, disabled: true }],
+      productclosuredate: [{ value: this.account.productclosuredate, disabled: true }]
     });
   }
 
@@ -676,6 +677,21 @@ export class ActivityActionComponent implements OnInit {
     }
   }
 
+  checkremedialproductfnc(value) {
+    if (value) {
+      this.actionForm.controls.remedialproduct.enable();
+      this.actionForm.controls.productclosuredate.enable();
+      this.actionForm.controls["remedialproduct"].setValidators(Validators.required);
+      this.actionForm.controls["productclosuredate"].setValidators(Validators.required);
+      this.actionForm.controls["productclosuredate"].updateValueAndValidity();
+    } else {
+      this.actionForm.controls.remedialproduct.disable();
+      this.actionForm.controls.productclosuredate.disable();
+      this.actionForm.controls.remedialproduct.setValue('');
+      this.actionForm.controls.productclosuredate.setValue('');
+    }
+  }
+
   restructure(value) {
     if (value) {
       this.actionForm.controls.restructureamount.enable();
@@ -877,6 +893,10 @@ export class ActivityActionComponent implements OnInit {
   }
 
   cancelipf() {
+      window.open(environment.applink + '/cancelipf?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=collections&nationid=', '_blank');
+  }
+
+  cancelipfold() {
     // place temp data in bpms
     var body = {
       accnumber: this.accnumber,

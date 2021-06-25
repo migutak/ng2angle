@@ -9,28 +9,14 @@
             </div>
             <div class="card-wrapper">
                <div class="card-body">
-                  <button class="btn btn-link" (click)="opendash()"><i class="fas fa-external-link-alt"></i> Open
-                     Dashboard </button>
-                  <!--<div class="row">
-                     <div class="col-md-4">
-                        <ng-select [items]="branches" bindLabel="branchname" placeholder="Select Branch"
-                           (change)="onChange($event)" [(ngModel)]="selectedBranch">
-                        </ng-select>
-                     </div>
-                     <div class="col-md-4">
-                        <ng-select [items]="arocodes" bindLabel="AROCODE" placeholder="Select arocode"
-                           [(ngModel)]="selectedarocode">
-                        </ng-select>
-                     </div>
-                     <div class="col-md-4">
-                        <ng-select [items]="productcodes" bindLabel="PRODUCTCODE" placeholder="Select Product"
-                           [(ngModel)]="selectedproduct">
-                        </ng-select>
-                     </div>
-                  </div>-->
-
-                  <!--
-                  <iframe src="https://159.122.130.149.nip.io:8080/goto/225bff353b008c7a77fb5728b58d7b13" height="900" width="100%" frameborder="0"></iframe>
+                  <!--<button class="btn btn-link" (click)="opendash()"><i class="fas fa-external-link-alt"></i> Open
+                     Dashboard </button>-->
+                
+                     <div class="text-center my-3">
+                        <iframe [src]="urlSafe" height="800" width="100%" frameBorder="0"></iframe>
+                    </div>
+                  
+                  <!--<iframe src="https://172.16.19.151:5601/goto/2b1d803dba7a974bc07b886cf17f7aa5" height="900" width="100%" frameborder="0"></iframe>
                   
                   <app-wbr-pivot #pivot1 [toolbar]="true" [width]="'100%'" [height]="500"
                      [customizeCell]="onCustomizeCell" (ready)="onPivotReady($event)"

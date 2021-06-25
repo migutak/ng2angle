@@ -5,6 +5,7 @@ import { ViewChild } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { EcolService } from '../../../services/ecol.service';
 import { WebdatarocksComponent } from '../../../webdatarocks/webdatarocks.component';
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 
 @Component({
@@ -44,22 +45,9 @@ export class HomeComponent implements OnInit {
         this.child.webDataRocks.off('reportcomplete');
         this.child.webDataRocks.setReport({
             dataSource: {
-                //filename: 'https://cdn.webdatarocks.com/data/data.json',
-                //filename: 'http://127.0.0.1:8000/api/tqall?filter[where][productcode]=MortCnstPPMTLoan',
+               
             },
-/*
-            slice: {
-                rows: [
-                    { uniqueName: 'Category' }
-                ],
-                columns: [
-                    { uniqueName: 'Destination' }
-                ],
-                measures: [
-                    { uniqueName: 'Category', aggregation: 'count' },
-                    { uniqueName: 'Price', aggregation: 'sum' }
-                ]
-            }*/
+
             slice: {
                 rows: [
                     { uniqueName: 'bucket' }
@@ -75,7 +63,10 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    constructor(public http: HttpClient, private ecolService: EcolService,) {
+    url: string = environment.requestsDash;
+    urlSafe: SafeResourceUrl;
+
+    constructor(public http: HttpClient, private ecolService: EcolService,private domSanitizer : DomSanitizer) {
 
     }
 
@@ -89,6 +80,8 @@ export class HomeComponent implements OnInit {
         }
         //
         localStorage.setItem('profile', '0');
+
+        this.urlSafe= this.domSanitizer.bypassSecurityTrustResourceUrl(this.url);
     }
 
     onChange($event) {

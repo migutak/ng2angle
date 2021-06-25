@@ -13,7 +13,7 @@ import { SendLetterComponent } from './pages/actions/sendletter.component';
 import { ActivityLogComponent } from './pages/activitylog/activitylog.component';
 import { MultipleptpComponent } from './pages/multipleptp/multipleptp.component';
 
-import { AuthGuard} from '../auth.guard';
+import { AuthGuard } from '../auth.guard';
 import { ActivityActionComponent } from './pages/activitylog/activityaction/activityaction.component';
 import { ActivityHomeComponent } from './pages/activitylog/activityhome/activityhome.component';
 import { AccPlanComponent } from './pages/activitylog/accplan/accplan.component';
@@ -91,14 +91,14 @@ export const routes = [
         children: [
             { path: '', redirectTo: 'notes', pathMatch: 'full' },
             { path: 'activityhome', component: ActivityHomeComponent },
-            { path: 'activityaction', component: ActivityActionComponent},
+            { path: 'activityaction', component: ActivityActionComponent },
             { path: 'notes', component: NotesComponent },
-            { path: 'files', component: FilesComponent},
+            { path: 'files', component: FilesComponent },
             { path: 'sms', component: SmsComponent },
-            { path: 'accplan', component: AccPlanComponent},
+            { path: 'accplan', component: AccPlanComponent },
             { path: 'contacts', component: CustContactsComponent },
             { path: 'demandletters', component: DemandLettersComponent },
-            { path: 'remedialcollaterals', component: CollateralsComponent},
+            { path: 'remedialcollaterals', component: CollateralsComponent },
             { path: 'bulknotes', component: BulknotesComponent },
             { path: 'guarantors', component: GuarantorsComponent },
             { path: 'editnote', component: EditnoteComponent },
@@ -107,8 +107,14 @@ export const routes = [
             { path: 'products', component: ProductsComponent },
             { path: 'relegationapproval', component: RelegationapprovalComponent },
             { path: '**', redirectTo: 'notes' }
-          ],
-          canActivate: [AuthGuard]
+        ],
+        canActivate: [AuthGuard]
+
+    },
+    {
+        path: 'cancelipf',
+        component: Error404Component,
+        canActivate: [AuthGuard]
 
     },
 

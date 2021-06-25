@@ -27,6 +27,7 @@ import { SendLetterComponent } from './actions/sendletter.component';
 import { MultipleptpComponent } from './multipleptp/multipleptp.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ActivityLogComponent } from './activitylog/activitylog.component';
+import { ActivityIpfComponent } from './activityipf/activityipf.component';
 import { ActivityActionComponent } from '../pages/activitylog/activityaction/activityaction.component';
 import { ActivityHomeComponent } from '../pages/activitylog/activityhome/activityhome.component';
 import { AccPlanComponent } from '../pages/activitylog/accplan/accplan.component';
@@ -106,7 +107,8 @@ import { DatePipe } from '@angular/common';
         ExtloginComponent,
         WriteoffstoryComponent,
         ProductsComponent,
-        RelegationapprovalComponent
+        RelegationapprovalComponent,
+        ActivityIpfComponent
     ],
     providers: [
         ToasterService,
