@@ -446,12 +446,20 @@ const assetfinance = {
     icon: 'icon-layers',
     submenu: [
         {
-            text: 'Asset Finance',
-            link: '/assetfinance/assetf'
+            text: 'Viewall IPF',
+            link: '/assetfinance/ipf'
         },
         {
-            text: 'IPF',
-            link: '/assetfinance/ipf'
+            text: 'IPF Cancellations Due',
+            link: '/assetfinance/ipfcancellationsdue'
+        },
+        {
+            text: 'IPF Cancellations Done',
+            link: '/assetfinance/ipfcancellationsdone'
+        },
+        {
+            text: 'Asset Finance',
+            link: '/assetfinance/assetf'
         },
         {
             text: 'Insurance Companies',

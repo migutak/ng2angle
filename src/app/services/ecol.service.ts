@@ -148,10 +148,19 @@ export class EcolService {
     return this.httpClient.post<any>(environment.letters_api + 'ipfcancellation/download', body);
   }
 
+  submitcancelipf(body) {
+    return this.httpClient.post<any>(environment.letters_api + 'ipfcancellationwithsend/download', body);
+  }
+
   getbulknotes(cust) {
     // tslint:disable-next-line:max-line-length
     const response = this.httpClient.get<any>(environment.nodeapi + '/vallnotes?filter[where][custnumber]=' + cust + '&filter[where][notesrc]=uploaded a note' ); //+ '&filter[order]=notedate DESC'
     return forkJoin([response]);
+  }
+
+  ipfdetails(accnumber) {
+    const url = environment.nodeapi + '/tbl-ipfs?filter[where][accnumber]='+accnumber;
+    return this.httpClient.get<any>(url);
   }
 
   getflaggednotes(cust) {
@@ -163,6 +172,11 @@ export class EcolService {
   getcmdstatus() {
     const url = environment.api + '/api/cmdstatus';
     return this.httpClient.get(url);
+  }
+
+  checkipfcancellation(accnumber) {
+    const url = environment.nodeapi + '/tbl-ipf-cancellations?filter[where][accnumber]='+accnumber;
+    return this.httpClient.get<any>(url);
   }
 
   getreviewers() {

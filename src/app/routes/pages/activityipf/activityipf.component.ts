@@ -19,19 +19,23 @@ export class ActivityIpfComponent implements OnInit {
   constructor(
     public settings: SettingsService,
     private ecolService: EcolService,
-    ) { }
+  ) { }
 
   ngOnInit() {
+
   }
 
   //Calculate refund amount
-  buttonCalculate(loanStartDate, policyAmount, arrearsAmount) {
-    const start = new Date(loanStartDate)
-    const end = new Date()
-    this.diff = 0
-    const days = Math.round(this.diff / 1000 / 60 / 60 / 24);
+  buttonCalculate() {
 
-    var Refundamount = (policyAmount + arrearsAmount) / 365 * (365 - days)
+    var now = moment(new Date()); //todays date
+    var end = moment(this.model.lsd); // another date "2015-12-1"
+    var duration = moment.duration(now.diff(end));
+    var daysin = duration.asDays();
+    console.log(daysin)
+    const days = Math.round(daysin / 1000 / 60 / 60 / 24);
+
+    var Refundamount = (this.model.policyamount + this.model.arrearsamount) / 365 * (365 - days)
 
     this.model.refundamount = (Refundamount);
     this.model.daysUtilized = (days);
@@ -41,7 +45,7 @@ export class ActivityIpfComponent implements OnInit {
   //generate letter button
   previewbtn() {
     this.ecolService.loader();
-    console.log(this.model)
+    //console.log(this.model)
     const previewrequest = {
       accnumber: this.model.accnumber,
       custnumber: this.model.custnumber,
@@ -68,4 +72,79 @@ export class ActivityIpfComponent implements OnInit {
       swal('Error!', 'Service currently not available', 'error');
     });
   }
+
+  cancelipf(form) {
+    console.log(form)
+    const submitdata = {
+      accnumber: this.model.accnumber,
+      custnumber: this.model.custnumber,
+      origdate: this.model.lsd,
+      origbalance: this.model.policyamount,
+      oustbalance: this.model.policyamount,
+      refundamount: this.model.refundamount,
+      daysutilized: this.model.daysutilized,
+      daysunutilized: this.model.daysunutilized,
+      branchname: this.model.branchname,
+      insuranceaddress: this.model.isuranceaadress,
+      insuranceemail: this.model.insuranceemail,
+      policynumber: this.model.policynumber,
+      broker: this.model.broker,
+      custname: this.model.custname,
+      insurancecompany: this.model.insuranceco,
+      username: this.model.issuedby,
+      emailaddress: this.model.emailaddress,
+      postcode: this.model.postcode
+    };
+
+    this.ecolService.submitcancelipf(submitdata).subscribe(resp => {
+      console.log(resp);
+      this.addactivity()
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Service currently not available', 'error');
+    });
+
+  }
+
+  // add activity
+  addactivity() {
+    const activitydata = {
+      collectoraction: "IPF",
+      party: null,
+      collectornote: "Cancelled IPF with comment: " + this.model.cancellationcomm,
+      reason: "Hardship",
+      cmdstatus: "Hardcore",
+      route: "ACTIVE COLLECTION",
+      paymode: "",
+      accountnumber:this.model.accnumber,
+      custnumber: this.model.custnumber,
+      notesrc: "cancel IPF",
+      noteimp: "N",
+      owner: this.model.issuedby,
+      product: "IPF"
+    };
+
+    this.ecolService.postactivitylogs(activitydata).subscribe(resp => {
+      swal('All Good!', 'IPF Cancellation successfully issued', 'success');
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Service currently not available', 'error');
+    });
+
+  }
+
+  ipfdetails(accnumber) {
+    this.ecolService.ipfdetails(accnumber).subscribe(resp => {
+      console.log(resp)
+      if(resp && resp.length>0) {
+        this.model = resp[0]
+      } else {
+        swal('Warning','IPF Details are not available', 'warning')
+      }
+    }, error => {
+      console.log(error);
+      swal('Error!', 'Service currently not available', 'error');
+    });
+  }
+
 }

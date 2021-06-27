@@ -68,6 +68,7 @@ export class ActivityActionComponent implements OnInit {
   relg: boolean = false;
   debtcollect: boolean = false;
   investigate: boolean = false;
+  ipfstatus: string;
 
   collectoraction: any = [
     { collectoractionid: 'OC', collectoraction: 'OUTGOING CALL' },
@@ -171,7 +172,7 @@ export class ActivityActionComponent implements OnInit {
     });
 
     this.ptpid = this.route.snapshot.queryParamMap.get('ptpid');
-
+    this.ipfstatus = this.route.snapshot.queryParamMap.get('ipfstatus');
     // build form
     this.buildForm();
 
@@ -870,6 +871,7 @@ export class ActivityActionComponent implements OnInit {
       //
       window.open(environment.debtcollectorLink);
     }, error => {
+      console.log(error)
       alert('error !!!')
     }
     );
@@ -893,7 +895,22 @@ export class ActivityActionComponent implements OnInit {
   }
 
   cancelipf() {
-      window.open(environment.applink + '/cancelipf?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=collections&nationid=', '_blank');
+    // check if ipf
+    this.ecolService.checkipfcancellation(this.accnumber).subscribe(data => {
+      if(data && data.length) {
+      this.ipfstatus = data[0].status
+      }
+      //console.log((this.accnumber).substring(2, 5), this.ipfstatus)
+
+      if ((this.accnumber).substring(2, 5) === '6D0' && !this.ipfstatus) {
+        window.open(environment.applink + '/cancelipf?accnumber=' + this.accnumber + '&custnumber=' + this.custnumber + '&username=' + this.username + '&sys=collections&nationid=', '_blank');
+      } else {
+        alert('Product not IPF or IPF Cancellation already in progress')
+      }
+    }, error => {
+      console.log(error)
+      alert('error !!!')
+    });   
   }
 
   cancelipfold() {
