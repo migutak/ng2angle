@@ -1,0 +1,423 @@
+<div class="container" style="background-color: aliceblue;">
+    <div>
+        <h1>IPF Cancellation</h1>
+        <hr />
+
+        <div class="card-header">
+            <strong>Account Details</strong>
+        </div>
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Customer Name
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="custname" name="custname" #custname="ngModel"
+                    [(ngModel)]="model.custname" disabled />
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Account Number
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="accnumber" name="accnumber" #accnumber="ngModel"
+                        [(ngModel)]="model.accnumber" disabled
+                         />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Customer Number
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="custnumber" name="custnumber" #custnumber="ngModel"
+                        [(ngModel)]="model.custnumber" disabled
+                        />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Policy Number
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="policynumber" name="policynumber" #policynumber="ngModel"
+                        [(ngModel)]="model.policynumber" disabled />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Email Address
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="emailaddress" name="emailaddress" #emailaddress="ngModel" disabled
+                        [(ngModel)]="model.emailaddress" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Phone Number
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="celnumber" name="celnumber" #celnumber="ngModel" disabled
+                        [(ngModel)]="model.celnumber" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Product Name
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="productname" name="productname" #productname="ngModel" disabled
+                        [(ngModel)]="model.productname" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Policy Amount
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input type="number" class="form-control" id="policyamount" name="policyamount"
+                        #policyamount="ngModel" [(ngModel)]="model.policyamount" disabled />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Amount in Arrears
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input type="number" class="form-control" id="arrearsamount" name="arrearsamount"
+                        #arrearsamount="ngModel" [(ngModel)]="model.arrearsamount" disabled />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Days in Arrears
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="daysinarr" name="daysinarr" #daysinarr="ngModel" disabled
+                        [(ngModel)]="model.daysinarr" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                BranchName
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="branchname" name="branchname" #branchname="ngModel" disabled
+                        [(ngModel)]="model.branchname" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group row m-b-15" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                With Asset Finance
+            </div>
+            <div class="col-md-9">
+                <div class="radio radio-css radio-inline" id="yes">
+                    <input [(ngModel)]="model.waf" class="form-check-input" id="inlineRadio3" name="inlineRadio3"
+                        type="radio" value="yes" disabled/>
+                    <label class="form-check-label" for="inlineRadio3">Yes</label>
+                </div>
+                <div class="radio radio-css radio-inline" id="no">
+                    <input [(ngModel)]="model.waf" class="form-check-input" id="inlineRadio4" name="inlineRadio4"
+                        type="radio" value="no" disabled/>
+                    <label class="form-check-label" for="inlineRadio4">No</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row m-b-15" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Cancel IPF
+            </div>
+            <div class="col-md-9">
+                <div class="radio radio-css radio-inline" id="cyes">
+                    <input [(ngModel)]="model.cancelipf" class="form-check-input" id="inlineRadio5" name="inlineRadio5"
+                        type="radio" value="cyes" disabled/>
+                    <label class="form-check-label" for="inlineRadio5">Yes</label>
+                </div>
+                <div class="radio radio-css radio-inline" id="cno">
+                    <input [(ngModel)]="model.cancelipf" class="form-check-input" id="inlineRadio6" name="inlineRadio6"
+                        type="radio" value="cno" disabled/>
+                    <label class="form-check-label" for="inlineRadio6">No</label>
+                </div>
+                <!--                      <div *ngIf="celnumber.valid || emailaddress.valid" class="valid-feedback"></div>-->
+            </div>
+        </div>
+
+
+
+        <div class="card-header">
+            <strong>IPF Cancellation Details </strong>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Date Cancellation Issued
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input #dci="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" bsDatepicker
+                        class="form-control" id="dci" name="dci" placeholder="Date Issued" placement="top"
+                        type="text" disabled/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                Issued By
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="issuedby" name="issuedby" #issuedby="ngModel" disabled
+                        [(ngModel)]="model.issuedby" />
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Policy Start Date (DD-MMM-YYYY)
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="psd" placeholder="Loan Start Date" placement="top" type="text"
+                        name="psd" #psd="ngModel" [(ngModel)]="model.psd" disabled />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Tel Number
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="telnumber" name="telnumber" #telnumber="ngModel"
+                        [(ngModel)]="model.telnumber" disabled />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Insurance Company
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" id="insuranceco" name="insuranceco" #insuranceco="ngModel"
+                        [(ngModel)]="model.insuranceco" disabled />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Insurance Email
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="insuemail" name="insuemail" #insuemail="ngModel"
+                        [(ngModel)]="model.insuemail" disabled />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Broker
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="broker" name="broker" #broker="ngModel" [(ngModel)]="model.broker"
+                        disabled />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Insurance Address
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="insuaddress" name="insuaddress" #insuaddress="ngModel"
+                        [(ngModel)]="model.insuaddress" disabled />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Loan Start Date (DD-MMM-YYYY)
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="lsd" placeholder="Loan Start Date" placement="top" type="text" disabled
+                        name="lsd" #lsd="ngModel" [(ngModel)]="model.lsd" 
+                        />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Policy EndDate (DD-MMM-YYYY)
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input class="form-control" id="ped" placeholder="Policy End Date" placement="top" type="text" disabled
+                        name="ped" #ped="ngModel" [(ngModel)]="model.ped"
+                        />
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Days Utilized
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input type="number" class="form-control" id="daysutilized" name="daysutilized" disabled
+                        #daysutilized="ngModel" [(ngModel)]="model.daysutilized"  />
+                </div>
+            </div>
+            <div class="col-md-3">
+                Days Unutilized
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input type="number" class="form-control" id="daysunutilized" name="daysunutilized" disabled
+                        #daysunutilized="ngModel" [(ngModel)]="model.daysunutilized" />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-xl-2 col-md-3">
+                Refund Amount
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" id="refundamount" name="refundamount" disabled
+                        #refundamount="ngModel" [(ngModel)]="model.refundamount" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 20px">
+            <div class="col-md-12">
+                <label>Cancellation Comments</label>
+                <label for="cancellationcomm"></label>
+                <textarea class="form-control is-valid" id="cancellationcomm" name="cancellationcomm" rows="3" disabled
+                    id="cancellationcomm" name="cancellationcomm" #cancellationcomm="ngModel"
+                    [(ngModel)]="model.cancellationcomm"
+                    ></textarea>
+            </div>
+        </div>
+
+        <hr />
+        <strong>Update</strong>
+        <form #ipfcancelupdateForm="ngForm" (ngSubmit)="cancelupdateipf(ipfcancelupdateForm)" novalidate autocomplete="off">
+            <div class="row" style="padding-top: 20px">
+                <div class="col-xl-2 col-md-3">
+                    Status
+                </div>
+                <div class="col-md-9">
+                    <select type="text" class="form-control" id="status" name="status" #status="ngModel"
+                        [(ngModel)]="model.status" [ngClass]="{ 'is-invalid': status.errors }" required>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Payment Received">Payment Received</option>
+                        <option value="Reinstatement">Reinstatement</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-3">
+                    Payment amount
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <input type="number" class="form-control" id="paymentamount" name="paymentamount" #paymentamount="ngModel"
+                            [(ngModel)]="model.paymentamount" [ngClass]="{ 'is-invalid': paymentamount.errors }" />
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3">
+                    Payment date
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <input #paymentdate="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" bsDatepicker
+                            class="form-control" id="paymentdate" name="paymentdate" placeholder="Date of Payment" placement="top"
+                            type="text" #paymentdate="ngModel" [(ngModel)]="model.paymentdate" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-3">
+                    Writeoff amount
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <input type="number" class="form-control" id="writeoffamount" name="writeoffamount" #writeoffamount="ngModel"
+                            [(ngModel)]="model.writeoffamount"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-3">
+                    Reinstatement Letter
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <button class="btn btn-link" (click)="previewbtn()">Preview</button>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3">
+                    Reinstatement date
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <input #reinstatementdate="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" bsDatepicker
+                            class="form-control" id="reinstatementdate" name="reinstatementdate" placeholder="Date of Reinstatement" placement="top"
+                            type="text" #reinstatementdate="ngModel" [(ngModel)]="model.reinstatementdate" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 20px">
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <button class="btn btn-sm btn-primary" type="submit" [disabled]="!ipfcancelupdateForm.valid">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 text-center">
+                <span>&copy;</span>
+                <span>{{ settings.getAppSetting('year') }}</span>
+                <span class="mx-2">-</span>
+                <span>{{ settings.getAppSetting('name') }}</span>
+                <br />
+                <span>{{ settings.getAppSetting('description') }}</span>
+            </div>
+        </form>
+    </div>
+</div>

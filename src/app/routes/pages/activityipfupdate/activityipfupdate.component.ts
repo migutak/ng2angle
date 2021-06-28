@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../core/settings/settings.service';
 import swal from 'sweetalert2';
-import * as moment from 'moment';
 import { EcolService } from '../../../services/ecol.service';
 import { environment } from '../../../../environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-activityipf',
-  templateUrl: './activityipf.component.html',
-  styleUrls: ['./activityipf.component.scss']
+  selector: 'app-activityipfupdate',
+  templateUrl: './activityipfupdate.component.html',
+  styleUrls: ['./activityipfupdate.component.scss']
 })
-export class ActivityIpfComponent implements OnInit {
+export class ActivityIpfUpdateComponent implements OnInit {
 
   model: any = {};
   username: string;
-  diff: any;
   accnumber: string;
   custnumber: string;
   sys: string;
@@ -53,24 +51,7 @@ export class ActivityIpfComponent implements OnInit {
     this.ipfdetails(this.accnumber)
   }
 
-  //Calculate refund amount
-  buttonCalculate() {
 
-    var now = moment(new Date()); //todays date
-    var end = moment(this.model.lsd); // another date "2015-12-1"
-    var duration = moment.duration(now.diff(end));
-    var daysin = duration.asDays();
-    console.log(daysin)
-    const days = Math.round(daysin / 1000 / 60 / 60 / 24);
-
-    var Refundamount = (this.model.policyamount + this.model.arrearsamount) / 365 * (365 - days)
-
-    this.model.refundamount = (Refundamount);
-    this.model.daysUtilized = (days);
-    this.model.daysUnutilized = (365 - days);
-  }
-
-  //generate letter button
   previewbtn() {
     this.ecolService.loader();
     //console.log(this.model)
@@ -92,7 +73,7 @@ export class ActivityIpfComponent implements OnInit {
       postcode: this.model.postcode
     }
 
-    this.ecolService.previewipf(previewrequest).subscribe(resp => {
+    this.ecolService.previewipfreinstatement(previewrequest).subscribe(resp => {
       this.model.cancellationletter = resp.message;
       window.open(environment.uploadurl + '/download/bpms?filename=' + resp.message);
     }, error => {
@@ -101,64 +82,35 @@ export class ActivityIpfComponent implements OnInit {
     });
   }
 
-  cancelipf(form) {
+  cancelupdateipf(form) {
     console.log(form)
-    if(!this.model.cancellationletter) {
-      alert('Please preview cancellation letter before you continue')
-    }
     this.ecolService.loader();
     const submitdata = {
-      accnumber: this.model.ACCNUMBER,
-      custnumber: this.model.CUSTNUMBER,
-      custname: this.model.CLIENTNAME,
-      origdate: this.model.LOANSTARTDATE,
-      policyamount: this.model.POLICYAMOUNT,
-      oustbalance: this.model.POLICYAMOUNT,
-      refundamount: this.model.refundamount,
-      daysutilized: this.model.daysutilized,
-      daysunutilized: this.model.daysunutilized,
-      branchname: this.model.BRANCHNAME,
-      insuranceaddress: this.model.INSURANCEADDRESS,
-      insuranceemail: this.model.INSURANCEEMAIL,
-      policynumber: this.model.POLICYNUMBER,
-      broker: this.model.BROKER,
-      insuranceco: this.model.INSURANCECO,
-      issuedby: this.model.issuedby,
-      emailaddress: this.model.EMAILADDRESS,
-      postcode: this.model.postcode,
-      celnumber: this.model.CELNUMBER,
-      telnumber: this.model.TELNUMBER,
-      arrearsamout: this.model.TOTALARREARS,
-      daysinarr: this.model.DAYSINARR,
-      withassetfinance: this.model.waf,
-      cancelipf: this.model.cancelipf,
-      loanstartdate: this.model.LOANSTARTDATE,
-      policystartdate: this.model.POLICYSTARTDATE,
-      policyenddate: this.model.POLICYENDDATE,
-      status: 'Cancelled',
-      cancellationletter: this.model.cancellationletter,
-      cancellationcomment: this.model.cancellationcomment,
-      cancellationdate: this.model.cancellationdate
+      id: this.model.id,
+      paymentamount: this.model.paymentamount,
+      paymentdate: this.model.paymentdate,
+      status: this.model.status,
+      reinstatementletter: this.model.reinstatementletter,
+      reinstatementdate: this.model.reinstatementdate,
+      writeoffamount: this.model.writeoffamount
     };
 
-    this.ecolService.submitcancelipf(submitdata).subscribe(resp => {
+    this.ecolService.cancelipfupdate(submitdata).subscribe(resp => {
       this.addactivity()
     }, error => {
       console.log(error);
       swal('Error!', 'Service currently not available', 'error');
     });
-
   }
 
   // add activity
   addactivity() {
     const activitydata = {
       collectoraction: "IPF",
-      collectornote: "Cancelled IPF with comment: " + this.model.cancellationcomm,
-      
+      collectornote: "Status: " + this.model.status,
       accountnumber: this.model.accnumber,
       custnumber: this.model.custnumber,
-      notesrc: "IPF Cancellation",
+      notesrc: "IPF Cancellation update",
       noteimp: "N",
       owner: this.model.issuedby,
       product: "IPF"
@@ -166,7 +118,7 @@ export class ActivityIpfComponent implements OnInit {
 
     this.ecolService.postactivitylogs(activitydata).subscribe(resp => {
       swal({
-        title: 'IPF Cancellation successfully issued',
+        title: 'IPF Cancellation update successfully',
         imageUrl: 'assets/img/user/coop.jpg',
         text: 'Close activity windows?',
         showCancelButton: true,
@@ -185,11 +137,11 @@ export class ActivityIpfComponent implements OnInit {
       console.log(error);
       swal('Error!', 'Service currently not available', 'error');
     });
-
   }
 
   ipfdetails(accnumber) {
     this.ecolService.ipfdetails(accnumber).subscribe(resp => {
+      console.log(resp)
       if (resp && resp.length > 0) {
         this.model = resp[0]
       } else {

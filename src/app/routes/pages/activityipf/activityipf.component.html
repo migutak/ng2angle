@@ -11,8 +11,8 @@
                     Customer Name
                 </div>
                 <div class="col-md-9">
-                        <input class="form-control" id="custname" name="custname" #custname="ngModel"
-                            [(ngModel)]="model.custname" [ngClass]="{ 'is-invalid': custname.errors }" required />
+                        <input type="text" class="form-control" id="CLIENTNAME" name="CLIENTNAME" #CLIENTNAME="ngModel"
+                            [(ngModel)]="model.CLIENTNAME" [ngClass]="{ 'is-invalid': CLIENTNAME.errors }" disabled required/>
                 </div>
             </div>
 
@@ -22,8 +22,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="accnumber" name="accnumber" #accnumber="ngModel"
-                            [(ngModel)]="model.accnumber" [ngClass]="{ 'is-invalid': accnumber.errors }" required />
+                        <input class="form-control" id="ACCNUMBER" name="ACCNUMBER" #ACCNUMBER="ngModel"
+                            [(ngModel)]="model.ACCNUMBER" [ngClass]="{ 'is-invalid': ACCNUMBER.errors }" disabled required />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -31,8 +31,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="custnumber" name="custnumber" #custnumber="ngModel"
-                            [(ngModel)]="model.custnumber" [ngClass]="{ 'is-invalid': custnumber.errors }" required />
+                        <input class="form-control" id="CUSTNUMBER" name="CUSTNUMBER" #CUSTNUMBER="ngModel"
+                            [(ngModel)]="model.CUSTNUMBER" [ngClass]="{ 'is-invalid': CUSTNUMBER.errors }" disabled required />
                     </div>
                 </div>
             </div>
@@ -44,8 +44,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="policynumber" name="policynumber" #policynumber="ngModel"
-                            [(ngModel)]="model.policynumber" [ngClass]="{ 'is-invalid': policynumber.errors }"
+                        <input class="form-control" id="POLICYNUMBER" name="POLICYNUMBER" #POLICYNUMBER="ngModel"
+                            [(ngModel)]="model.POLICYNUMBER" [ngClass]="{ 'is-invalid': POLICYNUMBER.errors }"
                             required />
                     </div>
                 </div>
@@ -54,8 +54,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="emailaddress" name="emailaddress" #emailaddress="ngModel"
-                            [(ngModel)]="model.emailaddress" />
+                        <input class="form-control" id="EMAILADDRESS" name="EMAILADDRESS" #EMAILADDRESS="ngModel"
+                            [(ngModel)]="model.EMAILADDRESS" />
                     </div>
                 </div>
             </div>
@@ -67,8 +67,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="celnumber" name="celnumber" #celnumber="ngModel"
-                            [(ngModel)]="model.celnumber" />
+                        <input class="form-control" id="TELNUMBER" name="TELNUMBER" #TELNUMBER="ngModel"
+                            [(ngModel)]="model.TELNUMBER" />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -76,8 +76,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="productname" name="productname" #productname="ngModel"
-                            [(ngModel)]="model.productname" />
+                        <input class="form-control" id="PRODUCTCODE" name="PRODUCTCODE" #PRODUCTCODE="ngModel" disabled
+                            [(ngModel)]="model.PRODUCTCODE" />
                     </div>
                 </div>
             </div>
@@ -89,9 +89,9 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input type="number" class="form-control" id="policyamount" name="policyamount"
-                            #policyamount="ngModel" [(ngModel)]="model.policyamount"
-                            [ngClass]="{ 'is-invalid': policyamount.errors }" required />
+                        <input type="number" class="form-control" id="POLICYAMOUNT" name="POLICYAMOUNT"
+                            #POLICYAMOUNT="ngModel" [(ngModel)]="model.POLICYAMOUNT"
+                            [ngClass]="{ 'is-invalid': POLICYAMOUNT.errors }" required />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -99,9 +99,9 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input type="number" class="form-control" id="arrearsamount" name="arrearsamount"
-                            #arrearsamount="ngModel" [(ngModel)]="model.arrearsamount"
-                            [ngClass]="{ 'is-invalid': arrearsamount.errors }" required />
+                        <input type="number" class="form-control" id="TOTALARREARS" name="TOTALARREARS"
+                            #TOTALARREARS="ngModel" [(ngModel)]="model.TOTALARREARS"
+                            [ngClass]="{ 'is-invalid': TOTALARREARS.errors }" required />
                     </div>
                 </div>
             </div>
@@ -115,18 +115,18 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="daysinarr" name="daysinarr" #daysinarr="ngModel"
-                            [(ngModel)]="model.daysinarr" [ngClass]="{ 'is-invalid': daysinarr.errors }"
+                        <input class="form-control" id="DAYSINARR" name="DAYSINARR" #DAYSINARR="ngModel" disabled
+                            [(ngModel)]="model.DAYSINARR" [ngClass]="{ 'is-invalid': DAYSINARR.errors }"
                             required />
                     </div>
                 </div>
                 <div class="col-md-3">
-                    BranchName
+                    Branch Name
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="branchname" name="branchname" #branchname="ngModel"
-                            [(ngModel)]="model.branchname" />
+                        <input class="form-control" id="BRANCHNAME" name="BRANCHNAME" #BRANCHNAME="ngModel" disabled
+                            [(ngModel)]="model.BRANCHNAME" />
                     </div>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                     <div class="col-md-12">
                         <input #dci="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }" 
                             bsDatepicker class="form-control" id="dci" name="dci" placeholder="Date Issued"
-                            placement="top" type="text" />
+                            [(ngModel)]="model.dci" placement="top" type="text" />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -197,7 +197,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="issuedby" name="issuedby" #issuedby="ngModel"
+                        <input class="form-control" id="issuedby" name="issuedby" #issuedby="ngModel" disabled
                             [(ngModel)]="model.issuedby" [ngClass]="{ 'is-invalid': issuedby.errors }"
                             required />
                     </div>
@@ -214,9 +214,9 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="psd" placeholder="Loan Start Date" placement="top" type="text"
-                            name="psd" #psd="ngModel" [(ngModel)]="model.psd"
-                            [ngClass]="{ 'is-invalid': psd.errors }" required />
+                        <input class="form-control" id="POLICYSTARTDATE" placeholder="Loan Start Date" placement="top" type="text"
+                            name="POLICYSTARTDATE" #POLICYSTARTDATE="ngModel" [(ngModel)]="model.POLICYSTARTDATE"
+                            [ngClass]="{ 'is-invalid': POLICYSTARTDATE.errors }" required />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -224,8 +224,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="telnumber" name="telnumber" #telnumber="ngModel"
-                            [(ngModel)]="model.telnumber" [ngClass]="{ 'is-invalid': telnumber.errors }"
+                        <input class="form-control" id="CELNUMBER" name="CELNUMBER" #CELNUMBER="ngModel"
+                            [(ngModel)]="model.CELNUMBER" [ngClass]="{ 'is-invalid': CELNUMBER.errors }"
                             required />
                     </div>
                 </div>
@@ -238,8 +238,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="insuranceco" name="insuranceco" #insuranceco="ngModel"
-                            [(ngModel)]="model.insuranceco" [ngClass]="{ 'is-invalid': insuranceco.errors }"
+                        <input type="text" class="form-control" id="INSURANCECO" name="INSURANCECO" #INSURANCECO="ngModel"
+                            [(ngModel)]="model.INSURANCECO" [ngClass]="{ 'is-invalid': INSURANCECO.errors }"
                             required />
                     </div>
                 </div>
@@ -248,8 +248,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="insuemail" name="insuemail" #insuemail="ngModel"
-                            [(ngModel)]="model.insuemail" [ngClass]="{ 'is-invalid': insuemail.errors }"
+                        <input class="form-control" id="INSURANCEEMAIL" name="INSURANCEEMAIL" #INSURANCEEMAIL="ngModel"
+                            [(ngModel)]="model.INSURANCEEMAIL" [ngClass]="{ 'is-invalid': INSURANCEEMAIL.errors }"
                             required />
                     </div>
                 </div>
@@ -264,8 +264,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="broker" name="broker" #broker="ngModel"
-                            [(ngModel)]="model.broker" [ngClass]="{ 'is-invalid': broker.errors }"
+                        <input class="form-control" id="BROKER" name="BROKER" #BROKER="ngModel"
+                            [(ngModel)]="model.BROKER" [ngClass]="{ 'is-invalid': BROKER.errors }"
                             required />
                     </div>
                 </div>
@@ -274,8 +274,8 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="insuaddress" name="insuaddress" #insuaddress="ngModel"
-                            [(ngModel)]="model.insuaddress" [ngClass]="{ 'is-invalid': insuaddress.errors }"
+                        <input class="form-control" id="INSURANCEADDRESS" name="INSURANCEADDRESS" #INSURANCEADDRESS="ngModel"
+                            [(ngModel)]="model.INSURANCEADDRESS" [ngClass]="{ 'is-invalid': INSURANCEADDRESS.errors }"
                             required />
                     </div>
                 </div>
@@ -289,19 +289,19 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="lsd" placeholder="Loan Start Date" placement="top" type="text"
-                            name="lsd" #lsd="ngModel" [(ngModel)]="model.lsd"
-                            [ngClass]="{ 'is-invalid': lsd.errors }" required />
+                        <input class="form-control" id="LOANSTARTDATE" placeholder="Loan Start Date" placement="top" type="text"
+                            name="LOANSTARTDATE" #LOANSTARTDATE="ngModel" [(ngModel)]="model.LOANSTARTDATE"
+                            [ngClass]="{ 'is-invalid': LOANSTARTDATE.errors }" required />
                     </div>
                 </div>
                 <div class="col-md-3">
-                    Policy EndDate
+                    Policy End Date (DD-MMM-YYYY)
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input class="form-control" id="ped" placeholder="Policy End Date" placement="top" type="text"
-                            name="ped" #ped="ngModel" [(ngModel)]="model.ped"
-                            [ngClass]="{ 'is-invalid': ped.errors }" required />
+                        <input class="form-control" id="POLICYENDDATE" placeholder="Policy End Date" placement="top" type="text"
+                            name="POLICYENDDATE" #POLICYENDDATE="ngModel" [(ngModel)]="model.POLICYENDDATE"
+                            [ngClass]="{ 'is-invalid': POLICYENDDATE.errors }" required />
                     </div>
                 </div>
             </div>
@@ -318,7 +318,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input type="number" class="form-control" id="daysutilized" name="daysutilized"
+                        <input type="number" class="form-control" id="daysutilized" name="daysutilized" disabled
                             #daysutilized="ngModel" [(ngModel)]="model.daysutilized"
                             [ngClass]="{ 'is-invalid': daysutilized.errors }" required />
                     </div>
@@ -328,7 +328,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input type="number" class="form-control" id="daysunutilized" name="daysunutilized"
+                        <input type="number" class="form-control" id="daysunutilized" name="daysunutilized" disabled
                             #daysunutilized="ngModel" [(ngModel)]="model.daysunutilized"
                             [ngClass]="{ 'is-invalid': daysunutilized.errors }" required />
                     </div>
@@ -342,7 +342,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" id="refundamount" name="refundamount"
+                        <input type="text" class="form-control" id="refundamount" name="refundamount" disabled
                             #refundamount="ngModel" [(ngModel)]="model.refundamount"
                             [ngClass]="{ 'is-invalid': refundamount.errors }" required />
                     </div>
@@ -367,7 +367,7 @@
 
                 <div class="col-md-3">
                     <div class="col-md-12">
-                        <button class="btn btn-sm btn-primary" id="previewcanceletter" type="button" (click)="previewbtn()">
+                        <button class="btn btn-sm btn-primary" id="previewcanceletter" type="button" [disabled]="!ipfcancelForm.valid" (click)="previewbtn()">
                             Preview Cancellation Letter
                         </button>
                     </div>

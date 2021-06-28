@@ -13,6 +13,7 @@ import { SendLetterComponent } from './pages/actions/sendletter.component';
 import { ActivityLogComponent } from './pages/activitylog/activitylog.component';
 import { MultipleptpComponent } from './pages/multipleptp/multipleptp.component';
 import { ActivityIpfComponent } from './pages/activityipf/activityipf.component';
+import { ActivityIpfUpdateComponent } from './pages/activityipfupdate/activityipfupdate.component';
 import { AuthGuard } from '../auth.guard';
 import { ActivityActionComponent } from './pages/activitylog/activityaction/activityaction.component';
 import { ActivityHomeComponent } from './pages/activitylog/activityhome/activityhome.component';
@@ -115,9 +116,12 @@ export const routes = [
         path: 'cancelipf',
         component: ActivityIpfComponent,
         canActivate: [AuthGuard]
-
     },
-
+    {
+        path: 'cancelipfupdate',
+        component: ActivityIpfUpdateComponent,
+        canActivate: [AuthGuard]
+    },
     // Not found
     { path: '', redirectTo: 'extlettersx', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }

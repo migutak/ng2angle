@@ -148,6 +148,10 @@ export class EcolService {
     return this.httpClient.post<any>(environment.letters_api + 'ipfcancellation/download', body);
   }
 
+  previewipfreinstatement(body) {
+    return this.httpClient.post<any>(environment.letters_api + 'ipfreinstatement/download', body);
+  }
+
   submitcancelipf(body) {
     return this.httpClient.post<any>(environment.letters_api + 'ipfcancellationwithsend/download', body);
   }
@@ -159,7 +163,7 @@ export class EcolService {
   }
 
   ipfdetails(accnumber) {
-    const url = environment.nodeapi + '/tbl-ipfs?filter[where][accnumber]='+accnumber;
+    const url = environment.nodeapi + '/tbl-ipfs?filter[where][ACCNUMBER]='+accnumber;
     return this.httpClient.get<any>(url);
   }
 
@@ -264,6 +268,11 @@ export class EcolService {
 
   patchtblexcuse(body) {
     const url = environment.api + '/api/tblexcuse/' + body.id;
+    return this.httpClient.patch(url, body);
+  }
+
+  cancelipfupdate(body) {
+    const url = environment.nodeapi + '/tbl-ipf-cancellations/' + body.id;
     return this.httpClient.patch(url, body);
   }
 

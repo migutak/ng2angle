@@ -28,6 +28,7 @@ import { MultipleptpComponent } from './multipleptp/multipleptp.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ActivityLogComponent } from './activitylog/activitylog.component';
 import { ActivityIpfComponent } from './activityipf/activityipf.component';
+import { ActivityIpfUpdateComponent } from './activityipfupdate/activityipfupdate.component';
 import { ActivityActionComponent } from '../pages/activitylog/activityaction/activityaction.component';
 import { ActivityHomeComponent } from '../pages/activitylog/activityhome/activityhome.component';
 import { AccPlanComponent } from '../pages/activitylog/accplan/accplan.component';
@@ -108,7 +109,8 @@ import { DatePipe } from '@angular/common';
         WriteoffstoryComponent,
         ProductsComponent,
         RelegationapprovalComponent,
-        ActivityIpfComponent
+        ActivityIpfComponent,
+        ActivityIpfUpdateComponent
     ],
     providers: [
         ToasterService,

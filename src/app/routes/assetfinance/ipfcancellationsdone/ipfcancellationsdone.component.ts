@@ -78,7 +78,8 @@ export class IpfCancellationsDoneComponent implements OnInit {
       { field: 'CANCELLATIONDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'WRITEOFFAMOUNT', filter: 'agNumberColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
       { field: 'REINSTATEMENTDATE', filter: 'agDateColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
-      { field: 'POLICYNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true }
+      { field: 'POLICYNUMBER', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: true },
+      { field: 'ID', filter: 'agTextColumnFilter', filterParams: { newRowsAction: 'keep' }, resizable: false }
     ];
     this.defaultColDef = {
       width: 120,
@@ -140,10 +141,10 @@ export class IpfCancellationsDoneComponent implements OnInit {
     }
   }
 
-  onRowDoubleClicked(event: any) {
+  onRowClicked(event: any) {
     this.model = event.node.data;
     // tslint:disable-next-line:max-line-length
-    window.open(environment.applink + '/activitylog?accnumber=' + this.model.ACCNUMBER + '&custnumber=' + this.model.CUSTNUMBER + '&username=' + this.username + '&sys=assetf', '_blank');
+    window.open(environment.applink + '/cancelipfupdate?id=' + this.model.ID + '&username=' + this.username + '&sys=cancelipf', '_blank');
   }
 
 
